@@ -6,4 +6,4 @@ bin/
 *.ncb
 *.suo
 _ReSharper.*
-*.resharper.user
+*.user
