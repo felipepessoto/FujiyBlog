@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujiyBlog.Core", "FujiyBlog.Core\FujiyBlog.Core.csproj", "{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujiyBlog.Web", "FujiyBlog.Web\FujiyBlog.Web.csproj", "{A92F8E10-632A-41CD-B741-F6137CF17414}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FujiyBlog.Web.Tests", "FujiyBlog.Web.Tests\FujiyBlog.Web.Tests.csproj", "{4F060952-7BF7-454B-8B3C-27E1038E2503}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A92F8E10-632A-41CD-B741-F6137CF17414}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A92F8E10-632A-41CD-B741-F6137CF17414}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A92F8E10-632A-41CD-B741-F6137CF17414}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A92F8E10-632A-41CD-B741-F6137CF17414}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F060952-7BF7-454B-8B3C-27E1038E2503}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F060952-7BF7-454B-8B3C-27E1038E2503}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F060952-7BF7-454B-8B3C-27E1038E2503}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F060952-7BF7-454B-8B3C-27E1038E2503}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
