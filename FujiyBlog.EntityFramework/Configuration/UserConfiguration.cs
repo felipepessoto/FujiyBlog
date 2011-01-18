@@ -7,8 +7,13 @@ namespace FujiyBlog.EntityFramework.Configuration
     {
         public UserConfiguration()
         {
-            Property(b => b.Email).IsUnicode(false).HasMaxLength(50).IsRequired();
-            Property(b => b.Password).IsUnicode(false).HasMaxLength(50).IsRequired();
+            Property(b => b.Login).IsUnicode(false);
+            Property(b => b.Email).IsUnicode(false);
+            Property(b => b.Password).IsUnicode(false);
+            Property(b => b.DisplayName).IsUnicode(false);
+            Property(b => b.FullName).IsUnicode(false);
+            Property(b => b.Location).IsUnicode(false);
+            Property(b => b.About).IsUnicode(false);
         }
     }
 }

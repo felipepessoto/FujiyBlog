@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\UserProfileConfiguration.cs" />
     <Compile Include="Configuration\PostConfiguration.cs" />
     <Compile Include="Configuration\PostCommentConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />

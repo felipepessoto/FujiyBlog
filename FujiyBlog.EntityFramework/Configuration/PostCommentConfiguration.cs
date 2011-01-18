@@ -7,8 +7,12 @@ namespace FujiyBlog.EntityFramework.Configuration
     {
         public PostCommentConfiguration()
         {
-            Property(b => b.Comment).IsUnicode(false).HasMaxLength(200).IsRequired();
-            HasRequired(x => x.Post);
+            Property(b => b.AuthorName).IsUnicode(false);
+            Property(b => b.AuthorEmail).IsUnicode(false);
+            Property(b => b.AuthorWebsite).IsUnicode(false);
+            Property(b => b.Comment).IsUnicode(false);
+            Property(b => b.IpAddress).IsUnicode(false);
+            Property(b => b.Avatar).IsUnicode(false);
         }
     }
 }

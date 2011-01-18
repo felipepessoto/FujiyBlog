@@ -12,7 +12,6 @@ namespace FujiyBlog.EntityFramework
         {
             ModelBuilder builder = new ModelBuilder();
             builder.Configurations.Add(new PostCommentConfiguration());
-            builder.Configurations.Add(new UserProfileConfiguration());
             builder.Configurations.Add(new PostConfiguration());
             builder.Configurations.Add(new UserConfiguration());
 

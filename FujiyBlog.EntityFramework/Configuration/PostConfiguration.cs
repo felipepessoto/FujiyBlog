@@ -7,8 +7,10 @@ namespace FujiyBlog.EntityFramework.Configuration
     {
         public PostConfiguration()
         {
-            Property(b => b.Title).IsRequired();
-            HasRequired(x => x.Author);
+            Property(b => b.Title).IsUnicode(false);
+            Property(b => b.Description).IsUnicode(false);
+            Property(b => b.Slug).IsUnicode(false);
+            Property(b => b.Content).IsUnicode(false);
         }
     }
 }
