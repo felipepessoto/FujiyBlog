@@ -5,7 +5,7 @@ namespace FujiyBlog.Core.DomainObjects
 {
     public class PostComment
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required, StringLength(50)]
         public virtual string AuthorName { get; set; }
