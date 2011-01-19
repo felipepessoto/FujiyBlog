@@ -8,7 +8,7 @@ using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public class BlogController : Controller
+    public partial class BlogController : Controller
     {
         private readonly IPostRepository postRepository;
 
@@ -17,7 +17,7 @@ namespace FujiyBlog.Web.Controllers
             this.postRepository = postRepository;
         }
 
-        public ActionResult Index(int? skip)
+        public virtual ActionResult Index(int? skip)
         {
             IEnumerable<Post> recentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), 10);
 

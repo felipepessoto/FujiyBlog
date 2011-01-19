@@ -28,13 +28,6 @@ namespace FujiyBlog.Web
 
             routes.MapRoute("Home", "", new { controller = "Blog", action = "Index" });
             routes.MapRoute("PostDetail", "{*PostSlug}", new { controller = "Post", action = "Details" });
-
-            routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Home", action = "Index", id = UrlParameter.Optional } // Parameter defaults
-            );
-
         }
 
         protected void Application_Start()

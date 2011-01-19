@@ -1,7 +1,7 @@
 ﻿@model FujiyBlog.Core.DomainObjects.Post
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -12,7 +12,7 @@
     </div>
   
   
-  @Html.Partial("Post");
+  @Html.DisplayForModel();
   
   @*<blog:RelatedPosts runat="server" ID="related" MaxResults="3" ShowDescription="true" DescriptionMaxLength="100" Visible="false" />*@
   
