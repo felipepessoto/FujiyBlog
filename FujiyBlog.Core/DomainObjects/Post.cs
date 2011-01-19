@@ -24,6 +24,8 @@ namespace FujiyBlog.Core.DomainObjects
 
         public virtual DateTime LastModificationDate { get; set; }
 
+        public virtual DateTime PublishedDate { get; set; }
+
         public virtual bool IsPublished { get; set; }
 
         public virtual bool IsCommentEnabled { get; set; }
@@ -34,5 +36,7 @@ namespace FujiyBlog.Core.DomainObjects
         public virtual User Author { get; set; }
 
         public virtual ICollection<PostComment> Comments { get; set; }
+
+        public virtual ICollection<Tag> Tags { get; set; }
     }
 }

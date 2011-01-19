@@ -36,10 +36,5 @@ namespace FujiyBlog.EntityFramework
 
             Database.Set<T>().Remove(entity);
         }
-
-        public virtual T Find(params object[] keyValues)
-        {
-            return Database.Set<T>().Find(keyValues);
-        }
     }
 }

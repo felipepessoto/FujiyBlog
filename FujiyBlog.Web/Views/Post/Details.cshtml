@@ -1,0 +1,19 @@
+﻿@model FujiyBlog.Core.DomainObjects.Post
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+  
+    <div id="postnavigation">
+      Titulo do post anterior | 
+      Titulo do proximo post
+    </div>
+  
+  
+  @Html.Partial("Post");
+  
+  @*<blog:RelatedPosts runat="server" ID="related" MaxResults="3" ShowDescription="true" DescriptionMaxLength="100" Visible="false" />*@
+  
+  @*<uc:CommentView ID="CommentView1" runat="server" />*@

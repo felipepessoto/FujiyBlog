@@ -2,7 +2,7 @@
 
 namespace FujiyBlog.Core.Repositories
 {
-    public interface IUserRepository :IRepository<User>
+    public interface IUserRepository : IRepository<User>
     {
         bool EmailExistsWithAnotherUser(string email, int userId);
     }

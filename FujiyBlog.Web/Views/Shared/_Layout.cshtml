@@ -2,40 +2,49 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Themes/Default/Site.css")" rel="stylesheet" type="text/css" />
     <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.4.4.min.js" type="text/javascript"></script>
     <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.7/jquery.validate.pack.js" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+
+      @RenderSection("Meta", required: false)
 </head>
 
 <body>
-    <div class="page">
 
-        <div id="header">
-            <div id="title">
-                <h1>My MVC Application</h1>
-            </div>
-
-            <div id="logindisplay">
-                @Html.Partial("_LogOnPartial")
-            </div>
-
-            <div id="menucontainer">
-
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                </ul>
-
-            </div>
+<div id="frame">
+        <div id="frameinner">
+        
+      <div id="header">
+        <p id="blogname"><a href="/">Nome Do Blog</a></p>
+        <p id="blogdesc">Descrição do Blog</p>
+        
+        <div id="menu">
+        <ul>
+          <li><a href="/" rel="home">Página Inicial</a></li>
+          <li><a href="/">Arquivo</a></li>
+          <li><a href="/">Contato</a></li>
+          <li><a href="/" class="feed"><img src="/pics/rssButton.gif" alt="Feed" />RSS</a></li>
+          <li>@Html.Partial("_LogOnPartial")</li>
+        </ul>
+      </div>
+      </div>
+        
+        <div id="content">
+          @RenderBody()
         </div>
-
-        <div id="main">
-            @RenderBody()
-            <div id="footer">
-            </div>
+        
+        <div id="sidepanel">
+          WIDGET
         </div>
+        
+           <div id="ecofooter">
+              <p>Powered by <a href="/">FujiyBlog</a> 1.0.0.0 - Eco Theme by n3o <a href="http://www.n3o.co.uk">Web Designers</a></p>
+          </div>
+      
+      <div class="clearer">&nbsp;</div>
+      </div>
     </div>
 </body>
 </html>

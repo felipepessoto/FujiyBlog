@@ -8,6 +8,7 @@ using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Infrastructure;
 using Microsoft.Practices.Unity;
 using FujiyBlog.EntityFramework;
+using System.Configuration;
 
 namespace FujiyBlog.Web
 {
@@ -24,6 +25,9 @@ namespace FujiyBlog.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute("Home", "", new { controller = "Blog", action = "Index" });
+            routes.MapRoute("PostDetail", "{*PostSlug}", new { controller = "Post", action = "Details" });
 
             routes.MapRoute(
                 "Default", // Route name
@@ -46,9 +50,13 @@ namespace FujiyBlog.Web
         private static void ConfigureUnity()
         {
             var container = new UnityContainer();
-            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(); 
-            container.RegisterType<IUserRepository, UserRepository>(); 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container)); 
+            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new InjectionMember[]
+                                                                             {
+                                                                                 new InjectionConstructor(ConfigurationManager.ConnectionStrings["FujiyBlog"].ConnectionString)
+                                                                             });
+            container.RegisterType<IUserRepository, UserRepository>();
+            container.RegisterType<IPostRepository, PostRepository>(); 
+            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }
 }

@@ -1,0 +1,21 @@
+﻿@model FujiyBlog.Core.DomainObjects.Post
+
+<div class="post xfolkentry" id="post@(Model.Id)">
+        <h1>
+            <a href="/@Model.Slug" class="taggedlink">@Model.Title</a></h1>
+        <span class="author">by <a href="/@Model.Author.Login">@Model.Author.DisplayName</a></span>
+        <span class="pubDate">@Model.PublishedDate</span>
+        <div class="text">@Model.Content</div>
+        <div class="bottom">
+            RATING
+            <p class="tags">
+                Tags: @Model.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + y + ",", x=> x.Trim(','))</p>
+            <p class="categories">
+                Categories:
+            </p>
+        </div>
+        <div class="footer">
+            ADMIN LINKS <a rel="bookmark" href="/posts/@Model.Id/" title="<%=Server.HtmlEncode(Post.Title) %>">
+                Permalink</a> | <a rel="nofollow" href="/posts/@Model.Slug/#comment">Comments (@Model.Comments.Count(x => x.IsApproved)</a>
+        </div>
+    </div>

@@ -5,7 +5,5 @@ namespace FujiyBlog.Core.Repositories
         void Add(T entity);
 
         void Remove(T entity);
-
-        T Find(params object[] keyValues);
     }
 }
