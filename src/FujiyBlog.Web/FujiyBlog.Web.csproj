@@ -173,7 +173,7 @@
     <Content Include="Views\Post\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\DisplayTemplates\Post.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\PostDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="T4MVC.settings.t4" />

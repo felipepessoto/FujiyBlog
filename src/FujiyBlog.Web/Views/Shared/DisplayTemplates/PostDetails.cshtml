@@ -1,11 +1,11 @@
 ﻿@model FujiyBlog.Core.ViewModel.PostDetails
 
-<div class="post xfolkentry" id="post@(Model.Id)">
+<div class="post xfolkentry" id="post@(Model.Post.Id)">
         <h1>
-            <a href="/@Model.Slug" class="taggedlink">@Model.Title</a></h1>
-        <span class="author">by <a href="/@Model.Author.Login">@Model.Author.DisplayName</a></span>
-        <span class="pubDate">@Model.PublishedDate</span>
-        <div class="text">@Model.Content</div>
+            <a href="/@Model.Post.Slug" class="taggedlink">@Model.Post.Title</a></h1>
+        <span class="author">by <a href="/@Model.AuthorLogin">@Model.AuthorDisplayName</a></span>
+        <span class="pubDate">@Model.Post.PublishedDate</span>
+        <div class="text">@Model.Post.Content</div>
         <div class="bottom">
             RATING
             <p class="tags">
@@ -15,7 +15,7 @@
             </p>
         </div>
         <div class="footer">
-            ADMIN LINKS <a rel="bookmark" href="/posts/@Model.Id/" title="<%=Server.HtmlEncode(Post.Title) %>">
-                Permalink</a> | @Html.ActionLink("Comments (" + Model.Comments.Count(x => x.IsApproved) + ")", MVC.Post.Details(Model.Slug))
+            ADMIN LINKS <a rel="bookmark" href="/posts/@Model.Post.Id/" title="<%=Server.HtmlEncode(Post.Title) %>">
+                Permalink</a> | @Html.ActionLink("Comments (" + Model.CommentsCount + ")", MVC.Post.Details(Model.Post.Slug))
         </div>
     </div>

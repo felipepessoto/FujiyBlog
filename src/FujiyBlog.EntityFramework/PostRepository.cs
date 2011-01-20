@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.ViewModel;
 
 namespace FujiyBlog.EntityFramework
 {
@@ -13,13 +14,25 @@ namespace FujiyBlog.EntityFramework
         {
         }
 
-        public IEnumerable<Post> GetRecentPosts(int skip, int take)
+        public IEnumerable<PostDetails> GetRecentPosts(int skip, int take)
         {
+            IQueryable<Post> posts = Database.Posts.Include("Author").Include("Tags").Include("Comments");
+
             if (skip > 0)
             {
-                return Database.Posts.Skip(skip).Take(take);
+                posts = posts.Skip(skip);
             }
-            return Database.Posts.Take(take);
+            IEnumerable<PostDetails> postDetails = from post in posts.Take(take)
+                                                   select new PostDetails
+                                                              {
+                                                                  Post = post,
+                                                                  AuthorDisplayName = post.Author.DisplayName,
+                                                                  AuthorLogin = post.Author.Login,
+                                                                  Tags = post.Tags,
+                                                                  CommentsCount = post.Comments.Count(x=> x.IsApproved && !x.IsDeleted)
+                                                              };
+
+            return postDetails.ToList();
         }
 
         public Post GetPost(string slug)

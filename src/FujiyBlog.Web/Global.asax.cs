@@ -27,7 +27,7 @@ namespace FujiyBlog.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("Home", "", new { controller = "Blog", action = "Index" });
-            routes.MapRoute("PostDetail", "{*PostSlug}", new { controller = "Post", action = "Details" });
+            routes.MapRoute("PostDetail", "posts/{*PostSlug}", new { controller = "Post", action = "Details" });
         }
 
         protected void Application_Start()
@@ -43,10 +43,7 @@ namespace FujiyBlog.Web
         private static void ConfigureUnity()
         {
             var container = new UnityContainer();
-            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new InjectionMember[]
-                                                                             {
-                                                                                 new InjectionConstructor(ConfigurationManager.ConnectionStrings["FujiyBlog"].ConnectionString)
-                                                                             });
+            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>();
             container.RegisterType<IUserRepository, UserRepository>();
             container.RegisterType<IPostRepository, PostRepository>(); 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

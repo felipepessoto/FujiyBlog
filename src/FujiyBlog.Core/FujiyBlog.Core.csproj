@@ -51,6 +51,7 @@
     <Compile Include="Repositories\IPostRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="ViewModel\PostDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />
