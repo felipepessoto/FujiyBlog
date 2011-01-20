@@ -1,9 +1,13 @@
-﻿using FujiyBlog.Web.Controllers;
+﻿using System.Linq;
+using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Web.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using FujiyBlog.Core.Repositories;
 using System.Web.Mvc;
+using Moq;
+using System.Collections.Generic;
 
 namespace FujiyBlog.Web.Tests.Controllers
 {
@@ -16,77 +20,40 @@ namespace FujiyBlog.Web.Tests.Controllers
     [TestClass()]
     public class BlogControllerTest
     {
+        private BlogController blogController;
+        private IPostRepository postRepository;
 
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
+        [ClassInitialize()]
+        public static void MyClassInitialize(TestContext testContext)
         {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
         }
 
-        #region Additional test attributes
-        // 
-        //You can use the following additional attributes as you write your tests:
-        //
-        //Use ClassInitialize to run code before running the first test in the class
-        //[ClassInitialize()]
-        //public static void MyClassInitialize(TestContext testContext)
-        //{
-        //}
-        //
-        //Use ClassCleanup to run code after all tests in a class have run
-        //[ClassCleanup()]
-        //public static void MyClassCleanup()
-        //{
-        //}
-        //
-        //Use TestInitialize to run code before running each test
-        //[TestInitialize()]
-        //public void MyTestInitialize()
-        //{
-        //}
-        //
-        //Use TestCleanup to run code after each test has run
-        //[TestCleanup()]
-        //public void MyTestCleanup()
-        //{
-        //}
-        //
-        #endregion
+        [ClassCleanup()]
+        public static void MyClassCleanup()
+        {
+        }
 
+        [TestInitialize()]
+        public void MyTestInitialize()
+        {
+            var postRepoMock = new Mock<IPostRepository>();
+            postRepoMock.Setup(x => x.GetRecentPosts(It.IsAny<int>(), It.IsAny<int>())).Returns(
+                (int skip, int take) =>
+                Enumerable.Range(skip, take).Select(x => new Post { Title = x + " - Title", Content = new string('A', x) }));
 
-        /// <summary>
-        ///A test for Index
-        ///</summary>
-        // TODO: Ensure that the UrlToTest attribute specifies a URL to an ASP.NET page (for example,
-        // http://.../Default.aspx). This is necessary for the unit test to be executed on the web server,
-        // whether you are testing a page, web service, or a WCF service.
+            blogController = new BlogController(postRepoMock.Object);
+        }
+
+        [TestCleanup()]
+        public void MyTestCleanup()
+        {
+        }
+
         [TestMethod()]
-        [HostType("ASP.NET")]
-        [AspNetDevelopmentServerHost("D:\\Meus Arquivos\\Desenvolvimento\\Projetos\\Blog\\FujiyBlog.Web", "/")]
-        [UrlToTest("http://localhost:5370/")]
         public void IndexTest()
         {
-            IPostRepository postRepository = null; // TODO: Initialize to an appropriate value
-            BlogController target = new BlogController(postRepository); // TODO: Initialize to an appropriate value
-            Nullable<int> skip = new Nullable<int>(); // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.Index(skip);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            var model = ((ViewResult)blogController.Index(0)).Model;
+            Assert.IsInstanceOfType(model, typeof(IEnumerable<Post>));
         }
     }
 }

@@ -1,8 +1,12 @@
-﻿using FujiyBlog.Web.Controllers;
+﻿using System.Collections.Generic;
+using System.Linq;
+using FujiyBlog.Web.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting.Web;
 using FujiyBlog.Core.Repositories;
 using System.Web.Mvc;
+using Moq;
+using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Tests.Controllers
 {
@@ -31,8 +35,9 @@ namespace FujiyBlog.Web.Tests.Controllers
         [TestInitialize()]
         public void MyTestInitialize()
         {
-            //postRepository = 
-            postController = new PostController(null);
+            var postRepoMock = new Mock<IPostRepository>();
+            postRepoMock.Setup(x => x.GetPost("slug_post")).Returns((string slug) => new Post());
+            postController = new PostController(postRepoMock.Object);
         }
         
         [TestCleanup()]
@@ -40,17 +45,24 @@ namespace FujiyBlog.Web.Tests.Controllers
         {
         }
 
-        [TestMethod()]
-        public void DetailsTest()
+        [TestMethod]
+        public void Details_Post_Exists()
         {
-            IPostRepository postRepository = null; // TODO: Initialize to an appropriate value
-            PostController target = new PostController(postRepository); // TODO: Initialize to an appropriate value
-            string postSlug = string.Empty; // TODO: Initialize to an appropriate value
-            ActionResult expected = null; // TODO: Initialize to an appropriate value
-            ActionResult actual;
-            actual = target.Details(postSlug);
-            Assert.AreEqual(expected, actual);
-            Assert.Inconclusive("Verify the correctness of this test method.");
+            var actionResult = postController.Details("slug_post");
+            Assert.IsInstanceOfType(actionResult, typeof(ViewResult));
+
+            var viewResult = (ViewResult)actionResult;
+            Assert.IsInstanceOfType(viewResult.Model, typeof(Post));
+
+            var model = (Post)viewResult.Model;
+            Assert.IsNotNull(model);
+        }
+
+        [TestMethod]
+        public void Details_Post_Not_Exists()
+        {
+            var actionResult = postController.Details("slug_post_nao_existe");
+            Assert.IsInstanceOfType(actionResult, typeof(HttpNotFoundResult));
         }
     }
 }
