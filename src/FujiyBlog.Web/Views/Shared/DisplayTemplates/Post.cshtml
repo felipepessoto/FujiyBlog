@@ -1,4 +1,4 @@
-﻿@model FujiyBlog.Core.DomainObjects.Post
+﻿@model FujiyBlog.Core.ViewModel.PostDetails
 
 <div class="post xfolkentry" id="post@(Model.Id)">
         <h1>
@@ -16,6 +16,6 @@
         </div>
         <div class="footer">
             ADMIN LINKS <a rel="bookmark" href="/posts/@Model.Id/" title="<%=Server.HtmlEncode(Post.Title) %>">
-                Permalink</a> | <a rel="nofollow" href="/posts/@Model.Slug/#comment">Comments (@Model.Comments.Count(x => x.IsApproved)</a>
+                Permalink</a> | @Html.ActionLink("Comments (" + Model.Comments.Count(x => x.IsApproved) + ")", MVC.Post.Details(Model.Slug))
         </div>
     </div>
