@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.ViewModel;
 
 namespace FujiyBlog.Core.Repositories
 {
     public interface IPostRepository : IRepository<Post>
     {
-        IEnumerable<PostDetails> GetRecentPosts(int skip, int take);
+        IEnumerable<Post> GetRecentPosts(int skip, int take);
         Post GetPost(string slug);
+        Post GetPost(int id);
     }
 }

@@ -26,12 +26,14 @@ namespace FujiyBlog.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Home", "", new { controller = "Blog", action = "Index" });
-            routes.MapRoute("PostDetail", "posts/{*PostSlug}", new { controller = "Post", action = "Details" });
+            routes.MapRoute("Home", "", MVC.Blog.Index());
+            routes.MapRoute("PostDetailId", "postid/{*Id}", MVC.Post.DetailsById());
+            routes.MapRoute("PostDetail", "posts/{*PostSlug}", MVC.Post.Details());
         }
 
         protected void Application_Start()
         {
+            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);

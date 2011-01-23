@@ -24,7 +24,7 @@ namespace FujiyBlog.Core.DomainObjects
 
         public virtual DateTime LastModificationDate { get; set; }
 
-        public virtual DateTime PublishedDate { get; set; }
+        public virtual DateTime PublicationDate { get; set; }
 
         public virtual bool IsPublished { get; set; }
 

@@ -8,7 +8,6 @@ using FujiyBlog.Core.Repositories;
 using System.Web.Mvc;
 using Moq;
 using System.Collections.Generic;
-using FujiyBlog.Core.ViewModel;
 
 namespace FujiyBlog.Web.Tests.Controllers
 {
@@ -40,7 +39,7 @@ namespace FujiyBlog.Web.Tests.Controllers
             var postRepoMock = new Mock<IPostRepository>();
             postRepoMock.Setup(x => x.GetRecentPosts(It.IsAny<int>(), It.IsAny<int>())).Returns(
                 (int skip, int take) =>
-                Enumerable.Range(skip, take).Select(x => new PostDetails { Post = new Post { Title = x + " - Title", Content = new string('A', x) } }));
+                Enumerable.Range(skip, take).Select(x => new Post{ Title = x + " - Title", Content = new string('A', x) }));
 
             blogController = new BlogController(postRepoMock.Object);
         }
@@ -54,7 +53,7 @@ namespace FujiyBlog.Web.Tests.Controllers
         public void IndexTest()
         {
             var model = ((ViewResult)blogController.Index(0)).Model;
-            Assert.IsInstanceOfType(model, typeof(IEnumerable<PostDetails>));
+            Assert.IsInstanceOfType(model, typeof(IEnumerable<Post>));
         }
     }
 }

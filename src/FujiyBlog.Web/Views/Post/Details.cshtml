@@ -1,19 +1,36 @@
 ﻿@model FujiyBlog.Core.DomainObjects.Post
-
 @{
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="postnavigation">
+    Titulo do post anterior | Titulo do proximo post
+</div>
 
-  
-    <div id="postnavigation">
-      Titulo do post anterior | 
-      Titulo do proximo post
+@Html.DisplayForModel()
+
+@foreach (FujiyBlog.Core.DomainObjects.PostComment comment in Model.Comments)
+{ 
+    <div class="comment@(Model.Author == comment.Author ? " self" : "")">
+        <p class="date">@comment.CreationDate</p>
+        <p class="gravatar">
+            GRAVATAR</p>
+        <p class="content">@comment.Comment</p>
+        <p class="author">
+            @if (comment.AuthorWebsite != null)
+            {
+                <a href="@comment.AuthorWebsite">@comment.AuthorName</a>
+            }
+            else
+            {
+                <span>@comment.AuthorName</span>
+            }
+            @*    <%= ((BlogEngine.Core.BlogSettings.Instance.IsCommentNestingEnabled && Comment.IsApproved) ? " | " : "") %>
+    <%= ReplyToLink %>    
+    <%= AdminLinks %>*@
+        </p>
+        @*  <div class="comment-replies" id="replies_<%=Comment.Id %>" <%= (Comment.Comments.Count == 0) ? " style=\"display:none;\"" : "" %>>
+    <asp:PlaceHolder ID="phSubComments" runat="server" />
+  </div>*@
     </div>
-  
-  
-  @Html.DisplayForModel();
-  
-  @*<blog:RelatedPosts runat="server" ID="related" MaxResults="3" ShowDescription="true" DescriptionMaxLength="100" Visible="false" />*@
-  
-  @*<uc:CommentView ID="CommentView1" runat="server" />*@
+}

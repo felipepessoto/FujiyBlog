@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.ViewModel;
 
 namespace FujiyBlog.EntityFramework
 {
@@ -14,30 +15,31 @@ namespace FujiyBlog.EntityFramework
         {
         }
 
-        public IEnumerable<PostDetails> GetRecentPosts(int skip, int take)
+        private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < DateTime.Now;
+
+        public IEnumerable<Post> GetRecentPosts(int skip, int take)
         {
-            IQueryable<Post> posts = Database.Posts.Include("Author").Include("Tags").Include("Comments");
+            IQueryable<Post> posts = Database.Posts.Where(PublicPost).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).OrderByDescending(x => x.PublicationDate);
 
             if (skip > 0)
             {
                 posts = posts.Skip(skip);
             }
-            IEnumerable<PostDetails> postDetails = from post in posts.Take(take)
-                                                   select new PostDetails
-                                                              {
-                                                                  Post = post,
-                                                                  AuthorDisplayName = post.Author.DisplayName,
-                                                                  AuthorLogin = post.Author.Login,
-                                                                  Tags = post.Tags,
-                                                                  CommentsCount = post.Comments.Count(x=> x.IsApproved && !x.IsDeleted)
-                                                              };
 
-            return postDetails.ToList();
+            posts = posts.Take(take);
+
+
+            return posts.ToList();
         }
 
         public Post GetPost(string slug)
         {
-            return Database.Posts.SingleOrDefault(x => x.Slug == slug);
+            return Database.Posts.Where(PublicPost).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).SingleOrDefault(x => x.Slug == slug);
+        }
+
+        public Post GetPost(int id)
+        {
+            return Database.Posts.Where(PublicPost).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).SingleOrDefault(x => x.Id == id);
         }
     }
 }

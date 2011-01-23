@@ -34,6 +34,18 @@ namespace FujiyBlog.Web.Controllers
             return View(post);
         }
 
+        public virtual ActionResult DetailsById(int id)
+        {
+            Post post = postRepository.GetPost(id);
+
+            if (post == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(MVC.Post.Views.Details, post);
+        }
+
         public virtual ActionResult Create()
         {
             return View();

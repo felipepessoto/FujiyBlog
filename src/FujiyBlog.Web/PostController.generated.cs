@@ -38,6 +38,11 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DetailsById() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
         }
@@ -61,6 +66,7 @@ namespace FujiyBlog.Web.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Details = "Details";
+            public readonly string DetailsById = "DetailsById";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
@@ -88,6 +94,12 @@ namespace FujiyBlog.Web.Controllers {
         public override System.Web.Mvc.ActionResult Details(string postSlug) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);
             callInfo.RouteValueDictionary.Add("postSlug", postSlug);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DetailsById(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
+            callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 
