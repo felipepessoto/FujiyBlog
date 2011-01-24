@@ -17,9 +17,14 @@ namespace FujiyBlog.EntityFramework
 
         private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < DateTime.Now;
 
-        public IEnumerable<Post> GetRecentPosts(int skip, int take)
+        public IEnumerable<Post> GetRecentPosts(bool isPublic, int skip, int take)
         {
-            IQueryable<Post> posts = Database.Posts.Where(PublicPost).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).OrderByDescending(x => x.PublicationDate);
+            IQueryable<Post> posts = Database.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).OrderByDescending(x => x.PublicationDate);
+
+            if (isPublic)
+            {
+                posts = posts.Where(PublicPost);
+            }
 
             if (skip > 0)
             {
@@ -28,18 +33,17 @@ namespace FujiyBlog.EntityFramework
 
             posts = posts.Take(take);
 
-
             return posts.ToList();
         }
 
         public Post GetPost(string slug)
         {
-            return Database.Posts.Where(PublicPost).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).SingleOrDefault(x => x.Slug == slug);
+            return Database.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).SingleOrDefault(x => x.Slug == slug);
         }
 
         public Post GetPost(int id)
         {
-            return Database.Posts.Where(PublicPost).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).SingleOrDefault(x => x.Id == id);
+            return Database.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Tags).SingleOrDefault(x => x.Id == id);
         }
     }
 }

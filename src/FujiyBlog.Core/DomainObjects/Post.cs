@@ -40,5 +40,10 @@ namespace FujiyBlog.Core.DomainObjects
         public virtual ICollection<Tag> Tags { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
+
+        public bool IsPublic
+        {
+            get { return IsPublished && !IsDeleted && PublicationDate < DateTime.Now; }
+        }
     }
 }

@@ -19,7 +19,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Index(int? skip)
         {
-            IEnumerable<Post> recentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), 10);
+            IEnumerable<Post> recentPosts = postRepository.GetRecentPosts(true, skip.GetValueOrDefault(), 10);
 
             return View(recentPosts);
         }

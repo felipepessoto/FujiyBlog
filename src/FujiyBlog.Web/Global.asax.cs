@@ -9,6 +9,7 @@ using FujiyBlog.Web.Infrastructure;
 using Microsoft.Practices.Unity;
 using FujiyBlog.EntityFramework;
 using System.Configuration;
+using FujiyBlog.Core.Infrastructure;
 
 namespace FujiyBlog.Web
 {
@@ -29,6 +30,12 @@ namespace FujiyBlog.Web
             routes.MapRoute("Home", "", MVC.Blog.Index());
             routes.MapRoute("PostDetailId", "postid/{*Id}", MVC.Post.DetailsById());
             routes.MapRoute("PostDetail", "posts/{*PostSlug}", MVC.Post.Details());
+
+            routes.MapRoute(
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new {controller = "", action = "", id = UrlParameter.Optional} // Parameter defaults
+                );
         }
 
         protected void Application_Start()
@@ -45,9 +52,11 @@ namespace FujiyBlog.Web
         private static void ConfigureUnity()
         {
             var container = new UnityContainer();
-            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>();
-            container.RegisterType<IUserRepository, UserRepository>();
-            container.RegisterType<IPostRepository, PostRepository>(); 
+            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new HttpContextLifetimeManager<FujiyBlogDatabase>());
+            container.RegisterType<IUnitOfWork, FujiyBlogDatabase>(new HttpContextLifetimeManager<FujiyBlogDatabase>());
+            container.RegisterType<IUserRepository, UserRepository>(new HttpContextLifetimeManager<IUserRepository>());
+            container.RegisterType<IPostRepository, PostRepository>(new HttpContextLifetimeManager<IPostRepository>());
+            container.RegisterType<IPostCommentRepository, PostCommentRepository>(new HttpContextLifetimeManager<IPostCommentRepository>()); 
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
         }
     }

@@ -5,7 +5,7 @@ namespace FujiyBlog.Core.Repositories
 {
     public interface IPostRepository : IRepository<Post>
     {
-        IEnumerable<Post> GetRecentPosts(int skip, int take);
+        IEnumerable<Post> GetRecentPosts(bool isPublic, int skip, int take);
         Post GetPost(string slug);
         Post GetPost(int id);
     }

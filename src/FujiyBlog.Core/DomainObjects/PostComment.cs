@@ -1,18 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace FujiyBlog.Core.DomainObjects
 {
-    public class PostComment
+    public class PostComment : IValidatableObject
     {
         public virtual int Id { get; set; }
 
-        [Required, StringLength(50)]
+        [StringLength(50)]
         public virtual string AuthorName { get; set; }
 
-        [StringLength(255), RegularExpression(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-+ @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-+ @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$")]
+        [StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
         public virtual string AuthorEmail { get; set; }
 
         [StringLength(200)]
@@ -43,5 +42,17 @@ namespace FujiyBlog.Core.DomainObjects
         public virtual User Author { get; set; }
 
         public virtual User ModeratedBy { get; set; }
+
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Author == null)
+            {
+                if (AuthorName == null)
+                {
+                    yield return new ValidationResult("You should enter your name", new[] { "AuthorName" });
+                }
+            }
+        }
     }
 }

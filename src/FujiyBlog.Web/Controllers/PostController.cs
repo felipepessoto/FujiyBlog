@@ -5,16 +5,22 @@ using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
+using FujiyBlog.Core.Services;
+using FujiyBlog.Core.Infrastructure;
 
 namespace FujiyBlog.Web.Controllers
 {
     public partial class PostController : Controller
     {
+        private readonly IUnitOfWork unitOfWork;
         private readonly IPostRepository postRepository;
+        private readonly PostService postService;
 
-        public PostController(IPostRepository postRepository)
+        public PostController(IUnitOfWork unitOfWork, IPostRepository postRepository, PostService postService)
         {
+            this.unitOfWork = unitOfWork;
             this.postRepository = postRepository;
+            this.postService = postService;
         }
 
         public virtual ActionResult Index()
@@ -46,49 +52,21 @@ namespace FujiyBlog.Web.Controllers
             return View(MVC.Post.Views.Details, post);
         }
 
-        public virtual ActionResult Create()
+        public virtual ActionResult DoComment(int id)
         {
-            return View();
-        } 
+            PostComment postComment = new PostComment();
 
-        [HttpPost]
-        public virtual ActionResult Create(FormCollection collection)
-        {
-            try
+            postComment.IpAddress = Request.UserHostAddress;
+            postComment.Post = postRepository.GetPost(id);
+
+            if (TryUpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" }))
             {
-                // TODO: Add insert logic here
+                postService.AddComment(postComment);
+                unitOfWork.SaveChanges();
 
-                return RedirectToAction("Index");
+                return Json(true);
             }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public virtual ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public virtual ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        public virtual ActionResult Delete(int id)
-        {
-            return View();
+            return Json(false);
         }
 
         [HttpPost]

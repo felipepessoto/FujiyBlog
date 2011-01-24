@@ -47,13 +47,17 @@
     <Compile Include="DomainObjects\Setting.cs" />
     <Compile Include="DomainObjects\Tag.cs" />
     <Compile Include="DomainObjects\User.cs" />
+    <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IPostCommentRepository.cs" />
     <Compile Include="Repositories\IPostRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Services\PostCommentResult.cs" />
+    <Compile Include="Services\PostService.cs" />
+    <Compile Include="Services\ServiceResultBase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Specifications\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

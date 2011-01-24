@@ -88,9 +88,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\HttpContextLifetimeManager.cs" />
     <Compile Include="Infrastructure\UnityDependencyResolver.cs" />
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="PostController.generated.cs">
@@ -186,6 +188,8 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
+    <Content Include="Views\Post\DoComment.cshtml" />
+    <Content Include="Views\Post\Comments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -43,8 +43,8 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Edit() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        public System.Web.Mvc.ActionResult DoComment() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -67,8 +67,7 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
-            public readonly string Create = "Create";
-            public readonly string Edit = "Edit";
+            public readonly string DoComment = "DoComment";
             public readonly string Delete = "Delete";
         }
 
@@ -78,7 +77,9 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Comments = "~/Views/Post/Comments.cshtml";
             public readonly string Details = "~/Views/Post/Details.cshtml";
+            public readonly string DoComment = "~/Views/Post/DoComment.cshtml";
         }
     }
 
@@ -103,32 +104,8 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Create() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Create(System.Web.Mvc.FormCollection collection) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            callInfo.RouteValueDictionary.Add("collection", collection);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Edit(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Edit(int id, System.Web.Mvc.FormCollection collection) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("collection", collection);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Delete(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        public override System.Web.Mvc.ActionResult DoComment(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }

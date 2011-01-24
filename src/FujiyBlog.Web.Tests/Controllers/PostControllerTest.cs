@@ -37,7 +37,7 @@ namespace FujiyBlog.Web.Tests.Controllers
         {
             var postRepoMock = new Mock<IPostRepository>();
             postRepoMock.Setup(x => x.GetPost("slug_post")).Returns((string slug) => new Post());
-            postController = new PostController(postRepoMock.Object);
+            postController = new PostController(null, postRepoMock.Object, null);
         }
         
         [TestCleanup()]

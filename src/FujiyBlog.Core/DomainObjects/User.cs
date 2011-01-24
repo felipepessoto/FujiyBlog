@@ -11,9 +11,7 @@ namespace FujiyBlog.Core.DomainObjects
         [Required, StringLength(20)]
         public virtual string Login { get; set; }
 
-        [Required, StringLength(255), RegularExpression(@"^(?!\.)(""([^""\r\\]|\\[""\r\\])*""|"
-+ @"([-a-z0-9!#$%&'*+/=?^_`{|}~]|(?<!\.)\.)*)(?<!\.)"
-+ @"@[a-z0-9][\w\.-]*[a-z0-9]\.[a-z][a-z\.]*[a-z]$")]
+        [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
         public virtual string Email { get; set; }
 
         [Required, StringLength(50)]
