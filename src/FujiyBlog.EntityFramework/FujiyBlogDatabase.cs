@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.EntityFramework.Configuration;

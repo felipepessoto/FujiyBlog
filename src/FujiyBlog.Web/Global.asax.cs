@@ -51,13 +51,12 @@ namespace FujiyBlog.Web
 
         private static void ConfigureUnity()
         {
-            var container = new UnityContainer();
-            container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new HttpContextLifetimeManager<FujiyBlogDatabase>());
-            container.RegisterType<IUnitOfWork, FujiyBlogDatabase>(new HttpContextLifetimeManager<FujiyBlogDatabase>());
-            container.RegisterType<IUserRepository, UserRepository>(new HttpContextLifetimeManager<IUserRepository>());
-            container.RegisterType<IPostRepository, PostRepository>(new HttpContextLifetimeManager<IPostRepository>());
-            container.RegisterType<IPostCommentRepository, PostCommentRepository>(new HttpContextLifetimeManager<IPostCommentRepository>()); 
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DependencyResolver.SetResolver(new UnityDependencyResolver());
+        }
+
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            using (DependencyResolver.Current as IDisposable) ;
         }
     }
 }
