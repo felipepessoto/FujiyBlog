@@ -1,6 +1,6 @@
 ﻿@model FujiyBlog.Core.DomainObjects.PostComment
 
-@using (Ajax.BeginForm(MVC.Post.ActionNames.DoComment, MVC.Post.Name, new { id = Model.Post.Id }, new AjaxOptions { }))
+@using (Ajax.BeginForm(MVC.Post.ActionNames.DoComment, MVC.Post.Name, new { id = Model.Post.Id }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "commentlist" }))
 {
 <div id="comment-form">
     <div class="commentForm">

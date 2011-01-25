@@ -59,14 +59,12 @@ namespace FujiyBlog.Web.Controllers
             postComment.IpAddress = Request.UserHostAddress;
             postComment.Post = postRepository.GetPost(id);
 
-            if (TryUpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" }))
-            {
-                postService.AddComment(postComment);
-                unitOfWork.SaveChanges();
+            UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
 
-                return Json(true);
-            }
-            return Json(false);
+            postService.AddComment(postComment);
+            unitOfWork.SaveChanges();
+
+            return View(MVC.Post.Views.Comments, new[] {postComment});
         }
 
         [HttpPost]

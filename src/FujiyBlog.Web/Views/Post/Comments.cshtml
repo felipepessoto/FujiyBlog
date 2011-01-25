@@ -1,27 +1,31 @@
 ﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.PostComment>
-           
-@foreach (FujiyBlog.Core.DomainObjects.PostComment comment in Model)
-{ 
-    <div class="comment@(comment.Post.Author == comment.Author ? " self" : "")">
-        <p class="date">@comment.CreationDate</p>
-        <p class="gravatar">
-            GRAVATAR</p>
-        <p class="content">@comment.Comment</p>
-        <p class="author">
-            @if (comment.AuthorWebsite != null)
-            {
-                <a href="@comment.AuthorWebsite">@comment.AuthorName</a>
-            }
-            else
-            {
-                <span>@comment.AuthorName</span>
-            }
-            @*    <%= ((BlogEngine.Core.BlogSettings.Instance.IsCommentNestingEnabled && Comment.IsApproved) ? " | " : "") %>
+@{
+    this.Layout = null;
+}
+
+    @foreach (FujiyBlog.Core.DomainObjects.PostComment comment in Model)
+    { 
+        <div class="comment@(comment.Post.Author == comment.Author ? " self" : "")">
+            <p class="date">@comment.CreationDate</p>
+            <p class="gravatar">
+                GRAVATAR</p>
+            <p class="content">@comment.Comment</p>
+            <p class="author">
+                @if (comment.AuthorWebsite != null)
+                {
+                    <a href="@comment.AuthorWebsite">@comment.AuthorName</a>
+                }
+                else
+                {
+                    <span>@comment.AuthorName</span>
+                }
+                @*    <%= ((BlogEngine.Core.BlogSettings.Instance.IsCommentNestingEnabled && Comment.IsApproved) ? " | " : "") %>
     <%= ReplyToLink %>    
     <%= AdminLinks %>*@
-        </p>
-        @*  <div class="comment-replies" id="replies_<%=Comment.Id %>" <%= (Comment.Comments.Count == 0) ? " style=\"display:none;\"" : "" %>>
+            </p>
+            @*  <div class="comment-replies" id="replies_<%=Comment.Id %>" <%= (Comment.Comments.Count == 0) ? " style=\"display:none;\"" : "" %>>
     <asp:PlaceHolder ID="phSubComments" runat="server" />
   </div>*@
-    </div>
-}
+        </div>
+    }
+
