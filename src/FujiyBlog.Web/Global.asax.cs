@@ -46,11 +46,6 @@ namespace FujiyBlog.Web
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            ConfigureUnity();
-        }
-
-        private static void ConfigureUnity()
-        {
             DependencyResolver.SetResolver(new UnityDependencyResolver());
         }
 

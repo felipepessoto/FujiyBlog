@@ -11,7 +11,7 @@ namespace FujiyBlog.Web.Infrastructure
 {
     public class UnityDependencyResolver : IDependencyResolver, IDisposable
     {
-        private IUnityContainer Container
+        private static IUnityContainer Container
         {
             get
             {
