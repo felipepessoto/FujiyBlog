@@ -7,7 +7,7 @@ namespace FujiyBlog.EntityFramework.Configuration
     {
         public UserConfiguration()
         {
-            Property(b => b.Login).IsUnicode(false);
+            Property(b => b.Username).IsUnicode(false);
             Property(b => b.Email).IsUnicode(false);
             Property(b => b.Password).IsUnicode(false);
             Property(b => b.DisplayName).IsUnicode(false);

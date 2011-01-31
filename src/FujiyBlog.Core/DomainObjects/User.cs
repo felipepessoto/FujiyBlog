@@ -9,7 +9,7 @@ namespace FujiyBlog.Core.DomainObjects
         public virtual int Id { get; set; }
         
         [Required, StringLength(20)]
-        public virtual string Login { get; set; }
+        public virtual string Username { get; set; }
 
         [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
         public virtual string Email { get; set; }
@@ -33,7 +33,7 @@ namespace FujiyBlog.Core.DomainObjects
         [StringLength(500)]
         public virtual string About { get; set; }
 
-        public virtual DateTime BirthDate { get; set; }
+        public virtual DateTime? BirthDate { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
     }

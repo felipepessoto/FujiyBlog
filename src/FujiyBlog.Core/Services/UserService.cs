@@ -24,11 +24,11 @@ namespace FujiyBlog.Core.Services
             {
                 List<ValidationResult> validationResults = new List<ValidationResult>();
                 validationResults.Add(new ValidationResult(TextMessages.UserEmailAlreadyExists, new[] {"Email"}));
-                return new CreateUserResult();
+                return new CreateUserResult(validationResults);
             }
 
             User user = new User();
-            user.Login = username;
+            user.Username = username;
             user.Email = email;
             user.Password = password;
 

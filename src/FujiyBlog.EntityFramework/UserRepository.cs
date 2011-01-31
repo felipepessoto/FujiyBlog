@@ -15,5 +15,20 @@ namespace FujiyBlog.EntityFramework
         {
             return Database.Users.Any(x => x.Email == email && x.Id != userId);
         }
+
+        public User GetById(int id)
+        {
+            return Database.Users.SingleOrDefault(x => x.Id == id);
+        }
+
+        public User GetByUsername(string username)
+        {
+            return Database.Users.SingleOrDefault(x => x.Username == username);
+        }
+
+        public User GetByEmail(string email)
+        {
+            return Database.Users.SingleOrDefault(x => x.Email == email);
+        }
     }
 }

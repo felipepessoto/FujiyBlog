@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Services;
 
@@ -13,10 +10,12 @@ namespace FujiyBlog.Web.Infrastructure
     public class BlogMembershipProvider : MembershipProvider
     {
         private readonly UserService userService;
+        private readonly IUserRepository userRepository;
 
-        public BlogMembershipProvider(UserService userService)
+        public BlogMembershipProvider(UserService userService, IUserRepository userRepository)
         {
             this.userService = userService;
+            this.userRepository = userRepository;
         }
 
         #region Overrides of MembershipProvider
@@ -28,17 +27,17 @@ namespace FujiyBlog.Web.Infrastructure
             if (createUserResult.RuleViolations.Any(x => x.MemberNames.First() == "Email"))
             {
                 status = MembershipCreateStatus.DuplicateEmail;
+                return null;
             }
 
             if (!createUserResult.RuleViolations.Any())
             {
+                User newUser = createUserResult.User;
                 status = MembershipCreateStatus.Success;
-            }
-            else
-            {
-                status = MembershipCreateStatus.ProviderError;
+                return new BlogMembershipUser(Name, newUser);
             }
 
+            status = MembershipCreateStatus.ProviderError;
             return null;
         }
 
@@ -54,7 +53,15 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            throw new NotImplementedException();
+            User user = userRepository.GetByUsername(username);
+
+            if (user.Password == oldPassword)
+            {
+                user.Password = newPassword;
+                return true;
+            }
+
+            return false;
         }
 
         public override string ResetPassword(string username, string answer)
@@ -64,12 +71,45 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override void UpdateUser(MembershipUser user)
         {
-            throw new NotImplementedException();
+            BlogMembershipUser membershipUser = (BlogMembershipUser)user;
+
+            User blogUser = userRepository.GetById(membershipUser.Id);
+
+            if (blogUser.About != membershipUser.About)
+            {
+                blogUser.About = membershipUser.About;
+            }
+
+            if (blogUser.BirthDate != membershipUser.BirthDate)
+            {
+                blogUser.BirthDate = membershipUser.BirthDate;
+            }
+
+            if (blogUser.DisplayName != membershipUser.DisplayName)
+            {
+                blogUser.DisplayName = membershipUser.DisplayName;
+            }
+
+            if (blogUser.Email != membershipUser.Email)
+            {
+                blogUser.Email = membershipUser.Email;
+            }
+
+            if (blogUser.FullName != membershipUser.FullName)
+            {
+                blogUser.FullName = membershipUser.FullName;
+            }
+
+            if (blogUser.Location != membershipUser.Location)
+            {
+                blogUser.Location = membershipUser.Location;
+            }
         }
 
         public override bool ValidateUser(string username, string password)
         {
-            throw new NotImplementedException();
+            User user = userRepository.GetByUsername(username);
+            return user != null && user.Password == password;
         }
 
         public override bool UnlockUser(string userName)
@@ -79,17 +119,46 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
-            throw new NotImplementedException();
+            User user = userRepository.GetById((int)providerUserKey);
+
+            if(user == null)
+            {
+                return null;
+            }
+
+            if (userIsOnline)
+            {
+                user.LastLoginDate = DateTime.Now;
+            }
+
+            return new BlogMembershipUser(Name, user);
         }
 
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
-            throw new NotImplementedException();
+            User user = userRepository.GetByUsername(username);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (userIsOnline)
+            {
+                user.LastLoginDate = DateTime.Now;
+            }
+
+            return new BlogMembershipUser(Name, user);
         }
 
         public override string GetUserNameByEmail(string email)
         {
-            throw new NotImplementedException();
+            User user = userRepository.GetByEmail(email);
+            if (user != null)
+            {
+                return user.Username;
+            }
+            return null;
         }
 
         public override bool DeleteUser(string username, bool deleteAllRelatedData)
