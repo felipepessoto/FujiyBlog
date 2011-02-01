@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Security.Principal;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using FujiyBlog.Web.Models;
@@ -48,7 +42,7 @@ namespace FujiyBlog.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction(MVC.Blog.Index());
                     }
                 }
                 else
@@ -69,7 +63,7 @@ namespace FujiyBlog.Web.Controllers
         {
             FormsService.SignOut();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction(MVC.Blog.Index());
         }
 
         // **************************************
@@ -93,7 +87,7 @@ namespace FujiyBlog.Web.Controllers
                 if (createStatus == MembershipCreateStatus.Success)
                 {
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction(MVC.Blog.Index());
                 }
                 else
                 {
@@ -125,7 +119,7 @@ namespace FujiyBlog.Web.Controllers
             {
                 if (MembershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
                 {
-                    return RedirectToAction("ChangePasswordSuccess");
+                    return RedirectToAction(MVC.Account.Views.ChangePasswordSuccess);
                 }
                 else
                 {

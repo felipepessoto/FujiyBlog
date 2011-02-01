@@ -4,25 +4,42 @@ using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Services;
+using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Infrastructure
 {
     public class BlogMembershipProvider : MembershipProvider
     {
-        private readonly UserService userService;
-        private readonly IUserRepository userRepository;
-
-        public BlogMembershipProvider(UserService userService, IUserRepository userRepository)
+        private static UserService UserService
         {
-            this.userService = userService;
-            this.userRepository = userRepository;
+            get
+            {
+                return (UserService)DependencyResolver.Current.GetService(typeof(UserService));
+            }
+        }
+
+        private static IUserRepository UserRepository
+        {
+            get
+            {
+                return (IUserRepository)DependencyResolver.Current.GetService(typeof(IUserRepository));
+            }
+        }
+
+        private int minRequiredPasswordLength;
+
+        public override void Initialize(string name, System.Collections.Specialized.NameValueCollection config)
+        {
+            base.Initialize(name, config);
+
+            minRequiredPasswordLength = int.Parse(config["minRequiredPasswordLength"]);
         }
 
         #region Overrides of MembershipProvider
 
         public override MembershipUser CreateUser(string username, string password, string email, string passwordQuestion, string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)
         {
-            CreateUserResult createUserResult = userService.CreateUser(username, password, email);
+            CreateUserResult createUserResult = UserService.CreateUser(username, password, email);
 
             if (createUserResult.RuleViolations.Any(x => x.MemberNames.First() == "Email"))
             {
@@ -53,7 +70,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override bool ChangePassword(string username, string oldPassword, string newPassword)
         {
-            User user = userRepository.GetByUsername(username);
+            User user = UserRepository.GetByUsername(username);
 
             if (user.Password == oldPassword)
             {
@@ -73,7 +90,7 @@ namespace FujiyBlog.Web.Infrastructure
         {
             BlogMembershipUser membershipUser = (BlogMembershipUser)user;
 
-            User blogUser = userRepository.GetById(membershipUser.Id);
+            User blogUser = UserRepository.GetById(membershipUser.Id);
 
             if (blogUser.About != membershipUser.About)
             {
@@ -108,7 +125,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override bool ValidateUser(string username, string password)
         {
-            User user = userRepository.GetByUsername(username);
+            User user = UserRepository.GetByUsername(username);
             return user != null && user.Password == password;
         }
 
@@ -119,7 +136,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
-            User user = userRepository.GetById((int)providerUserKey);
+            User user = UserRepository.GetById((int)providerUserKey);
 
             if(user == null)
             {
@@ -136,7 +153,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override MembershipUser GetUser(string username, bool userIsOnline)
         {
-            User user = userRepository.GetByUsername(username);
+            User user = UserRepository.GetByUsername(username);
 
             if (user == null)
             {
@@ -153,7 +170,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override string GetUserNameByEmail(string email)
         {
-            User user = userRepository.GetByEmail(email);
+            User user = UserRepository.GetByEmail(email);
             if (user != null)
             {
                 return user.Username;
@@ -219,7 +236,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override bool RequiresUniqueEmail
         {
-            get { throw new NotImplementedException(); }
+            get { return true; }
         }
 
         public override MembershipPasswordFormat PasswordFormat
@@ -229,7 +246,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override int MinRequiredPasswordLength
         {
-            get { throw new NotImplementedException(); }
+            get { return minRequiredPasswordLength; }
         }
 
         public override int MinRequiredNonAlphanumericCharacters

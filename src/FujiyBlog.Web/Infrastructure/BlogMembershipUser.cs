@@ -12,6 +12,11 @@ namespace FujiyBlog.Web.Infrastructure
             : base(providerName, user.Username, null, user.Email, null, null, true, false,
                 user.CreationDate, user.LastLoginDate, DateTime.MinValue, DateTime.MinValue,DateTime.MinValue)
         {
+            if (user == null)
+            {
+                throw new ArgumentNullException("user");
+            }
+
             this.user = user;
         }
 
