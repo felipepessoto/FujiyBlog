@@ -92,10 +92,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastructure\BlogMembershipProvider.cs" />
-    <Compile Include="Infrastructure\BlogMembershipUser.cs" />
     <Compile Include="Infrastructure\UnityDependencyResolver.cs" />
-    <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\FormsAuthenticationService.cs" />
+    <Compile Include="Models\IFormsAuthenticationService.cs" />
+    <Compile Include="Models\LogOnModel.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\ValidatePasswordLengthAttribute.cs" />
     <Compile Include="PostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

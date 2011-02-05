@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Resources;
@@ -35,6 +32,25 @@ namespace FujiyBlog.Core.Services
             userRepository.Add(user);
 
             return new CreateUserResult(user);
+        }
+
+        public bool ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            User user = userRepository.GetByUsername(username);
+
+            if (user.Password == oldPassword)
+            {
+                user.Password = newPassword;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool ValidateUser(string username, string password)
+        {
+            User user = userRepository.GetByUsername(username);
+            return user != null && user.Password == password;
         }
     }
 }

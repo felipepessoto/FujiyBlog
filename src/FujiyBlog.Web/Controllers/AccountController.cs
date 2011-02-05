@@ -1,30 +1,40 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
 using FujiyBlog.Web.Models;
+using FujiyBlog.Core.Repositories;
+using FujiyBlog.Core.Services;
+using FujiyBlog.Web.Extensions;
 
 namespace FujiyBlog.Web.Controllers
 {
     public partial class AccountController : Controller
     {
+        private readonly IUserRepository userRepository;
+        private readonly UserService userService;
 
         public IFormsAuthenticationService FormsService { get; set; }
-        public IMembershipService MembershipService { get; set; }
+
+        public AccountController(IUserRepository userRepository, UserService userService)
+        {
+            this.userRepository = userRepository;
+            this.userService = userService;
+        }
 
         protected override void Initialize(RequestContext requestContext)
         {
             if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-            if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
 
             base.Initialize(requestContext);
         }
 
-        // **************************************
-        // URL: /Account/LogOn
-        // **************************************
-
         public virtual ActionResult LogOn()
         {
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction(MVC.Account.ChangePassword());
+            }
             return View();
         }
 
@@ -33,7 +43,7 @@ namespace FujiyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MembershipService.ValidateUser(model.UserName, model.Password))
+                if (userService.ValidateUser(model.UserName, model.Password))
                 {
                     FormsService.SignIn(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
@@ -55,10 +65,6 @@ namespace FujiyBlog.Web.Controllers
             return View(model);
         }
 
-        // **************************************
-        // URL: /Account/LogOff
-        // **************************************
-
         public virtual ActionResult LogOff()
         {
             FormsService.SignOut();
@@ -72,7 +78,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Register()
         {
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.PasswordLength = 6;//TODO configuracao
             return View();
         }
 
@@ -82,32 +88,25 @@ namespace FujiyBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Attempt to register the user
-                MembershipCreateStatus createStatus = MembershipService.CreateUser(model.UserName, model.Password, model.Email);
+                CreateUserResult createStatus = userService.CreateUser(model.UserName, model.Password, model.Email);
 
-                if (createStatus == MembershipCreateStatus.Success)
+                if (!createStatus.RuleViolations.Any())
                 {
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
                     return RedirectToAction(MVC.Blog.Index());
                 }
-                else
-                {
-                    ModelState.AddModelError("", AccountValidation.ErrorCodeToString(createStatus));
-                }
+                ModelState.Merge(createStatus.RuleViolations);
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.PasswordLength = 6;//TODO configuracao
             return View(model);
         }
-
-        // **************************************
-        // URL: /Account/ChangePassword
-        // **************************************
 
         [Authorize]
         public virtual ActionResult ChangePassword()
         {
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.PasswordLength = 6;//TODO configuracao
             return View();
         }
 
@@ -117,7 +116,7 @@ namespace FujiyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (MembershipService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
+                if (userService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
                 {
                     return RedirectToAction(MVC.Account.Views.ChangePasswordSuccess);
                 }
@@ -128,7 +127,7 @@ namespace FujiyBlog.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = MembershipService.MinPasswordLength;
+            ViewBag.PasswordLength = 6;//TODO configuracao
             return View(model);
         }
 
