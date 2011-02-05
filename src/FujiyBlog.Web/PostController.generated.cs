@@ -33,6 +33,11 @@ namespace FujiyBlog.Web.Controllers {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Index() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Details() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Details);
         }
@@ -80,6 +85,7 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Comments = "~/Views/Post/Comments.cshtml";
             public readonly string Details = "~/Views/Post/Details.cshtml";
             public readonly string DoComment = "~/Views/Post/DoComment.cshtml";
+            public readonly string Index = "~/Views/Post/Index.cshtml";
         }
     }
 
@@ -87,8 +93,9 @@ namespace FujiyBlog.Web.Controllers {
     public class T4MVC_PostController: FujiyBlog.Web.Controllers.PostController {
         public T4MVC_PostController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index() {
+        public override System.Web.Mvc.ActionResult Index(int? skip) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            callInfo.RouteValueDictionary.Add("skip", skip);
             return callInfo;
         }
 

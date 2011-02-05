@@ -37,6 +37,11 @@ namespace FujiyBlog.Web.Tests.Controllers
         {
             var postRepoMock = new Mock<IPostRepository>();
             postRepoMock.Setup(x => x.GetPost("slug_post")).Returns((string slug) => new Post());
+
+            postRepoMock.Setup(x => x.GetRecentPosts(It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>())).Returns(
+               (int skip, int take) =>
+               Enumerable.Range(skip, take).Select(x => new Post { Title = x + " - Title", Content = new string('A', x) }));
+
             postController = new PostController(null, postRepoMock.Object, null);
         }
         
@@ -63,6 +68,13 @@ namespace FujiyBlog.Web.Tests.Controllers
         {
             var actionResult = postController.Details("slug_post_nao_existe");
             Assert.IsInstanceOfType(actionResult, typeof(HttpNotFoundResult));
+        }
+
+        [TestMethod]
+        public void IndexTest()
+        {
+            var model = ((ViewResult)postController.Index(0)).Model;
+            Assert.IsInstanceOfType(model, typeof(IEnumerable<Post>));
         }
     }
 }

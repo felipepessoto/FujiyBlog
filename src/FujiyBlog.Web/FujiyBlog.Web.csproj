@@ -82,11 +82,7 @@
     <Compile Include="AccountController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="BlogController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -178,7 +174,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Post\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Post\Details.cshtml" />

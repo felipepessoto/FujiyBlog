@@ -7,7 +7,7 @@ namespace FujiyBlog.EntityFramework.Configuration
     {
         public SettingConfiguration()
         {
-            Property(b => b.Name).IsUnicode(false);
+            Property(b => b.Key).IsUnicode(false);
             Property(b => b.Description).IsUnicode(false);
             Property(b => b.Value).IsUnicode(false).IsMaxLength();
         }

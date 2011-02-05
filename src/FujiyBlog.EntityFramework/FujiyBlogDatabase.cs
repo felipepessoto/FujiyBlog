@@ -14,6 +14,7 @@ namespace FujiyBlog.EntityFramework
             builder.Configurations.Add(new PostCommentConfiguration());
             builder.Configurations.Add(new PostConfiguration());
             builder.Configurations.Add(new UserConfiguration());
+            builder.Configurations.Add(new SettingConfiguration());
         }
 
         //public string Script()
@@ -24,6 +25,7 @@ namespace FujiyBlog.EntityFramework
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Setting> Settings { get; set; }
 
         void IUnitOfWork.SaveChanges()
         {

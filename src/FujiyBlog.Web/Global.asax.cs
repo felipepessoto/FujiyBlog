@@ -27,7 +27,7 @@ namespace FujiyBlog.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Home", "", MVC.Blog.Index());
+            routes.MapRoute("Home", "", MVC.Post.Index());
             routes.MapRoute("PostDetailId", "postid/{*Id}", MVC.Post.DetailsById());
             routes.MapRoute("PostDetail", "posts/{*PostSlug}", MVC.Post.Details());
 

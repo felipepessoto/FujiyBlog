@@ -52,7 +52,7 @@ namespace FujiyBlog.Web.Controllers
                     }
                     else
                     {
-                        return RedirectToAction(MVC.Blog.Index());
+                        return RedirectToAction(MVC.Post.Index());
                     }
                 }
                 else
@@ -69,7 +69,7 @@ namespace FujiyBlog.Web.Controllers
         {
             FormsService.SignOut();
 
-            return RedirectToAction(MVC.Blog.Index());
+            return RedirectToAction(MVC.Post.Index());
         }
 
         // **************************************
@@ -93,7 +93,7 @@ namespace FujiyBlog.Web.Controllers
                 if (!createStatus.RuleViolations.Any())
                 {
                     FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction(MVC.Blog.Index());
+                    return RedirectToAction(MVC.Post.Index());
                 }
                 ModelState.Merge(createStatus.RuleViolations);
             }
@@ -118,7 +118,7 @@ namespace FujiyBlog.Web.Controllers
             {
                 if (userService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
                 {
-                    return RedirectToAction(MVC.Account.Views.ChangePasswordSuccess);
+                    return RedirectToAction(MVC.Account.ChangePasswordSuccess());
                 }
                 else
                 {

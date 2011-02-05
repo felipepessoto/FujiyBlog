@@ -52,6 +52,7 @@
     <Compile Include="Repositories\IPostCommentRepository.cs" />
     <Compile Include="Repositories\IPostRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
+    <Compile Include="Repositories\ISettingRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Resources\TextMessages.Designer.cs">
       <AutoGen>True</AutoGen>

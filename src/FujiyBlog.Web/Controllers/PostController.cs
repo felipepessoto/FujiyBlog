@@ -23,9 +23,11 @@ namespace FujiyBlog.Web.Controllers
             this.postService = postService;
         }
 
-        public virtual ActionResult Index()
+        public virtual ActionResult Index(int? skip)
         {
-            return View();
+            IEnumerable<Post> recentPosts = postRepository.GetRecentPosts(true, skip.GetValueOrDefault(), 10);
+
+            return View(recentPosts);
         }
 
         public virtual ActionResult Details(string postSlug)
