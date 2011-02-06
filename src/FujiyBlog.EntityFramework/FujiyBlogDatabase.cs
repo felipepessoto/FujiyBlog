@@ -19,7 +19,7 @@ namespace FujiyBlog.EntityFramework
 
         //public string Script()
         //{
-        //    return ObjectContext.CreateDatabaseScript();
+        //    return ((System.Data.Entity.Infrastructure.IObjectContextAdapter)this).ObjectContext.CreateDatabaseScript();
         //}
 
         public DbSet<PostComment> PostComments { get; set; }
