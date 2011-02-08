@@ -13,13 +13,15 @@ namespace FujiyBlog.Web.Controllers
     {
         private readonly IUserRepository userRepository;
         private readonly UserService userService;
+        private readonly ISettingRepository settingRepository;
 
         public IFormsAuthenticationService FormsService { get; set; }
 
-        public AccountController(IUserRepository userRepository, UserService userService)
+        public AccountController(IUserRepository userRepository, UserService userService, ISettingRepository settingRepository)
         {
             this.userRepository = userRepository;
             this.userService = userService;
+            this.settingRepository = settingRepository;
         }
 
         protected override void Initialize(RequestContext requestContext)
@@ -78,7 +80,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Register()
         {
-            ViewBag.PasswordLength = 6;//TODO configuracao
+            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
             return View();
         }
 
@@ -99,14 +101,14 @@ namespace FujiyBlog.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = 6;//TODO configuracao
+            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
             return View(model);
         }
 
         [Authorize]
         public virtual ActionResult ChangePassword()
         {
-            ViewBag.PasswordLength = 6;//TODO configuracao
+            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
             return View();
         }
 
@@ -127,7 +129,7 @@ namespace FujiyBlog.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = 6;//TODO configuracao
+            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
             return View(model);
         }
 
