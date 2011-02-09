@@ -7,6 +7,7 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Core.Infrastructure;
+using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -25,7 +26,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Index(int? skip)
         {
-            IEnumerable<Post> recentPosts = postRepository.GetRecentPosts(true, skip.GetValueOrDefault(), 10);
+            IEnumerable<Post> recentPosts = postRepository.GetRecentPosts(true, skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage);
 
             return View(recentPosts);
         }

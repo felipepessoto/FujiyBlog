@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using System.Web.Security;
 using FujiyBlog.Web.Models;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Extensions;
 
@@ -11,17 +9,13 @@ namespace FujiyBlog.Web.Controllers
 {
     public partial class AccountController : Controller
     {
-        private readonly IUserRepository userRepository;
         private readonly UserService userService;
-        private readonly ISettingRepository settingRepository;
 
         public IFormsAuthenticationService FormsService { get; set; }
 
-        public AccountController(IUserRepository userRepository, UserService userService, ISettingRepository settingRepository)
+        public AccountController(UserService userService)
         {
-            this.userRepository = userRepository;
             this.userService = userService;
-            this.settingRepository = settingRepository;
         }
 
         protected override void Initialize(RequestContext requestContext)
@@ -80,7 +74,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Register()
         {
-            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
+            ViewBag.PasswordLength = Settings.SettingRepository.MinRequiredPasswordLength;
             return View();
         }
 
@@ -101,14 +95,14 @@ namespace FujiyBlog.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
+            ViewBag.PasswordLength = Settings.SettingRepository.MinRequiredPasswordLength;
             return View(model);
         }
 
         [Authorize]
         public virtual ActionResult ChangePassword()
         {
-            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
+            ViewBag.PasswordLength = Settings.SettingRepository.MinRequiredPasswordLength;
             return View();
         }
 
@@ -129,7 +123,7 @@ namespace FujiyBlog.Web.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = settingRepository.MinRequiredPasswordLength;
+            ViewBag.PasswordLength = Settings.SettingRepository.MinRequiredPasswordLength;
             return View(model);
         }
 

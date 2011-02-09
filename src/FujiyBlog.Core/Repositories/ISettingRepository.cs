@@ -1,9 +1,10 @@
-﻿using FujiyBlog.Core.DomainObjects;
-
-namespace FujiyBlog.Core.Repositories
+﻿namespace FujiyBlog.Core.Repositories
 {
     public interface ISettingRepository
     {
-        Setting MinRequiredPasswordLength { get; }
+        int MinRequiredPasswordLength { get; }
+        int PostsPerPage { get; }
+        string BlogName { get; }
+        string BlogDescription { get; }
     }
 }

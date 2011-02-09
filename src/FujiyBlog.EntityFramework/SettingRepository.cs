@@ -1,4 +1,5 @@
-﻿using FujiyBlog.Core.DomainObjects;
+﻿using System;
+using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.EntityFramework
@@ -10,9 +11,24 @@ namespace FujiyBlog.EntityFramework
         {
         }
 
-        public Setting  MinRequiredPasswordLength
+        public int  MinRequiredPasswordLength
         {
-            get { return Database.Settings.Find("MinRequiredPasswordLength"); }
+            get { return int.Parse(Database.Settings.Find("MinRequiredPasswordLength").Value); }
+        }
+
+        public int PostsPerPage
+        {
+            get { return int.Parse(Database.Settings.Find("PostsPerPage").Value); }
+        }
+
+        public string BlogName
+        {
+            get { return Database.Settings.Find("BlogName ").Value; }
+        }
+
+        public string BlogDescription
+        {
+            get { return Database.Settings.Find("BlogDescription ").Value; }
         }
     }
 }

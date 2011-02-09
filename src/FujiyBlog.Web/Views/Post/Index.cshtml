@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.Post>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = FujiyBlog.Web.Models.Settings.SettingRepository.BlogName + " - " + FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Meta 
