@@ -108,6 +108,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\PostIndex.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Themes\Default\img\download.png" />
@@ -160,6 +161,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Shared\DisplayTemplates\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -181,7 +183,7 @@
     <Content Include="Views\Post\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Shared\DisplayTemplates\Post.cshtml" />
+    <Content Include="Views\Post\Post.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="T4MVC.settings.t4" />

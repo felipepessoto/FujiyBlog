@@ -21,7 +21,7 @@ namespace FujiyBlog.Core.Services
 
         public PostCommentResult AddComment(PostComment comment)
         {
-            comment.CreationDate = DateTime.Now;
+            comment.CreationDate = DateTime.UtcNow;
 
             postCommentRepository.Add(comment);
 

@@ -15,7 +15,7 @@ namespace FujiyBlog.EntityFramework
         {
         }
 
-        private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < DateTime.Now;
+        private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < DateTime.UtcNow;
 
         public IEnumerable<Post> GetRecentPosts(bool isPublic, int skip, int take)
         {
@@ -34,6 +34,11 @@ namespace FujiyBlog.EntityFramework
             posts = posts.Take(take);
 
             return posts.ToList();
+        }
+
+        public int GetTotal(bool isPublic)
+        {
+            return Database.Posts.Count(PublicPost);
         }
 
         public Post GetPost(string slug)

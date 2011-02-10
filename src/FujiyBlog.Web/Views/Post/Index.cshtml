@@ -1,14 +1,13 @@
-﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.Post>
+﻿@model FujiyBlog.Web.ViewModels.PostIndex
 @{
     ViewBag.Title = FujiyBlog.Web.Models.Settings.SettingRepository.BlogName + " - " + FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription;
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = MVC.Shared.Views._Layout;
 }
 @section Meta 
 {
-    @*<meta name="description" content="@Html.Settings().SearchDescription" />
-  <meta name="keywords" content="@Html.Settings().SearchKeywords" />  *@
+   <meta name="description" content="@FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription" />
 }
-@foreach (var item in Model)
+@foreach (var item in Model.RecentPosts)
 {
-    @Html.DisplayFor(x=> item)
+    Html.RenderPartial(MVC.Post.Views.Post, item);
 }

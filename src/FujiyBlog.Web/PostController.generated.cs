@@ -86,6 +86,7 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Details = "~/Views/Post/Details.cshtml";
             public readonly string DoComment = "~/Views/Post/DoComment.cshtml";
             public readonly string Index = "~/Views/Post/Index.cshtml";
+            public readonly string Post = "~/Views/Post/Post.cshtml";
         }
     }
 
