@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
@@ -30,65 +27,105 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
                                   {
                                       PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                                      RecentPosts = postRepository.GetRecentPosts(true, skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage),
-                                      TotalPosts = postRepository.GetTotal(true),
+                                      RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, isPublic: !User.Identity.IsAuthenticated),
+                                      TotalPosts = postRepository.GetTotal(isPublic: !User.Identity.IsAuthenticated),
                                   };
+
+            ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
+            ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
             return View(model);
         }
 
+        public virtual ActionResult Tag(string tag, int? skip)
+        {
+            PostIndex model = new PostIndex
+            {
+                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, tag, isPublic: !User.Identity.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(tag, isPublic: !User.Identity.IsAuthenticated),
+            };
+
+            return View(MVC.Post.Views.Index, model);
+        }
+
+        public virtual ActionResult Category(string category, int? skip)
+        {
+            PostIndex model = new PostIndex
+            {
+                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, category: category, isPublic: !User.Identity.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(category: category, isPublic: !User.Identity.IsAuthenticated),
+            };
+
+            return View(MVC.Post.Views.Index, model);
+        }
+
         public virtual ActionResult Details(string postSlug)
         {
-            Post post = postRepository.GetPost(postSlug);
-
-            if (post == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(post);
+            return Details(postSlug, null);
         }
 
         public virtual ActionResult DetailsById(int id)
         {
-            Post post = postRepository.GetPost(id);
+            return Details(null, id);
+        }
+
+        private ActionResult Details(string slug, int? id)
+        {
+            Post post = id.HasValue ? postRepository.GetPost(id.GetValueOrDefault(), !User.Identity.IsAuthenticated) : postRepository.GetPost(slug, !User.Identity.IsAuthenticated);
 
             if (post == null)
             {
                 return HttpNotFound();
             }
 
-            return View(MVC.Post.Views.Details, post);
+            ViewBag.Title = post.Title;
+            ViewBag.Keywords = string.Join(",", post.Tags.Select(x => x.Name).Concat(post.Categories.Select(x => x.Name)));
+            ViewBag.Description = post.Description;
+
+            Post previousPost = postRepository.GetPreviousPost(post, !User.Identity.IsAuthenticated);
+            Post nextPost = postRepository.GetNextPost(post, !User.Identity.IsAuthenticated);
+
+            PostDetails postDetails = new PostDetails
+            {
+                Post = post,
+                PreviousPost = previousPost,
+                NextPost = nextPost
+            };
+
+            return View(postDetails);
+        }
+
+        public virtual ActionResult Archive()
+        {
+            PostArchive model = new PostArchive
+                                    {
+                                        AllPosts = postRepository.GetArchive(!User.Identity.IsAuthenticated)
+                                    };
+
+            model.UncategorizedPosts = model.AllPosts.Where(x => !x.Categories.Any());
+            model.AllCategories = model.AllPosts.SelectMany(x => x.Categories).Distinct();
+            model.TotalPosts = model.AllPosts.Count();
+            model.TotalComments = model.AllPosts.Sum(x => x.CommentsCount);
+
+            return View(model);
         }
 
         public virtual ActionResult DoComment(int id)
         {
-            PostComment postComment = new PostComment();
+            PostComment postComment = new PostComment
+                                          {
+                                              IpAddress = Request.UserHostAddress,
+                                              Post = postRepository.GetPost(id, !User.Identity.IsAuthenticated)
+                                          };
 
-            postComment.IpAddress = Request.UserHostAddress;
-            postComment.Post = postRepository.GetPost(id);
-
-            UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
+            UpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" });
 
             postService.AddComment(postComment);
             unitOfWork.SaveChanges();
 
-            return View(MVC.Post.Views.Comments, new[] {postComment});
-        }
-
-        [HttpPost]
-        public virtual ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
- 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(MVC.Post.Views.Comments, new[] { postComment });
         }
     }
 }

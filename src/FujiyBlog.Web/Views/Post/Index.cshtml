@@ -1,12 +1,5 @@
 ﻿@model FujiyBlog.Web.ViewModels.PostIndex
-@{
-    ViewBag.Title = FujiyBlog.Web.Models.Settings.SettingRepository.BlogName + " - " + FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription;
-    Layout = MVC.Shared.Views._Layout;
-}
-@section Meta 
-{
-   <meta name="description" content="@FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription" />
-}
+
 @foreach (var item in Model.RecentPosts)
 {
     Html.RenderPartial(MVC.Post.Views.Post, item);

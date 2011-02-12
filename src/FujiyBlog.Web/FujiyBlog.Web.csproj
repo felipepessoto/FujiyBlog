@@ -108,6 +108,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\PostArchive.cs" />
+    <Compile Include="ViewModels\PostDetails.cs" />
     <Compile Include="ViewModels\PostIndex.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +195,7 @@
     </None>
     <Content Include="Views\Post\DoComment.cshtml" />
     <Content Include="Views\Post\Comments.cshtml" />
+    <Content Include="Views\Post\Archive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -28,8 +28,11 @@ namespace FujiyBlog.Web
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute("Home", "", MVC.Post.Index());
-            routes.MapRoute("PostDetailId", "postid/{*Id}", MVC.Post.DetailsById());
+            routes.MapRoute("PostDetailId", "postid/{Id}", MVC.Post.DetailsById());
             routes.MapRoute("PostDetail", "posts/{*PostSlug}", MVC.Post.Details());
+            routes.MapRoute("TagHome", "tags/{tag}", MVC.Post.Tag());
+            routes.MapRoute("CategoryHome", "category/{category}", MVC.Post.Category());
+            routes.MapRoute("Archive", "archive", MVC.Post.Archive());
 
             routes.MapRoute(
                 "Default", // Route name

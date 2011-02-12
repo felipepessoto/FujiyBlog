@@ -40,5 +40,7 @@ namespace FujiyBlog.Core.DomainObjects
         public virtual ICollection<Tag> Tags { get; set; }
 
         public virtual ICollection<Category> Categories { get; set; }
+
+        public int CommentsCount { get; set; }
     }
 }

@@ -36,9 +36,9 @@ namespace FujiyBlog.Web.Tests.Controllers
         public void MyTestInitialize()
         {
             var postRepoMock = new Mock<IPostRepository>();
-            postRepoMock.Setup(x => x.GetPost("slug_post")).Returns((string slug) => new Post());
+            postRepoMock.Setup(x => x.GetPost("slug_post", true)).Returns((string slug) => new Post());
 
-            postRepoMock.Setup(x => x.GetRecentPosts(It.IsAny<bool>(), It.IsAny<int>(), It.IsAny<int>())).Returns(
+            postRepoMock.Setup(x => x.GetRecentPosts(It.IsAny<int>(), It.IsAny<int>(), null, null, It.IsAny<bool>())).Returns(
                (int skip, int take) =>
                Enumerable.Range(skip, take).Select(x => new Post { Title = x + " - Title", Content = new string('A', x) }));
 

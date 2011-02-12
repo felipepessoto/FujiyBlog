@@ -10,19 +10,18 @@
         @if (@Model.Tags.Any())
         { 
             <p class="tags">
-                Tags: @Model.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + y + ",", x => x.Trim(','))</p>
+                Tags: @Html.Raw(Model.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</p>
         }
         @if (@Model.Categories.Any())
         { 
             <p class="categories">
-                Categories:@Model.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + y + ",", x => x.Trim(','))
+                Categories: @Html.Raw(Model.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
             </p>
         }
     </div>
     <div class="footer">
         @*ADMIN LINKS*@
         @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Id), new { rel = "bookmark", title = Model.Title })
-        | 
-        <a href="@Url.Action(MVC.Post.Details(Model.Slug))#commentlist" >Comments (@Model.Comments.Count())</a>
+        | <a href="@Url.Action(MVC.Post.Details(Model.Slug))#commentlist" >Comments (@Model.CommentsCount)</a>
     </div>
 </div>

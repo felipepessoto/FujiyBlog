@@ -1,0 +1,76 @@
+﻿@model FujiyBlog.Web.ViewModels.PostArchive
+<div id="archive">
+    <h1>
+        Archive</h1>
+    <ul>
+        @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+        {
+            <li><a href="#@category.Id">@category.Name</a></li>
+        }
+        <li><a href="#Uncategorized">Uncategorized</a></li>
+    </ul>
+    @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+    {
+        <h2 id="@category.Id">
+            @*<a href="LINKSCATEGORYFEEDS"><img src="/blog/pics/rssButton.png" alt="RSS" /></a>*@
+            @category.Name (@category.Posts.Count())
+        </h2>
+            
+
+        <table>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Title
+                </th>
+                <th class="comments">
+                    Comments
+                </th>
+            </tr>
+            @foreach (FujiyBlog.Core.DomainObjects.Post post in category.Posts)
+            {
+                <tr>
+                    <td class="date">@post.PublicationDate.ToLocalTime().ToShortDateString()
+                    </td>
+                    <td class="title">@Html.ActionLink(post.Title, MVC.Post.Details(post.Slug))
+                    </td>
+                    <td class="comments">@post.CommentsCount
+                    </td>
+                </tr>  
+            }
+        </table>
+    }
+
+     <h2 id="Uncategorized">
+            @*<a href="LINKSCATEGORYFEEDS"><img src="/blog/pics/rssButton.png" alt="RSS" /></a>*@
+            Uncategorized (@Model.UncategorizedPosts.Count())
+        </h2>
+            
+
+        <table>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Title
+                </th>
+                <th class="comments">
+                    Comments
+                </th>
+            </tr>
+            @foreach (FujiyBlog.Core.DomainObjects.Post post in Model.UncategorizedPosts)
+            {
+                <tr>
+                    <td class="date">@post.PublicationDate.ToLocalTime().ToShortDateString()
+                    </td>
+                    <td class="title">@Html.ActionLink(post.Title, MVC.Post.Details(post.Slug))
+                    </td>
+                    <td class="comments">@post.CommentsCount
+                    </td>
+                </tr>  
+            }
+        </table>
+</div>

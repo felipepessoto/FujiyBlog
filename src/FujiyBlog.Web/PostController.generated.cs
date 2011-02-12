@@ -38,6 +38,16 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Tag() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Tag);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Category() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Category);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Details() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Details);
         }
@@ -50,11 +60,6 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DoComment() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Delete() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -70,10 +75,12 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
+            public readonly string Tag = "Tag";
+            public readonly string Category = "Category";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
+            public readonly string Archive = "Archive";
             public readonly string DoComment = "DoComment";
-            public readonly string Delete = "Delete";
         }
 
 
@@ -82,6 +89,7 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Archive = "~/Views/Post/Archive.cshtml";
             public readonly string Comments = "~/Views/Post/Comments.cshtml";
             public readonly string Details = "~/Views/Post/Details.cshtml";
             public readonly string DoComment = "~/Views/Post/DoComment.cshtml";
@@ -100,6 +108,20 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult Tag(string tag, int? skip) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Tag);
+            callInfo.RouteValueDictionary.Add("tag", tag);
+            callInfo.RouteValueDictionary.Add("skip", skip);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Category(string category, int? skip) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Category);
+            callInfo.RouteValueDictionary.Add("category", category);
+            callInfo.RouteValueDictionary.Add("skip", skip);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Details(string postSlug) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);
             callInfo.RouteValueDictionary.Add("postSlug", postSlug);
@@ -112,16 +134,14 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult DoComment(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
-            callInfo.RouteValueDictionary.Add("id", id);
+        public override System.Web.Mvc.ActionResult Archive() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Archive);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Delete(int id, System.Web.Mvc.FormCollection collection) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        public override System.Web.Mvc.ActionResult DoComment(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
             callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("collection", collection);
             return callInfo;
         }
 

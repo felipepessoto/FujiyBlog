@@ -1,14 +1,19 @@
-﻿@model FujiyBlog.Core.DomainObjects.Post
-@{
-    ViewBag.Title = Model.Title;
-}
+﻿@model FujiyBlog.Web.ViewModels.PostDetails
 <div id="postnavigation">
-    Titulo do post anterior | Titulo do proximo post
+    @if (Model.PreviousPost != null)
+    {
+        @Html.ActionLink(Model.PreviousPost.Title, MVC.Post.Details(Model.PreviousPost.Slug))
+    }
+    |
+    @if (Model.NextPost != null)
+    {
+        @Html.ActionLink(Model.NextPost.Title, MVC.Post.Details(Model.NextPost.Slug))
+    }
 </div>
-@{Html.RenderPartial(MVC.Post.Views.Post);}
+@{Html.RenderPartial(MVC.Post.Views.Post, Model.Post);}
 <div id="commentlist">
     <h1 id="comment">
         Comentários</h1>
-    @{Html.RenderPartial(MVC.Post.Views.Comments, Model.Comments);}
+    @{Html.RenderPartial(MVC.Post.Views.Comments, Model.Post.Comments);}
 </div>
-@{Html.RenderPartial(MVC.Post.Views.DoComment, new FujiyBlog.Core.DomainObjects.PostComment { Post = Model });}
+@{Html.RenderPartial(MVC.Post.Views.DoComment, new FujiyBlog.Core.DomainObjects.PostComment { Post = Model.Post });}

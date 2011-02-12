@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BlogML">
+      <HintPath>..\packages\blogml.2.2.0\lib\BlogML.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -41,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogML\BlogReader.cs" />
     <Compile Include="DomainObjects\Category.cs" />
     <Compile Include="DomainObjects\Post.cs" />
     <Compile Include="DomainObjects\PostComment.cs" />
@@ -49,6 +53,7 @@
     <Compile Include="DomainObjects\User.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\IBlogMLRepository.cs" />
     <Compile Include="Repositories\IPostCommentRepository.cs" />
     <Compile Include="Repositories\IPostRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
@@ -73,6 +78,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TextMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
