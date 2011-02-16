@@ -23,12 +23,12 @@ namespace FujiyBlog.Core.DomainObjects
         [StringLength(100)]
         public virtual string FullName { get; set; }
 
-        [Required, StringLength(20)]
+        [StringLength(20)]
         public virtual string Location { get; set; }
 
         public virtual DateTime CreationDate { get; set; }
 
-        public virtual DateTime LastLoginDate { get; set; }
+        public virtual DateTime? LastLoginDate { get; set; }
 
         [StringLength(500)]
         public virtual string About { get; set; }

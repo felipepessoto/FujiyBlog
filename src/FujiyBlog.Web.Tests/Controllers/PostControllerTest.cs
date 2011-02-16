@@ -20,7 +20,6 @@ namespace FujiyBlog.Web.Tests.Controllers
     public class PostControllerTest
     {
         private PostController postController;
-        private IPostRepository postRepository;
 
         [ClassInitialize()]
         public static void MyClassInitialize(TestContext testContext)

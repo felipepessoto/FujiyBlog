@@ -54,7 +54,9 @@ namespace FujiyBlog.Web
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
-            using (DependencyResolver.Current as IDisposable) ;
+            using (DependencyResolver.Current as IDisposable)
+            {
+            }
         }
     }
 }

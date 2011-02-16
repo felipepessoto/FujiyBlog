@@ -21,6 +21,8 @@ namespace FujiyBlog.EntityFramework
             builder.Configurations.Add(new PostConfiguration());
             builder.Configurations.Add(new UserConfiguration());
             builder.Configurations.Add(new SettingConfiguration());
+            builder.Configurations.Add(new TagConfiguration());
+            builder.Configurations.Add(new CategoryConfiguration());
         }
 
         //public string Script()
@@ -32,6 +34,8 @@ namespace FujiyBlog.EntityFramework
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Setting> Settings { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         void IUnitOfWork.SaveChanges()
         {

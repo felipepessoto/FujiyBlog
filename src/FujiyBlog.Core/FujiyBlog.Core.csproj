@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlogML\BlogReader.cs" />
+    <Compile Include="BlogML\BlogMLImporter.cs" />
+    <Compile Include="BlogML\BlogMLExtendedPost.cs" />
     <Compile Include="DomainObjects\Category.cs" />
     <Compile Include="DomainObjects\Post.cs" />
     <Compile Include="DomainObjects\PostComment.cs" />

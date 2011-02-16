@@ -11,7 +11,7 @@ namespace FujiyBlog.Core.DomainObjects
         [StringLength(50)]
         public virtual string AuthorName { get; set; }
 
-        [StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
+        [StringLength(255), RegularExpression(@"^([\w-_]+\.)*[\w-_]+@([\w-_]+\.)*[\w-_]+\.[\w-_]+$")]
         public virtual string AuthorEmail { get; set; }
 
         [StringLength(200)]

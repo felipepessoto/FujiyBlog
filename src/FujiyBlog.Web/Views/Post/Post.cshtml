@@ -4,7 +4,7 @@
         @Html.ActionLink(Model.Title, MVC.Post.Details(Model.Slug))</h1>
     <span class="author">by <a href="/@Model.Author.Username">@Model.Author.DisplayName</a></span>
     <span class="pubDate">@Model.PublicationDate.ToLocalTime()</span>
-    <div class="text">@Model.Content</div>
+    <div class="text">@Html.Raw(Model.Content)</div>
     <div class="bottom">
         @*RATING*@
         @if (@Model.Tags.Any())

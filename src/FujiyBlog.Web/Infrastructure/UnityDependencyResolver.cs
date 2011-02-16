@@ -25,6 +25,7 @@ namespace FujiyBlog.Web.Infrastructure
                     container.RegisterType<IPostRepository, PostRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IPostCommentRepository, PostCommentRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<ISettingRepository, SettingRepository>(new ContainerControlledLifetimeManager());
+                    container.RegisterType<IBlogMLRepository, BlogMLRepository>(new ContainerControlledLifetimeManager());
                     HttpContext.Current.Items["Container"] = container;
                 }
                 return container;

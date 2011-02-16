@@ -45,9 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlogMLRepository.cs" />
+    <Compile Include="Configuration\CategoryConfiguration.cs" />
     <Compile Include="Configuration\SettingConfiguration.cs" />
     <Compile Include="Configuration\PostConfiguration.cs" />
     <Compile Include="Configuration\PostCommentConfiguration.cs" />
+    <Compile Include="Configuration\TagConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
     <Compile Include="PostCommentRepository.cs" />
     <Compile Include="PostRepository.cs" />
