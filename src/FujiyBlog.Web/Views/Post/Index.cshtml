@@ -2,5 +2,31 @@
 
 @foreach (var item in Model.RecentPosts)
 {
-    Html.RenderPartial(MVC.Post.Views.Post, item);
+    <div class="post xfolkentry" id="post@(item.Post.Id)">
+    <h1>
+        @Html.ActionLink(item.Post.Title, MVC.Post.Details(item.Post.Slug))</h1>
+    <span class="author">by @Html.ActionLink(item.Author.DisplayName, MVC.Post.Author(item.Author.Username, null))</span>
+    <span class="pubDate">@item.Post.PublicationDate.ToLocalTime()</span>
+    <div class="text">@Html.Raw(item.Post.Content)</div>
+    <div class="bottom">
+        @*RATING*@
+        @if (@item.Tags.Any())
+        { 
+            <p class="tags">
+                Tags: @Html.Raw(item.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</p>
+        }
+        @if (@item.Categories.Any())
+        { 
+            <p class="categories">
+                Categories: @Html.Raw(item.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
+            </p>
+        }
+    </div>
+    <div class="footer">
+        @*ADMIN LINKS*@
+        @Html.ActionLink("Permalink", MVC.Post.DetailsById(item.Post.Id), new { rel = "bookmark", title = item.Post.Title })
+        | <a href="@Url.Action(MVC.Post.Details(item.Post.Slug))#commentlist" >Comments (@item.CommentsTotal)</a>
+    </div>
+</div>
+
 }
