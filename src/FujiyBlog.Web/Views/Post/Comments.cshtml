@@ -9,16 +9,23 @@
             <p class="date">@comment.CreationDate.ToLocalTime()</p>
             <p class="gravatar">
                 GRAVATAR</p>
-            <p class="content">@comment.Comment</p>
+            <p class="content">@Html.Raw(comment.Comment)</p>
             <p class="author">
-                @if (comment.AuthorWebsite != null)
+
+            @if (comment.Author == null)
+            { 
+                if (!string.IsNullOrEmpty(comment.AuthorWebsite))
                 {
-                    <a href="@comment.AuthorWebsite">@comment.AuthorName</a>
+                    <a href="@comment.AuthorWebsite" target="_blank" rel="nofollow">@(comment.Author == null ? comment.AuthorName : comment.Author.DisplayName)</a>
                 }
                 else
                 {
                     <span>@comment.AuthorName</span>
                 }
+            }
+            else { 
+                @Html.ActionLink(comment.Author.DisplayName, MVC.Post.Author(comment.Author.Username, null))
+            }
                 @*    <%= ((BlogEngine.Core.BlogSettings.Instance.IsCommentNestingEnabled && Comment.IsApproved) ? " | " : "") %>
     <%= ReplyToLink %>    
     <%= AdminLinks %>*@

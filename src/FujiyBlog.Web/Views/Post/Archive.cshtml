@@ -29,14 +29,14 @@
                     Comments
                 </th>
             </tr>
-            @foreach (FujiyBlog.Core.DomainObjects.Post post in category.Posts)
+            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Categories.Any(y => y == category)))
             {
                 <tr>
-                    <td class="date">@post.PublicationDate.ToLocalTime().ToShortDateString()
+                    <td class="date">@postSummary.Post.PublicationDate.ToLocalTime().ToShortDateString()
                     </td>
-                    <td class="title">@Html.ActionLink(post.Title, MVC.Post.Details(post.Slug))
+                    <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
                     </td>
-                    <td class="comments">@post.CommentsCount
+                    <td class="comments">@postSummary.CommentsTotal
                     </td>
                 </tr>  
             }
@@ -61,14 +61,14 @@
                     Comments
                 </th>
             </tr>
-            @foreach (FujiyBlog.Core.DomainObjects.Post post in Model.UncategorizedPosts)
+            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.UncategorizedPosts)
             {
                 <tr>
-                    <td class="date">@post.PublicationDate.ToLocalTime().ToShortDateString()
+                    <td class="date">@postSummary.Post.PublicationDate.ToLocalTime().ToShortDateString()
                     </td>
-                    <td class="title">@Html.ActionLink(post.Title, MVC.Post.Details(post.Slug))
+                    <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
                     </td>
-                    <td class="comments">@post.CommentsCount
+                    <td class="comments">@postSummary.CommentsTotal
                     </td>
                 </tr>  
             }

@@ -13,12 +13,14 @@ namespace FujiyBlog.Web.Controllers
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly IPostRepository postRepository;
+        private readonly IUserRepository userRepository;
         private readonly PostService postService;
 
-        public PostController(IUnitOfWork unitOfWork, IPostRepository postRepository, PostService postService)
+        public PostController(IUnitOfWork unitOfWork, IPostRepository postRepository, IUserRepository userRepository, PostService postService)
         {
             this.unitOfWork = unitOfWork;
             this.postRepository = postRepository;
+            this.userRepository = userRepository;
             this.postService = postService;
         }
 
@@ -61,6 +63,33 @@ namespace FujiyBlog.Web.Controllers
             return View(MVC.Post.Views.Index, model);
         }
 
+        public virtual ActionResult Author(string author, int? skip)
+        {
+            PostIndex model = new PostIndex
+            {
+                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !User.Identity.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(authorUserName: author, isPublic: !User.Identity.IsAuthenticated),
+            };
+
+            return View(MVC.Post.Views.Index, model);
+        }
+
+        public virtual ActionResult Archive()
+        {
+            PostArchive model = new PostArchive
+            {
+                AllPosts = postRepository.GetArchive(!User.Identity.IsAuthenticated)
+            };
+
+            model.UncategorizedPosts = model.AllPosts.Where(x => !x.Categories.Any());
+            model.AllCategories = model.AllPosts.SelectMany(x => x.Categories).Distinct();
+            model.TotalPosts = model.AllPosts.Count();
+            model.TotalComments = model.AllPosts.Sum(x => x.CommentsTotal);
+
+            return View(model);
+        }
+
         public virtual ActionResult Details(string postSlug)
         {
             return Details(postSlug, null);
@@ -97,34 +126,29 @@ namespace FujiyBlog.Web.Controllers
             return View(postDetails);
         }
 
-        public virtual ActionResult Archive()
-        {
-            PostArchive model = new PostArchive
-                                    {
-                                        AllPosts = postRepository.GetArchive(!User.Identity.IsAuthenticated)
-                                    };
-
-            model.UncategorizedPosts = model.AllPosts.Where(x => !x.Categories.Any());
-            model.AllCategories = model.AllPosts.SelectMany(x => x.Categories).Distinct();
-            model.TotalPosts = model.AllPosts.Count();
-            model.TotalComments = model.AllPosts.Sum(x => x.CommentsCount);
-
-            return View(model);
-        }
-
         public virtual ActionResult DoComment(int id)
         {
+            bool isLogged = User.Identity.IsAuthenticated;
+
             PostComment postComment = new PostComment
                                           {
                                               IpAddress = Request.UserHostAddress,
-                                              Post = postRepository.GetPost(id, !User.Identity.IsAuthenticated)
+                                              Post = postRepository.GetPost(id, !isLogged)
                                           };
 
-            UpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" });
+            if (isLogged)
+            {
+                postComment.Author = userRepository.GetByUsername(User.Identity.Name);
+                UpdateModel(postComment, new[] { "Comment" });
+            }
+            else
+            {
+                UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
+            }
 
             postService.AddComment(postComment);
             unitOfWork.SaveChanges();
-
+            
             return View(MVC.Post.Views.Comments, new[] { postComment });
         }
     }

@@ -11,7 +11,6 @@ namespace FujiyBlog.EntityFramework.Configuration
             Property(b => b.Description).IsUnicode(false);
             Property(b => b.Slug).IsUnicode(false);
             Property(b => b.Content).IsUnicode(false).IsMaxLength();
-            Ignore(b => b.CommentsCount);
         }
     }
 }

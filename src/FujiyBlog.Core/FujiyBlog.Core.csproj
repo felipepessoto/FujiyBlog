@@ -52,6 +52,7 @@
     <Compile Include="DomainObjects\Setting.cs" />
     <Compile Include="DomainObjects\Tag.cs" />
     <Compile Include="DomainObjects\User.cs" />
+    <Compile Include="Dto\PostSummary.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IBlogMLRepository.cs" />

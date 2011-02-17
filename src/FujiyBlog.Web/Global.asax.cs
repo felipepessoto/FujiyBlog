@@ -32,6 +32,7 @@ namespace FujiyBlog.Web
             routes.MapRoute("PostDetail", "posts/{*PostSlug}", MVC.Post.Details());
             routes.MapRoute("TagHome", "tags/{tag}", MVC.Post.Tag());
             routes.MapRoute("CategoryHome", "category/{category}", MVC.Post.Category());
+            routes.MapRoute("AuthorHome", "author/{author}", MVC.Post.Author());
             routes.MapRoute("Archive", "archive", MVC.Post.Archive());
 
             routes.MapRoute(

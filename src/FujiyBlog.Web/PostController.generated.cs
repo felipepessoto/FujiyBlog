@@ -48,6 +48,11 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Author() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Author);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Details() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Details);
         }
@@ -77,9 +82,10 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Index = "Index";
             public readonly string Tag = "Tag";
             public readonly string Category = "Category";
+            public readonly string Author = "Author";
+            public readonly string Archive = "Archive";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
-            public readonly string Archive = "Archive";
             public readonly string DoComment = "DoComment";
         }
 
@@ -122,6 +128,18 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
+        public override System.Web.Mvc.ActionResult Author(string author, int? skip) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Author);
+            callInfo.RouteValueDictionary.Add("author", author);
+            callInfo.RouteValueDictionary.Add("skip", skip);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Archive() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Archive);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Details(string postSlug) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);
             callInfo.RouteValueDictionary.Add("postSlug", postSlug);
@@ -131,11 +149,6 @@ namespace FujiyBlog.Web.Controllers {
         public override System.Web.Mvc.ActionResult DetailsById(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
             callInfo.RouteValueDictionary.Add("id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Archive() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Archive);
             return callInfo;
         }
 

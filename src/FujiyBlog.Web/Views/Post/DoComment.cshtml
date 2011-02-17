@@ -6,6 +6,8 @@
     <div class="commentForm">
         <p id="addcomment">
             Comment</p>
+            @if (!User.Identity.IsAuthenticated)
+            { 
         @Html.LabelFor(x => x.AuthorName)
         @Html.EditorFor(x => x.AuthorName)
         @Html.ValidationMessageFor(x => x.AuthorName)
@@ -15,7 +17,7 @@
         @Html.LabelFor(x => x.AuthorWebsite)
         @Html.EditorFor(x => x.AuthorWebsite)
         @Html.ValidationMessageFor(x => x.AuthorWebsite)
-        
+            }
         <div id="commentCompose">
             @Html.LabelFor(x => x.Comment)
             @Html.TextAreaFor(x => x.Comment)

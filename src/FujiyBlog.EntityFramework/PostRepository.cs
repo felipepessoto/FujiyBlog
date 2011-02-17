@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
+using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.DomainObjects;
 
@@ -31,44 +32,32 @@ namespace FujiyBlog.EntityFramework
 
             if (id.HasValue)
             {
-                post = posts.SingleOrDefault(x => x.Id == id.GetValueOrDefault());
+                int idInt = id.GetValueOrDefault();
+                post = posts.SingleOrDefault(x => x.Id == idInt);
             }
             else
             {
                 post = posts.SingleOrDefault(x => x.Slug == slug);
             }
 
-            FillCommentsCount(post, isPublic);
-
             Database.Entry(post).Collection(x=>x.Tags).Load();
             Database.Entry(post).Collection(x => x.Categories).Load();
             if (isPublic)
             {
-                Database.Entry(post).Collection(x => x.Comments).Query().Where(PublicPostComment).Load();
+                Database.Entry(post).Collection(x => x.Comments).Query().Include(x => x.Author).Where(PublicPostComment).Load();
             }
             else
             {
-                Database.Entry(post).Collection(x => x.Comments).Query().Load();
+                Database.Entry(post).Collection(x => x.Comments).Query().Include(x => x.Author).Load();
             }
 
             return post;
         }
 
-        private void FillCommentsCount(Post post, bool isPublic = true)
+        public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, bool isPublic = true)
         {
-            IQueryable<PostComment> comments = Database.Entry(post).Collection(p => p.Comments).Query();
-
-            if (isPublic)
-            {
-                comments = comments.Where(PublicPostComment);
-            }
-
-            post.CommentsCount = comments.Count();
-        }
-
-        public IEnumerable<Post> GetRecentPosts(int skip, int take, string tag = null, string category = null, bool isPublic = true)
-        {
-            IQueryable<Post> posts = Database.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).OrderByDescending(x => x.PublicationDate);
+            IQueryable<Post> posts = Database.Posts;
+            IQueryable<PostComment> comments = Database.PostComments;
 
             if (tag != null)
             {
@@ -80,9 +69,15 @@ namespace FujiyBlog.EntityFramework
                 posts = posts.Where(x => x.Categories.Any(y => y.Name == category));
             }
 
+            if (authorUserName != null)
+            {
+                posts = posts.Where(x => x.Author.Username == authorUserName);
+            }
+
             if (isPublic)
             {
                 posts = posts.Where(PublicPost);
+                comments = comments.Where(PublicPostComment);
             }
 
             if (skip > 0)
@@ -92,36 +87,44 @@ namespace FujiyBlog.EntityFramework
 
             posts = posts.Take(take);
 
-            List<Post> postsList = posts.ToList();
+            var postSummaries = ((from post in posts
+                                  join comment in comments on post.Id equals comment.Post.Id into g
+                                  select new PostSummary
+                                             {
+                                                 Post = post,
+                                                 Author = post.Author,
+                                                 Tags = post.Tags,
+                                                 Categories = post.Categories,
+                                                 CommentsTotal = g.Count()
+                                             }).OrderByDescending(x => x.Post.PublicationDate).ToList());
 
-            foreach (Post post in postsList)
-            {
-                FillCommentsCount(post, isPublic);
-            }
-
-            return postsList;
+            return postSummaries;
         }
 
-        public IEnumerable<Post> GetArchive(bool isPublic = true)
+        public IEnumerable<PostSummary> GetArchive(bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts;
+            IQueryable<PostComment> comments = Database.PostComments;
 
             if (isPublic)
             {
                 posts = posts.Where(PublicPost);
+                comments = comments.Where(PublicPostComment);
             }
 
-            List<Post> postsList = posts.ToList();
+            var postSummaries = ((from post in posts
+                                  join comment in comments on post.Id equals comment.Post.Id into g
+                                  select new PostSummary
+                                  {
+                                      Post = post,
+                                      Categories = post.Categories,
+                                      CommentsTotal = g.Count()
+                                  }).OrderByDescending(x => x.Post.PublicationDate).ToList());
 
-            foreach (Post post in postsList)
-            {
-                FillCommentsCount(post, isPublic);
-            }
-
-            return postsList;
+            return postSummaries;
         }
 
-        public int GetTotal(string tag = null, string category = null, bool isPublic = true)
+        public int GetTotal(string tag = null, string category = null, string authorUserName = null, bool isPublic = true)
         {
             IQueryable<Post> posts = Database.Posts;
 
@@ -133,6 +136,11 @@ namespace FujiyBlog.EntityFramework
             if (category != null)
             {
                 posts = posts.Where(x => x.Categories.Any(y => y.Name == category));
+            }
+
+            if (authorUserName != null)
+            {
+                posts = posts.Where(x => x.Author.Username == authorUserName);
             }
 
             if (isPublic)

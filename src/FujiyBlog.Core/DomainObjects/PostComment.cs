@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace FujiyBlog.Core.DomainObjects
@@ -8,12 +9,15 @@ namespace FujiyBlog.Core.DomainObjects
     {
         public virtual int Id { get; set; }
 
+        [DisplayName("Name")]
         [StringLength(50)]
         public virtual string AuthorName { get; set; }
 
+        [DisplayName("Email")]
         [StringLength(255), RegularExpression(@"^([\w-_]+\.)*[\w-_]+@([\w-_]+\.)*[\w-_]+\.[\w-_]+$")]
         public virtual string AuthorEmail { get; set; }
 
+        [DisplayName("Site")]
         [StringLength(200)]
         public virtual string AuthorWebsite { get; set; }
 
