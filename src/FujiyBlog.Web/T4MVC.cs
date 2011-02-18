@@ -24,6 +24,7 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static class MVC {
     public static FujiyBlog.Web.Controllers.AccountController Account = new FujiyBlog.Web.Controllers.T4MVC_AccountController();
+    public static FujiyBlog.Web.Controllers.FeedController Feed = new FujiyBlog.Web.Controllers.T4MVC_FeedController();
     public static FujiyBlog.Web.Controllers.PostController Post = new FujiyBlog.Web.Controllers.T4MVC_PostController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
