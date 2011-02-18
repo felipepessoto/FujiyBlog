@@ -35,7 +35,7 @@ namespace FujiyBlog.EntityFramework
             return (from post in database.Posts
                    where !post.IsDeleted && post.IsPublished && post.PublicationDate < DateTime.UtcNow
                    orderby post.PublicationDate descending
-                   select post).ToList();
+                   select post).Take(take).ToList();
         }
     }
 }
