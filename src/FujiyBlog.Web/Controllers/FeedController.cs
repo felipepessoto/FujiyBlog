@@ -1,8 +1,8 @@
 ﻿using System;
 using System.ServiceModel.Syndication;
 using System.Web.Mvc;
+using FujiyBlog.Core;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Feed;
 
 namespace FujiyBlog.Web.Controllers
 {

@@ -6,7 +6,7 @@ using System.Xml;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
 
-namespace FujiyBlog.Core.Feed
+namespace FujiyBlog.Core
 {
     public class FeedGenerator
     {
