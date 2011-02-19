@@ -24,10 +24,10 @@
         
         <div id="menu">
         <ul>
-          <li><a href="/" rel="home">Página Inicial</a></li>
-          <li><a href="/">@Html.ActionLink("Archive", MVC.Post.Archive())</a></li>
+          <li>@Html.ActionLink("Home", MVC.Post.Index())</li>
+          <li>@Html.ActionLink("Archive", MVC.Post.Archive())</li>
           <li><a href="/">Contato</a></li>
-          <li><a href="/" class="feed"><img src="/pics/rssButton.gif" alt="Feed" />RSS</a></li>
+          <li>@Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) / @Html.ActionLink("Atom 1.0", MVC.Feed.Atom10())</li>
           <li>@Html.Partial(MVC.Shared.Views._LogOnPartial)</li>
         </ul>
       </div>

@@ -45,6 +45,7 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Rss20 = "Rss20";
+            public readonly string Atom10 = "Atom10";
         }
 
 
@@ -62,6 +63,11 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Rss20() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Rss20);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Atom10() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Atom10);
             return callInfo;
         }
 

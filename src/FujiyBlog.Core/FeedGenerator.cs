@@ -53,7 +53,7 @@ namespace FujiyBlog.Core
             {
                 feedFormatter= new Rss20FeedFormatter(feed);
             }
-            if (typeof(T) == typeof(Atom10FeedFormatter))
+            else if (typeof(T) == typeof(Atom10FeedFormatter))
             {
                 feedFormatter = new Atom10FeedFormatter(feed);
             }

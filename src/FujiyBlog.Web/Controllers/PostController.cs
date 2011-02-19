@@ -29,8 +29,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
                                   {
                                       PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                                      RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, isPublic: !User.Identity.IsAuthenticated),
-                                      TotalPosts = postRepository.GetTotal(isPublic: !User.Identity.IsAuthenticated),
+                                      RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, isPublic: !Request.IsAuthenticated),
+                                      TotalPosts = postRepository.GetTotal(isPublic: !Request.IsAuthenticated),
                                   };
 
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
@@ -44,8 +44,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, tag, isPublic: !User.Identity.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(tag, isPublic: !User.Identity.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, tag, isPublic: !Request.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(tag, isPublic: !Request.IsAuthenticated),
             };
 
             return View(MVC.Post.Views.Index, model);
@@ -56,8 +56,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, category: category, isPublic: !User.Identity.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(category: category, isPublic: !User.Identity.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, category: category, isPublic: !Request.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(category: category, isPublic: !Request.IsAuthenticated),
             };
 
             return View(MVC.Post.Views.Index, model);
@@ -68,8 +68,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !User.Identity.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(authorUserName: author, isPublic: !User.Identity.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !Request.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(authorUserName: author, isPublic: !Request.IsAuthenticated),
             };
 
             return View(MVC.Post.Views.Index, model);
@@ -79,7 +79,7 @@ namespace FujiyBlog.Web.Controllers
         {
             PostArchive model = new PostArchive
             {
-                AllPosts = postRepository.GetArchive(!User.Identity.IsAuthenticated)
+                AllPosts = postRepository.GetArchive(!Request.IsAuthenticated)
             };
 
             model.UncategorizedPosts = model.AllPosts.Where(x => !x.Categories.Any());
@@ -102,7 +102,7 @@ namespace FujiyBlog.Web.Controllers
 
         private ActionResult Details(string slug, int? id)
         {
-            Post post = id.HasValue ? postRepository.GetPost(id.GetValueOrDefault(), !User.Identity.IsAuthenticated) : postRepository.GetPost(slug, !User.Identity.IsAuthenticated);
+            Post post = id.HasValue ? postRepository.GetPost(id.GetValueOrDefault(), !Request.IsAuthenticated) : postRepository.GetPost(slug, !Request.IsAuthenticated);
 
             if (post == null)
             {
@@ -113,8 +113,8 @@ namespace FujiyBlog.Web.Controllers
             ViewBag.Keywords = string.Join(",", post.Tags.Select(x => x.Name).Concat(post.Categories.Select(x => x.Name)));
             ViewBag.Description = post.Description;
 
-            Post previousPost = postRepository.GetPreviousPost(post, !User.Identity.IsAuthenticated);
-            Post nextPost = postRepository.GetNextPost(post, !User.Identity.IsAuthenticated);
+            Post previousPost = postRepository.GetPreviousPost(post, !Request.IsAuthenticated);
+            Post nextPost = postRepository.GetNextPost(post, !Request.IsAuthenticated);
 
             PostDetails postDetails = new PostDetails
             {
@@ -128,7 +128,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult DoComment(int id)
         {
-            bool isLogged = User.Identity.IsAuthenticated;
+            bool isLogged = Request.IsAuthenticated;
 
             PostComment postComment = new PostComment
                                           {

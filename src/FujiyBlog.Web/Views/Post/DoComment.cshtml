@@ -6,7 +6,7 @@
     <div class="commentForm">
         <p id="addcomment">
             Comment</p>
-            @if (!User.Identity.IsAuthenticated)
+            @if (!Request.IsAuthenticated)
             { 
         @Html.LabelFor(x => x.AuthorName)
         @Html.EditorFor(x => x.AuthorName)
