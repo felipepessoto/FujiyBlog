@@ -47,11 +47,13 @@
   <ItemGroup>
     <Compile Include="BlogMLRepository.cs" />
     <Compile Include="Configuration\CategoryConfiguration.cs" />
+    <Compile Include="Configuration\WidgetSettingConfiguration.cs" />
     <Compile Include="Configuration\SettingConfiguration.cs" />
     <Compile Include="Configuration\PostConfiguration.cs" />
     <Compile Include="Configuration\PostCommentConfiguration.cs" />
     <Compile Include="Configuration\TagConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="WidgetSettingRepository.cs" />
     <Compile Include="FeedRepository.cs" />
     <Compile Include="PostCommentRepository.cs" />
     <Compile Include="PostRepository.cs" />

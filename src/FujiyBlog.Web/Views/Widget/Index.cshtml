@@ -1,0 +1,6 @@
+﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.WidgetSetting>
+
+@foreach (FujiyBlog.Core.DomainObjects.WidgetSetting widgetSetting in Model)
+{
+    Html.RenderPartial(widgetSetting.Name, widgetSetting);
+}

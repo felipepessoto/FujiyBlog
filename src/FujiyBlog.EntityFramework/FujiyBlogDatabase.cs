@@ -23,6 +23,7 @@ namespace FujiyBlog.EntityFramework
             builder.Configurations.Add(new SettingConfiguration());
             builder.Configurations.Add(new TagConfiguration());
             builder.Configurations.Add(new CategoryConfiguration());
+            builder.Configurations.Add(new WidgetSettingConfiguration());
         }
 
         //public string Script()
@@ -36,6 +37,7 @@ namespace FujiyBlog.EntityFramework
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<WidgetSetting> WidgetSettings { get; set; }
 
         void IUnitOfWork.SaveChanges()
         {

@@ -86,6 +86,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="FeedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -116,6 +117,9 @@
     <Compile Include="ViewModels\PostArchive.cs" />
     <Compile Include="ViewModels\PostDetails.cs" />
     <Compile Include="ViewModels\PostIndex.cs" />
+    <Compile Include="WidgetController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Themes\Default\img\download.png" />
@@ -201,6 +205,8 @@
     <Content Include="Views\Post\DoComment.cshtml" />
     <Content Include="Views\Post\Comments.cshtml" />
     <Content Include="Views\Post\Archive.cshtml" />
+    <Content Include="Views\Widget\Html.cshtml" />
+    <Content Include="Views\Widget\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
