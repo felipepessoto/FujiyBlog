@@ -1,4 +1,9 @@
 ﻿@model FujiyBlog.Web.ViewModels.PostDetails
+           
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
 <div id="postnavigation">
     @if (Model.PreviousPost != null)
     {
