@@ -1,0 +1,27 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+    IDictionary<string, string> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, string>() { { "Title", "" }, { "Text", "" } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, string>>(Model.Settings);
+    }
+}
+Title: @Html.TextBox("Title" + Model.Id, settings["Title"])
+Body: @Html.TextArea("Text" + Model.Id, settings["Text"])
+<a href="javascript:void(0);" onclick="javascript:saveHtmlWidget(@Model.Id, $('#Title@(Model.Id)').val(), $('#Text@(Model.Id)').val());">
+    Save</a>
+<script type="text/javascript">
+    function saveHtmlWidget(id, title, text) {
+        json = JSON.stringify({ Title: title, Text: text });
+
+        $.ajax({
+            url: '@Url.Action(MVC.Widget.Edit())',
+            type: 'post',
+            data: { widgetSettingId: id, settings: json }
+        });
+    }
+</script>

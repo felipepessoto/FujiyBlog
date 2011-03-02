@@ -13,7 +13,6 @@ namespace FujiyBlog.Core.DomainObjects
         [Required,StringLength(50)]
         public virtual string WidgetZone { get; set; }
 
-        [Required]
-        public virtual byte[] Settings { get; set; }
+        public virtual string Settings { get; set; }
     }
 }

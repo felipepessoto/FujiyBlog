@@ -36,6 +36,16 @@ namespace FujiyBlog.Web.Controllers {
         public System.Web.Mvc.ActionResult Index() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Index);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Add() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Add);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Edit() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public WidgetController Actions { get { return MVC.Widget; } }
@@ -50,6 +60,8 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
+            public readonly string Add = "Add";
+            public readonly string Edit = "Edit";
         }
 
 
@@ -59,6 +71,7 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string Html = "~/Views/Widget/Html.cshtml";
+            public readonly string HtmlEdit = "~/Views/Widget/HtmlEdit.cshtml";
             public readonly string Index = "~/Views/Widget/Index.cshtml";
         }
     }
@@ -70,6 +83,26 @@ namespace FujiyBlog.Web.Controllers {
         public override System.Web.Mvc.ActionResult Index(string zoneName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
             callInfo.RouteValueDictionary.Add("zoneName", zoneName);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Add(string zoneName, string widgetName) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Add);
+            callInfo.RouteValueDictionary.Add("zoneName", zoneName);
+            callInfo.RouteValueDictionary.Add("widgetName", widgetName);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(int widgetSettingId) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            callInfo.RouteValueDictionary.Add("widgetSettingId", widgetSettingId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Edit(int widgetSettingId, string settings) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+            callInfo.RouteValueDictionary.Add("widgetSettingId", widgetSettingId);
+            callInfo.RouteValueDictionary.Add("settings", settings);
             return callInfo;
         }
 

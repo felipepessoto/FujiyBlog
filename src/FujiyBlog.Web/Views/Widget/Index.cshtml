@@ -1,6 +1,26 @@
-﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.WidgetSetting>
-
-@foreach (FujiyBlog.Core.DomainObjects.WidgetSetting widgetSetting in Model)
+﻿@model FujiyBlog.Web.ViewModels.WidgetIndex
+@foreach (FujiyBlog.Core.DomainObjects.WidgetSetting widgetSetting in Model.WidgetSettings)
 {
-    Html.RenderPartial(widgetSetting.Name, widgetSetting);
+    if (Request.IsAuthenticated)
+    {
+    @Ajax.ActionLink("Edit", MVC.Widget.Edit(widgetSetting.Id), new AjaxOptions { OnSuccess = "showEditWidget" })
+    }
+    <div class="widget @(widgetSetting.Name)" id="widget@(widgetSetting.Id)">
+        <a class="delete" href="#" title="Apagar widget">X</a>
+        <a class="edit" href="#" title="Editar widget">Editar</a>
+        <a class="move" href="#" title="Move widget">Move</a>
+        @{Html.RenderPartial(widgetSetting.Name, widgetSetting);}
+    </div>
 }
+<br />
+@using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "function(){alert('a');}" }, new { id = "addwidgetform" }))
+{ 
+    @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), "Select")
+    <a href="javascript:void(0);" onclick="javascript:$('#addwidgetform').trigger('submit');">
+        Add</a>
+}
+<script type="text/javascript">
+    function showEditWidget(result) {
+        $('<div>' + result + '</div>').dialog();
+    }
+</script>

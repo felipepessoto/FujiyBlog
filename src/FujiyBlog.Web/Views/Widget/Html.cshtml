@@ -1,3 +1,16 @@
 ﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
-
-@Html.Raw(System.Text.Encoding.Unicode.GetString(Model.Settings))
+@{
+    IDictionary<string, string> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, string>() { { "Title", "" }, { "Text", "" } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, string>>(Model.Settings);
+    }
+}
+<h4>@Html.Raw(settings["Title"])</h4>
+<div class="content">
+    @Html.Raw(settings["Text"])
+</div>
