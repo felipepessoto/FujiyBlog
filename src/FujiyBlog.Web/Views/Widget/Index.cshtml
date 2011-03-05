@@ -5,7 +5,7 @@
         Html.RenderPartial(MVC.Widget.Views.Widget, widgetSetting);
     }
     <br />
-    @using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "function(){alert('a');}" }, new { id = "addwidgetform" }))
+    @using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "(function(){alert('a');})" }, new { id = "addwidgetform" }))
     { 
         @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), "Select")
         <a href="javascript:void(0);" onclick="javascript:$('#addwidgetform').trigger('submit');">

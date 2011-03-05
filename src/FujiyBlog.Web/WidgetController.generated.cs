@@ -43,6 +43,11 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Remove() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Remove);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
         }
@@ -61,6 +66,7 @@ namespace FujiyBlog.Web.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Add = "Add";
+            public readonly string Remove = "Remove";
             public readonly string Edit = "Edit";
         }
 
@@ -70,6 +76,8 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Categories = "~/Views/Widget/Categories.cshtml";
+            public readonly string CategoriesEdit = "~/Views/Widget/CategoriesEdit.cshtml";
             public readonly string Html = "~/Views/Widget/Html.cshtml";
             public readonly string HtmlEdit = "~/Views/Widget/HtmlEdit.cshtml";
             public readonly string Index = "~/Views/Widget/Index.cshtml";
@@ -91,6 +99,12 @@ namespace FujiyBlog.Web.Controllers {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Add);
             callInfo.RouteValueDictionary.Add("zoneName", zoneName);
             callInfo.RouteValueDictionary.Add("widgetName", widgetName);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Remove(int settingsId) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Remove);
+            callInfo.RouteValueDictionary.Add("settingsId", settingsId);
             return callInfo;
         }
 

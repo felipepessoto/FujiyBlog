@@ -188,5 +188,19 @@ namespace FujiyBlog.EntityFramework
         {
             return Database.Categories.OrderBy(x => x.Name).ToList();
         }
+
+        public IEnumerable<TagWithCount> GetTagsCloud(int minimumPosts)
+        {
+            var tags = from tag in Database.Tags
+                       where tag.Posts.Count() >= minimumPosts
+                       orderby tag.Name
+                       select new TagWithCount
+                                  {
+                                      Tag = tag,
+                                      PostsCount = tag.Posts.Count()
+                                  };
+
+            return tags.ToList();
+        }
     }
 }

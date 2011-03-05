@@ -14,5 +14,6 @@ namespace FujiyBlog.Core.Repositories
         Post GetNextPost(Post post, bool isPublic = true);
         IEnumerable<PostSummary> GetArchive(bool isPublic = true);
         IEnumerable<Category> GetCategories();
+        IEnumerable<TagWithCount> GetTagsCloud(int minimumPosts);
     }
 }

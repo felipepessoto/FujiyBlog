@@ -55,6 +55,7 @@
     <Compile Include="DomainObjects\User.cs" />
     <Compile Include="DomainObjects\WidgetSetting.cs" />
     <Compile Include="Dto\PostSummary.cs" />
+    <Compile Include="Dto\TagWithCount.cs" />
     <Compile Include="FeedGenerator.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -63,6 +63,15 @@ namespace FujiyBlog.Web.Controllers
             return Json(true);
         }
 
+        [HttpPost, Authorize]
+        public virtual ActionResult Remove(int settingsId)
+        {
+            WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(settingsId);
+            widgetSettingRepository.Remove(setting);
+            unitOfWork.SaveChanges();
+            return Json(true);
+        }
+
         [Authorize]
         public virtual ActionResult Edit(int widgetSettingId)
         {
