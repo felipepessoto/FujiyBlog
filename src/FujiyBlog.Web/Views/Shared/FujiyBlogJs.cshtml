@@ -13,8 +13,8 @@
             currentDialog: null,
 
             showEditWidget: function (result) {
-                if(fujiyBlog.widget.currentDialog){
-                    fujiyBlog.widget.currentDialog.dialog('close');
+                if(fujiyBlog.widget.currentDialog) {
+                    fujiyBlog.widget.currentDialog.remove();
                 }
 
                 fujiyBlog.widget.currentDialog = $('<div>' + result + '</div>').dialog();
