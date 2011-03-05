@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
+    <Compile Include="Controllers\JavaScriptController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
@@ -95,6 +96,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\UnityDependencyResolver.cs" />
+    <Compile Include="JavaScriptController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChangePasswordModel.cs" />
     <Compile Include="Models\FormsAuthenticationService.cs" />
     <Compile Include="Models\IFormsAuthenticationService.cs" />
@@ -135,6 +139,7 @@
     <Content Include="Content\Themes\Default\img\widgetmainbg.jpg" />
     <Content Include="Content\Themes\Default\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\jquery-1.5-vsdoc.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -158,7 +163,6 @@
     <Content Include="Content\Themes\Base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\Themes\Base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\Themes\Base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Scripts\jquery-1.4.4-vsdoc.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -209,6 +213,8 @@
     <Content Include="Views\Widget\Html.cshtml" />
     <Content Include="Views\Widget\Index.cshtml" />
     <Content Include="Views\Widget\HtmlEdit.cshtml" />
+    <None Include="Views\Shared\FujiyBlogJs.cshtml" />
+    <Content Include="Views\Widget\Widget.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -228,12 +234,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10183</DevelopmentServerPort>
           <DevelopmentServerVPath>/blog</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/blog/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,0 +1,10 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+<div class="widget @(Model.Name)" id="widget@(Model.Id)">
+    @if (Request.IsAuthenticated)
+    {
+        <a class="delete" href="#" title="Apagar widget">X</a>
+        @Ajax.ActionLink("Edit", MVC.Widget.Edit(Model.Id), new AjaxOptions { OnSuccess = "fujiyBlog.widget.showEditWidget" }, new { @class = "edit" })
+        <a class="move" href="#" title="Move widget">Move</a>
+    }
+    @{Html.RenderPartial(Model.Name, Model);}
+</div>

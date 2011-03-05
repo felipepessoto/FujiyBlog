@@ -25,6 +25,7 @@ using T4MVC;
 public static class MVC {
     public static FujiyBlog.Web.Controllers.AccountController Account = new FujiyBlog.Web.Controllers.T4MVC_AccountController();
     public static FujiyBlog.Web.Controllers.FeedController Feed = new FujiyBlog.Web.Controllers.T4MVC_FeedController();
+    public static FujiyBlog.Web.Controllers.JavaScriptController JavaScript = new FujiyBlog.Web.Controllers.T4MVC_JavaScriptController();
     public static FujiyBlog.Web.Controllers.PostController Post = new FujiyBlog.Web.Controllers.T4MVC_PostController();
     public static FujiyBlog.Web.Controllers.WidgetController Widget = new FujiyBlog.Web.Controllers.T4MVC_WidgetController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
@@ -285,7 +286,7 @@ namespace Links {
         private const string URLPATH = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string jquery_1_4_4_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.4.4-vsdoc.min.js") ? Url("jquery-1.4.4-vsdoc.min.js") : Url("jquery-1.4.4-vsdoc.js");
+        public static readonly string jquery_1_5_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.5-vsdoc.min.js") ? Url("jquery-1.5-vsdoc.min.js") : Url("jquery-1.5-vsdoc.js");
                       
         public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
         public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");

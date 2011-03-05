@@ -32,7 +32,7 @@ namespace FujiyBlog.Web.Controllers
                 var diretorio = new DirectoryInfo(Server.MapPath("~/Views/Widget/"));
                 widgets = (from file in diretorio.GetFiles()
                            let fileWithoutExtension = Path.GetFileNameWithoutExtension(file.FullName)
-                           where fileWithoutExtension != "Index" && !fileWithoutExtension.EndsWith("Edit")
+                           where fileWithoutExtension != "Index" && fileWithoutExtension != "Widget" && !fileWithoutExtension.EndsWith("Edit")
                            select fileWithoutExtension).ToArray();
             }
         }
@@ -63,6 +63,7 @@ namespace FujiyBlog.Web.Controllers
             return Json(true);
         }
 
+        [Authorize]
         public virtual ActionResult Edit(int widgetSettingId)
         {
             WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(widgetSettingId);
@@ -79,7 +80,7 @@ namespace FujiyBlog.Web.Controllers
 
             unitOfWork.SaveChanges();
 
-            return Json(true);
+            return View(MVC.Widget.Views.Widget, setting);
         }
     }
 }

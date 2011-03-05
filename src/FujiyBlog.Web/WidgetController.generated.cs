@@ -73,6 +73,7 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Html = "~/Views/Widget/Html.cshtml";
             public readonly string HtmlEdit = "~/Views/Widget/HtmlEdit.cshtml";
             public readonly string Index = "~/Views/Widget/Index.cshtml";
+            public readonly string Widget = "~/Views/Widget/Widget.cshtml";
         }
     }
 
