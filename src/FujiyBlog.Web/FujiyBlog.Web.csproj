@@ -215,6 +215,8 @@
     <Content Include="Views\Widget\HtmlEdit.cshtml" />
     <None Include="Views\Shared\FujiyBlogJs.cshtml" />
     <Content Include="Views\Widget\Widget.cshtml" />
+    <Content Include="Views\Widget\Categories.cshtml" />
+    <Content Include="Views\Widget\CategoriesEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

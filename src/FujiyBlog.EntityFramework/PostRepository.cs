@@ -182,6 +182,11 @@ namespace FujiyBlog.EntityFramework
             }
 
             return posts.FirstOrDefault();
-        }   
+        }
+
+        public IEnumerable<Category> GetCategories()
+        {
+            return Database.Categories.OrderBy(x => x.Name).ToList();
+        }
     }
 }

@@ -1,0 +1,16 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+    IDictionary<string, string> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, string>() { { "Title", "" } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, string>>(Model.Settings);
+    }
+}
+Title: @Html.TextBox("Title" + Model.Id, settings["Title"])
+
+<a href="javascript:void(0);" onclick="javascript:fujiyBlog.widget.saveWidgetSettings(@Model.Id, JSON.stringify({ Title: $('#Title@(Model.Id)').val() }));">
+    Save</a>

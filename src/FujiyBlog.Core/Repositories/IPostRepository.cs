@@ -13,5 +13,6 @@ namespace FujiyBlog.Core.Repositories
         Post GetPreviousPost(Post post, bool isPublic = true);
         Post GetNextPost(Post post, bool isPublic = true);
         IEnumerable<PostSummary> GetArchive(bool isPublic = true);
+        IEnumerable<Category> GetCategories();
     }
 }

@@ -1,0 +1,23 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+    IDictionary<string, string> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, string>() { { "Title", "Categories" } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, string>>(Model.Settings);
+    }
+    FujiyBlog.Core.Repositories.IPostRepository postRepository = DependencyResolver.Current.GetService<FujiyBlog.Core.Repositories.IPostRepository>();
+    
+}
+<h4>@Html.Raw(settings["Title"])</h4>
+<div class="content">
+    <ul id="categorylist">
+    @foreach (var category in postRepository.GetCategories())
+    {
+        <li>@Html.ActionLink(category.Name + "(" + postRepository.GetTotal(category: category.Name, isPublic: Request.IsAuthenticated) + ")", MVC.Post.Category(category.Name, null))</li>    
+    }    
+    </ul>
+</div>
