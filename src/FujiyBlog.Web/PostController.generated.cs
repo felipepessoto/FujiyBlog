@@ -53,6 +53,11 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ArchiveDate() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ArchiveDate);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Details() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Details);
         }
@@ -84,6 +89,7 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Category = "Category";
             public readonly string Author = "Author";
             public readonly string Archive = "Archive";
+            public readonly string ArchiveDate = "ArchiveDate";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
             public readonly string DoComment = "DoComment";
@@ -137,6 +143,14 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Archive() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Archive);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ArchiveDate(int year, int month, int? skip) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ArchiveDate);
+            callInfo.RouteValueDictionary.Add("year", year);
+            callInfo.RouteValueDictionary.Add("month", month);
+            callInfo.RouteValueDictionary.Add("skip", skip);
             return callInfo;
         }
 

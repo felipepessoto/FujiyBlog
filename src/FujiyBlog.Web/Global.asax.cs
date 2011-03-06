@@ -34,6 +34,7 @@ namespace FujiyBlog.Web
             routes.MapRoute("CategoryHome", "category/{category}", MVC.Post.Category());
             routes.MapRoute("AuthorHome", "author/{author}", MVC.Post.Author());
             routes.MapRoute("Archive", "archive", MVC.Post.Archive());
+            routes.MapRoute("ArchiveByMonth", "archive/{year}/{month}", MVC.Post.ArchiveDate(), null, new { year = @"\d{4}", month = @"\d{1,2}" });
 
             routes.MapRoute(
                 "Default", // Route name

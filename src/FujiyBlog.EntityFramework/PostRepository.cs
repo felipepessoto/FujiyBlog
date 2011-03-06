@@ -40,6 +40,11 @@ namespace FujiyBlog.EntityFramework
                 post = posts.SingleOrDefault(x => x.Slug == slug);
             }
 
+            if (post == null)
+            {
+                return null;
+            }
+
             Database.Entry(post).Collection(x=>x.Tags).Load();
             Database.Entry(post).Collection(x => x.Categories).Load();
             if (isPublic)
@@ -54,7 +59,7 @@ namespace FujiyBlog.EntityFramework
             return post;
         }
 
-        public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, bool isPublic = true)
+        public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null, bool isPublic = true)
         {
             IQueryable<Post> posts = Database.Posts;
             IQueryable<PostComment> comments = Database.PostComments;
@@ -83,6 +88,16 @@ namespace FujiyBlog.EntityFramework
             if (skip > 0)
             {
                 posts = posts.Skip(skip);
+            }
+
+            if (startDate.HasValue)
+            {
+                posts = posts.Where(x => x.PublicationDate >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                posts = posts.Where(x => x.PublicationDate <= endDate.Value);
             }
 
             posts = posts.Take(take);
@@ -124,7 +139,7 @@ namespace FujiyBlog.EntityFramework
             return postSummaries;
         }
 
-        public int GetTotal(string tag = null, string category = null, string authorUserName = null, bool isPublic = true)
+        public int GetTotal(string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null, bool isPublic = true)
         {
             IQueryable<Post> posts = Database.Posts;
 
@@ -141,6 +156,16 @@ namespace FujiyBlog.EntityFramework
             if (authorUserName != null)
             {
                 posts = posts.Where(x => x.Author.Username == authorUserName);
+            }
+
+            if (startDate.HasValue)
+            {
+                posts = posts.Where(x => x.PublicationDate >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                posts = posts.Where(x => x.PublicationDate <= endDate.Value);
             }
 
             if (isPublic)

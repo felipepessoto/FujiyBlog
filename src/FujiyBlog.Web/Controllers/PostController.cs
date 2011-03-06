@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
@@ -90,6 +91,21 @@ namespace FujiyBlog.Web.Controllers
             return View(model);
         }
 
+        public virtual ActionResult ArchiveDate(int year, int month, int? skip)
+        {
+            DateTime startDate = new DateTime(year, month, 1);
+            DateTime endDate = startDate.AddMonths(1);
+
+            PostIndex model = new PostIndex
+            {
+                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
+                TotalPosts = postRepository.GetTotal(startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
+            };
+
+            return View(MVC.Post.Views.Index, model);
+        }
+
         public virtual ActionResult Details(string postSlug)
         {
             return Details(postSlug, null);
@@ -123,7 +139,7 @@ namespace FujiyBlog.Web.Controllers
                 NextPost = nextPost
             };
 
-            return View(postDetails);
+            return View(MVC.Post.Views.Details, postDetails);
         }
 
         public virtual ActionResult DoComment(int id)
