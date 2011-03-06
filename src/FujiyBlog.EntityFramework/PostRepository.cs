@@ -230,9 +230,7 @@ namespace FujiyBlog.EntityFramework
 
         public IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending)
         {
-            var months = from data in Database.Posts
-                         group data by new {data.PublicationDate.Year, data.PublicationDate.Month} into g
-                         select g;
+            var months = Database.Posts.GroupBy(data => new {data.PublicationDate.Year, data.PublicationDate.Month});
 
             if(descending)
             {
@@ -243,12 +241,11 @@ namespace FujiyBlog.EntityFramework
                 months = months.OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month);
             }
 
-            var monthsProj = (from g in months
-                              select new
-                                         {
-                                             Data = g.Key,
-                                             Count = g.Count()
-                                         }).ToList();
+            var monthsProj = months.Select(g => new
+                                                    {
+                                                        Data = g.Key,
+                                                        Count = g.Count()
+                                                    }).ToList();
 
             var monthsTuples = from data in monthsProj
                                select Tuple.Create(new DateTime(data.Data.Year, data.Data.Month, 1), data.Count);
