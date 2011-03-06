@@ -1,0 +1,31 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+    IDictionary<string, object> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, object>() { { "Title", "" }, { "RecentDatesAtTop", false } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
+    }
+    FujiyBlog.Core.Repositories.IPostRepository postRepository = DependencyResolver.Current.GetService<FujiyBlog.Core.Repositories.IPostRepository>();
+    var datesCount = postRepository.GetArchiveCountByMonth((bool)settings["RecentDatesAtTop"]);
+    var years = datesCount.Select(x => x.Item1.Year).Distinct();
+}
+<h4>@Html.Raw(settings["Title"] as string)</h4>
+<div class="content">
+    <ul class="monthlist">
+        @foreach (var year in years)
+        {
+            <li class="year"><a href="javascript:void(0);" onclick="$(this).next().toggle('fast')">@year</a>
+                <ul style="display: none">
+                    @foreach (var mes in datesCount.Where(x => x.Item1.Year == year))
+                    {
+                        <li>@Html.ActionLink(mes.Item1.Month + "(" + mes.Item2 + ")", MVC.Post.ArchiveDate(mes.Item1.Year, mes.Item1.Month, null))</li>
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>

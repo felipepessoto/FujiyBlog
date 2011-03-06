@@ -219,6 +219,8 @@
     <Content Include="Views\Widget\CategoriesEdit.cshtml" />
     <Content Include="Views\Widget\TagCloud.cshtml" />
     <Content Include="Views\Widget\TagCloudEdit.cshtml" />
+    <Content Include="Views\Widget\Archive.cshtml" />
+    <Content Include="Views\Widget\ArchiveEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

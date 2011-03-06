@@ -227,5 +227,33 @@ namespace FujiyBlog.EntityFramework
 
             return tags.ToList();
         }
+
+        public IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending)
+        {
+            var months = from data in Database.Posts
+                         group data by new {data.PublicationDate.Year, data.PublicationDate.Month} into g
+                         select g;
+
+            if(descending)
+            {
+                months = months.OrderByDescending(g => g.Key.Year).ThenByDescending(g => g.Key.Month);
+            }
+            else
+            {
+                months = months.OrderBy(g => g.Key.Year).ThenBy(g => g.Key.Month);
+            }
+
+            var monthsProj = (from g in months
+                              select new
+                                         {
+                                             Data = g.Key,
+                                             Count = g.Count()
+                                         }).ToList();
+
+            var monthsTuples = from data in monthsProj
+                               select Tuple.Create(new DateTime(data.Data.Year, data.Data.Month, 1), data.Count);
+
+            return monthsTuples;
+        }
     }
 }

@@ -16,5 +16,6 @@ namespace FujiyBlog.Core.Repositories
         IEnumerable<PostSummary> GetArchive(bool isPublic = true);
         IEnumerable<Category> GetCategories();
         IEnumerable<TagWithCount> GetTagsCloud(int minimumPosts);
+        IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending);
     }
 }
