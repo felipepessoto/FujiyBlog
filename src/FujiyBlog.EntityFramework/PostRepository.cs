@@ -203,7 +203,7 @@ namespace FujiyBlog.EntityFramework
 
         public Post GetPreviousPost(Post post, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.OrderBy(x => x.PublicationDate).Where(x=>x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
+            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
 
             if (isPublic)
             {
@@ -215,7 +215,7 @@ namespace FujiyBlog.EntityFramework
 
         public Post GetNextPost(Post post, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
+            IQueryable<Post> posts = Database.Posts.OrderBy(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
 
             if (isPublic)
             {
