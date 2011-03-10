@@ -34,7 +34,7 @@
                     Comments
                 </th>
             </tr>
-            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Categories.Any(y => y == category)))
+            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Post.Categories.Any(y => y == category)))
             {
                 <tr>
                     <td class="date">@postSummary.Post.PublicationDate.ToLocalTime().ToShortDateString()

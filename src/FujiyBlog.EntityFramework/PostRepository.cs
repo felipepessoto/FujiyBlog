@@ -61,8 +61,7 @@ namespace FujiyBlog.EntityFramework
 
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts;
-            IQueryable<PostComment> comments = Database.PostComments;
+            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
 
             if (tag != null)
             {
@@ -82,7 +81,6 @@ namespace FujiyBlog.EntityFramework
             if (isPublic)
             {
                 posts = posts.Where(PublicPost);
-                comments = comments.Where(PublicPostComment);
             }
 
             if (skip > 0)
@@ -102,39 +100,57 @@ namespace FujiyBlog.EntityFramework
 
             posts = posts.Take(take);
 
-            var postSummaries = ((from post in posts
-                                  join comment in comments on post.Id equals comment.Post.Id into g
+            Dictionary<int,int> counts;
+
+            if (isPublic)
+            {
+                counts = (from post in posts
+                          select new { post.Id, C = post.Comments.Count(x=> x.IsApproved && !x.IsDeleted) }).ToDictionary(e => e.Id, e => e.C);
+            }
+            else
+            {
+                counts = (from post in posts
+                          select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
+            }
+
+            var postSummaries = (from post in posts.ToList()
                                   select new PostSummary
                                              {
                                                  Post = post,
-                                                 Author = post.Author,
-                                                 Tags = post.Tags,
-                                                 Categories = post.Categories,
-                                                 CommentsTotal = g.Count()
-                                             }).OrderByDescending(x => x.Post.PublicationDate).ToList());
+                                                 CommentsTotal = counts[post.Id]
+                                             }).ToList();
 
             return postSummaries;
         }
 
         public IEnumerable<PostSummary> GetArchive(bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts;
-            IQueryable<PostComment> comments = Database.PostComments;
+            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Categories);
 
             if (isPublic)
             {
                 posts = posts.Where(PublicPost);
-                comments = comments.Where(PublicPostComment);
             }
 
-            var postSummaries = ((from post in posts
-                                  join comment in comments on post.Id equals comment.Post.Id into g
-                                  select new PostSummary
-                                  {
-                                      Post = post,
-                                      Categories = post.Categories,
-                                      CommentsTotal = g.Count()
-                                  }).OrderByDescending(x => x.Post.PublicationDate).ToList());
+            Dictionary<int, int> counts;
+
+            if (isPublic)
+            {
+                counts = (from post in posts
+                          select new { post.Id, C = post.Comments.Count(x => x.IsApproved && !x.IsDeleted) }).ToDictionary(e => e.Id, e => e.C);
+            }
+            else
+            {
+                counts = (from post in posts
+                          select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
+            }
+
+            var postSummaries = (from post in posts.ToList()
+                                 select new PostSummary
+                                            {
+                                                Post = post,
+                                                CommentsTotal = counts[post.Id]
+                                            }).ToList();
 
             return postSummaries;
         }

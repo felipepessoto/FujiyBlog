@@ -7,8 +7,5 @@ namespace FujiyBlog.Core.Dto
     {
         public Post Post { get; set; }
         public int CommentsTotal { get; set; }
-        public User Author { get; set; }
-        public IEnumerable<Tag> Tags { get; set; }
-        public IEnumerable<Category> Categories { get; set; }
     }
 }

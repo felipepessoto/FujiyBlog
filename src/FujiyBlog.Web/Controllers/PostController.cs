@@ -83,8 +83,8 @@ namespace FujiyBlog.Web.Controllers
                 AllPosts = postRepository.GetArchive(!Request.IsAuthenticated)
             };
 
-            model.UncategorizedPosts = model.AllPosts.Where(x => !x.Categories.Any());
-            model.AllCategories = model.AllPosts.SelectMany(x => x.Categories).Distinct();
+            model.UncategorizedPosts = model.AllPosts.Where(x => !x.Post.Categories.Any()).ToList();
+            model.AllCategories = model.AllPosts.SelectMany(x => x.Post.Categories).Distinct().ToList();
             model.TotalPosts = model.AllPosts.Count();
             model.TotalComments = model.AllPosts.Sum(x => x.CommentsTotal);
 
