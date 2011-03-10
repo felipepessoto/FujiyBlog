@@ -24,8 +24,8 @@
         <div id="frameinner">
         
       <div id="header">
-        <p id="blogname"><a href="/">Nome Do Blog</a></p>
-        <p id="blogdesc">Descrição do Blog</p>
+        <p id="blogname">@Html.ActionLink(FujiyBlog.Web.Models.Settings.SettingRepository.BlogName, MVC.Post.Index())</p>
+        <p id="blogdesc">@FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription</p>
         
         <div id="menu">
         <ul>
