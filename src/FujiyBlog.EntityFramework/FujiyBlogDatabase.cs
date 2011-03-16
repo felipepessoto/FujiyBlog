@@ -1,6 +1,4 @@
 ﻿using System.Data.Entity;
-using System.Data.Entity.Database;
-using System.Data.Entity.ModelConfiguration;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.EntityFramework.Configuration;
 using FujiyBlog.Core.Infrastructure;
@@ -12,10 +10,10 @@ namespace FujiyBlog.EntityFramework
         public FujiyBlogDatabase()
         {
             Configuration.LazyLoadingEnabled = false;
-            DbDatabase.SetInitializer<FujiyBlogDatabase>(null);
+            Database.SetInitializer<FujiyBlogDatabase>(null);
         }
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        protected override void OnModelCreating(DbModelBuilder builder)
         {
             builder.Configurations.Add(new PostCommentConfiguration());
             builder.Configurations.Add(new PostConfiguration());

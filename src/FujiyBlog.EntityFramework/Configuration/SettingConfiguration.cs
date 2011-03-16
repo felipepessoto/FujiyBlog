@@ -8,7 +8,7 @@ namespace FujiyBlog.EntityFramework.Configuration
     {
         public SettingConfiguration()
         {
-            Property(b => b.Id).HasDatabaseGenerationOption(DatabaseGenerationOption.None);
+            Property(b => b.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             Property(b => b.Description).IsUnicode(false);
             Property(b => b.Value).IsUnicode(false).IsMaxLength();
         }
