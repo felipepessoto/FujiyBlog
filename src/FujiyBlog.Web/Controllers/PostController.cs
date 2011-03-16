@@ -25,12 +25,14 @@ namespace FujiyBlog.Web.Controllers
             this.postService = postService;
         }
 
-        public virtual ActionResult Index(int? skip)
+        public virtual ActionResult Index(int? page)
         {
+            int skip = (page.GetValueOrDefault(1) - 1)*Settings.SettingRepository.PostsPerPage;
+
             PostIndex model = new PostIndex
                                   {
                                       PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                                      RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, isPublic: !Request.IsAuthenticated),
+                                      RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, isPublic: !Request.IsAuthenticated),
                                       TotalPosts = postRepository.GetTotal(isPublic: !Request.IsAuthenticated),
                                   };
 
@@ -40,36 +42,42 @@ namespace FujiyBlog.Web.Controllers
             return View(model);
         }
 
-        public virtual ActionResult Tag(string tag, int? skip)
+        public virtual ActionResult Tag(string tag, int? page)
         {
+            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, tag, isPublic: !Request.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, tag, isPublic: !Request.IsAuthenticated),
                 TotalPosts = postRepository.GetTotal(tag, isPublic: !Request.IsAuthenticated),
             };
 
             return View(MVC.Post.Views.Index, model);
         }
 
-        public virtual ActionResult Category(string category, int? skip)
+        public virtual ActionResult Category(string category, int? page)
         {
+            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, category: category, isPublic: !Request.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, category: category, isPublic: !Request.IsAuthenticated),
                 TotalPosts = postRepository.GetTotal(category: category, isPublic: !Request.IsAuthenticated),
             };
 
             return View(MVC.Post.Views.Index, model);
         }
 
-        public virtual ActionResult Author(string author, int? skip)
+        public virtual ActionResult Author(string author, int? page)
         {
+            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !Request.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !Request.IsAuthenticated),
                 TotalPosts = postRepository.GetTotal(authorUserName: author, isPublic: !Request.IsAuthenticated),
             };
 
@@ -91,15 +99,17 @@ namespace FujiyBlog.Web.Controllers
             return View(model);
         }
 
-        public virtual ActionResult ArchiveDate(int year, int month, int? skip)
+        public virtual ActionResult ArchiveDate(int year, int month, int? page)
         {
+            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+
             DateTime startDate = new DateTime(year, month, 1);
             DateTime endDate = startDate.AddMonths(1);
 
             PostIndex model = new PostIndex
             {
                 PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                RecentPosts = postRepository.GetRecentPosts(skip.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage, startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
+                RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
                 TotalPosts = postRepository.GetTotal(startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
             };
 

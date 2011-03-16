@@ -114,30 +114,30 @@ namespace FujiyBlog.Web.Controllers {
     public class T4MVC_PostController: FujiyBlog.Web.Controllers.PostController {
         public T4MVC_PostController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index(int? skip) {
+        public override System.Web.Mvc.ActionResult Index(int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("skip", skip);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Tag(string tag, int? skip) {
+        public override System.Web.Mvc.ActionResult Tag(string tag, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Tag);
             callInfo.RouteValueDictionary.Add("tag", tag);
-            callInfo.RouteValueDictionary.Add("skip", skip);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Category(string category, int? skip) {
+        public override System.Web.Mvc.ActionResult Category(string category, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Category);
             callInfo.RouteValueDictionary.Add("category", category);
-            callInfo.RouteValueDictionary.Add("skip", skip);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Author(string author, int? skip) {
+        public override System.Web.Mvc.ActionResult Author(string author, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Author);
             callInfo.RouteValueDictionary.Add("author", author);
-            callInfo.RouteValueDictionary.Add("skip", skip);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
@@ -146,11 +146,11 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ArchiveDate(int year, int month, int? skip) {
+        public override System.Web.Mvc.ActionResult ArchiveDate(int year, int month, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ArchiveDate);
             callInfo.RouteValueDictionary.Add("year", year);
             callInfo.RouteValueDictionary.Add("month", month);
-            callInfo.RouteValueDictionary.Add("skip", skip);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
