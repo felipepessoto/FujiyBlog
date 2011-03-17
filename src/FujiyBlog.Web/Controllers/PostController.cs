@@ -31,9 +31,9 @@ namespace FujiyBlog.Web.Controllers
 
             PostIndex model = new PostIndex
                                   {
-                                      PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                                      CurrentPage = page.GetValueOrDefault(1),
                                       RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, isPublic: !Request.IsAuthenticated),
-                                      TotalPosts = postRepository.GetTotal(isPublic: !Request.IsAuthenticated),
+                                      TotalPages = (int)Math.Ceiling(postRepository.GetTotal(isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
                                   };
 
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
@@ -48,9 +48,9 @@ namespace FujiyBlog.Web.Controllers
 
             PostIndex model = new PostIndex
             {
-                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                CurrentPage = page.GetValueOrDefault(1),
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, tag, isPublic: !Request.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(tag, isPublic: !Request.IsAuthenticated),
+                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(tag, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
             return View(MVC.Post.Views.Index, model);
@@ -62,9 +62,9 @@ namespace FujiyBlog.Web.Controllers
 
             PostIndex model = new PostIndex
             {
-                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                CurrentPage = page.GetValueOrDefault(1),
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, category: category, isPublic: !Request.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(category: category, isPublic: !Request.IsAuthenticated),
+                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(category: category, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
             return View(MVC.Post.Views.Index, model);
@@ -76,9 +76,9 @@ namespace FujiyBlog.Web.Controllers
 
             PostIndex model = new PostIndex
             {
-                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                CurrentPage = page.GetValueOrDefault(1),
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !Request.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(authorUserName: author, isPublic: !Request.IsAuthenticated),
+                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(authorUserName: author, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
             return View(MVC.Post.Views.Index, model);
@@ -108,9 +108,9 @@ namespace FujiyBlog.Web.Controllers
 
             PostIndex model = new PostIndex
             {
-                PostsPerPage = Settings.SettingRepository.PostsPerPage,
+                CurrentPage = page.GetValueOrDefault(1),
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
-                TotalPosts = postRepository.GetTotal(startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
+                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
             return View(MVC.Post.Views.Index, model);

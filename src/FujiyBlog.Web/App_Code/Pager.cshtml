@@ -1,0 +1,70 @@
+﻿@helper Links(int currentPage, int totalPages){
+    
+    int numbersToShow = Math.Min(13, totalPages);
+
+    int initialPage = Math.Max(currentPage - (numbersToShow / 2), 1);
+
+    int suppostEndPage = initialPage + numbersToShow - 1;
+    if (suppostEndPage > totalPages)
+    {
+        initialPage = initialPage - (suppostEndPage - totalPages);
+    }
+
+    bool showTwoFirst = initialPage > 1;
+
+    if (showTwoFirst)
+    {
+        initialPage += 2;
+        numbersToShow -= 2;
+    }
+
+    bool showTwoLasts = initialPage + numbersToShow - 1 < totalPages;
+
+    if (showTwoLasts)
+    {
+        numbersToShow -= 2;
+    }
+
+<ul class="PostPager">
+    @if (currentPage == 1)
+    {
+        <li class="PagerLinkDisabled">Next posts</li>
+    }
+    else
+    { 
+        <li class="PagerLink"><a href="?page=@(currentPage - 1)">Next posts</a></li>
+    }
+    @if (showTwoFirst)
+    {
+        <li class="PagerLink"><a href="?page=1">1</a></li>
+        <li class="PagerLink"><a href="?page=2">2</a></li>
+        <li class="PagerEllipses">...</li>
+    }
+    @foreach (int page in Enumerable.Range(initialPage, numbersToShow))
+    {
+        if (page == currentPage)
+        {
+        <li class="PagerLinkCurrent">@page</li>
+        }
+        else
+        {
+        <li class="PagerLink"><a href="?page=@page">@page</a></li>
+        }
+    }
+    @if (showTwoLasts)
+    {
+        <li class="PagerEllipses">...</li>
+        <li class="PagerLink"><a href="?page=@(totalPages - 1)">@( totalPages - 1)</a></li>
+        <li class="PagerLink"><a href="?page=@totalPages">@totalPages</a></li>
+    }
+    @if (currentPage == totalPages)
+    {
+        <li class="PagerLinkDisabled">Previous posts</li>
+    }
+    else
+    { 
+        <li class="PagerLink"><a href="?page=@(currentPage + 1)">Previous posts</a></li>
+    }
+</ul>
+
+    }

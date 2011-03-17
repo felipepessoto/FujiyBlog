@@ -222,6 +222,7 @@
     <Content Include="Views\Widget\TagCloudEdit.cshtml" />
     <Content Include="Views\Widget\Archive.cshtml" />
     <Content Include="Views\Widget\ArchiveEdit.cshtml" />
+    <Content Include="App_Code\Pager.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
