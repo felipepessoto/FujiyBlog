@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using FujiyBlog.Core.Dto;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.EntityFramework
 {
@@ -24,7 +19,7 @@ namespace FujiyBlog.EntityFramework
 
         public IEnumerable<WidgetSetting> GetWidgetSettings(string widgetZone)
         {
-            return Database.WidgetSettings.Where(x => x.WidgetZone == widgetZone).ToList();
+            return Database.WidgetSettings.Where(x => x.WidgetZone == widgetZone).OrderBy(x => x.Position).ToList();
         }
     }
 }

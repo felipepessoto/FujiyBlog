@@ -56,11 +56,12 @@ namespace FujiyBlog.Web.Controllers
                                               {
                                                   Name = widgetName,
                                                   WidgetZone = zoneName,
+                                                  Position = int.MaxValue
                                               };
 
             widgetSettingRepository.Add(widgetSetting);
             unitOfWork.SaveChanges();
-            return Json(true);
+            return View(MVC.Widget.Views.Widget, widgetSetting);
         }
 
         [HttpPost, Authorize]

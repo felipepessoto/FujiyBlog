@@ -13,6 +13,8 @@ namespace FujiyBlog.Core.DomainObjects
         [Required,StringLength(50)]
         public virtual string WidgetZone { get; set; }
 
+        public virtual int Position { get; set; }
+
         public virtual string Settings { get; set; }
     }
 }

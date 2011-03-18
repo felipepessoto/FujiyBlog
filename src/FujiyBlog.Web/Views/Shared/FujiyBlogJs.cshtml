@@ -39,6 +39,23 @@
                 if(fujiyBlog.widget.currentDialog){
                     fujiyBlog.widget.currentDialog.dialog('close');
                 }
+            },
+
+            showAddedWidget: function(result){
+                $('#addedwidgets').append(result);
+            },
+
+            startDragAndDrop:function(){
+                $(".widget").droppable({
+                //activeClass: "ui-state-hover",
+                //hoverClass: "ui-state-active",
+                drop: function( event, ui ) {
+                    $( this )
+                        .addClass( "ui-state-highlight" )
+                        .find( "p" )
+                            .html( "Dropped!" );
+                }
+        });
             }
         }
     }
