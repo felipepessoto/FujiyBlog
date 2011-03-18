@@ -30,12 +30,18 @@ namespace FujiyBlog.EntityFramework
             get { return Database.Settings.Find((int)SettingNames.BlogDescription).Value; }
         }
 
+        public string Theme
+        {
+            get { return Database.Settings.Find((int)SettingNames.Theme).Value; }
+        }
+
         private enum SettingNames
         {
             MinRequiredPasswordLength = 1,
             PostsPerPage = 2,
             BlogName = 3,
-            BlogDescription = 4
+            BlogDescription = 4,
+            Theme = 5
         }
     }
 }

@@ -6,5 +6,6 @@
         int PostsPerPage { get; }
         string BlogName { get; }
         string BlogDescription { get; }
+        string Theme { get; }
     }
 }
