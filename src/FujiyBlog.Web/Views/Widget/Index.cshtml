@@ -4,14 +4,15 @@
     {
         Html.RenderPartial(MVC.Widget.Views.Widget, widgetSetting);
     }
-    @if (Request.IsAuthenticated)
-    {
-        <div id="addedwidgets"></div>
-        using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "fujiyBlog.widget.showAddedWidget" }, new { id = "addwidgetform" }))
-        { 
-        @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), "Select")
-        <a href="javascript:void(0);" onclick="javascript:$('#addwidgetform').trigger('submit');">
-            Add</a>
-        }
-    }
 </div>
+@if (Request.IsAuthenticated)
+{
+    <script type="text/javascript">fujiyBlog.widget.startDragAndDrop();</script>
+    <div id="addedwidgets"></div>
+    using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "fujiyBlog.widget.showAddedWidget('widgetzone_" + Model.ZoneName + "', arguments[0]);" }, new { id = "addwidgetform" + Model.ZoneName }))
+    { 
+    @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), "Select")
+    <a href="javascript:void(0);" onclick="javascript:$('#addwidgetform@(Model.ZoneName)').trigger('submit');">
+        Add</a>
+    }
+}

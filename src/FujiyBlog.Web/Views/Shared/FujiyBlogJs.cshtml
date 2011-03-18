@@ -41,21 +41,21 @@
                 }
             },
 
-            showAddedWidget: function(result){
-                $('#addedwidgets').append(result);
+            showAddedWidget: function(idZoneElement, result){
+                $('#' + idZoneElement).append(result);
             },
 
             startDragAndDrop:function(){
-                $(".widget").droppable({
-                //activeClass: "ui-state-hover",
-                //hoverClass: "ui-state-active",
-                drop: function( event, ui ) {
-                    $( this )
-                        .addClass( "ui-state-highlight" )
-                        .find( "p" )
-                            .html( "Dropped!" );
-                }
-        });
+                $('.widgetzone').sortable({placeholder: 'ui-state-highlight', forcePlaceholderSize: true, handle: '.move',
+                    update: function(event, ui) {
+                        var widgetsOrder = $(this).sortable('toArray').toString();
+                        $.ajax({
+                            url: '@Url.Action(MVC.Widget.Sort())',
+                            type: 'post',
+                            data: { widgetsOrder: widgetsOrder }
+                        })
+                    }
+                });
             }
         }
     }

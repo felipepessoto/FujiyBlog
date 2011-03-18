@@ -51,6 +51,11 @@ namespace FujiyBlog.Web.Controllers {
         public System.Web.Mvc.ActionResult Edit() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Sort() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Sort);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public WidgetController Actions { get { return MVC.Widget; } }
@@ -68,6 +73,7 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Add = "Add";
             public readonly string Remove = "Remove";
             public readonly string Edit = "Edit";
+            public readonly string Sort = "Sort";
         }
 
 
@@ -122,6 +128,12 @@ namespace FujiyBlog.Web.Controllers {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             callInfo.RouteValueDictionary.Add("widgetSettingId", widgetSettingId);
             callInfo.RouteValueDictionary.Add("settings", settings);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Sort(string widgetsOrder) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Sort);
+            callInfo.RouteValueDictionary.Add("widgetsOrder", widgetsOrder);
             return callInfo;
         }
 

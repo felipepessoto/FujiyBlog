@@ -92,5 +92,18 @@ namespace FujiyBlog.Web.Controllers
 
             return View(MVC.Widget.Views.Widget, setting);
         }
+
+        [Authorize, HttpPost]
+        public virtual ActionResult Sort(string widgetsOrder)
+        {
+            int position = 1;
+            foreach (int widgetSettingId in widgetsOrder.Split(',').Select(x=> int.Parse(x.Substring(6))))
+            {
+                WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(widgetSettingId);
+                setting.Position = position++;
+            }
+            unitOfWork.SaveChanges();
+            return null;
+        }
     }
 }
