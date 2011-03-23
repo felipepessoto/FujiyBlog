@@ -21,7 +21,7 @@
                 }
             }
             else { 
-                @Html.ActionLink(comment.Author.DisplayName, MVC.Post.Author(comment.Author.Username, null))
+                @Html.ActionLink(comment.Author.DisplayName ?? comment.Author.Username, MVC.Post.Author(comment.Author.Username, null))
             }
                 @*    <%= ((BlogEngine.Core.BlogSettings.Instance.IsCommentNestingEnabled && Comment.IsApproved) ? " | " : "") %>
     <%= ReplyToLink %>    
