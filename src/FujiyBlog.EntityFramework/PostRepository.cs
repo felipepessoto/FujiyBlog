@@ -16,7 +16,12 @@ namespace FujiyBlog.EntityFramework
         {
         }
 
-        private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < DateTime.UtcNow;
+        private static DateTime UtcNow
+        {
+            get { return DateTime.UtcNow; }
+        }
+
+        private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < UtcNow;
         private static readonly Expression<Func<PostComment, bool>> PublicPostComment = x => x.IsApproved && !x.IsDeleted;
 
         private Post GetPost(string slug, int? id, bool isPublic = true)

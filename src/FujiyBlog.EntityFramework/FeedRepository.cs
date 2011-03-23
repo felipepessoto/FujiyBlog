@@ -32,8 +32,10 @@ namespace FujiyBlog.EntityFramework
 
         public IEnumerable<Post> GetPosts(int take)
         {
+            DateTime utcNow = DateTime.UtcNow;
+
             return (from post in database.Posts
-                   where !post.IsDeleted && post.IsPublished && post.PublicationDate < DateTime.UtcNow
+                    where !post.IsDeleted && post.IsPublished && post.PublicationDate < utcNow
                    orderby post.PublicationDate descending
                    select post).Take(take).ToList();
         }
