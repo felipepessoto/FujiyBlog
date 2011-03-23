@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.EntityFramework
@@ -7,6 +8,8 @@ namespace FujiyBlog.EntityFramework
     {
         protected override void Seed(FujiyBlogDatabase context)
         {
+            DateTime utcNow = DateTime.UtcNow;
+
             Setting minRequiredPasswordLength = new Setting
                                                     {
                                                         Id = 1,
@@ -47,6 +50,31 @@ namespace FujiyBlog.EntityFramework
             context.Settings.Add(blogName);
             context.Settings.Add(blogDescription);
             context.Settings.Add(theme);
+
+            User admin = new User
+                             {
+                                 CreationDate = utcNow,
+                                 Username = "admin",
+                                 Password = "admin",
+                                 Email = "admin@example.com",
+                             };
+
+            context.Users.Add(admin);
+
+            Post examplePost = new Post
+                                   {
+                                       Title = "Example post. You blog is now installed",
+                                       Slug = "example",
+                                       Content = "Example post",
+                                       Author = admin,
+                                       IsPublished = true,
+                                       CreationDate = utcNow,
+                                       LastModificationDate = utcNow,
+                                       PublicationDate = utcNow,
+
+                                   };
+
+            context.Posts.Add(examplePost);
 
             base.Seed(context);
         }

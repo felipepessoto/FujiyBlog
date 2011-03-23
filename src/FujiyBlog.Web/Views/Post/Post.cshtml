@@ -2,7 +2,7 @@
 <div class="post xfolkentry" id="post@(Model.Id)">
     <h1>
         @Html.ActionLink(Model.Title, MVC.Post.Details(Model.Slug))</h1>
-    <span class="author">by @Html.ActionLink(Model.Author.DisplayName, MVC.Post.Author(Model.Author.Username, null))</span>
+    <span class="author">by @Html.ActionLink(Model.Author.DisplayName ?? Model.Author.Username, MVC.Post.Author(Model.Author.Username, null))</span>
     <span class="pubDate">@Model.PublicationDate.ToLocalTime()</span>
     <div class="text">@Html.Raw(Model.Content)</div>
     <div class="bottom">
