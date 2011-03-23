@@ -10,7 +10,7 @@ namespace FujiyBlog.EntityFramework
         public FujiyBlogDatabase()
         {
             Configuration.LazyLoadingEnabled = false;
-            //Database.SetInitializer<FujiyBlogDatabase>(null);
+            Database.SetInitializer(new FujiyBlogDatabaseInitializer());
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)

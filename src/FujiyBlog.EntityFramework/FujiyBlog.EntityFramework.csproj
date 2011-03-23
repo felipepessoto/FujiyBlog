@@ -53,6 +53,7 @@
     <Compile Include="Configuration\PostCommentConfiguration.cs" />
     <Compile Include="Configuration\TagConfiguration.cs" />
     <Compile Include="Configuration\UserConfiguration.cs" />
+    <Compile Include="FujiyBlogDatabaseInitializer.cs" />
     <Compile Include="WidgetSettingRepository.cs" />
     <Compile Include="FeedRepository.cs" />
     <Compile Include="PostCommentRepository.cs" />
