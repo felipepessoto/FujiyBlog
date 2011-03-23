@@ -42,7 +42,9 @@
             },
 
             showAddedWidget: function(idZoneElement, result){
-                $('#' + idZoneElement).append(result);
+                if(result){
+                    $('#' + idZoneElement).append(result);
+                }
             },
 
             startDragAndDrop:function(){

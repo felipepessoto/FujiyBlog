@@ -11,8 +11,8 @@
     }
     FujiyBlog.Core.Repositories.IPostRepository postRepository = DependencyResolver.Current.GetService<FujiyBlog.Core.Repositories.IPostRepository>();
     var tagCloud = postRepository.GetTagsCloud((int)settings["MinimumPosts"]);
-    int minTag = tagCloud.Min(x => x.PostsCount);
-    int maxTag = tagCloud.Max(x => x.PostsCount);
+    int minTag = tagCloud.Select(x=>x.PostsCount).DefaultIfEmpty().Min();
+    int maxTag = tagCloud.Select(x => x.PostsCount).DefaultIfEmpty().Max();
     int distribution = (maxTag - minTag) / 3;
 }
 <h4>@Html.Raw(settings["Title"] as string)</h4>

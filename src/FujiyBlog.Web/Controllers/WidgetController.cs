@@ -52,6 +52,11 @@ namespace FujiyBlog.Web.Controllers
         [HttpPost, Authorize]
         public virtual ActionResult Add(string zoneName, string widgetName)
         {
+            if (string.IsNullOrEmpty(widgetName))
+            {
+                return Json(false);
+            }
+
             WidgetSetting widgetSetting = new WidgetSetting
                                               {
                                                   Name = widgetName,
