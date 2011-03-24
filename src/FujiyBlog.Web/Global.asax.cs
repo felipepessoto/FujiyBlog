@@ -45,7 +45,6 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
-            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
