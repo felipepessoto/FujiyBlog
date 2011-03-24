@@ -1,3 +1,4 @@
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
@@ -6,7 +7,10 @@ using System.Data.Entity.Infrastructure;
 namespace FujiyBlog.Web.App_Start {
     public static class EntityFramework_SqlServerCompact {
         public static void Start() {
-            Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
+            if (ConfigurationManager.ConnectionStrings["FujiyBlogDatabase"].ProviderName == "System.Data.SqlServerCe.4.0")
+            {
+                Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
+            }
         }
     }
 }
