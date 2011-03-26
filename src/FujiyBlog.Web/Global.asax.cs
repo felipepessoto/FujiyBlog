@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Infrastructure;
+using FujiyBlog.Web.Models;
 using Microsoft.Practices.Unity;
 using FujiyBlog.EntityFramework;
 using System.Configuration;
@@ -62,7 +63,7 @@ namespace FujiyBlog.Web
         {
             RazorViewEngine engine = (RazorViewEngine) ViewEngines.Engines.Single();
 
-            string themeName = "Default";
+            string themeName = Settings.SettingRepository.Theme;
 
             engine.MasterLocationFormats = new[]
                                                {

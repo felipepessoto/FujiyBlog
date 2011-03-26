@@ -42,7 +42,7 @@ namespace FujiyBlog.EntityFramework
             {
                 Id = 5,
                 Description = "Theme",
-                Value = "Standand"
+                Value = "Default"
             };
 
             context.Settings.Add(minRequiredPasswordLength);
