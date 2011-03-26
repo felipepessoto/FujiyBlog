@@ -53,7 +53,7 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(tag, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            return View(MVC.Post.Views.Index, model);
+            return View("Index", model);
         }
 
         public virtual ActionResult Category(string category, int? page)
@@ -67,7 +67,7 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(category: category, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            return View(MVC.Post.Views.Index, model);
+            return View("Index", model);
         }
 
         public virtual ActionResult Author(string author, int? page)
@@ -81,7 +81,7 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(authorUserName: author, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            return View(MVC.Post.Views.Index, model);
+            return View("Index", model);
         }
 
         public virtual ActionResult Archive()
@@ -113,7 +113,7 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            return View(MVC.Post.Views.Index, model);
+            return View("Index", model);
         }
 
         public virtual ActionResult Details(string postSlug)
@@ -149,7 +149,7 @@ namespace FujiyBlog.Web.Controllers
                 NextPost = nextPost
             };
 
-            return View(MVC.Post.Views.Details, postDetails);
+            return View("Details", postDetails);
         }
 
         public virtual ActionResult DoComment(int id)
@@ -174,8 +174,8 @@ namespace FujiyBlog.Web.Controllers
 
             postService.AddComment(postComment);
             unitOfWork.SaveChanges();
-            
-            return View(MVC.Post.Views.Comments, new[] { postComment });
+
+            return View("Comments", new[] { postComment });
         }
     }
 }

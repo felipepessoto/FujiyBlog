@@ -1,0 +1,29 @@
+﻿@model FujiyBlog.Core.DomainObjects.PostComment
+
+@using (Ajax.BeginForm(MVC.Post.ActionNames.DoComment, MVC.Post.Name, new { id = Model.Post.Id }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "commentlist" }))
+{
+<div id="comment-form">
+    <div class="commentForm">
+        <p id="addcomment">
+            Comment</p>
+            @if (!Request.IsAuthenticated)
+            { 
+        @Html.LabelFor(x => x.AuthorName)
+        @Html.EditorFor(x => x.AuthorName)
+        @Html.ValidationMessageFor(x => x.AuthorName)
+        @Html.LabelFor(x => x.AuthorEmail)
+        @Html.EditorFor(x => x.AuthorEmail)
+        @Html.ValidationMessageFor(x => x.AuthorEmail)
+        @Html.LabelFor(x => x.AuthorWebsite)
+        @Html.EditorFor(x => x.AuthorWebsite)
+        @Html.ValidationMessageFor(x => x.AuthorWebsite)
+            }
+        <div id="commentCompose">
+            @Html.LabelFor(x => x.Comment)
+            @Html.TextAreaFor(x => x.Comment)
+            @Html.ValidationMessageFor(x => x.Comment)
+        </div>
+        <input type="submit" value="Save comment" />
+    </div>
+</div>
+}

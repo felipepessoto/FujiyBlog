@@ -45,12 +45,48 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
+            foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
+            {
+                ViewEngines.Engines.Remove(viewEngine);
+            }
+
             AreaRegistration.RegisterAllAreas();
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            RazorViewEngine engine = (RazorViewEngine) ViewEngines.Engines.Single();
+
+            string themeName = "Default";
+
+            engine.MasterLocationFormats = new[]
+                                               {
+                                                   "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
+                                                   "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
+                                                   "~/Views/{1}/{0}.cshtml",
+                                                   "~/Views/Shared/{0}.cshtml",
+                                               };
+
+            engine.ViewLocationFormats = new[]
+                                             {
+                                                 "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
+                                                 "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
+                                                  "~/Views/{1}/{0}.cshtml",
+                                                   "~/Views/Shared/{0}.cshtml",
+                                             };
+
+            engine.PartialViewLocationFormats = new[]
+                                                    {
+                                                        "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
+                                                        "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
+                                                        "~/Views/{1}/{0}.cshtml",
+                                                        "~/Views/Shared/{0}.cshtml",
+                                                    };
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)

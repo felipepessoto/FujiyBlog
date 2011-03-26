@@ -29,6 +29,7 @@ public static class MVC {
     public static FujiyBlog.Web.Controllers.PostController Post = new FujiyBlog.Web.Controllers.T4MVC_PostController();
     public static FujiyBlog.Web.Controllers.WidgetController Widget = new FujiyBlog.Web.Controllers.T4MVC_WidgetController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
+    public static T4MVC.ThemesController Themes = new T4MVC.ThemesController();
 }
 
 namespace T4MVC {

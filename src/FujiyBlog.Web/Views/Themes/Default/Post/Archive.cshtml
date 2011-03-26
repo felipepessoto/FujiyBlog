@@ -1,0 +1,81 @@
+﻿@model FujiyBlog.Web.ViewModels.PostArchive
+           
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div id="archive">
+    <h1>
+        Archive</h1>
+    <ul>
+        @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+        {
+            <li><a href="#@category.Id">@category.Name</a></li>
+        }
+        <li><a href="#Uncategorized">Uncategorized</a></li>
+    </ul>
+    @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+    {
+        <h2 id="@category.Id">
+            @*<a href="LINKSCATEGORYFEEDS"><img src="/blog/pics/rssButton.png" alt="RSS" /></a>*@
+            @category.Name (@category.Posts.Count())
+        </h2>
+            
+
+        <table>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Title
+                </th>
+                <th class="comments">
+                    Comments
+                </th>
+            </tr>
+            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Post.Categories.Any(y => y == category)))
+            {
+                <tr>
+                    <td class="date">@postSummary.Post.PublicationDate.ToLocalTime().ToShortDateString()
+                    </td>
+                    <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
+                    </td>
+                    <td class="comments">@postSummary.CommentsTotal
+                    </td>
+                </tr>  
+            }
+        </table>
+    }
+
+     <h2 id="Uncategorized">
+            @*<a href="LINKSCATEGORYFEEDS"><img src="/blog/pics/rssButton.png" alt="RSS" /></a>*@
+            Uncategorized (@Model.UncategorizedPosts.Count())
+        </h2>
+            
+
+        <table>
+            <tr>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Title
+                </th>
+                <th class="comments">
+                    Comments
+                </th>
+            </tr>
+            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.UncategorizedPosts)
+            {
+                <tr>
+                    <td class="date">@postSummary.Post.PublicationDate.ToLocalTime().ToShortDateString()
+                    </td>
+                    <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
+                    </td>
+                    <td class="comments">@postSummary.CommentsTotal
+                    </td>
+                </tr>  
+            }
+        </table>
+</div>

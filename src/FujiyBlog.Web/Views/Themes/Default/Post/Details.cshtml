@@ -1,0 +1,24 @@
+﻿@model FujiyBlog.Web.ViewModels.PostDetails
+           
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div id="postnavigation">
+    @if (Model.PreviousPost != null)
+    {
+        @Html.ActionLink(Model.PreviousPost.Title, MVC.Post.Details(Model.PreviousPost.Slug))
+    }
+    |
+    @if (Model.NextPost != null)
+    {
+        @Html.ActionLink(Model.NextPost.Title, MVC.Post.Details(Model.NextPost.Slug))
+    }
+</div>
+@{Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, Model.Post);}
+<div id="commentlist">
+    <h1 id="comment">
+        Comentários</h1>
+    @{Html.RenderPartial(MVC.Themes.Views.Default.Post.Comments, Model.Post.Comments);}
+</div>
+@{Html.RenderPartial(MVC.Themes.Views.Default.Post.DoComment, new FujiyBlog.Core.DomainObjects.PostComment { Post = Model.Post });}

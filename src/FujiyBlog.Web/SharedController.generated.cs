@@ -28,18 +28,7 @@ namespace T4MVC {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string _LogOnPartial = "~/Views/Shared/_LogOnPartial.cshtml";
-            public readonly string Error = "~/Views/Shared/Error.cshtml";
             public readonly string FujiyBlogJs = "~/Views/Shared/FujiyBlogJs.cshtml";
-            static readonly _DisplayTemplates s_DisplayTemplates = new _DisplayTemplates();
-            public _DisplayTemplates DisplayTemplates { get { return s_DisplayTemplates; } }
-            public partial class _DisplayTemplates{
-            }
-            static readonly _Themes s_Themes = new _Themes();
-            public _Themes Themes { get { return s_Themes; } }
-            public partial class _Themes{
-                public readonly string Standand = "~/Views/Shared/Themes/Standand.cshtml";
-            }
         }
     }
 

@@ -57,10 +57,6 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string ChangePassword = "~/Views/Account/ChangePassword.cshtml";
-            public readonly string ChangePasswordSuccess = "~/Views/Account/ChangePasswordSuccess.cshtml";
-            public readonly string LogOn = "~/Views/Account/LogOn.cshtml";
-            public readonly string Register = "~/Views/Account/Register.cshtml";
         }
     }
 
