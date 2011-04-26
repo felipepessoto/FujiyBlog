@@ -36,8 +36,17 @@ readonly string[]  NonQualifiedViewFolders = new string[] {
   "EditorTemplates"
 };
 
+// Set this to true if you *never* want view names to be fully qualified paths
+// This may be needed if you are using Spark
+static bool UseNonQualifiedViewNames = false;
+
 // The name of the interface that all T4MVC action results will implement
 const string ActionResultInterfaceName = "IT4MVCActionResult";
+
+// This can be set to false to omit the generation of the System.Web.Mvc.T4Extensions class, which can be
+// useful if it is already defined in a referenced library
+// See http://stackoverflow.com/questions/5563163/t4mvc-use-extension-methods-in-control-library/5574227
+static bool GenerateMvcT4Extensions = true;
 
 // If true, the T4MVC action result interface will be generated
 // If false, the namespace of the interface must be referenced in the 'ReferencedNamespaces' setting
@@ -53,6 +62,13 @@ const string LinksNamespace = "Links";
 // when the static file changes, the link changes and guarantees that the client will re-request the resource.
 // e.g. when true, the link looks like: "/Content/nerd.jpg?2009-09-04T12:25:48"
 static bool AddTimestampToStaticLinks = false;
+
+static bool AddTimestampToStaticLink(ProjectItem projectItem) {
+    // By default, this just returns the static flag, but you can add additional logic to make more complex
+    // decisions about which files should have the timestamp
+    // See http://mvccontrib.codeplex.com/workitem/7129 for details
+    return AddTimestampToStaticLinks;
+}
 
 // Folders containing static files for which links are generated (e.g. Links.Scripts.Map_js)
 readonly string[] StaticFilesFolders = new string[] {
