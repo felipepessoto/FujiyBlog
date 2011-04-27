@@ -7,7 +7,7 @@ using System.Data.Entity.Infrastructure;
 namespace FujiyBlog.Web.App_Start {
     public static class EntityFramework_SqlServerCompact {
         public static void Start() {
-            if (ConfigurationManager.ConnectionStrings["FujiyBlogDatabase"].ProviderName == "System.Data.SqlServerCe.4.0")
+            if (ConfigurationManager.ConnectionStrings["FujiyBlogDatabase"] != null && ConfigurationManager.ConnectionStrings["FujiyBlogDatabase"].ProviderName == "System.Data.SqlServerCe.4.0")
             {
                 Database.DefaultConnectionFactory = new SqlCeConnectionFactory("System.Data.SqlServerCe.4.0");
             }
