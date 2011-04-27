@@ -1,0 +1,105 @@
+﻿@model FujiyBlog.Core.DomainObjects.Post
+
+@{
+    Layout = MVC.Admin.Shared.Views._Layout;
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Post</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Slug)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Slug)
+            @Html.ValidationMessageFor(model => model.Slug)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Content)
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreationDate)
+            @Html.ValidationMessageFor(model => model.CreationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LastModificationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LastModificationDate)
+            @Html.ValidationMessageFor(model => model.LastModificationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PublicationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PublicationDate)
+            @Html.ValidationMessageFor(model => model.PublicationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPublished)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsPublished)
+            @Html.ValidationMessageFor(model => model.IsPublished)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsCommentEnabled)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsCommentEnabled)
+            @Html.ValidationMessageFor(model => model.IsCommentEnabled)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsDeleted)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsDeleted)
+            @Html.ValidationMessageFor(model => model.IsDeleted)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

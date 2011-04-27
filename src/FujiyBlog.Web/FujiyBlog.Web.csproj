@@ -94,11 +94,15 @@
     <Compile Include="AccountController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="Admin.PostController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Admin.SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="App_Start\EntityFramework.SqlServerCompact.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\JavaScriptController.cs" />
@@ -146,6 +150,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin\Site.css" />
     <Content Include="Content\Themes\Default\img\download.png" />
     <Content Include="Content\Themes\Default\img\footerbg.jpg" />
     <Content Include="Content\Themes\Default\img\grunge-header.jpg" />
@@ -159,6 +164,7 @@
     <Content Include="Content\Themes\Default\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.5-vsdoc.js" />
+    <Content Include="Scripts\modernizr-1.7.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -182,16 +188,12 @@
     <Content Include="Content\Themes\Base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\Themes\Base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\Themes\Base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Areas\Admin\Controllers\" />
     <Folder Include="Areas\Admin\Models\" />
-    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -211,6 +213,12 @@
     <Content Include="Views\Widget\Html.cshtml" />
     <Content Include="Views\Widget\Index.cshtml" />
     <Content Include="Views\Widget\HtmlEdit.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
