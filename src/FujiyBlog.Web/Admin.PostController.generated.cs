@@ -33,8 +33,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ViewResult Details() {
-            return new T4MVC_ViewResult(Area, Name, ActionNames.Details);
+        public System.Web.Mvc.ViewResult Index() {
+            return new T4MVC_ViewResult(Area, Name, ActionNames.Index);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -65,8 +65,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
-            public readonly string Details = "Details";
             public readonly string Create = "Create";
+            public readonly string CreatePost = "CreatePost";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
             public readonly string DeleteConfirmed = "Delete";
@@ -80,7 +80,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public class ViewNames {
             public readonly string Create = "~/Areas/Admin/Views/Post/Create.cshtml";
             public readonly string Delete = "~/Areas/Admin/Views/Post/Delete.cshtml";
-            public readonly string Details = "~/Areas/Admin/Views/Post/Details.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/Post/Edit.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Post/Index.cshtml";
         }
@@ -90,14 +89,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
     public class T4MVC_PostController: FujiyBlog.Web.Areas.Admin.Controllers.PostController {
         public T4MVC_PostController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ViewResult Index() {
+        public override System.Web.Mvc.ViewResult Index(int? page) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ViewResult Details(int id) {
-            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Details);
-            callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
@@ -106,9 +100,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Create(FujiyBlog.Core.DomainObjects.Post post) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            callInfo.RouteValueDictionary.Add("post", post);
+        public override System.Web.Mvc.ActionResult CreatePost() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.CreatePost);
             return callInfo;
         }
 

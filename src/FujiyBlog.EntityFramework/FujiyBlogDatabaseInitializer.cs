@@ -45,11 +45,19 @@ namespace FujiyBlog.EntityFramework
                 Value = "Default"
             };
 
+            Setting utcOffset = new Setting
+            {
+                Id = 6,
+                Description = "Utc Offset",
+                Value = "0"
+            };
+
             context.Settings.Add(minRequiredPasswordLength);
             context.Settings.Add(postsPerPage);
             context.Settings.Add(blogName);
             context.Settings.Add(blogDescription);
             context.Settings.Add(theme);
+            context.Settings.Add(utcOffset);
 
             User admin = new User
                              {

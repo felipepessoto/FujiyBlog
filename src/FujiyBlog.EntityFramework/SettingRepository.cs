@@ -35,13 +35,19 @@ namespace FujiyBlog.EntityFramework
             get { return Database.Settings.Find((int)SettingNames.Theme).Value; }
         }
 
+        public int UtcOffset
+        {
+            get { return int.Parse(Database.Settings.Find((int)SettingNames.UtcOffset).Value); }
+        }
+
         private enum SettingNames
         {
             MinRequiredPasswordLength = 1,
             PostsPerPage = 2,
             BlogName = 3,
             BlogDescription = 4,
-            Theme = 5
+            Theme = 5,
+            UtcOffset = 6,
         }
     }
 }

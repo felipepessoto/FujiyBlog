@@ -7,5 +7,6 @@
         string BlogName { get; }
         string BlogDescription { get; }
         string Theme { get; }
+        int UtcOffset { get; }
     }
 }

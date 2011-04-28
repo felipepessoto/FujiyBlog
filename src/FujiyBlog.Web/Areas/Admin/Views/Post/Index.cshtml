@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.Post>
+﻿@model FujiyBlog.Web.ViewModels.PostIndex
 
 @{
     Layout = MVC.Admin.Shared.Views._Layout;
@@ -8,81 +8,60 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Write new post", MVC.Admin.Post.Create())
 </p>
+
+@Pager.Links(Model.CurrentPage, Model.TotalPages)
+
 <table>
     <tr>
         <th>
-            Title
+            Published
         </th>
         <th>
-            Description
+            Title
         </th>
         <th>
             Slug
         </th>
         <th>
-            Content
-        </th>
-        <th>
             CreationDate
-        </th>
-        <th>
-            LastModificationDate
         </th>
         <th>
             PublicationDate
         </th>
         <th>
-            IsPublished
-        </th>
-        <th>
             IsCommentEnabled
-        </th>
-        <th>
-            IsDeleted
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.RecentPosts) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
+        <td class="@(item.Post.IsPublished ? "postpublished" : "postnotpublished")">
+            @Html.DisplayFor(modelItem => item.Post.IsPublished)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.Post.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Slug)
+            @Html.DisplayFor(modelItem => item.Post.Slug)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Content)
+            @Html.DisplayFor(modelItem => item.Post.CreationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
+            @Html.DisplayFor(modelItem => item.Post.PublicationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.LastModificationDate)
+            @Html.DisplayFor(modelItem => item.Post.IsCommentEnabled)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PublicationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsPublished)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsCommentEnabled)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Edit", "Edit", new { id=item.Post.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Post.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Post.Id })
         </td>
     </tr>
 }
-
 </table>
+@Pager.Links(Model.CurrentPage, Model.TotalPages)
