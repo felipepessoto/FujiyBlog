@@ -1,5 +1,6 @@
 ﻿@helper Links(int currentPage, int totalPages){
     
+    totalPages = Math.Max(totalPages, 1);
     int numbersToShow = Math.Min(13, totalPages);
 
     int initialPage = Math.Max(currentPage - (numbersToShow / 2), 1);
