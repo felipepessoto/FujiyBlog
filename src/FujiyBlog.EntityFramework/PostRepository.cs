@@ -273,5 +273,31 @@ namespace FujiyBlog.EntityFramework
 
             return monthsTuples;
         }
+
+        public IEnumerable<Tag> GetOrCreateTags(IEnumerable<string> tagsNames)
+        {
+            var tags = (from tag in Database.Tags
+                       where tagsNames.Contains(tag.Name)
+                       select tag).ToList();
+
+            var upperTags = tags.Select(x => x.Name.ToUpperInvariant());
+            var tagsNotFound = from tag in tagsNames
+                               where !upperTags.Contains(tag.ToUpperInvariant())
+                               select tag;
+
+            foreach (string newTagName in tagsNotFound)
+            {
+                Tag newTag = new Tag();
+                newTag.Name = newTagName;
+                tags.Add(Database.Tags.Add(newTag));
+            }
+            return tags;
+        }
+
+        public void DeletePost(int id)
+        {
+            Post post = Database.Posts.Include(x => x.Author).Single(x => x.Id == id);
+            post.IsDeleted = true;
+        }
     }
 }

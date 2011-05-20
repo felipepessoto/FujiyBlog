@@ -6,8 +6,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.EntityFramework;
+using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
 
@@ -16,25 +18,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
     [Authorize]
     public partial class PostController : Controller
     {
+        private readonly IUnitOfWork unitOfWork;
         private readonly FujiyBlogDatabase db;
         private readonly IPostRepository postRepository;
         private readonly IUserRepository userRepository;
 
-        public PostController(FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
+        public PostController(IUnitOfWork unitOfWork, FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
         {
+            this.unitOfWork = unitOfWork;
             this.db = db;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
         }
 
-        //
-        // GET: /Admin/Post/
-
         public virtual ViewResult Index(int? page)
         {
             int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
 
-            PostIndex model = new PostIndex
+            AdminPostIndex model = new AdminPostIndex 
             {
                 CurrentPage = page.GetValueOrDefault(1),
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, isPublic: false),
@@ -44,22 +45,20 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(model);
         }
 
-        //
-        // GET: /Admin/Post/Create
-
         public virtual ActionResult Create()
         {
-            Post newPost = new Post
+            AdminPostEdit viewModel = new AdminPostEdit();
+            viewModel.Post = new Post
                                {
                                    PublicationDate = DateTime.UtcNow.AddHours(Settings.SettingRepository.UtcOffset),
                                    IsPublished = true,
                                    IsCommentEnabled = true,
                                };
-            return View(newPost);
-        }
+            viewModel.AllCategories = db.Categories.ToList();
+            viewModel.AllTags = db.Tags.ToList();
 
-        //
-        // POST: /Admin/Post/Create
+            return View(viewModel);
+        }
 
         [HttpPost, ActionName("Create")]
         public virtual ActionResult CreatePost()
@@ -87,33 +86,50 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             return View(newPost);
         }
-        
-        //
-        // GET: /Admin/Post/Edit/5
 
         public virtual ActionResult Edit(int id)
         {
-            Post post = db.Posts.Find(id);
-            return View(post);
+            AdminPostEdit viewModel = new AdminPostEdit();
+            viewModel.Post = db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id);
+            viewModel.AllCategories = db.Categories.ToList();
+            viewModel.AllTags = db.Tags.ToList();
+
+            return View(viewModel);
         }
 
-        //
-        // POST: /Admin/Post/Edit/5
-
-        [HttpPost]
-        public virtual ActionResult Edit(Post post)
+        [HttpPost, ActionName("Edit")]
+        public virtual ActionResult EditPost(int id, string tags, IEnumerable<int> selectedCategories)
         {
+            Post editedPost = db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id);
+
+            TryUpdateModel(editedPost, new[] { "Title", "Description", "Slug", "Content", "PublicationDate", "IsPublished", "IsCommentEnabled" });
+
+            if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
+            {
+                ModelState.AddModelError("Slug", "This slug already exists");
+            }
+
             if (ModelState.IsValid)
             {
-                db.Entry(post).State = EntityState.Modified;
+                editedPost.Tags.Clear();
+                foreach (Tag tag in postRepository.GetOrCreateTags(tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
+                {
+                    editedPost.Tags.Add(tag);
+                }
+
+                editedPost.Categories.Clear();
+
+                foreach (Category category in db.Categories.Where(x => selectedCategories.Contains(x.Id)))
+                {
+                    editedPost.Categories.Add(category);
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(post);
-        }
 
-        //
-        // GET: /Admin/Post/Delete/5
+            return View(editedPost);
+        }
 
         public virtual ActionResult Delete(int id)
         {
@@ -121,16 +137,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(post);
         }
 
-        //
-        // POST: /Admin/Post/Delete/5
-
         [HttpPost, ActionName("Delete")]
         public virtual ActionResult DeleteConfirmed(int id)
-        {            
-            Post post = db.Posts.Find(id);
-            db.Posts.Remove(post);
-            db.SaveChanges();
+        {
+            postRepository.DeletePost(id);
+            unitOfWork.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public virtual ActionResult AddCategory(string name)
+        {
+            if (!db.Categories.Any(x => x.Name == name))
+            {
+                Category newCategory = db.Categories.Add(new Category {Name = name});
+                unitOfWork.SaveChanges();
+                return Json(newCategory);
+            }
+            return Json(false);
         }
     }
 }

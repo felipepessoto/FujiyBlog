@@ -17,5 +17,7 @@ namespace FujiyBlog.Core.Repositories
         IEnumerable<Category> GetCategories();
         IEnumerable<TagWithCount> GetTagsCloud(int minimumPosts);
         IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending);
+        IEnumerable<Tag> GetOrCreateTags(IEnumerable<string> tagsNames);
+        void DeletePost(int id);
     }
 }

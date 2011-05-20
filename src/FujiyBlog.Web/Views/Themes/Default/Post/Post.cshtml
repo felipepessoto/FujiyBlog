@@ -20,7 +20,11 @@
         }
     </div>
     <div class="footer">
-        @*ADMIN LINKS*@
+    @if (Request.IsAuthenticated)
+    { 
+        @Html.ActionLink("Edit", MVC.Admin.Post.Edit(Model.Id)) <text>|</text>
+        @Html.ActionLink("Delete", MVC.Admin.Post.Delete(Model.Id)) <text>|</text>
+    }
         @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Id), new { rel = "bookmark", title = Model.Title })
         | <a href="@Url.Action(MVC.Post.Details(Model.Slug))#commentlist" >Comments (@Model.Comments.Count)</a>
     </div>

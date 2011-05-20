@@ -43,6 +43,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult EditPost() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.EditPost);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
@@ -50,6 +55,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DeleteConfirmed() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult AddCategory() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.AddCategory);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -66,10 +76,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Create = "Create";
-            public readonly string CreatePost = "CreatePost";
+            public readonly string CreatePost = "Create";
             public readonly string Edit = "Edit";
+            public readonly string EditPost = "Edit";
             public readonly string Delete = "Delete";
             public readonly string DeleteConfirmed = "Delete";
+            public readonly string AddCategory = "AddCategory";
         }
 
 
@@ -111,9 +123,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Core.DomainObjects.Post post) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("post", post);
+        public override System.Web.Mvc.ActionResult EditPost(int id, string tags, System.Collections.Generic.IEnumerable<int> selectedCategories) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditPost);
+            callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("tags", tags);
+            callInfo.RouteValueDictionary.Add("selectedCategories", selectedCategories);
             return callInfo;
         }
 
@@ -126,6 +140,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public override System.Web.Mvc.ActionResult DeleteConfirmed(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
             callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AddCategory(string name) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AddCategory);
+            callInfo.RouteValueDictionary.Add("name", name);
             return callInfo;
         }
 

@@ -319,8 +319,6 @@ namespace Links {
         private const string URLPATH = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-        public static readonly string jquery_1_5_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.5-vsdoc.min.js") ? Url("jquery-1.5-vsdoc.min.js") : Url("jquery-1.5-vsdoc.js");
-                      
         public static readonly string modernizr_1_7_min_js = Url("modernizr-1.7.min.js");
     }
 

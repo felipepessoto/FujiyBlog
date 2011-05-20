@@ -1,4 +1,4 @@
-﻿@model FujiyBlog.Web.ViewModels.PostIndex
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostIndex
 
 @{
     Layout = MVC.Admin.Shared.Views._Layout;
@@ -22,16 +22,19 @@
             Title
         </th>
         <th>
-            Slug
+            Author
+        </th>
+        <th>
+            Categories
+        </th>
+        <th>
+            Tags
         </th>
         <th>
             CreationDate
         </th>
         <th>
             PublicationDate
-        </th>
-        <th>
-            IsCommentEnabled
         </th>
         <th></th>
     </tr>
@@ -45,7 +48,13 @@
             @Html.DisplayFor(modelItem => item.Post.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Post.Slug)
+            @(item.Post.Author.DisplayName ?? item.Post.Author.Username)
+        </td>
+        <td>
+            @string.Join(", ", item.Post.Categories.Select(x=>x.Name).ToList())
+        </td>
+        <td>
+            @string.Join(", ", item.Post.Tags.Select(x=>x.Name).ToList())
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Post.CreationDate)
@@ -54,11 +63,7 @@
             @Html.DisplayFor(modelItem => item.Post.PublicationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Post.IsCommentEnabled)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Post.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Post.Id }) |
             @Html.ActionLink("Delete", "Delete", new { id=item.Post.Id })
         </td>
     </tr>

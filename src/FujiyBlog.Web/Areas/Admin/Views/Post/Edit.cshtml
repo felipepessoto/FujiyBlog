@@ -1,4 +1,4 @@
-﻿@model FujiyBlog.Core.DomainObjects.Post
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostEdit
 
 @{
     Layout = MVC.Admin.Shared.Views._Layout;
@@ -12,87 +12,78 @@
     <fieldset>
         <legend>Post</legend>
 
-        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.Post.Id)
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Title)
+            @Html.LabelFor(model => model.Post.Title)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Title)
-            @Html.ValidationMessageFor(model => model.Title)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
+            @Html.EditorFor(model => model.Post.Title)
+            @Html.ValidationMessageFor(model => model.Post.Title)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Slug)
+            @Html.LabelFor(model => model.Post.Description)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Slug)
-            @Html.ValidationMessageFor(model => model.Slug)
+            @Html.EditorFor(model => model.Post.Description)
+            @Html.ValidationMessageFor(model => model.Post.Description)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.Content)
+            @Html.LabelFor(model => model.Post.Slug)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Content)
-            @Html.ValidationMessageFor(model => model.Content)
+            @Html.EditorFor(model => model.Post.Slug)
+            @Html.ValidationMessageFor(model => model.Post.Slug)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.CreationDate)
+            @Html.LabelFor(model => model.Post.Content)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CreationDate)
-            @Html.ValidationMessageFor(model => model.CreationDate)
+            @Html.EditorFor(model => model.Post.Content)
+            @Html.ValidationMessageFor(model => model.Post.Content)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.LastModificationDate)
+            @Html.LabelFor(model => model.Post.PublicationDate)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.LastModificationDate)
-            @Html.ValidationMessageFor(model => model.LastModificationDate)
+            @Html.EditorFor(model => model.Post.PublicationDate)
+            @Html.ValidationMessageFor(model => model.Post.PublicationDate)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.PublicationDate)
+            @Html.LabelFor(model => model.Post.IsPublished)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.PublicationDate)
-            @Html.ValidationMessageFor(model => model.PublicationDate)
+            @Html.EditorFor(model => model.Post.IsPublished)
+            @Html.ValidationMessageFor(model => model.Post.IsPublished)
         </div>
 
         <div class="editor-label">
-            @Html.LabelFor(model => model.IsPublished)
+            @Html.LabelFor(model => model.Post.IsCommentEnabled)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.IsPublished)
-            @Html.ValidationMessageFor(model => model.IsPublished)
+            @Html.EditorFor(model => model.Post.IsCommentEnabled)
+            @Html.ValidationMessageFor(model => model.Post.IsCommentEnabled)
         </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsCommentEnabled)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsCommentEnabled)
-            @Html.ValidationMessageFor(model => model.IsCommentEnabled)
-        </div>
+        <ul id="categories-list">
+        @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+        {
+            <li><input type="checkbox" name="selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
+        }
+        </ul>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsDeleted)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsDeleted)
-            @Html.ValidationMessageFor(model => model.IsDeleted)
-        </div>
+        <label for="Post_Title">Add new category</label>
+        <input type="text" id="new-category-name" />
+        
+        <a href="javascript:void(0);" id="add-category">Add</a>
+
+        @Html.TextBox("tags", string.Join(",", Model.Post.Tags.Select(x=>x.Name)))
+
 
         <p>
             <input type="submit" value="Save" />
@@ -103,3 +94,28 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript">
+    $('#add-category').click(function () {
+        var callUrl = '@Url.Action(MVC.Admin.Post.AddCategory())';
+        var callData = "name=" + $('#new-category-name').val();
+        $.ajax({
+            type: "POST",
+            url: callUrl,
+            data: callData,
+            success: function (response) {
+                if (response) {
+                    var container = $('#categories-list');
+                    var inputs = container.find('input');
+                    var id = inputs.length + 1;
+
+                    var html = '<li><input checked=checked type="checkbox" name="selectedCategories" value="' + response.Id + '" />' + response.Name + '</li>';
+                    container.append($(html));
+                }
+                else {
+                    alert('erro');
+                }
+            }
+        });
+    });
+</script>
