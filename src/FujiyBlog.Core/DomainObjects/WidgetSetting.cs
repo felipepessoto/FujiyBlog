@@ -5,16 +5,16 @@ namespace FujiyBlog.Core.DomainObjects
     public class WidgetSetting
     {
         [Required]
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
 
         [Required,StringLength(50)]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         [Required,StringLength(50)]
-        public virtual string WidgetZone { get; set; }
+        public string WidgetZone { get; set; }
 
-        public virtual int Position { get; set; }
+        public int Position { get; set; }
 
-        public virtual string Settings { get; set; }
+        public string Settings { get; set; }
     }
 }

@@ -5,10 +5,15 @@ namespace FujiyBlog.Core.DomainObjects
 {
     public class Tag
     {
-        public virtual int Id { get; set; }
+        public Tag()
+        {
+            Posts = new List<Post>();
+        }
+
+        public int Id { get; set; }
 
         [Required, StringLength(50)]
-        public virtual string Name { get; set; }
+        public string Name { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
     }

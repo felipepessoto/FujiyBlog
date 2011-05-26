@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Extensions;
 
 namespace FujiyBlog.EntityFramework
 {
@@ -21,16 +22,15 @@ namespace FujiyBlog.EntityFramework
             get { return DateTime.UtcNow; }
         }
 
-        private static readonly Expression<Func<Post, bool>> PublicPost = x => x.IsPublished && !x.IsDeleted && x.PublicationDate < UtcNow;
         private static readonly Expression<Func<PostComment, bool>> PublicPostComment = x => x.IsApproved && !x.IsDeleted;
 
         private Post GetPost(string slug, int? id, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.Include(x => x.Author);
+            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).Include(x => x.Author);
 
             if (isPublic)
             {
-                posts = posts.Where(PublicPost);
+                posts = posts.WhereIsPublicPost();
             }
 
             Post post;
@@ -66,7 +66,7 @@ namespace FujiyBlog.EntityFramework
 
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
 
             if (tag != null)
             {
@@ -85,7 +85,7 @@ namespace FujiyBlog.EntityFramework
 
             if (isPublic)
             {
-                posts = posts.Where(PublicPost);
+                posts = posts.WhereIsPublicPost();
             }
 
             if (skip > 0)
@@ -130,11 +130,11 @@ namespace FujiyBlog.EntityFramework
 
         public IEnumerable<PostSummary> GetArchive(bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Include(x => x.Categories);
 
             if (isPublic)
             {
-                posts = posts.Where(PublicPost);
+                posts = posts.WhereIsPublicPost();
             }
 
             Dictionary<int, int> counts;
@@ -162,7 +162,7 @@ namespace FujiyBlog.EntityFramework
 
         public int GetTotal(string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts;
+            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted);
 
             if (tag != null)
             {
@@ -191,7 +191,7 @@ namespace FujiyBlog.EntityFramework
 
             if (isPublic)
             {
-                posts = posts.Where(PublicPost);
+                posts = posts.WhereIsPublicPost();
             }
             return posts.Count();
         }
@@ -208,11 +208,11 @@ namespace FujiyBlog.EntityFramework
 
         public Post GetPreviousPost(Post post, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
+            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
 
             if (isPublic)
             {
-                posts = posts.Where(PublicPost);
+                posts = posts.WhereIsPublicPost();
             }
 
             return posts.FirstOrDefault();
@@ -220,11 +220,11 @@ namespace FujiyBlog.EntityFramework
 
         public Post GetNextPost(Post post, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.OrderBy(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
+            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).OrderBy(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
 
             if (isPublic)
             {
-                posts = posts.Where(PublicPost);
+                posts = posts.WhereIsPublicPost();
             }
 
             return posts.FirstOrDefault();

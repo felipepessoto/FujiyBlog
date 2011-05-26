@@ -13,6 +13,8 @@ namespace FujiyBlog.EntityFramework.Configuration
             Property(b => b.Comment).IsUnicode(false);
             Property(b => b.IpAddress).IsUnicode(false);
             Property(b => b.Avatar).IsUnicode(false);
+
+            HasOptional(t => t.ParentComment).WithMany(t => t.NestedComments);
         }
     }
 }

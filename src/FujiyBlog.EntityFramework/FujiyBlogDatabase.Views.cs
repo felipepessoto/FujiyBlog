@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets2872A693AC4194532758781A7FB966D200AEF830367684671DED3D47D6B5D7BF))]
+[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySetsE99966031D5EB036173B961B7FB344AA94206615FBE780B94DB251B069B4DDD9))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -17,18 +17,18 @@ namespace Edm_EntityMappingGeneratedViews
     /// <Summary>
     /// The type contains views for EntitySets and AssociationSets that were generated at design time.
     /// </Summary>
-    public sealed class ViewsForBaseEntitySets2872A693AC4194532758781A7FB966D200AEF830367684671DED3D47D6B5D7BF : System.Data.Mapping.EntityViewContainer
+    public sealed class ViewsForBaseEntitySetsE99966031D5EB036173B961B7FB344AA94206615FBE780B94DB251B069B4DDD9 : System.Data.Mapping.EntityViewContainer
     {
         
         /// <Summary>
         /// The constructor stores the views for the extents and also the hash values generated based on the metadata and mapping closure and views.
         /// </Summary>
-        public ViewsForBaseEntitySets2872A693AC4194532758781A7FB966D200AEF830367684671DED3D47D6B5D7BF()
+        public ViewsForBaseEntitySetsE99966031D5EB036173B961B7FB344AA94206615FBE780B94DB251B069B4DDD9()
         {
             this.EdmEntityContainerName = "FujiyBlogDatabase";
             this.StoreEntityContainerName = "CodeFirstDatabase";
-            this.HashOverMappingClosure = "7fe33710fd07a4c72d42fc93f120a38aebb2e71aa68fd76395f5cf6755b45bd8";
-            this.HashOverAllExtentViews = "92ae47daf78ac73cfe515218b3a4f3e22a81fda8dee10a43a07969f709af4a9d";
+            this.HashOverMappingClosure = "5dc8c48082d4dc8b61222938046a187838a9ad11359cb8ca70c1b9a9818d3a16";
+            this.HashOverAllExtentViews = "8cf5a4f0956c5b00ecd1f6040129c77356703bff08785503580c2f562b2008b0";
             this.ViewCount = 25;
         }
         
@@ -145,19 +145,19 @@ namespace Edm_EntityMappingGeneratedViews
         /// </Summary>
         private System.Collections.Generic.KeyValuePair<string, string> GetView0()
         {
-            System.Text.StringBuilder viewString = new System.Text.StringBuilder(3785);
+            System.Text.StringBuilder viewString = new System.Text.StringBuilder(3815);
             viewString.Append("\r\n    SELECT VALUE -- Constructing PostComment\r\n        [CodeFirstDatabaseSchema");
             viewString.Append(".PostComment](T7.PostComment_Id, T7.PostComment_AuthorName, T7.PostComment_Autho");
             viewString.Append("rEmail, T7.PostComment_AuthorWebsite, T7.PostComment_Comment, T7.PostComment_IpA");
             viewString.Append("ddress, T7.PostComment_Avatar, T7.PostComment_CreationDate, T7.PostComment_IsApp");
-            viewString.Append("roved, T7.PostComment_IsSpam, T7.PostComment_IsDeleted, T7.[PostComment.Post_Id]");
-            viewString.Append(", T7.[PostComment.ParentComment_Id], T7.[PostComment.Author_Id], T7.[PostComment");
-            viewString.Append(".ModeratedBy_Id])\r\n    FROM (\r\n        SELECT T3.PostComment_Id, T3.PostComment_");
+            viewString.Append("roved, T7.PostComment_IsSpam, T7.PostComment_IsDeleted, T7.[PostComment.Author_I");
+            viewString.Append("d], T7.[PostComment.ModeratedBy_Id], T7.[PostComment.Post_Id], T7.[PostComment.P");
+            viewString.Append("arentComment_Id])\r\n    FROM (\r\n        SELECT T3.PostComment_Id, T3.PostComment_");
             viewString.Append("AuthorName, T3.PostComment_AuthorEmail, T3.PostComment_AuthorWebsite, T3.PostCom");
             viewString.Append("ment_Comment, T3.PostComment_IpAddress, T3.PostComment_Avatar, T3.PostComment_Cr");
             viewString.Append("eationDate, T3.PostComment_IsApproved, T3.PostComment_IsSpam, T3.PostComment_IsD");
-            viewString.Append("eleted, T3.[PostComment.Post_Id], T6.[PostComment.ParentComment_Id], T4.[PostCom");
-            viewString.Append("ment.Author_Id], T5.[PostComment.ModeratedBy_Id], T3._from0, T3._from1, (T6._fro");
+            viewString.Append("eleted, T4.[PostComment.Author_Id], T5.[PostComment.ModeratedBy_Id], T3.[PostCom");
+            viewString.Append("ment.Post_Id], T6.[PostComment.ParentComment_Id], T3._from0, T3._from1, (T6._fro");
             viewString.Append("m2 AND T6._from2 IS NOT NULL) AS _from2, (T4._from3 AND T4._from3 IS NOT NULL) A");
             viewString.Append("S _from3, (T5._from4 AND T5._from4 IS NOT NULL) AS _from4\r\n        FROM  (\r\n    ");
             viewString.Append("        SELECT T1.PostComment_Id, T1.PostComment_AuthorName, T1.PostComment_Auth");
@@ -180,20 +180,20 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("                True AS _from1\r\n                FROM FujiyBlogDatabase.PostComme");
             viewString.Append("nt_Post AS T) AS T2\r\n                ON T1.PostComment_Id = T2.PostComment_Id) A");
             viewString.Append("S T3\r\n            LEFT OUTER JOIN (\r\n            SELECT \r\n                Key(T.");
-            viewString.Append("PostComment_Author_Source).Id AS PostComment_Id, \r\n                Key(T.PostCom");
-            viewString.Append("ment_Author_Target).Id AS [PostComment.Author_Id], \r\n                True AS _fr");
-            viewString.Append("om3\r\n            FROM FujiyBlogDatabase.PostComment_Author AS T) AS T4\r\n        ");
-            viewString.Append("    ON T3.PostComment_Id = T4.PostComment_Id\r\n            LEFT OUTER JOIN (\r\n   ");
-            viewString.Append("         SELECT \r\n                Key(T.PostComment_ModeratedBy_Source).Id AS Po");
-            viewString.Append("stComment_Id, \r\n                Key(T.PostComment_ModeratedBy_Target).Id AS [Pos");
-            viewString.Append("tComment.ModeratedBy_Id], \r\n                True AS _from4\r\n            FROM Fuj");
-            viewString.Append("iyBlogDatabase.PostComment_ModeratedBy AS T) AS T5\r\n            ON T3.PostCommen");
-            viewString.Append("t_Id = T5.PostComment_Id\r\n            LEFT OUTER JOIN (\r\n            SELECT \r\n  ");
-            viewString.Append("              Key(T.PostComment_ParentComment_Source).Id AS PostComment_Id, \r\n  ");
-            viewString.Append("              Key(T.PostComment_ParentComment_Target).Id AS [PostComment.ParentC");
-            viewString.Append("omment_Id], \r\n                True AS _from2\r\n            FROM FujiyBlogDatabase");
-            viewString.Append(".PostComment_ParentComment AS T) AS T6\r\n            ON T3.PostComment_Id = T6.Po");
-            viewString.Append("stComment_Id\r\n    ) AS T7");
+            viewString.Append("User_AuthoredPostComments_Target).Id AS PostComment_Id, \r\n                Key(T.");
+            viewString.Append("User_AuthoredPostComments_Source).Id AS [PostComment.Author_Id], \r\n             ");
+            viewString.Append("   True AS _from3\r\n            FROM FujiyBlogDatabase.User_AuthoredPostComments ");
+            viewString.Append("AS T) AS T4\r\n            ON T3.PostComment_Id = T4.PostComment_Id\r\n            L");
+            viewString.Append("EFT OUTER JOIN (\r\n            SELECT \r\n                Key(T.User_ModeratedPostC");
+            viewString.Append("omments_Target).Id AS PostComment_Id, \r\n                Key(T.User_ModeratedPost");
+            viewString.Append("Comments_Source).Id AS [PostComment.ModeratedBy_Id], \r\n                True AS _");
+            viewString.Append("from4\r\n            FROM FujiyBlogDatabase.User_ModeratedPostComments AS T) AS T5");
+            viewString.Append("\r\n            ON T3.PostComment_Id = T5.PostComment_Id\r\n            LEFT OUTER J");
+            viewString.Append("OIN (\r\n            SELECT \r\n                Key(T.PostComment_ParentComment_Sour");
+            viewString.Append("ce).Id AS PostComment_Id, \r\n                Key(T.PostComment_ParentComment_Targ");
+            viewString.Append("et).Id AS [PostComment.ParentComment_Id], \r\n                True AS _from2\r\n    ");
+            viewString.Append("        FROM FujiyBlogDatabase.PostComment_ParentComment AS T) AS T6\r\n          ");
+            viewString.Append("  ON T3.PostComment_Id = T6.PostComment_Id\r\n    ) AS T7");
             return new System.Collections.Generic.KeyValuePair<string, string>("CodeFirstDatabase.PostComment", viewString.ToString());
         }
         
@@ -324,39 +324,39 @@ namespace Edm_EntityMappingGeneratedViews
         /// </Summary>
         private System.Collections.Generic.KeyValuePair<string, string> GetView7()
         {
-            System.Text.StringBuilder viewString = new System.Text.StringBuilder(2481);
+            System.Text.StringBuilder viewString = new System.Text.StringBuilder(2551);
             viewString.Append("\r\n    SELECT VALUE -- Constructing PostComments\r\n        [FujiyBlog.EntityFramew");
             viewString.Append("ork.PostComment](T1.PostComment_Id, T1.PostComment_AuthorName, T1.PostComment_Au");
             viewString.Append("thorEmail, T1.PostComment_AuthorWebsite, T1.PostComment_Comment, T1.PostComment_");
             viewString.Append("IpAddress, T1.PostComment_Avatar, T1.PostComment_CreationDate, T1.PostComment_Is");
             viewString.Append("Approved, T1.PostComment_IsSpam, T1.PostComment_IsDeleted) WITH \r\n        RELATI");
-            viewString.Append("ONSHIP(CREATEREF(FujiyBlogDatabase.Posts, ROW(T1.[PostComment_Post.PostComment_P");
-            viewString.Append("ost_Target.Id]),[FujiyBlog.EntityFramework.Post]),[FujiyBlog.EntityFramework.Pos");
-            viewString.Append("tComment_Post],PostComment_Post_Source,PostComment_Post_Target) \r\n        RELATI");
-            viewString.Append("ONSHIP(CREATEREF(FujiyBlogDatabase.PostComments, ROW(T1.[PostComment_ParentComme");
-            viewString.Append("nt.PostComment_ParentComment_Target.Id]),[FujiyBlog.EntityFramework.PostComment]");
-            viewString.Append("),[FujiyBlog.EntityFramework.PostComment_ParentComment],PostComment_ParentCommen");
-            viewString.Append("t_Source,PostComment_ParentComment_Target) \r\n        RELATIONSHIP(CREATEREF(Fuji");
-            viewString.Append("yBlogDatabase.Users, ROW(T1.[PostComment_Author.PostComment_Author_Target.Id]),[");
-            viewString.Append("FujiyBlog.EntityFramework.User]),[FujiyBlog.EntityFramework.PostComment_Author],");
-            viewString.Append("PostComment_Author_Source,PostComment_Author_Target) \r\n        RELATIONSHIP(CREA");
-            viewString.Append("TEREF(FujiyBlogDatabase.Users, ROW(T1.[PostComment_ModeratedBy.PostComment_Moder");
-            viewString.Append("atedBy_Target.Id]),[FujiyBlog.EntityFramework.User]),[FujiyBlog.EntityFramework.");
-            viewString.Append("PostComment_ModeratedBy],PostComment_ModeratedBy_Source,PostComment_ModeratedBy_");
-            viewString.Append("Target) \r\n    FROM (\r\n        SELECT \r\n            T.Id AS PostComment_Id, \r\n   ");
-            viewString.Append("         T.AuthorName AS PostComment_AuthorName, \r\n            T.AuthorEmail AS ");
-            viewString.Append("PostComment_AuthorEmail, \r\n            T.AuthorWebsite AS PostComment_AuthorWebs");
-            viewString.Append("ite, \r\n            T.Comment AS PostComment_Comment, \r\n            T.IpAddress A");
-            viewString.Append("S PostComment_IpAddress, \r\n            T.Avatar AS PostComment_Avatar, \r\n       ");
-            viewString.Append("     T.CreationDate AS PostComment_CreationDate, \r\n            T.IsApproved AS P");
-            viewString.Append("ostComment_IsApproved, \r\n            T.IsSpam AS PostComment_IsSpam, \r\n         ");
-            viewString.Append("   T.IsDeleted AS PostComment_IsDeleted, \r\n            True AS _from0, \r\n       ");
-            viewString.Append("     T.Post_Id AS [PostComment_Post.PostComment_Post_Target.Id], \r\n            T");
-            viewString.Append(".ParentComment_Id AS [PostComment_ParentComment.PostComment_ParentComment_Target");
-            viewString.Append(".Id], \r\n            T.Author_Id AS [PostComment_Author.PostComment_Author_Target");
-            viewString.Append(".Id], \r\n            T.ModeratedBy_Id AS [PostComment_ModeratedBy.PostComment_Mod");
-            viewString.Append("eratedBy_Target.Id]\r\n        FROM CodeFirstDatabase.PostComment AS T\r\n    ) AS T");
-            viewString.Append("1");
+            viewString.Append("ONSHIP(CREATEREF(FujiyBlogDatabase.Users, ROW(T1.[User_AuthoredPostComments.User");
+            viewString.Append("_AuthoredPostComments_Source.Id]),[FujiyBlog.EntityFramework.User]),[FujiyBlog.E");
+            viewString.Append("ntityFramework.User_AuthoredPostComments],User_AuthoredPostComments_Target,User_");
+            viewString.Append("AuthoredPostComments_Source) \r\n        RELATIONSHIP(CREATEREF(FujiyBlogDatabase.");
+            viewString.Append("Users, ROW(T1.[User_ModeratedPostComments.User_ModeratedPostComments_Source.Id])");
+            viewString.Append(",[FujiyBlog.EntityFramework.User]),[FujiyBlog.EntityFramework.User_ModeratedPost");
+            viewString.Append("Comments],User_ModeratedPostComments_Target,User_ModeratedPostComments_Source) \r");
+            viewString.Append("\n        RELATIONSHIP(CREATEREF(FujiyBlogDatabase.Posts, ROW(T1.[PostComment_Pos");
+            viewString.Append("t.PostComment_Post_Target.Id]),[FujiyBlog.EntityFramework.Post]),[FujiyBlog.Enti");
+            viewString.Append("tyFramework.PostComment_Post],PostComment_Post_Source,PostComment_Post_Target) \r");
+            viewString.Append("\n        RELATIONSHIP(CREATEREF(FujiyBlogDatabase.PostComments, ROW(T1.[PostComm");
+            viewString.Append("ent_ParentComment.PostComment_ParentComment_Target.Id]),[FujiyBlog.EntityFramewo");
+            viewString.Append("rk.PostComment]),[FujiyBlog.EntityFramework.PostComment_ParentComment],PostComme");
+            viewString.Append("nt_ParentComment_Source,PostComment_ParentComment_Target) \r\n    FROM (\r\n        ");
+            viewString.Append("SELECT \r\n            T.Id AS PostComment_Id, \r\n            T.AuthorName AS PostC");
+            viewString.Append("omment_AuthorName, \r\n            T.AuthorEmail AS PostComment_AuthorEmail, \r\n   ");
+            viewString.Append("         T.AuthorWebsite AS PostComment_AuthorWebsite, \r\n            T.Comment A");
+            viewString.Append("S PostComment_Comment, \r\n            T.IpAddress AS PostComment_IpAddress, \r\n   ");
+            viewString.Append("         T.Avatar AS PostComment_Avatar, \r\n            T.CreationDate AS PostCom");
+            viewString.Append("ment_CreationDate, \r\n            T.IsApproved AS PostComment_IsApproved, \r\n     ");
+            viewString.Append("       T.IsSpam AS PostComment_IsSpam, \r\n            T.IsDeleted AS PostComment_");
+            viewString.Append("IsDeleted, \r\n            True AS _from0, \r\n            T.Author_Id AS [User_Auth");
+            viewString.Append("oredPostComments.User_AuthoredPostComments_Source.Id], \r\n            T.Moderated");
+            viewString.Append("By_Id AS [User_ModeratedPostComments.User_ModeratedPostComments_Source.Id], \r\n  ");
+            viewString.Append("          T.Post_Id AS [PostComment_Post.PostComment_Post_Target.Id], \r\n        ");
+            viewString.Append("    T.ParentComment_Id AS [PostComment_ParentComment.PostComment_ParentComment_T");
+            viewString.Append("arget.Id]\r\n        FROM CodeFirstDatabase.PostComment AS T\r\n    ) AS T1");
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.PostComments", viewString.ToString());
         }
         
@@ -449,9 +449,63 @@ namespace Edm_EntityMappingGeneratedViews
         }
         
         /// <Summary>
-        /// return view for FujiyBlogDatabase.Post_Author
+        /// return view for FujiyBlogDatabase.User_AuthoredPostComments
         /// </Summary>
         private System.Collections.Generic.KeyValuePair<string, string> GetView12()
+        {
+            return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.User_AuthoredPostComments", @"
+    SELECT VALUE -- Constructing User_AuthoredPostComments
+        [FujiyBlog.EntityFramework.User_AuthoredPostComments](T3.[User_AuthoredPostComments.User_AuthoredPostComments_Source], T3.[User_AuthoredPostComments.User_AuthoredPostComments_Target])
+    FROM (
+        SELECT -- Constructing User_AuthoredPostComments_Source
+            CreateRef(FujiyBlogDatabase.Users, row(T2.[User_AuthoredPostComments.User_AuthoredPostComments_Source.Id]),[FujiyBlog.EntityFramework.User]) AS [User_AuthoredPostComments.User_AuthoredPostComments_Source], 
+            T2.[User_AuthoredPostComments.User_AuthoredPostComments_Target]
+        FROM (
+            SELECT -- Constructing User_AuthoredPostComments_Target
+                CreateRef(FujiyBlogDatabase.PostComments, row(T1.[User_AuthoredPostComments.User_AuthoredPostComments_Target.Id]),[FujiyBlog.EntityFramework.PostComment]) AS [User_AuthoredPostComments.User_AuthoredPostComments_Target], 
+                T1.[User_AuthoredPostComments.User_AuthoredPostComments_Source.Id]
+            FROM (
+                SELECT 
+                    T.Author_Id AS [User_AuthoredPostComments.User_AuthoredPostComments_Source.Id], 
+                    T.Id AS [User_AuthoredPostComments.User_AuthoredPostComments_Target.Id], 
+                    True AS _from0
+                FROM CodeFirstDatabase.PostComment AS T
+                WHERE T.Author_Id IS NOT NULL
+            ) AS T1
+        ) AS T2
+    ) AS T3");
+        }
+        
+        /// <Summary>
+        /// return view for FujiyBlogDatabase.User_ModeratedPostComments
+        /// </Summary>
+        private System.Collections.Generic.KeyValuePair<string, string> GetView13()
+        {
+            return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.User_ModeratedPostComments", "\r\n    SELECT VALUE -- Constructing User_ModeratedPostComments\r\n        [FujiyBlog" +
+                    ".EntityFramework.User_ModeratedPostComments](T3.[User_ModeratedPostComments.User" +
+                    "_ModeratedPostComments_Source], T3.[User_ModeratedPostComments.User_ModeratedPos" +
+                    "tComments_Target])\r\n    FROM (\r\n        SELECT -- Constructing User_ModeratedPos" +
+                    "tComments_Source\r\n            CreateRef(FujiyBlogDatabase.Users, row(T2.[User_Mo" +
+                    "deratedPostComments.User_ModeratedPostComments_Source.Id]),[FujiyBlog.EntityFram" +
+                    "ework.User]) AS [User_ModeratedPostComments.User_ModeratedPostComments_Source], " +
+                    "\r\n            T2.[User_ModeratedPostComments.User_ModeratedPostComments_Target]\r" +
+                    "\n        FROM (\r\n            SELECT -- Constructing User_ModeratedPostComments_T" +
+                    "arget\r\n                CreateRef(FujiyBlogDatabase.PostComments, row(T1.[User_Mo" +
+                    "deratedPostComments.User_ModeratedPostComments_Target.Id]),[FujiyBlog.EntityFram" +
+                    "ework.PostComment]) AS [User_ModeratedPostComments.User_ModeratedPostComments_Ta" +
+                    "rget], \r\n                T1.[User_ModeratedPostComments.User_ModeratedPostCommen" +
+                    "ts_Source.Id]\r\n            FROM (\r\n                SELECT \r\n                    " +
+                    "T.ModeratedBy_Id AS [User_ModeratedPostComments.User_ModeratedPostComments_Sourc" +
+                    "e.Id], \r\n                    T.Id AS [User_ModeratedPostComments.User_ModeratedP" +
+                    "ostComments_Target.Id], \r\n                    True AS _from0\r\n                FR" +
+                    "OM CodeFirstDatabase.PostComment AS T\r\n                WHERE T.ModeratedBy_Id IS" +
+                    " NOT NULL\r\n            ) AS T1\r\n        ) AS T2\r\n    ) AS T3");
+        }
+        
+        /// <Summary>
+        /// return view for FujiyBlogDatabase.Post_Author
+        /// </Summary>
+        private System.Collections.Generic.KeyValuePair<string, string> GetView14()
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.Post_Author", @"
     SELECT VALUE -- Constructing Post_Author
@@ -478,7 +532,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// <Summary>
         /// return view for FujiyBlogDatabase.Tag_Posts
         /// </Summary>
-        private System.Collections.Generic.KeyValuePair<string, string> GetView13()
+        private System.Collections.Generic.KeyValuePair<string, string> GetView15()
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.Tag_Posts", @"
     SELECT VALUE -- Constructing Tag_Posts
@@ -505,7 +559,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// <Summary>
         /// return view for FujiyBlogDatabase.Category_Posts
         /// </Summary>
-        private System.Collections.Generic.KeyValuePair<string, string> GetView14()
+        private System.Collections.Generic.KeyValuePair<string, string> GetView16()
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.Category_Posts", @"
     SELECT VALUE -- Constructing Category_Posts
@@ -532,7 +586,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// <Summary>
         /// return view for FujiyBlogDatabase.PostComment_Post
         /// </Summary>
-        private System.Collections.Generic.KeyValuePair<string, string> GetView15()
+        private System.Collections.Generic.KeyValuePair<string, string> GetView17()
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.PostComment_Post", @"
     SELECT VALUE -- Constructing PostComment_Post
@@ -559,7 +613,7 @@ namespace Edm_EntityMappingGeneratedViews
         /// <Summary>
         /// return view for FujiyBlogDatabase.PostComment_ParentComment
         /// </Summary>
-        private System.Collections.Generic.KeyValuePair<string, string> GetView16()
+        private System.Collections.Generic.KeyValuePair<string, string> GetView18()
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.PostComment_ParentComment", @"
     SELECT VALUE -- Constructing PostComment_ParentComment
@@ -579,62 +633,6 @@ namespace Edm_EntityMappingGeneratedViews
                     True AS _from0
                 FROM CodeFirstDatabase.PostComment AS T
                 WHERE T.ParentComment_Id IS NOT NULL
-            ) AS T1
-        ) AS T2
-    ) AS T3");
-        }
-        
-        /// <Summary>
-        /// return view for FujiyBlogDatabase.PostComment_Author
-        /// </Summary>
-        private System.Collections.Generic.KeyValuePair<string, string> GetView17()
-        {
-            return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.PostComment_Author", @"
-    SELECT VALUE -- Constructing PostComment_Author
-        [FujiyBlog.EntityFramework.PostComment_Author](T3.[PostComment_Author.PostComment_Author_Source], T3.[PostComment_Author.PostComment_Author_Target])
-    FROM (
-        SELECT -- Constructing PostComment_Author_Source
-            CreateRef(FujiyBlogDatabase.PostComments, row(T2.[PostComment_Author.PostComment_Author_Source.Id]),[FujiyBlog.EntityFramework.PostComment]) AS [PostComment_Author.PostComment_Author_Source], 
-            T2.[PostComment_Author.PostComment_Author_Target]
-        FROM (
-            SELECT -- Constructing PostComment_Author_Target
-                CreateRef(FujiyBlogDatabase.Users, row(T1.[PostComment_Author.PostComment_Author_Target.Id]),[FujiyBlog.EntityFramework.User]) AS [PostComment_Author.PostComment_Author_Target], 
-                T1.[PostComment_Author.PostComment_Author_Source.Id]
-            FROM (
-                SELECT 
-                    T.Id AS [PostComment_Author.PostComment_Author_Source.Id], 
-                    T.Author_Id AS [PostComment_Author.PostComment_Author_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.PostComment AS T
-                WHERE T.Author_Id IS NOT NULL
-            ) AS T1
-        ) AS T2
-    ) AS T3");
-        }
-        
-        /// <Summary>
-        /// return view for FujiyBlogDatabase.PostComment_ModeratedBy
-        /// </Summary>
-        private System.Collections.Generic.KeyValuePair<string, string> GetView18()
-        {
-            return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.PostComment_ModeratedBy", @"
-    SELECT VALUE -- Constructing PostComment_ModeratedBy
-        [FujiyBlog.EntityFramework.PostComment_ModeratedBy](T3.[PostComment_ModeratedBy.PostComment_ModeratedBy_Source], T3.[PostComment_ModeratedBy.PostComment_ModeratedBy_Target])
-    FROM (
-        SELECT -- Constructing PostComment_ModeratedBy_Source
-            CreateRef(FujiyBlogDatabase.PostComments, row(T2.[PostComment_ModeratedBy.PostComment_ModeratedBy_Source.Id]),[FujiyBlog.EntityFramework.PostComment]) AS [PostComment_ModeratedBy.PostComment_ModeratedBy_Source], 
-            T2.[PostComment_ModeratedBy.PostComment_ModeratedBy_Target]
-        FROM (
-            SELECT -- Constructing PostComment_ModeratedBy_Target
-                CreateRef(FujiyBlogDatabase.Users, row(T1.[PostComment_ModeratedBy.PostComment_ModeratedBy_Target.Id]),[FujiyBlog.EntityFramework.User]) AS [PostComment_ModeratedBy.PostComment_ModeratedBy_Target], 
-                T1.[PostComment_ModeratedBy.PostComment_ModeratedBy_Source.Id]
-            FROM (
-                SELECT 
-                    T.Id AS [PostComment_ModeratedBy.PostComment_ModeratedBy_Source.Id], 
-                    T.ModeratedBy_Id AS [PostComment_ModeratedBy.PostComment_ModeratedBy_Target.Id], 
-                    True AS _from0
-                FROM CodeFirstDatabase.PostComment AS T
-                WHERE T.ModeratedBy_Id IS NOT NULL
             ) AS T1
         ) AS T2
     ) AS T3");

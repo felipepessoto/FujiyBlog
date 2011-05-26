@@ -6,35 +6,44 @@ namespace FujiyBlog.Core.DomainObjects
 {
     public class User
     {
-        public virtual int Id { get; set; }
+        public User()
+        {
+            Posts = new List<Post>();
+        }
+
+        public int Id { get; set; }
         
         [Required, StringLength(20)]
-        public virtual string Username { get; set; }
+        public string Username { get; set; }
 
         [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
-        public virtual string Email { get; set; }
+        public string Email { get; set; }
 
         [Required, StringLength(50)]
-        public virtual string Password { get; set; }
+        public string Password { get; set; }
 
         [StringLength(20)]
-        public virtual string DisplayName { get; set; }
+        public string DisplayName { get; set; }
 
         [StringLength(100)]
-        public virtual string FullName { get; set; }
+        public string FullName { get; set; }
 
         [StringLength(20)]
-        public virtual string Location { get; set; }
+        public string Location { get; set; }
 
-        public virtual DateTime CreationDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
-        public virtual DateTime? LastLoginDate { get; set; }
+        public DateTime? LastLoginDate { get; set; }
 
         [StringLength(500)]
-        public virtual string About { get; set; }
+        public string About { get; set; }
 
-        public virtual DateTime? BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
+
+        public virtual ICollection<PostComment> AuthoredPostComments { get; set; }
+
+        public virtual ICollection<PostComment> ModeratedPostComments { get; set; }
     }
 }

@@ -14,6 +14,9 @@ namespace FujiyBlog.EntityFramework.Configuration
             Property(b => b.FullName).IsUnicode(false);
             Property(b => b.Location).IsUnicode(false);
             Property(b => b.About).IsUnicode(false);
+
+            HasMany(b => b.AuthoredPostComments).WithOptional(b => b.Author);
+            HasMany(b => b.ModeratedPostComments).WithOptional(b => b.ModeratedBy);
         }
     }
 }

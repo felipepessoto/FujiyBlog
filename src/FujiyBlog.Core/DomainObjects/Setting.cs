@@ -5,12 +5,12 @@ namespace FujiyBlog.Core.DomainObjects
     public class Setting
     {
         [Required]
-        public virtual int Id { get; set; }
+        public int Id { get; set; }
 
         [Required, StringLength(500)]
-        public virtual string Description { get; set; }
+        public string Description { get; set; }
 
         [Required]
-        public virtual string Value { get; set; }
+        public string Value { get; set; }
     }
 }
