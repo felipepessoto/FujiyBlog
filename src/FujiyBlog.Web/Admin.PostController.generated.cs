@@ -75,8 +75,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
-            public readonly string Create = "Create";
-            public readonly string CreatePost = "Create";
             public readonly string Edit = "Edit";
             public readonly string EditPost = "Edit";
             public readonly string Delete = "Delete";
@@ -107,23 +105,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Create() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult CreatePost() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.CreatePost);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Edit(int id) {
+        public override System.Web.Mvc.ActionResult Edit(int? id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult EditPost(int id, string tags, System.Collections.Generic.IEnumerable<int> selectedCategories) {
+        public override System.Web.Mvc.ActionResult EditPost(int? id, string tags, System.Collections.Generic.IEnumerable<int> selectedCategories) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditPost);
             callInfo.RouteValueDictionary.Add("id", id);
             callInfo.RouteValueDictionary.Add("tags", tags);

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Dto;
+using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.EntityFramework;
@@ -33,64 +35,38 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ViewResult Index(int? page)
         {
-            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+            IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
+                .Paging(page.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage);
 
-            AdminPostIndex model = new AdminPostIndex 
+            Dictionary<int, int> counts = (from post in posts
+                      select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
+
+            AdminPostIndex model = new AdminPostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, isPublic: false),
-                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(isPublic: false) / (double)Settings.SettingRepository.PostsPerPage),
+                RecentPosts = (from post in posts.ToList()
+                               select new PostSummary
+                                          {
+                                              Post = post,
+                                              CommentsTotal = counts[post.Id]
+                                          }),
+                TotalPages = (int)Math.Ceiling(db.Posts.Where(x => !x.IsDeleted).Count() / (double)Settings.SettingRepository.PostsPerPage),
             };
 
             return View(model);
         }
 
-        public virtual ActionResult Create()
+        public virtual ActionResult Edit(int? id)
         {
             AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Post = new Post
-                               {
-                                   PublicationDate = DateTime.UtcNow.AddHours(Settings.SettingRepository.UtcOffset),
-                                   IsPublished = true,
-                                   IsCommentEnabled = true,
-                               };
-            viewModel.AllCategories = db.Categories.ToList();
-            viewModel.AllTags = db.Tags.ToList();
-
-            return View(viewModel);
-        }
-
-        [HttpPost, ActionName("Create")]
-        public virtual ActionResult CreatePost()
-        {
-            Post newPost = new Post
-            {
-                Author = userRepository.GetByUsername(User.Identity.Name),
-                CreationDate = DateTime.UtcNow,
-                LastModificationDate= DateTime.UtcNow,
-            };
-
-            TryUpdateModel(newPost, new[] { "Title","Description","Slug","Content","PublicationDate","IsPublished","IsCommentEnabled"});
-
-            if (db.Posts.Any(x => x.Slug == newPost.Slug))
-            {
-                ModelState.AddModelError("Slug", "This slug already exists");
-            }
-
-            if (ModelState.IsValid)
-            {
-                db.Posts.Add(newPost);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
-
-            return View(newPost);
-        }
-
-        public virtual ActionResult Edit(int id)
-        {
-            AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Post = db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id);
+            viewModel.Post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
+                                 : new Post
+                                       {
+                                           PublicationDate =
+                                               DateTime.UtcNow.AddHours(Settings.SettingRepository.UtcOffset),
+                                           IsPublished = true,
+                                           IsCommentEnabled = true
+                                       };
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
 
@@ -98,37 +74,50 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Edit")]
-        public virtual ActionResult EditPost(int id, string tags, IEnumerable<int> selectedCategories)
+        public virtual ActionResult EditPost(int? id, string tags, IEnumerable<int> selectedCategories)
         {
-            Post editedPost = db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id);
+            Post editedPost = id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
+                                  : db.Posts.Add(new Post
+                                        {
+                                            Author = userRepository.GetByUsername(User.Identity.Name),
+                                            CreationDate = DateTime.UtcNow,
+                                            LastModificationDate = DateTime.UtcNow
+                                        });
 
-            TryUpdateModel(editedPost, new[] { "Title", "Description", "Slug", "Content", "PublicationDate", "IsPublished", "IsCommentEnabled" });
+            TryUpdateModel(editedPost, "Post", new[] { "Title", "Description", "Slug", "Content", "PublicationDate", "IsPublished", "IsCommentEnabled" });
 
             if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
             {
-                ModelState.AddModelError("Slug", "This slug already exists");
+                ModelState.AddModelError("Post.Slug", "This slug already exists");
             }
 
-            if (ModelState.IsValid)
+            editedPost.Tags.Clear();
+            foreach (Tag tag in postRepository.GetOrCreateTags(tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
             {
-                editedPost.Tags.Clear();
-                foreach (Tag tag in postRepository.GetOrCreateTags(tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
-                {
-                    editedPost.Tags.Add(tag);
-                }
+                editedPost.Tags.Add(tag);
+            }
 
-                editedPost.Categories.Clear();
+            editedPost.Categories.Clear();
 
+            if (selectedCategories != null)
+            {
                 foreach (Category category in db.Categories.Where(x => selectedCategories.Contains(x.Id)))
                 {
                     editedPost.Categories.Add(category);
                 }
-
+            }
+            if (ModelState.IsValid)
+            {
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(editedPost);
+            AdminPostEdit viewModel = new AdminPostEdit();
+            viewModel.Post = editedPost;
+            viewModel.AllCategories = db.Categories.ToList();
+            viewModel.AllTags = db.Tags.ToList();
+
+            return View(viewModel);
         }
 
         public virtual ActionResult Delete(int id)

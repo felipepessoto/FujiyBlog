@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Dto;
+using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Core.Infrastructure;
+using FujiyBlog.EntityFramework;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
 
@@ -13,13 +18,15 @@ namespace FujiyBlog.Web.Controllers
     public partial class PostController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        private readonly FujiyBlogDatabase db;
         private readonly IPostRepository postRepository;
         private readonly IUserRepository userRepository;
         private readonly PostService postService;
 
-        public PostController(IUnitOfWork unitOfWork, IPostRepository postRepository, IUserRepository userRepository, PostService postService)
+        public PostController(IUnitOfWork unitOfWork, FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository, PostService postService)
         {
             this.unitOfWork = unitOfWork;
+            this.db = db;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
             this.postService = postService;
@@ -27,14 +34,29 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Index(int? page)
         {
-            int skip = (page.GetValueOrDefault(1) - 1)*Settings.SettingRepository.PostsPerPage;
+            IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted);
+            if (!Request.IsAuthenticated)
+            {
+                posts = posts.WhereIsPublicPost();
+            }
+
+            IQueryable<Post> postsPage = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
+                .Paging(page.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage);
+
+            Dictionary<int, int> counts = (from post in postsPage
+                                           select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
 
             PostIndex model = new PostIndex
-                                  {
-                                      CurrentPage = page.GetValueOrDefault(1),
-                                      RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, isPublic: !Request.IsAuthenticated),
-                                      TotalPages = (int)Math.Ceiling(postRepository.GetTotal(isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
-                                  };
+            {
+                CurrentPage = page.GetValueOrDefault(1),
+                RecentPosts = (from post in postsPage.ToList()
+                               select new PostSummary
+                               {
+                                   Post = post,
+                                   CommentsTotal = counts[post.Id]
+                               }),
+                TotalPages = (int)Math.Ceiling(postsPage.Count() / (double)Settings.SettingRepository.PostsPerPage),
+            };
 
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
