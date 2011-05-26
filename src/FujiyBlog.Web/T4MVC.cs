@@ -38,6 +38,7 @@ namespace T4MVC {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public class AdminClass {
         public readonly string Name = "Admin";
+        public FujiyBlog.Web.Areas.Admin.Controllers.ImportController Import = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_ImportController();
         public FujiyBlog.Web.Areas.Admin.Controllers.PostController Post = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_PostController();
         public T4MVC.Admin.SharedController Shared = new T4MVC.Admin.SharedController();
     }

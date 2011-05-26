@@ -1,4 +1,4 @@
-﻿@helper Links(int currentPage, int totalPages){
+﻿@helper Links(int currentPage, int totalPages, string nextPageText, string previousPageText){
     
     totalPages = Math.Max(totalPages, 1);
     int numbersToShow = Math.Min(13, totalPages);
@@ -29,11 +29,11 @@
 <ul class="PostPager">
     @if (currentPage == 1)
     {
-        <li class="PagerLinkDisabled">Next posts</li>
+        <li class="PagerLinkDisabled">@previousPageText</li>
     }
     else
     { 
-        <li class="PagerLink"><a href="?page=@(currentPage - 1)">Next posts</a></li>
+        <li class="PagerLink"><a href="?page=@(currentPage - 1)">@previousPageText</a></li>
     }
     @if (showTwoFirst)
     {
@@ -60,11 +60,11 @@
     }
     @if (currentPage == totalPages)
     {
-        <li class="PagerLinkDisabled">Previous posts</li>
+        <li class="PagerLinkDisabled">@nextPageText</li>
     }
     else
     { 
-        <li class="PagerLink"><a href="?page=@(currentPage + 1)">Previous posts</a></li>
+        <li class="PagerLink"><a href="?page=@(currentPage + 1)">@nextPageText</a></li>
     }
 </ul>
 

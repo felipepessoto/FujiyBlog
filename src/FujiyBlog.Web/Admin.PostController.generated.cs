@@ -88,7 +88,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string Create = "~/Areas/Admin/Views/Post/Create.cshtml";
             public readonly string Delete = "~/Areas/Admin/Views/Post/Delete.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/Post/Edit.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Post/Index.cshtml";

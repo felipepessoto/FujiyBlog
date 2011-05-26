@@ -11,7 +11,7 @@
     @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
 </p>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages)
+@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
 
 <table>
     <tr>
@@ -69,4 +69,4 @@
     </tr>
 }
 </table>
-@Pager.Links(Model.CurrentPage, Model.TotalPages)
+@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")

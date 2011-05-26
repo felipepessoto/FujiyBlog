@@ -17,8 +17,7 @@ using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    [Authorize]
-    public partial class PostController : Controller
+    public partial class PostController : AdminController
     {
         private readonly IUnitOfWork unitOfWork;
         private readonly FujiyBlogDatabase db;

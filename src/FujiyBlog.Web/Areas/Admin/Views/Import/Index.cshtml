@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "BlogML Importer";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+@using(Html.BeginForm(MVC.Admin.Import.ImportBlogML(), FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+<input name="uploadFile" type="file" />
+<input type="submit" value="Upload File" />
+}
