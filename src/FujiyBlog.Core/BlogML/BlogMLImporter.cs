@@ -204,7 +204,7 @@ namespace FujiyBlog.Core.BlogML
 
             phrase = Regex.Replace(phrase, @"[^a-z0-9\s-]", ""); // invalid chars           
             phrase = Regex.Replace(phrase, @"\s+", " ").Trim(); // convert multiple spaces into one space   
-            phrase = phrase.Substring(0, phrase.Length <= 45 ? phrase.Length : 45).Trim(); // cut and trim it   
+            phrase = phrase.Substring(0, phrase.Length <= 200 ? phrase.Length : 200).Trim(); // cut and trim it   
             phrase = Regex.Replace(phrase, @"\s", "-"); // hyphens   
 
             return phrase;
