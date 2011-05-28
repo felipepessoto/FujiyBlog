@@ -34,29 +34,14 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Index(int? page)
         {
-            IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted);
-            if (!Request.IsAuthenticated)
-            {
-                posts = posts.WhereIsPublicPost();
-            }
-
-            IQueryable<Post> postsPage = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
-                .Paging(page.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage);
-
-            Dictionary<int, int> counts = (from post in postsPage
-                                           select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
-
+            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+            
             PostIndex model = new PostIndex
-            {
-                CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = (from post in postsPage.ToList()
-                               select new PostSummary
-                               {
-                                   Post = post,
-                                   CommentsTotal = counts[post.Id]
-                               }),
-                TotalPages = (int)Math.Ceiling(postsPage.Count() / (double)Settings.SettingRepository.PostsPerPage),
-            };
+                                  {
+                                      CurrentPage = page.GetValueOrDefault(1),
+                                      RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, isPublic: !Request.IsAuthenticated),
+                                      TotalPages = (int)Math.Ceiling(postRepository.GetTotal(isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
+                                  };
 
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
