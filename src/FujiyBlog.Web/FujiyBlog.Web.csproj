@@ -225,7 +225,6 @@
     <Content Include="Views\Widget\Archive.cshtml" />
     <Content Include="Views\Widget\ArchiveEdit.cshtml" />
     <Content Include="App_Code\Pager.cshtml" />
-    <Content Include="Views\Themes\Default\Shared\_LogOnPartial.cshtml" />
     <Content Include="Views\Themes\Default\Shared\Error.cshtml" />
     <Content Include="Views\Themes\Default\Account\ChangePassword.cshtml" />
     <Content Include="Views\Themes\Default\Account\ChangePasswordSuccess.cshtml" />

@@ -33,7 +33,14 @@
           <li>@Html.ActionLink("Archive", MVC.Post.Archive())</li>
           <li><a href="/">Contato</a></li>
           <li>@Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) / @Html.ActionLink("Atom 1.0", MVC.Feed.Atom10())</li>
-          <li>@Html.Partial(MVC.Themes.Views.Default.Shared._LogOnPartial)</li>
+          <li>@if (Request.IsAuthenticated)
+              {
+                  @Html.ActionLink("Log Off", "LogOff", "Account")
+              }
+              else
+              {
+                  @Html.ActionLink("Log On", "LogOn", "Account")
+              }</li>
         </ul>
       </div>
       </div>

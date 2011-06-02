@@ -2,9 +2,6 @@
     Layout = null;
     Response.AddHeader("Content-Type", "application/x-javascript"); 
 }
-@if (false) {
-<script src="~/Scripts/jquery-1.5-vsdoc.js" type="text/javascript"></script>
-}
 
 @*<script type="text/javascript">*@
     fujiyBlog = {
@@ -17,7 +14,11 @@
                     fujiyBlog.widget.currentDialog.remove();
                 }
 
-                fujiyBlog.widget.currentDialog = $('<div>' + result + '</div>').dialog();
+                fujiyBlog.widget.currentDialog = $('<div>' + result + '</div>').dialog({ height: 500,
+                    width: 750,
+                    modal: true,
+                    overlay: { opacity: 0.7, background: 'black' }
+                });
             },
 
             saveWidgetSettings: function (id, jsonSettings) {
