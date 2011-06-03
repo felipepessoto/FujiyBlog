@@ -52,5 +52,10 @@ namespace FujiyBlog.Core.Services
             User user = userRepository.GetByUsername(username);
             return user != null && user.Password == password;
         }
+
+        public void RetrievePassword(User user)
+        {
+            //TODO recuperar senha
+        }
     }
 }
