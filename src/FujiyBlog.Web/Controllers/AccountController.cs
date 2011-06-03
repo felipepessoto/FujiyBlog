@@ -1,28 +1,22 @@
-﻿using System.Linq;
-using System.Web.Mvc;
-using System.Web.Routing;
-using FujiyBlog.Web.Models;
+﻿using System.Web.Mvc;
+using System.Web.Security;
+using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Services;
-using FujiyBlog.Web.Extensions;
+using FujiyBlog.EntityFramework;
+using FujiyBlog.Web.Models;
+using System.Linq;
 
 namespace FujiyBlog.Web.Controllers
 {
     public partial class AccountController : Controller
     {
         private readonly UserService userService;
+        private readonly FujiyBlogDatabase db;
 
-        public IFormsAuthenticationService FormsService { get; set; }
-
-        public AccountController(UserService userService)
+        public AccountController(UserService userService, FujiyBlogDatabase db)
         {
             this.userService = userService;
-        }
-
-        protected override void Initialize(RequestContext requestContext)
-        {
-            if (FormsService == null) { FormsService = new FormsAuthenticationService(); }
-
-            base.Initialize(requestContext);
+            this.db = db;
         }
 
         public virtual ActionResult LogOn()
@@ -41,7 +35,7 @@ namespace FujiyBlog.Web.Controllers
             {
                 if (userService.ValidateUser(model.UserName, model.Password))
                 {
-                    FormsService.SignIn(model.UserName, model.RememberMe);
+                    FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
                         return Redirect(returnUrl);
@@ -63,40 +57,9 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult LogOff()
         {
-            FormsService.SignOut();
+            FormsAuthentication.SignOut();
 
             return RedirectToAction(MVC.Post.Index());
-        }
-
-        // **************************************
-        // URL: /Account/Register
-        // **************************************
-
-        public virtual ActionResult Register()
-        {
-            ViewBag.PasswordLength = Settings.SettingRepository.MinRequiredPasswordLength;
-            return View();
-        }
-
-        [HttpPost]
-        public virtual ActionResult Register(RegisterModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                // Attempt to register the user
-                CreateUserResult createStatus = userService.CreateUser(model.UserName, model.Password, model.Email);
-
-                if (!createStatus.RuleViolations.Any())
-                {
-                    FormsService.SignIn(model.UserName, false /* createPersistentCookie */);
-                    return RedirectToAction(MVC.Post.Index());
-                }
-                ModelState.Merge(createStatus.RuleViolations);
-            }
-
-            // If we got this far, something failed, redisplay form
-            ViewBag.PasswordLength = Settings.SettingRepository.MinRequiredPasswordLength;
-            return View(model);
         }
 
         [Authorize]
@@ -127,14 +90,32 @@ namespace FujiyBlog.Web.Controllers
             return View(model);
         }
 
-        // **************************************
-        // URL: /Account/ChangePasswordSuccess
-        // **************************************
-
         public virtual ActionResult ChangePasswordSuccess()
         {
             return View();
         }
 
+        public virtual ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public virtual ActionResult ForgotPassword(string email)
+        {
+            User user = db.Users.SingleOrDefault(x => x.Email == email);
+            if (user == null)
+            {
+                ModelState.AddModelError("email", "Email does not exist in our system");
+                return View();
+            }
+            userService.RetrievePassword(user);
+            return RedirectToAction(MVC.Account.ForgotPasswordSuccess());
+        }
+
+        public virtual ActionResult ForgotPasswordSuccess()
+        {
+            return View();
+        }
     }
 }

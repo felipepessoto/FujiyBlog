@@ -82,6 +82,7 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Administration = "~/Views/Widget/Administration.cshtml";
             public readonly string Archive = "~/Views/Widget/Archive.cshtml";
             public readonly string ArchiveEdit = "~/Views/Widget/ArchiveEdit.cshtml";
             public readonly string Categories = "~/Views/Widget/Categories.cshtml";

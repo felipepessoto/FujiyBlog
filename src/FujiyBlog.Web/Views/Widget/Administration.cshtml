@@ -1,0 +1,27 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+    IDictionary<string, object> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, object>() { { "Title", "Administration" } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
+    }
+}
+<h4>@Html.Raw(settings["Title"] as string)</h4>
+<div class="content">
+    <ul class="toprounded">
+        <li><a href="/blog/admin/Dashboard.aspx"><span>Dashboard</span></a></li>
+        <li>@Html.ActionLink("Posts", MVC.Admin.Post.Index())</li>
+        <li><a href="/blog/admin/Comments/Approved.aspx"><span>Comentários</span></a></li>
+        <li><a href="/blog/admin/Pages/Pages.aspx"><span>Páginas</span></a></li>
+        <li><a href="/blog/admin/Tracking/Pingbacks.aspx"><span>Tracking</span></a></li>
+        <li><a href="/blog/admin/Widgets/Blogroll.aspx"><span>Controles</span></a></li>
+        <li><a href="/blog/admin/Extension Manager/default.aspx"><span>Extensions</span></a></li>
+        <li><a href="/blog/admin/Users/Users.aspx"><span>Usuários</span></a></li>
+        <li><a href="/blog/admin/Settings/Main.aspx"><span>Configurações</span></a></li>
+        <li><a href="/blog/admin/Users/Profile.aspx?id=fujiy"><span>My Profile</span></a></li>
+        <li><a href="/blog/Account/change-password.aspx"><span>Change password</span></a></li></ul>
+</div>

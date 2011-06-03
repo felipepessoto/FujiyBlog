@@ -136,13 +136,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult AddCategory(string name)
         {
-            if (!db.Categories.Any(x => x.Name == name))
+            if (db.Categories.Any(x => x.Name == name))
             {
-                Category newCategory = db.Categories.Add(new Category {Name = name});
-                unitOfWork.SaveChanges();
-                return Json(newCategory);
+                return Json(new { errorMessage = "The category already exist" });
             }
-            return Json(false);
+
+            Category newCategory = db.Categories.Add(new Category {Name = name});
+            unitOfWork.SaveChanges();
+            return Json(newCategory);
         }
     }
 }

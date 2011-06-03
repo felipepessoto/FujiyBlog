@@ -1,14 +1,11 @@
 ﻿@model FujiyBlog.Web.Models.LogOnModel
 
 @{
-    ViewBag.Title = "Log On";
+    ViewBag.Title = "Account Login";
     Layout = "../Shared/_Layout.cshtml";
 }
 
 <h2>Log On</h2>
-<p>
-    Please enter your username and password. @Html.ActionLink("Register", "Register") if you don't have an account.
-</p>
 
 @Html.ValidationSummary(true, "Login was unsuccessful. Please correct the errors and try again.")
 
@@ -42,5 +39,7 @@
                 <input type="submit" value="Log On" />
             </p>
         </fieldset>
+
+        @Html.ActionLink("Forgot your password?", MVC.Account.ForgotPassword())
     </div>
 }

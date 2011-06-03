@@ -21,15 +21,13 @@ namespace FujiyBlog.Web.Controllers
         private readonly FujiyBlogDatabase db;
         private readonly IPostRepository postRepository;
         private readonly IUserRepository userRepository;
-        private readonly PostService postService;
 
-        public PostController(IUnitOfWork unitOfWork, FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository, PostService postService)
+        public PostController(IUnitOfWork unitOfWork, FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
         {
             this.unitOfWork = unitOfWork;
             this.db = db;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
-            this.postService = postService;
         }
 
         public virtual ActionResult Index(int? page)
@@ -165,6 +163,7 @@ namespace FujiyBlog.Web.Controllers
 
             PostComment postComment = new PostComment
                                           {
+                                              CreationDate = DateTime.UtcNow,
                                               IpAddress = Request.UserHostAddress,
                                               Post = postRepository.GetPost(id, !isLogged)
                                           };
@@ -179,7 +178,7 @@ namespace FujiyBlog.Web.Controllers
                 UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
             }
 
-            postService.AddComment(postComment);
+            db.PostComments.Add(postComment);
             unitOfWork.SaveChanges();
 
             return View("Comments", new[] { postComment });

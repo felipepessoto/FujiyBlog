@@ -46,9 +46,10 @@ namespace FujiyBlog.Web.Controllers {
         public class ActionNamesClass {
             public readonly string LogOn = "LogOn";
             public readonly string LogOff = "LogOff";
-            public readonly string Register = "Register";
             public readonly string ChangePassword = "ChangePassword";
             public readonly string ChangePasswordSuccess = "ChangePasswordSuccess";
+            public readonly string ForgotPassword = "ForgotPassword";
+            public readonly string ForgotPasswordSuccess = "ForgotPasswordSuccess";
         }
 
 
@@ -81,17 +82,6 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Register() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Register);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Register(FujiyBlog.Web.Models.RegisterModel model) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Register);
-            callInfo.RouteValueDictionary.Add("model", model);
-            return callInfo;
-        }
-
         public override System.Web.Mvc.ActionResult ChangePassword() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ChangePassword);
             return callInfo;
@@ -105,6 +95,22 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult ChangePasswordSuccess() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ChangePasswordSuccess);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ForgotPassword() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPassword);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ForgotPassword(string email) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPassword);
+            callInfo.RouteValueDictionary.Add("email", email);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ForgotPasswordSuccess() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPasswordSuccess);
             return callInfo;
         }
 

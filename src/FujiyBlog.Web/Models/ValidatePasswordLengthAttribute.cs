@@ -10,7 +10,7 @@ namespace FujiyBlog.Web.Models
     public sealed class ValidatePasswordLengthAttribute : ValidationAttribute, IClientValidatable
     {
         private const string _defaultErrorMessage = "'{0}' must be at least {1} characters long.";
-        private readonly int _minCharacters = 6;//TODO configuracao
+        private readonly int _minCharacters = Settings.SettingRepository.MinRequiredPasswordLength;
 
         public ValidatePasswordLengthAttribute()
             : base(_defaultErrorMessage)

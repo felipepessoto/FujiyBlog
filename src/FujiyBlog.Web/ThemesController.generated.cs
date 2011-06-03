@@ -36,8 +36,9 @@ namespace T4MVC {
                 public partial class _Account{
                     public readonly string ChangePassword = "~/Views/Themes/Default/Account/ChangePassword.cshtml";
                     public readonly string ChangePasswordSuccess = "~/Views/Themes/Default/Account/ChangePasswordSuccess.cshtml";
+                    public readonly string ForgotPassword = "~/Views/Themes/Default/Account/ForgotPassword.cshtml";
+                    public readonly string ForgotPasswordSuccess = "~/Views/Themes/Default/Account/ForgotPasswordSuccess.cshtml";
                     public readonly string LogOn = "~/Views/Themes/Default/Account/LogOn.cshtml";
-                    public readonly string Register = "~/Views/Themes/Default/Account/Register.cshtml";
                 }
                 static readonly _Post s_Post = new _Post();
                 public _Post Post { get { return s_Post; } }
@@ -53,7 +54,6 @@ namespace T4MVC {
                 public _Shared Shared { get { return s_Shared; } }
                 public partial class _Shared{
                     public readonly string _Layout = "~/Views/Themes/Default/Shared/_Layout.cshtml";
-                    public readonly string _LogOnPartial = "~/Views/Themes/Default/Shared/_LogOnPartial.cshtml";
                     public readonly string Error = "~/Views/Themes/Default/Shared/Error.cshtml";
                 }
             }
