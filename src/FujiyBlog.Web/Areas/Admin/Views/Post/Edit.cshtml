@@ -96,7 +96,7 @@
         <ul id="categories-list">
         @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
         {
-            <li><input type="checkbox" name="selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
+            <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
         }
         </ul>
 
@@ -106,7 +106,7 @@
         
         <a href="javascript:void(0);" id="add-category">Add</a>
 
-        @Html.TextBox("tags", string.Join(",", Model.Post.Tags.Select(x=>x.Name)))
+        @Html.TextBox("Post.tags", string.Join(",", Model.Post.Tags.Select(x=>x.Name)))
 
 
         <p>

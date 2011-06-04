@@ -110,6 +110,7 @@
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPostIndex.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPostEdit.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AdminPostSave.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />

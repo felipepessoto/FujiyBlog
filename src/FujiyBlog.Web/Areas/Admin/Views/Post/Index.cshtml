@@ -11,6 +11,10 @@
     @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
 </p>
 
+<div id="posts-type-filters">
+@Html.ActionLink("All", MVC.Admin.Post.Index()) | @Html.ActionLink("Drafts", MVC.Admin.Post.Index(null, false))| @Html.ActionLink("Published", MVC.Admin.Post.Index(null, true))
+</div>
+
 @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
 
 <table>
@@ -39,7 +43,8 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.RecentPosts) {
+@foreach (var item in Model.RecentPosts)
+{
     <tr>
         <td class="@(item.Post.IsPublished ? "postpublished" : "postnotpublished")">
             @Html.DisplayFor(modelItem => item.Post.IsPublished)
@@ -51,10 +56,10 @@
             @(item.Post.Author.DisplayName ?? item.Post.Author.Username)
         </td>
         <td>
-            @string.Join(", ", item.Post.Categories.Select(x=>x.Name).ToList())
+            @string.Join(", ", item.Post.Categories.Select(x => x.Name).ToList())
         </td>
         <td>
-            @string.Join(", ", item.Post.Tags.Select(x=>x.Name).ToList())
+            @string.Join(", ", item.Post.Tags.Select(x => x.Name).ToList())
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Post.CreationDate)
@@ -63,8 +68,8 @@
             @Html.DisplayFor(modelItem => item.Post.PublicationDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Post.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Post.Id })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Post.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Post.Id })
         </td>
     </tr>
 }

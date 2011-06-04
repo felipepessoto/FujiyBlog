@@ -32,24 +32,31 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             this.userRepository = userRepository;
         }
 
-        public virtual ViewResult Index(int? page)
+        public virtual ViewResult Index(int? page, bool? published)
         {
-            IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
+            IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted);
+
+            if (published.HasValue)
+            {
+                posts = published.Value ? posts.Where(x => x.IsPublished) : posts.Where(x => !x.IsPublished);
+            }
+
+            IQueryable<Post> pagePosts = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
                 .Paging(page.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage);
 
-            Dictionary<int, int> counts = (from post in posts
+            Dictionary<int, int> counts = (from post in pagePosts
                       select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
 
             AdminPostIndex model = new AdminPostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = (from post in posts.ToList()
+                RecentPosts = (from post in pagePosts.ToList()
                                select new PostSummary
                                           {
                                               Post = post,
                                               CommentsTotal = counts[post.Id]
                                           }),
-                TotalPages = (int)Math.Ceiling(db.Posts.Where(x => !x.IsDeleted).Count() / (double)Settings.SettingRepository.PostsPerPage),
+                TotalPages = (int)Math.Ceiling(posts.Count() / (double)Settings.SettingRepository.PostsPerPage),
             };
 
             return View(model);
@@ -73,9 +80,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost, ActionName("Edit")]
-        public virtual ActionResult EditPost(int? id, string tags, IEnumerable<int> selectedCategories)
+        public virtual ActionResult EditPost([Bind(Prefix="Post")]AdminPostSave postSave)
         {
-            Post editedPost = id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
+            Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == postSave.Id)
                                   : db.Posts.Add(new Post
                                         {
                                             Author = userRepository.GetByUsername(User.Identity.Name),
@@ -83,7 +90,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                             LastModificationDate = DateTime.UtcNow
                                         });
 
-            TryUpdateModel(editedPost, "Post", new[] { "Title", "Description", "Slug", "Content", "PublicationDate", "IsPublished", "IsCommentEnabled" });
+            editedPost.Title = postSave.Title;
+            editedPost.Description = postSave.Description;
+            editedPost.Slug = postSave.Slug;
+            editedPost.Content = postSave.Content;
+            editedPost.PublicationDate = postSave.PublicationDate.AddHours(-Settings.SettingRepository.UtcOffset);
+            editedPost.IsPublished = postSave.IsPublished;
+            editedPost.IsCommentEnabled = postSave.IsCommentEnabled;
+
+            //TryUpdateModel(editedPost, "Post", new[] { "Title", "Description", "Slug", "Content", "PublicationDate", "IsPublished", "IsCommentEnabled" });
 
             if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
             {
@@ -91,16 +106,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             editedPost.Tags.Clear();
-            foreach (Tag tag in postRepository.GetOrCreateTags(tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
+            foreach (Tag tag in postRepository.GetOrCreateTags(postSave.Tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
             {
                 editedPost.Tags.Add(tag);
             }
 
             editedPost.Categories.Clear();
 
-            if (selectedCategories != null)
+            if (postSave.SelectedCategories != null)
             {
-                foreach (Category category in db.Categories.Where(x => selectedCategories.Contains(x.Id)))
+                foreach (Category category in db.Categories.Where(x => postSave.SelectedCategories.Contains(x.Id)))
                 {
                     editedPost.Categories.Add(category);
                 }

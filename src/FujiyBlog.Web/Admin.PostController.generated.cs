@@ -98,9 +98,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
     public class T4MVC_PostController: FujiyBlog.Web.Areas.Admin.Controllers.PostController {
         public T4MVC_PostController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ViewResult Index(int? page) {
+        public override System.Web.Mvc.ViewResult Index(int? page, bool? published) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
             callInfo.RouteValueDictionary.Add("page", page);
+            callInfo.RouteValueDictionary.Add("published", published);
             return callInfo;
         }
 
@@ -110,11 +111,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult EditPost(int? id, string tags, System.Collections.Generic.IEnumerable<int> selectedCategories) {
+        public override System.Web.Mvc.ActionResult EditPost(FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostSave postSave) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditPost);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("tags", tags);
-            callInfo.RouteValueDictionary.Add("selectedCategories", selectedCategories);
+            callInfo.RouteValueDictionary.Add("Post", postSave);
             return callInfo;
         }
 
