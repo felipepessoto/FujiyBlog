@@ -6,5 +6,6 @@
         @Ajax.ActionLink("Edit", MVC.Widget.Edit(Model.Id), new AjaxOptions { OnSuccess = "fujiyBlog.widget.showEditWidget" }, new { @class = "edit" })
         <a class="move" href="javascript:void(0);" title="Move widget">Move</a>
     }
-    @{Html.RenderPartial(Model.Name, Model);}
+    @RenderBody()
+    @*@{Html.RenderPartial(Model.Name, Model);}*@
 </div>

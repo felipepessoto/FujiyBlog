@@ -1,5 +1,7 @@
 ﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
 @{
+    Layout = "Widget.cshtml";
+    
     IDictionary<string, string> settings;
     if (Model.Settings == null)
     {

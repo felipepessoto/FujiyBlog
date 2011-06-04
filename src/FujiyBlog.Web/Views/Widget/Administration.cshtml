@@ -1,5 +1,9 @@
 ﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
-@{
+           
+@if (Request.IsAuthenticated)
+{
+    Layout = "Widget.cshtml";
+    
     IDictionary<string, object> settings;
     if (Model.Settings == null)
     {
@@ -9,7 +13,7 @@
     {
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
     }
-}
+
 <h4>@Html.Raw(settings["Title"] as string)</h4>
 <div class="content">
     <ul class="toprounded">
@@ -25,3 +29,4 @@
         <li><a href="/blog/admin/Users/Profile.aspx?id=fujiy"><span>My Profile</span></a></li>
         <li><a href="/blog/Account/change-password.aspx"><span>Change password</span></a></li></ul>
 </div>
+}

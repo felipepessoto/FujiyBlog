@@ -2,7 +2,7 @@
 <div class="widgetzone" id="widgetzone_@(Model.ZoneName)">
     @foreach (FujiyBlog.Core.DomainObjects.WidgetSetting widgetSetting in Model.WidgetSettings)
     {
-        Html.RenderPartial(MVC.Widget.Views.Widget, widgetSetting);
+        Html.RenderPartial(widgetSetting.Name, widgetSetting);
     }
 </div>
 @if (Request.IsAuthenticated)

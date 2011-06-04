@@ -66,7 +66,7 @@ namespace FujiyBlog.Web.Controllers
 
             widgetSettingRepository.Add(widgetSetting);
             unitOfWork.SaveChanges();
-            return View(MVC.Widget.Views.Widget, widgetSetting);
+            return View(widgetSetting.Name, widgetSetting);
         }
 
         [HttpPost, Authorize]
@@ -95,7 +95,7 @@ namespace FujiyBlog.Web.Controllers
 
             unitOfWork.SaveChanges();
 
-            return View(MVC.Widget.Views.Widget, setting);
+            return View(setting.Name, setting);
         }
 
         [Authorize, HttpPost]
