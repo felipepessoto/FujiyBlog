@@ -6,7 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Extensions;
 using FujiyBlog.EntityFramework;
+using FujiyBlog.Web.Areas.Admin.ViewModels;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -19,58 +21,43 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             this.db = db;
         }
 
-        //
-        // GET: /Admin/Comment/
-
-        public virtual ViewResult Index()
+        public virtual ViewResult Index(int? page)
         {
-            return View(db.PostComments.ToList());
+            IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && x.IsApproved);
+
+            List<PostComment> pageComments =  comments.OrderByDescending(x=>x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
+
+            AdminCommentIndex model = new AdminCommentIndex
+                                          {
+                                              CurrentPage = page.GetValueOrDefault(1),
+                                              Comments = pageComments,
+                                              TotalPages = (int) Math.Ceiling(comments.Count()/(double) 10),
+                                          };
+
+            return View(model);
         }
 
-        //
-        // GET: /Admin/Comment/Details/5
-
-        public virtual ViewResult Details(int id)
+        public virtual ViewResult Pending(int? page)
         {
-            PostComment postcomment = db.PostComments.Find(id);
-            return View(postcomment);
-        }
+            IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && !x.IsApproved);
 
-        //
-        // GET: /Admin/Comment/Create
+            List<PostComment> pageComments = comments.OrderByDescending(x => x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
 
-        public virtual ActionResult Create()
-        {
-            return View();
-        } 
-
-        //
-        // POST: /Admin/Comment/Create
-
-        [HttpPost]
-        public virtual ActionResult Create(PostComment postcomment)
-        {
-            if (ModelState.IsValid)
+            AdminCommentIndex model = new AdminCommentIndex
             {
-                db.PostComments.Add(postcomment);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
+                CurrentPage = page.GetValueOrDefault(1),
+                Comments = pageComments,
+                TotalPages = (int)Math.Ceiling(comments.Count() / (double)10),
+            };
 
-            return View(postcomment);
+            return View(MVC.Admin.Comment.Views.Index, model);
         }
-        
-        //
-        // GET: /Admin/Comment/Edit/5
 
         public virtual ActionResult Edit(int id)
         {
             PostComment postcomment = db.PostComments.Find(id);
             return View(postcomment);
         }
-
-        //
-        // POST: /Admin/Comment/Edit/5
 
         [HttpPost]
         public virtual ActionResult Edit(PostComment postcomment)
@@ -84,31 +71,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(postcomment);
         }
 
-        //
-        // GET: /Admin/Comment/Delete/5
-
+        [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            PostComment postcomment = db.PostComments.Find(id);
-            return View(postcomment);
-        }
-
-        //
-        // POST: /Admin/Comment/Delete/5
-
-        [HttpPost, ActionName("Delete")]
-        public virtual ActionResult DeleteConfirmed(int id)
-        {            
-            PostComment postcomment = db.PostComments.Find(id);
-            db.PostComments.Remove(postcomment);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            db.Dispose();
-            base.Dispose(disposing);
+            db.Database.ExecuteSqlCommand("UPDATE [PostComments] SET IsDeleted = 1 WHERE Id = {0}", id);
+            return Json(true);
         }
     }
 }

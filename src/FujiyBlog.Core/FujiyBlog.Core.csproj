@@ -63,7 +63,6 @@
     <Compile Include="Repositories\IWidgetSettingRepository.cs" />
     <Compile Include="Repositories\IBlogMLRepository.cs" />
     <Compile Include="Repositories\IFeedRepository.cs" />
-    <Compile Include="Repositories\IPostCommentRepository.cs" />
     <Compile Include="Repositories\IPostRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\ISettingRepository.cs" />

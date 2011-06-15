@@ -39,10 +39,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             IQueryable<Post> pagePosts = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
-                .Paging(page.GetValueOrDefault(), Settings.SettingRepository.PostsPerPage);
+                .Paging(page.GetValueOrDefault(1), 10);
 
             Dictionary<int, int> counts = (from post in pagePosts
-                      select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
+                      select new { post.Id, C = post.Comments.Where(x => !x.IsDeleted).Count() }).ToDictionary(e => e.Id, e => e.C);
 
             AdminPostIndex model = new AdminPostIndex
             {
@@ -148,7 +148,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Categories()
         {
             Dictionary<Category, int> categoriesPostCount = (from category in db.Categories
-                                           select new { Category = category, PostCount = category.Posts.Count() }).ToDictionary(e => e.Category, e => e.PostCount);
+                                                             select new { Category = category, PostCount = category.Posts.Where(x => !x.IsDeleted).Count() }).ToDictionary(e => e.Category, e => e.PostCount);
 
             AdminCategoriesList adminCategoriesList = new AdminCategoriesList { CategoriesPostCount = categoriesPostCount };
             return View(adminCategoriesList);

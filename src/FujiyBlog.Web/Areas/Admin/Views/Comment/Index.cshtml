@@ -1,15 +1,13 @@
-﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.PostComment>
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentIndex
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = MVC.Admin.Comment.Views._Layout;
 }
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
 <table>
     <tr>
         <th>
@@ -33,20 +31,11 @@
         <th>
             CreationDate
         </th>
-        <th>
-            IsApproved
-        </th>
-        <th>
-            IsSpam
-        </th>
-        <th>
-            IsDeleted
-        </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
+@foreach (var item in Model.Comments) {
+    <tr id="item-row-@item.Id">
         <td>
             @Html.DisplayFor(modelItem => item.AuthorName)
         </td>
@@ -57,7 +46,8 @@
             @Html.DisplayFor(modelItem => item.AuthorWebsite)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Comment)
+            @Html.Raw(item.Comment.Substring(0, Math.Min(item.Comment.Length, 100)))
+            @if (item.Comment.Length > 100) { <text>...</text>}
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IpAddress)
@@ -69,20 +59,18 @@
             @Html.DisplayFor(modelItem => item.CreationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.IsApproved)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsSpam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IsDeleted)
-        </td>
-        <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
         </td>
     </tr>
 }
 
 </table>
+@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
+
+<script type="text/javascript">
+function RemoveItemRow(itemId) {
+        $('#item-row-' + itemId).hide();
+    }
+</script>

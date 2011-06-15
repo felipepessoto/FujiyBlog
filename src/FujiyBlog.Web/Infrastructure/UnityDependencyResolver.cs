@@ -23,7 +23,6 @@ namespace FujiyBlog.Web.Infrastructure
                     container.RegisterType<IUnitOfWork, FujiyBlogDatabase>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IUserRepository, UserRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IPostRepository, PostRepository>(new ContainerControlledLifetimeManager());
-                    container.RegisterType<IPostCommentRepository, PostCommentRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<ISettingRepository, SettingRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IBlogMLRepository, BlogMLRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IFeedRepository, FeedRepository>(new ContainerControlledLifetimeManager());

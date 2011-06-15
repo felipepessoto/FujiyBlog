@@ -33,8 +33,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ViewResult Details() {
-            return new T4MVC_ViewResult(Area, Name, ActionNames.Details);
+        public System.Web.Mvc.ViewResult Index() {
+            return new T4MVC_ViewResult(Area, Name, ActionNames.Index);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ViewResult Pending() {
+            return new T4MVC_ViewResult(Area, Name, ActionNames.Pending);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -45,11 +50,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DeleteConfirmed() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -65,11 +65,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
-            public readonly string Details = "Details";
-            public readonly string Create = "Create";
+            public readonly string Pending = "Pending";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
-            public readonly string DeleteConfirmed = "Delete";
         }
 
 
@@ -78,8 +76,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string _Layout = "~/Areas/Admin/Views/Comment/_Layout.cshtml";
             public readonly string Create = "~/Areas/Admin/Views/Comment/Create.cshtml";
-            public readonly string Delete = "~/Areas/Admin/Views/Comment/Delete.cshtml";
             public readonly string Details = "~/Areas/Admin/Views/Comment/Details.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/Comment/Edit.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Comment/Index.cshtml";
@@ -90,25 +88,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
     public class T4MVC_CommentController: FujiyBlog.Web.Areas.Admin.Controllers.CommentController {
         public T4MVC_CommentController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ViewResult Index() {
+        public override System.Web.Mvc.ViewResult Index(int? page) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ViewResult Details(int id) {
-            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Details);
-            callInfo.RouteValueDictionary.Add("id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Create() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult Create(FujiyBlog.Core.DomainObjects.PostComment postcomment) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            callInfo.RouteValueDictionary.Add("postcomment", postcomment);
+        public override System.Web.Mvc.ViewResult Pending(int? page) {
+            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Pending);
+            callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }
 
@@ -126,12 +114,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Delete(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            callInfo.RouteValueDictionary.Add("id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult DeleteConfirmed(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
