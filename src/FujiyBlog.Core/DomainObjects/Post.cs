@@ -31,12 +31,16 @@ namespace FujiyBlog.Core.DomainObjects
 
         public DateTime LastModificationDate { get; set; }
 
+        [Display(Name = "Publication Date")]
         public DateTime PublicationDate { get; set; }
 
+        [Display(Name = "Published")]
         public bool IsPublished { get; set; }
 
+        [Display(Name = "Comments Enabled")]
         public bool IsCommentEnabled { get; set; }
 
+        [Display(Name = "Deleted")]
         public bool IsDeleted { get; set; }
 
         [Required]

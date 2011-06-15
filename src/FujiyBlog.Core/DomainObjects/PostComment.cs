@@ -37,10 +37,13 @@ namespace FujiyBlog.Core.DomainObjects
 
         public DateTime CreationDate { get; set; }
 
+        [Display(Name="Approved")]
         public bool IsApproved { get; set; }
 
+        [Display(Name = "Spam")]
         public bool IsSpam { get; set; }
 
+        [Display(Name = "Deleted")]
         public bool IsDeleted { get; set; }
 
         [Required]
