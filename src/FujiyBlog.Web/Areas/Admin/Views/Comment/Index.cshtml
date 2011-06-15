@@ -1,0 +1,88 @@
+﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.PostComment>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            AuthorName
+        </th>
+        <th>
+            AuthorEmail
+        </th>
+        <th>
+            AuthorWebsite
+        </th>
+        <th>
+            Comment
+        </th>
+        <th>
+            IpAddress
+        </th>
+        <th>
+            Avatar
+        </th>
+        <th>
+            CreationDate
+        </th>
+        <th>
+            IsApproved
+        </th>
+        <th>
+            IsSpam
+        </th>
+        <th>
+            IsDeleted
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthorName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthorEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthorWebsite)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IpAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Avatar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsApproved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsSpam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.IsDeleted)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

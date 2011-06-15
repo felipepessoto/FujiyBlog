@@ -1,0 +1,69 @@
+﻿@model FujiyBlog.Core.DomainObjects.PostComment
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>PostComment</legend>
+
+    <div class="display-label">AuthorName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AuthorName)
+    </div>
+
+    <div class="display-label">AuthorEmail</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AuthorEmail)
+    </div>
+
+    <div class="display-label">AuthorWebsite</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.AuthorWebsite)
+    </div>
+
+    <div class="display-label">Comment</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Comment)
+    </div>
+
+    <div class="display-label">IpAddress</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IpAddress)
+    </div>
+
+    <div class="display-label">Avatar</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Avatar)
+    </div>
+
+    <div class="display-label">CreationDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CreationDate)
+    </div>
+
+    <div class="display-label">IsApproved</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsApproved)
+    </div>
+
+    <div class="display-label">IsSpam</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsSpam)
+    </div>
+
+    <div class="display-label">IsDeleted</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsDeleted)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

@@ -1,0 +1,105 @@
+﻿@model FujiyBlog.Core.DomainObjects.PostComment
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>PostComment</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AuthorName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AuthorName)
+            @Html.ValidationMessageFor(model => model.AuthorName)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AuthorEmail)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AuthorEmail)
+            @Html.ValidationMessageFor(model => model.AuthorEmail)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AuthorWebsite)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AuthorWebsite)
+            @Html.ValidationMessageFor(model => model.AuthorWebsite)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Comment)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Comment)
+            @Html.ValidationMessageFor(model => model.Comment)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IpAddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IpAddress)
+            @Html.ValidationMessageFor(model => model.IpAddress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Avatar)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Avatar)
+            @Html.ValidationMessageFor(model => model.Avatar)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CreationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CreationDate)
+            @Html.ValidationMessageFor(model => model.CreationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsApproved)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsApproved)
+            @Html.ValidationMessageFor(model => model.IsApproved)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsSpam)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsSpam)
+            @Html.ValidationMessageFor(model => model.IsSpam)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsDeleted)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsDeleted)
+            @Html.ValidationMessageFor(model => model.IsDeleted)
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
