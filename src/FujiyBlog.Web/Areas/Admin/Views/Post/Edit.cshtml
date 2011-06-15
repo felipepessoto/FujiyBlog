@@ -100,13 +100,13 @@
         }
         </ul>
 
-        <label for="Post_Title">Add new category</label>
+        <label for="new-category-name">Add new category</label>
         <input type="text" id="new-category-name" />
         <span id="new-category-name-error" class="field-validation-error" style="display:none"></span>
         
         <a href="javascript:void(0);" id="add-category">Add</a>
 
-        @Html.TextBox("Post.tags", string.Join(",", Model.Post.Tags.Select(x=>x.Name)))
+        @Html.TextBox("Post.Tags", string.Join(",", Model.Post.Tags.Select(x=>x.Name)))
 
 
         <p>
@@ -127,7 +127,7 @@
         }
         $('#new-category-name-error').text('').hide();
         var callUrl = '@Url.Action(MVC.Admin.Post.AddCategory())';
-        var callData = "name=" + $('#new-category-name').val();
+        var callData = "NewCategory.Name=" + $('#new-category-name').val();
         $.ajax({
             type: "POST",
             url: callUrl,

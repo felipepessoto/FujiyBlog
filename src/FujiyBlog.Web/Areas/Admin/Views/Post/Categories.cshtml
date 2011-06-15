@@ -1,0 +1,133 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCategoriesList
+@{
+    ViewBag.Title = "Categories";
+    Layout = MVC.Admin.Post.Views._Layout;
+}
+<h2>
+    Categories</h2>
+<p>
+    <a href="javascript:void(0);" id="open-new-category-dialog">Add new category</a>
+</p>
+<table>
+    <tr>
+        <th>
+        </th>
+        <th>
+            @Html.LabelFor(model => model.NewCategory.Name)
+        </th>
+        <th>
+            Posts
+        </th>
+    </tr>
+    @foreach (var item in Model.CategoriesPostCount)
+    {
+        <tr data-category-id="@item.Key.Id" id="category-row-@item.Key.Id">
+            <td>
+                <a href="javascript:void(0);" class="btn-edit-category">Edit</a>
+                @Ajax.ActionLink("Delete", MVC.Admin.Post.DeleteCategory(item.Key.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveCategoryRow(" + item.Key.Id + ");" }, new { @class = "btn-delete-category" })
+
+                <a href="javascript:void(0);" class="btn-update-category" style="display:none">Update</a>
+                <a href="javascript:void(0);" class="btn-cancel-category" style="display:none">Cancel</a>
+                
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => item.Key.Name, new { id = "txt-category-name" + item.Key.Id, style = "display:none", @class = "txt-category-name" })
+                <span class="lbl-category-name">@Html.DisplayFor(modelItem => item.Key.Name)</span>
+            </td>
+            <td>
+                @item.Value
+            </td>
+        </tr>
+    }
+</table>
+
+<div id="add-new-category">
+    @using (Ajax.BeginForm(MVC.Admin.Post.AddCategory(), new AjaxOptions { HttpMethod = "POST", OnSuccess = "location.href=location.href;" }, new { id = "form-new-category" }))
+    {
+        <fieldset>
+            <legend>Add New Category</legend>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.NewCategory.Name)
+            </div>
+            <div class="editor-field">
+                @Html.TextBoxFor(model => model.NewCategory.Name)
+                @Html.ValidationMessageFor(model => model.NewCategory.Name)
+            </div>
+        </fieldset>
+    }
+</div>
+
+<script type="text/javascript">
+    $('.btn-edit-category').click(function () {
+        var $this = $(this);
+        var categoryRow = $this.parents('tr');
+
+        $this.hide();
+        $this.siblings('.btn-delete-category').hide();
+        $this.siblings('.btn-update-category,.btn-cancel-category').show();
+
+        categoryRow.find('.txt-category-name').show();
+        categoryRow.find('.lbl-category-name').hide();
+    });
+
+    $('.btn-cancel-category').click(function () {
+        var $this = $(this);
+        var categoryRow = $this.parents('tr');
+
+        $this.hide();
+        $this.siblings('.btn-edit-category,.btn-delete-category').show();
+        $this.siblings('.btn-update-category').hide();
+
+        categoryRow.find('.txt-category-name').hide();
+        categoryRow.find('.lbl-category-name').show();
+    });
+
+    function RemoveCategoryRow(categoryId) {
+        $('#category-row-' + categoryId).hide();
+    }
+
+    $('.btn-update-category').click(function () {
+        var categoryRow = $(this).parents('tr');
+        var categoryId = categoryRow.data('category-id')
+        var txtCategoryName = categoryRow.find('#txt-category-name' + categoryId);
+        var categoryName = txtCategoryName.val()
+
+        if (categoryName === '') {
+            return;
+        }
+
+        var callUrl = '@Url.Action(MVC.Admin.Post.UpdateCategory())';
+        var callData = { id: categoryId, name: categoryName };
+        $.ajax({
+            type: "POST",
+            url: callUrl,
+            data: callData,
+            success: function (response) {
+                if (!response.errorMessage) {
+                    txtCategoryName.val(categoryName);
+                    categoryRow.find('.lbl-category-name').text(categoryName);
+                    categoryRow.find('.btn-cancel-category').click();
+                }
+                else {
+                    alert(response.errorMessage);
+                }
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+
+    var dialogAddNewCategory = $('#add-new-category').dialog({
+        autoOpen: false, draggable: false, modal: true, resizable: false, title: 'Add New Category',
+        buttons: {
+            "Create": function () { $('#form-new-category').submit(); },
+            "Cancel": function () { $(this).dialog("close"); }
+        }
+    });
+
+    $('#open-new-category-dialog').click(function () {
+        dialogAddNewCategory.dialog('open');
+    });
+</script>

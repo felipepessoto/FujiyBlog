@@ -58,8 +58,18 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult UpdateCategory() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.UpdateCategory);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult AddCategory() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.AddCategory);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DeleteCategory() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteCategory);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -79,7 +89,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string EditPost = "Edit";
             public readonly string Delete = "Delete";
             public readonly string DeleteConfirmed = "Delete";
+            public readonly string Categories = "Categories";
+            public readonly string UpdateCategory = "UpdateCategory";
             public readonly string AddCategory = "AddCategory";
+            public readonly string DeleteCategory = "DeleteCategory";
         }
 
 
@@ -88,6 +101,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string _Layout = "~/Areas/Admin/Views/Post/_Layout.cshtml";
+            public readonly string Categories = "~/Areas/Admin/Views/Post/Categories.cshtml";
             public readonly string Delete = "~/Areas/Admin/Views/Post/Delete.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/Post/Edit.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Post/Index.cshtml";
@@ -129,9 +144,27 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult AddCategory(string name) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AddCategory);
+        public override System.Web.Mvc.ActionResult Categories() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Categories);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult UpdateCategory(int id, string name) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateCategory);
+            callInfo.RouteValueDictionary.Add("id", id);
             callInfo.RouteValueDictionary.Add("name", name);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult AddCategory(FujiyBlog.Core.DomainObjects.Category newCategory) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AddCategory);
+            callInfo.RouteValueDictionary.Add("NewCategory", newCategory);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteCategory(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteCategory);
+            callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 

@@ -148,17 +148,50 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public virtual ActionResult AddCategory(string name)
+        public virtual ActionResult Categories()
         {
-            if (db.Categories.Any(x => x.Name == name))
+            Dictionary<Category, int> categoriesPostCount = (from category in db.Categories
+                                           select new { Category = category, PostCount = category.Posts.Count() }).ToDictionary(e => e.Category, e => e.PostCount);
+
+            AdminCategoriesList adminCategoriesList = new AdminCategoriesList { CategoriesPostCount = categoriesPostCount };
+            return View(adminCategoriesList);
+        }
+
+        [HttpPost]
+        public virtual ActionResult UpdateCategory(int id, string name)
+        {
+            if (db.Categories.Any(x => x.Id != id && x.Name == name))
+            {
+                return Json(new {errorMessage = "The category already exist"});
+            }
+
+            Category category = db.Categories.Single(x => x.Id == id);
+
+            category.Name = name;
+            unitOfWork.SaveChanges();
+            return Json(true);
+        }
+
+        [HttpPost]
+        public virtual ActionResult AddCategory([Bind(Include = "Name", Prefix = "NewCategory")]Category newCategory)
+        {
+            if (db.Categories.Any(x => x.Name == newCategory.Name))
             {
                 return Json(new { errorMessage = "The category already exist" });
             }
 
-            Category newCategory = db.Categories.Add(new Category {Name = name});
+            db.Categories.Add(newCategory);
             unitOfWork.SaveChanges();
             return Json(newCategory);
+        }
+
+        [HttpPost]
+        public virtual ActionResult DeleteCategory(int id)
+        {
+            Category category = db.Categories.Single(x => x.Id == id);
+            db.Categories.Remove(category);
+            unitOfWork.SaveChanges();
+            return Json(true);
         }
     }
 }
