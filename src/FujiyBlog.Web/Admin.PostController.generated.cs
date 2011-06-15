@@ -71,6 +71,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public System.Web.Mvc.ActionResult DeleteCategory() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteCategory);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult UpdateTag() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.UpdateTag);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DeleteTag() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteTag);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public PostController Actions { get { return MVC.Admin.Post; } }
@@ -93,6 +103,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string UpdateCategory = "UpdateCategory";
             public readonly string AddCategory = "AddCategory";
             public readonly string DeleteCategory = "DeleteCategory";
+            public readonly string Tags = "Tags";
+            public readonly string UpdateTag = "UpdateTag";
+            public readonly string DeleteTag = "DeleteTag";
         }
 
 
@@ -106,6 +119,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Delete = "~/Areas/Admin/Views/Post/Delete.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/Post/Edit.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Post/Index.cshtml";
+            public readonly string Tags = "~/Areas/Admin/Views/Post/Tags.cshtml";
         }
     }
 
@@ -164,6 +178,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult DeleteCategory(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteCategory);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Tags() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Tags);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult UpdateTag(int id, string name) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateTag);
+            callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("name", name);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteTag(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteTag);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }

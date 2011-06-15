@@ -112,6 +112,7 @@
     <Compile Include="Areas\Admin\ViewModels\AdminPostIndex.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPostEdit.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPostSave.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AdminTagsList.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
@@ -463,6 +464,7 @@
     <Content Include="Areas\Admin\Views\Import\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Post\Categories.cshtml" />
     <Content Include="Areas\Admin\Views\Post\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Post\Tags.cshtml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
@@ -13,7 +11,6 @@ using FujiyBlog.Core.Repositories;
 using FujiyBlog.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Models;
-using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -190,6 +187,39 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             Category category = db.Categories.Single(x => x.Id == id);
             db.Categories.Remove(category);
+            unitOfWork.SaveChanges();
+            return Json(true);
+        }
+
+        public virtual ActionResult Tags()
+        {
+            Dictionary<Tag, int> tagsPostCount = (from tag in db.Tags
+                                                             select new { Tag = tag, PostCount = tag.Posts.Count() }).ToDictionary(e => e.Tag, e => e.PostCount);
+
+            AdminTagsList tagsList = new AdminTagsList {TagsPostCount = tagsPostCount};
+            return View(tagsList);
+        }
+
+        [HttpPost]
+        public virtual ActionResult UpdateTag(int id, string name)
+        {
+            if (db.Tags.Any(x => x.Id != id && x.Name == name))
+            {
+                return Json(new { errorMessage = "The tag already exist" });
+            }
+
+            Tag tag = db.Tags.Single(x => x.Id == id);
+
+            tag.Name = name;
+            unitOfWork.SaveChanges();
+            return Json(true);
+        }
+
+        [HttpPost]
+        public virtual ActionResult DeleteTag(int id)
+        {
+            Tag tag = db.Tags.Single(x => x.Id == id);
+            db.Tags.Remove(tag);
             unitOfWork.SaveChanges();
             return Json(true);
         }

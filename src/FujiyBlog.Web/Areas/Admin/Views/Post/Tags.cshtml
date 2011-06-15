@@ -1,30 +1,28 @@
-﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCategoriesList
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminTagsList
 @{
-    ViewBag.Title = "Categories";
+    ViewBag.Title = "Tags";
     Layout = MVC.Admin.Post.Views._Layout;
 }
 <h2>
-    Categories</h2>
-<p>
-    <a href="javascript:void(0);" id="open-new-item-dialog">Add new category</a>
-</p>
+    Tags</h2>
+
 <table>
     <tr>
         <th>
         </th>
         <th>
-            @Html.LabelFor(model => model.NewCategory.Name)
+            @Html.LabelFor(model => model.TagsPostCount.FirstOrDefault().Key.Name)
         </th>
         <th>
             Posts
         </th>
     </tr>
-    @foreach (var item in Model.CategoriesPostCount)
+    @foreach (var item in Model.TagsPostCount)
     {
         <tr data-item-id="@item.Key.Id" id="item-row-@item.Key.Id">
             <td>
                 <a href="javascript:void(0);" class="btn-edit-item">Edit</a>
-                @Ajax.ActionLink("Delete", MVC.Admin.Post.DeleteCategory(item.Key.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Key.Id + ");" }, new { @class = "btn-delete-item" })
+                @Ajax.ActionLink("Delete", MVC.Admin.Post.DeleteTag(item.Key.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Key.Id + ");" }, new { @class = "btn-delete-item" })
 
                 <a href="javascript:void(0);" class="btn-update-item" style="display:none">Update</a>
                 <a href="javascript:void(0);" class="btn-cancel-item" style="display:none">Cancel</a>
@@ -40,23 +38,6 @@
         </tr>
     }
 </table>
-
-<div id="add-new-item">
-    @using (Ajax.BeginForm(MVC.Admin.Post.AddCategory(), new AjaxOptions { HttpMethod = "POST", OnSuccess = "location.href=location.href;" }, new { id = "form-new-item" }))
-    {
-        <fieldset>
-            <legend>Add New Category</legend>
-
-            <div class="editor-label">
-                @Html.LabelFor(model => model.NewCategory.Name)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(model => model.NewCategory.Name)
-                @Html.ValidationMessageFor(model => model.NewCategory.Name)
-            </div>
-        </fieldset>
-    }
-</div>
 
 <script type="text/javascript">
     $('.btn-edit-item').click(function () {
@@ -97,7 +78,7 @@
             return;
         }
 
-        var callUrl = '@Url.Action(MVC.Admin.Post.UpdateCategory())';
+        var callUrl = '@Url.Action(MVC.Admin.Post.UpdateTag())';
         var callData = { id: itemId, name: itemName };
         $.ajax({
             type: "POST",
@@ -117,17 +98,5 @@
                 alert('Error');
             }
         });
-    });
-
-    var dialogAddNewItem = $('#add-new-item').dialog({
-        autoOpen: false, draggable: false, modal: true, resizable: false, title: 'Add New Category',
-        buttons: {
-            "Create": function () { $('#form-new-item').submit(); },
-            "Cancel": function () { $(this).dialog("close"); }
-        }
-    });
-
-    $('#open-new-item-dialog').click(function () {
-        dialogAddNewItem.dialog('open');
     });
 </script>
