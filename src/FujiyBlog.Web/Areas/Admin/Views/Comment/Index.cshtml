@@ -1,15 +1,16 @@
 ﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentIndex
-
 @{
     ViewBag.Title = "Index";
     Layout = MVC.Admin.Comment.Views._Layout;
 }
-
-<h2>Index</h2>
-
+<h2>
+    Index</h2>
 @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
 <table>
     <tr>
+        <th>
+            <input type="checkbox" id="check-all-items" />
+        </th>
         <th>
             AuthorName
         </th>
@@ -31,46 +32,53 @@
         <th>
             CreationDate
         </th>
-        <th></th>
+        <th>
+        </th>
     </tr>
-
-@foreach (var item in Model.Comments) {
-    <tr id="item-row-@item.Id">
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorEmail)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AuthorWebsite)
-        </td>
-        <td>
-            @Html.Raw(item.Comment.Substring(0, Math.Min(item.Comment.Length, 100)))
-            @if (item.Comment.Length > 100) { <text>...</text>}
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.IpAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Avatar)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreationDate)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model.Comments)
+    {
+        <tr id="item-row-@item.Id">
+            <td>
+                <input type="checkbox" class="check-item" id="check-item@(item.Id)" value="@item.Id" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuthorWebsite)
+            </td>
+            <td>
+                @Html.Raw(item.Comment.Substring(0, Math.Min(item.Comment.Length, 100)))
+                @if (item.Comment.Length > 100)
+                { <text>...</text>}
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Avatar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", MVC.Admin.Comment.Edit(item.Id)) |
+                @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
+            </td>
+        </tr>
+    }
 </table>
 @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
-
 <script type="text/javascript">
-function RemoveItemRow(itemId) {
+
+    $('#check-all-items').click(function () {
+        $('.check-item').attr('checked', this.checked)
+    });
+
+    function RemoveItemRow(itemId) {
         $('#item-row-' + itemId).hide();
     }
 </script>

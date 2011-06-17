@@ -43,6 +43,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ViewResult Spam() {
+            return new T4MVC_ViewResult(Area, Name, ActionNames.Spam);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
         }
@@ -66,6 +71,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Pending = "Pending";
+            public readonly string Spam = "Spam";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
         }
@@ -77,8 +83,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string _Layout = "~/Areas/Admin/Views/Comment/_Layout.cshtml";
-            public readonly string Create = "~/Areas/Admin/Views/Comment/Create.cshtml";
-            public readonly string Details = "~/Areas/Admin/Views/Comment/Details.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/Comment/Edit.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Comment/Index.cshtml";
         }
@@ -100,15 +104,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
+        public override System.Web.Mvc.ViewResult Spam(int? page) {
+            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Spam);
+            callInfo.RouteValueDictionary.Add("page", page);
+            return callInfo;
+        }
+
         public override System.Web.Mvc.ActionResult Edit(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Core.DomainObjects.PostComment postcomment) {
+        public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentSave input) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("postcomment", postcomment);
+            callInfo.RouteValueDictionary.Add("input", input);
             return callInfo;
         }
 

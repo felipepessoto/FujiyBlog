@@ -23,58 +23,78 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ViewResult Index(int? page)
         {
-            IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && x.IsApproved);
-
-            List<PostComment> pageComments =  comments.OrderByDescending(x=>x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
-
-            AdminCommentIndex model = new AdminCommentIndex
-                                          {
-                                              CurrentPage = page.GetValueOrDefault(1),
-                                              Comments = pageComments,
-                                              TotalPages = (int) Math.Ceiling(comments.Count()/(double) 10),
-                                          };
+            AdminCommentIndex model = GetCommentsViewModel(page, true, null);
 
             return View(model);
         }
 
         public virtual ViewResult Pending(int? page)
         {
-            IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && !x.IsApproved);
-
-            List<PostComment> pageComments = comments.OrderByDescending(x => x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
-
-            AdminCommentIndex model = new AdminCommentIndex
-            {
-                CurrentPage = page.GetValueOrDefault(1),
-                Comments = pageComments,
-                TotalPages = (int)Math.Ceiling(comments.Count() / (double)10),
-            };
+            AdminCommentIndex model = GetCommentsViewModel(page, false, null);
 
             return View(MVC.Admin.Comment.Views.Index, model);
         }
 
+        public virtual ViewResult Spam(int? page)
+        {
+            AdminCommentIndex model = GetCommentsViewModel(page, false, true);
+
+            return View(MVC.Admin.Comment.Views.Index, model);
+        }
+
+        private AdminCommentIndex GetCommentsViewModel(int? page, bool isApproved, bool? isSpam)
+        {
+            IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && x.IsApproved == isApproved);
+
+            if (isSpam.HasValue)
+            {
+                comments = comments.Where(x => x.IsSpam == isSpam.Value);
+            }
+
+            List<PostComment> pageComments = comments.OrderByDescending(x => x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
+
+            return new AdminCommentIndex
+                       {
+                           CurrentPage = page.GetValueOrDefault(1),
+                           Comments = pageComments,
+                           TotalPages = (int) Math.Ceiling(comments.Count()/(double) 10),
+                       };
+        }
+
         public virtual ActionResult Edit(int id)
         {
-            PostComment postcomment = db.PostComments.Find(id);
+            PostComment postcomment = db.PostComments.Include(x => x.Author).Single(x => x.Id == id);
             return View(postcomment);
         }
 
         [HttpPost]
-        public virtual ActionResult Edit(PostComment postcomment)
+        public virtual ActionResult Edit(AdminCommentSave input)
         {
+            PostComment editedComment = db.PostComments.Include(x => x.Author).Include(x => x.Post).Single(x => x.Id == input.Id);
             if (ModelState.IsValid)
             {
-                db.Entry(postcomment).State = EntityState.Modified;
+                if (editedComment.Author == null)
+                {
+                    editedComment.AuthorName = input.AuthorName;
+                    editedComment.AuthorEmail = input.AuthorEmail;
+                    editedComment.AuthorWebsite = input.AuthorWebsite;
+                }
+                editedComment.Comment = input.Comment;
+
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(postcomment);
+            return View(editedComment);
         }
 
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            db.Database.ExecuteSqlCommand("UPDATE [PostComments] SET IsDeleted = 1 WHERE Id = {0}", id);
+            db.PostComments.Find(id).IsDeleted = true;
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.SaveChanges();
+            db.Configuration.ValidateOnSaveEnabled = true;
             return Json(true);
         }
     }

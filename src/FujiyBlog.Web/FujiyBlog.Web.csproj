@@ -118,6 +118,7 @@
     <Compile Include="Areas\Admin\ViewModels\AdminPostSave.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminTagsList.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminCommentIndex.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AdminCommentSave.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
@@ -471,7 +472,6 @@
     <Content Include="Areas\Admin\Views\Post\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Post\Tags.cshtml" />
     <Content Include="Areas\Admin\Views\Comment\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\Comment\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Comment\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Comment\_Layout.cshtml" />
     <None Include="T4MVC.tt">
