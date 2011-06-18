@@ -22,8 +22,6 @@ namespace FujiyBlog.EntityFramework
             get { return DateTime.UtcNow; }
         }
 
-        private static readonly Expression<Func<PostComment, bool>> PublicPostComment = x => x.IsApproved && !x.IsDeleted;
-
         private Post GetPost(string slug, int? id, bool isPublic = true)
         {
             IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).Include(x => x.Author);
@@ -54,11 +52,11 @@ namespace FujiyBlog.EntityFramework
             Database.Entry(post).Collection(x => x.Categories).Load();
             if (isPublic)
             {
-                Database.Entry(post).Collection(x => x.Comments).Query().Include(x => x.Author).Where(PublicPostComment).Load();
+                Database.Entry(post).Collection(x => x.Comments).Query().Where(x => !x.IsDeleted && x.IsApproved && !x.IsSpam).Include(x => x.Author).Load();
             }
             else
             {
-                Database.Entry(post).Collection(x => x.Comments).Query().Include(x => x.Author).Load();
+                Database.Entry(post).Collection(x => x.Comments).Query().Where(x => !x.IsDeleted).Include(x => x.Author).Load();
             }
 
             return post;

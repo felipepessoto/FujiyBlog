@@ -71,6 +71,15 @@
         </tr>
     }
 </table>
+@if (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString() != "Index")
+{ 
+    <a href="javascript:void(0);" id="approve-comments">Approve Selected</a>
+}
+@if (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString() != "Pending")
+{ 
+    <a href="javascript:void(0);" id="disapprove-comments">Disapprove Selected</a>
+}
+<a href="javascript:void(0);" id="delete-comments">Delete Selected</a>
 @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
 <script type="text/javascript">
 
@@ -81,4 +90,51 @@
     function RemoveItemRow(itemId) {
         $('#item-row-' + itemId).hide();
     }
+
+    function GetSelectedItems() {
+
+        var values = new Array();
+
+        $('.check-item:checked').each(function () {
+            values.push($(this).val());
+        });
+
+        return values;
+    }
+
+    function SendCommentStatusChange(callUrl) {
+
+        var ids = GetSelectedItems();
+
+        var postData = JSON.stringify({ selectedComments: ids });
+
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            url: callUrl,
+            data: postData,
+            success: function (response) {
+                var len = ids.length;
+                for (var i = 0; i < len; i++) {
+                    RemoveItemRow(ids[i]);
+                }
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    }
+
+    $('#approve-comments').click(function () {
+        SendCommentStatusChange('@Url.Action(MVC.Admin.Comment.ApproveSelected())');
+    });
+
+    $('#disapprove-comments').click(function () {
+        SendCommentStatusChange('@Url.Action(MVC.Admin.Comment.DisapproveSelected())');
+    });
+
+    $('#delete-comments').click(function () {
+        SendCommentStatusChange('@Url.Action(MVC.Admin.Comment.DeleteSelected())');
+    });
+
 </script>

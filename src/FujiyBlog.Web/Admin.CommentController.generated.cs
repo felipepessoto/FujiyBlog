@@ -48,6 +48,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ApproveSelected() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ApproveSelected);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DisapproveSelected() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DisapproveSelected);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DeleteSelected() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteSelected);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Edit() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
         }
@@ -72,6 +87,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Index = "Index";
             public readonly string Pending = "Pending";
             public readonly string Spam = "Spam";
+            public readonly string ApproveSelected = "ApproveSelected";
+            public readonly string DisapproveSelected = "DisapproveSelected";
+            public readonly string DeleteSelected = "DeleteSelected";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
         }
@@ -107,6 +125,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public override System.Web.Mvc.ViewResult Spam(int? page) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Spam);
             callInfo.RouteValueDictionary.Add("page", page);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ApproveSelected(System.Collections.Generic.IEnumerable<int> selectedComments) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ApproveSelected);
+            callInfo.RouteValueDictionary.Add("selectedComments", selectedComments);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DisapproveSelected(System.Collections.Generic.IEnumerable<int> selectedComments) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DisapproveSelected);
+            callInfo.RouteValueDictionary.Add("selectedComments", selectedComments);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteSelected(System.Collections.Generic.IEnumerable<int> selectedComments) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteSelected);
+            callInfo.RouteValueDictionary.Add("selectedComments", selectedComments);
             return callInfo;
         }
 

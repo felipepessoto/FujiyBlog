@@ -42,6 +42,56 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(MVC.Admin.Comment.Views.Index, model);
         }
 
+        [HttpPost]
+        public virtual ActionResult ApproveSelected(IEnumerable<int> selectedComments)
+        {
+            List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
+
+            foreach (PostComment postComment in comments)
+            {
+                postComment.IsApproved = true;
+                postComment.IsSpam = false;
+            }
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.SaveChanges();
+            db.Configuration.ValidateOnSaveEnabled = true;
+
+            return Json(true);
+        }
+
+        [HttpPost]
+        public virtual ActionResult DisapproveSelected(IEnumerable<int> selectedComments)
+        {
+            List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
+
+            foreach (PostComment postComment in comments)
+            {
+                postComment.IsApproved = false;
+                postComment.IsSpam = false;
+            }
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.SaveChanges();
+            db.Configuration.ValidateOnSaveEnabled = true;
+
+            return Json(true);
+        }
+
+        [HttpPost]
+        public virtual ActionResult DeleteSelected(IEnumerable<int> selectedComments)
+        {
+            List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
+
+            foreach (PostComment postComment in comments)
+            {
+                postComment.IsDeleted = true;
+            }
+            db.Configuration.ValidateOnSaveEnabled = false;
+            db.SaveChanges();
+            db.Configuration.ValidateOnSaveEnabled = true;
+
+            return Json(true);
+        }
+
         private AdminCommentIndex GetCommentsViewModel(int? page, bool isApproved, bool? isSpam)
         {
             IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && x.IsApproved == isApproved);
