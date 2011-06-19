@@ -40,9 +40,6 @@ namespace FujiyBlog.Core.DomainObjects
         [Display(Name="Approved")]
         public bool IsApproved { get; set; }
 
-        [Display(Name = "Spam")]
-        public bool IsSpam { get; set; }
-
         [Display(Name = "Deleted")]
         public bool IsDeleted { get; set; }
 

@@ -20,7 +20,7 @@
                 <h1>Blog Admin</h1>
             </div>
             <div id="logindisplay">
-                Welcome @Context.User.Identity.Name
+                Welcome @Context.User.Identity.Name | @Html.ActionLink("Go to Blog", MVC.Post.Index())
             </div>
             <nav>
                 <ul id="menu">

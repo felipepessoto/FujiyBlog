@@ -42,10 +42,24 @@
                 <input type="checkbox" class="check-item" id="check-item@(item.Id)" value="@item.Id" />
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AuthorName)
+                @if (item.Author == null)
+                {
+                    @Html.DisplayFor(modelItem => item.AuthorName)
+                }
+                else
+                { 
+                    @Html.DisplayFor(modelItem => item.Author.DisplayName)
+                }
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.AuthorEmail)
+                @if (item.Author == null)
+                {
+                    @Html.DisplayFor(modelItem => item.AuthorEmail)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Author.Email)
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.AuthorWebsite)

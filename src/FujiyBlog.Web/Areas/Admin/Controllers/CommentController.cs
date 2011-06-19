@@ -23,21 +23,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ViewResult Index(int? page)
         {
-            AdminCommentIndex model = GetCommentsViewModel(page, true, null);
+            AdminCommentIndex model = GetCommentsViewModel(page, true);
 
             return View(model);
         }
 
         public virtual ViewResult Pending(int? page)
         {
-            AdminCommentIndex model = GetCommentsViewModel(page, false, null);
-
-            return View(MVC.Admin.Comment.Views.Index, model);
-        }
-
-        public virtual ViewResult Spam(int? page)
-        {
-            AdminCommentIndex model = GetCommentsViewModel(page, false, true);
+            AdminCommentIndex model = GetCommentsViewModel(page, false);
 
             return View(MVC.Admin.Comment.Views.Index, model);
         }
@@ -50,7 +43,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             foreach (PostComment postComment in comments)
             {
                 postComment.IsApproved = true;
-                postComment.IsSpam = false;
             }
             db.Configuration.ValidateOnSaveEnabled = false;
             db.SaveChanges();
@@ -67,7 +59,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             foreach (PostComment postComment in comments)
             {
                 postComment.IsApproved = false;
-                postComment.IsSpam = false;
             }
             db.Configuration.ValidateOnSaveEnabled = false;
             db.SaveChanges();
@@ -92,14 +83,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return Json(true);
         }
 
-        private AdminCommentIndex GetCommentsViewModel(int? page, bool isApproved, bool? isSpam)
+        private AdminCommentIndex GetCommentsViewModel(int? page, bool isApproved)
         {
-            IQueryable<PostComment> comments = db.PostComments.Where(x => !x.IsDeleted && x.IsApproved == isApproved);
-
-            if (isSpam.HasValue)
-            {
-                comments = comments.Where(x => x.IsSpam == isSpam.Value);
-            }
+            IQueryable<PostComment> comments = db.PostComments.Include(x => x.Author).Where(x => !x.IsDeleted && x.IsApproved == isApproved);
 
             List<PostComment> pageComments = comments.OrderByDescending(x => x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
 

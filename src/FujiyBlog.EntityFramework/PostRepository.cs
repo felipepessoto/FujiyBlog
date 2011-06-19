@@ -52,7 +52,7 @@ namespace FujiyBlog.EntityFramework
             Database.Entry(post).Collection(x => x.Categories).Load();
             if (isPublic)
             {
-                Database.Entry(post).Collection(x => x.Comments).Query().Where(x => !x.IsDeleted && x.IsApproved && !x.IsSpam).Include(x => x.Author).Load();
+                Database.Entry(post).Collection(x => x.Comments).Query().Where(x => !x.IsDeleted && x.IsApproved).Include(x => x.Author).Load();
             }
             else
             {
@@ -113,7 +113,7 @@ namespace FujiyBlog.EntityFramework
             else
             {
                 counts = (from post in posts
-                          select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
+                          select new { post.Id, C = post.Comments.Count(x => !x.IsDeleted) }).ToDictionary(e => e.Id, e => e.C);
             }
 
             var postSummaries = (from post in posts.ToList()
@@ -145,7 +145,7 @@ namespace FujiyBlog.EntityFramework
             else
             {
                 counts = (from post in posts
-                          select new { post.Id, C = post.Comments.Count() }).ToDictionary(e => e.Id, e => e.C);
+                          select new { post.Id, C = post.Comments.Count(x => !x.IsDeleted) }).ToDictionary(e => e.Id, e => e.C);
             }
 
             var postSummaries = (from post in posts.ToList()

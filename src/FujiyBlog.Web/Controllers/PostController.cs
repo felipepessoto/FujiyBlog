@@ -171,6 +171,7 @@ namespace FujiyBlog.Web.Controllers
             if (isLogged)
             {
                 postComment.Author = userRepository.GetByUsername(User.Identity.Name);
+                postComment.IsApproved = true;
                 UpdateModel(postComment, new[] { "Comment" });
             }
             else
