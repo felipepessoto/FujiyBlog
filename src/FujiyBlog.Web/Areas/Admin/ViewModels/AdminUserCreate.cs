@@ -1,28 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-namespace FujiyBlog.Core.DomainObjects
+namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
-    public class User
+    public class AdminUserCreate
     {
-        public User()
+        public AdminUserCreate()
         {
-            Posts = new List<Post>();
+            CreationDate = DateTime.UtcNow;
         }
 
-        public int Id { get; set; }
-        
         [Required, StringLength(20)]
         public string Username { get; set; }
 
         [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-        
-        [DataType(DataType.Password)]
+
         [Required, StringLength(50)]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
+
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
 
         [StringLength(20)]
         public string DisplayName { get; set; }
@@ -30,25 +36,17 @@ namespace FujiyBlog.Core.DomainObjects
         [StringLength(100)]
         public string FullName { get; set; }
 
+        public DateTime? BirthDate { get; set; }
+
         [StringLength(20)]
         public string Location { get; set; }
-
-        public DateTime CreationDate { get; set; }
-
-        public DateTime? LastLoginDate { get; set; }
 
         [StringLength(500)]
         [DataType(DataType.MultilineText)]
         public string About { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public DateTime CreationDate { get; set; }
 
         public bool Enabled { get; set; }
-
-        public virtual ICollection<Post> Posts { get; set; }
-
-        public virtual ICollection<PostComment> AuthoredPostComments { get; set; }
-
-        public virtual ICollection<PostComment> ModeratedPostComments { get; set; }
     }
 }

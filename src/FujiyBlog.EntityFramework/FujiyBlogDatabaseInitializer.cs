@@ -65,6 +65,7 @@ namespace FujiyBlog.EntityFramework
                                  Username = "admin",
                                  Password = "admin",
                                  Email = "admin@example.com",
+                                 Enabled = true,
                              };
 
             context.Users.Add(admin);

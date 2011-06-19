@@ -20,19 +20,23 @@ namespace FujiyBlog.Core.DomainObjects
 
         [DisplayName("Email")]
         [StringLength(255), RegularExpression(@"^([\w-_]+\.)*[\w-_]+@([\w-_]+\.)*[\w-_]+\.[\w-_]+$")]
+        [DataType(DataType.EmailAddress)]
         public string AuthorEmail { get; set; }
 
         [DisplayName("Site")]
         [StringLength(200)]
+        [DataType(DataType.Url)]
         public string AuthorWebsite { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
 
         [Required, StringLength(45)]
         public string IpAddress { get; set; }
 
         [StringLength(200)]
+        [DataType(DataType.ImageUrl)]
         public string Avatar { get; set; }
 
         public DateTime CreationDate { get; set; }

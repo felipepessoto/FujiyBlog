@@ -12,7 +12,7 @@ using FujiyBlog.Web.Areas.Admin.ViewModels;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    public partial class CommentController : Controller
+    public partial class CommentController : AdminController
     {
         private readonly FujiyBlogDatabase db;
 

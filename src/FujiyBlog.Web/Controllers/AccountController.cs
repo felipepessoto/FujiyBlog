@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Services;
@@ -33,8 +34,18 @@ namespace FujiyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (userService.ValidateUser(model.UserName, model.Password))
+                User user = db.Users.SingleOrDefault(x => x.Username == model.UserName);
+
+                if (user != null && !user.Enabled)
                 {
+                    ModelState.AddModelError("", "The user is disabled.");
+                    return View(model);
+                }
+
+                if (user != null && user.Password == model.Password)
+                {
+                    user.LastLoginDate = DateTime.UtcNow;
+                    db.SaveChanges();
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {

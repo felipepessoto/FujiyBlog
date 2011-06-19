@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets6082CA18EF3FDD517070FE4F636DABB4671524FEFD6A7D639F18980D2150A5AD))]
+[assembly: System.Data.Mapping.EntityViewGenerationAttribute(typeof(Edm_EntityMappingGeneratedViews.ViewsForBaseEntitySets0E623AFEA1FA9922E8E64E2CD6B63579E02BA77D1A53D65400946DA3CB679280))]
 
 namespace Edm_EntityMappingGeneratedViews
 {
@@ -17,18 +17,18 @@ namespace Edm_EntityMappingGeneratedViews
     /// <Summary>
     /// The type contains views for EntitySets and AssociationSets that were generated at design time.
     /// </Summary>
-    public sealed class ViewsForBaseEntitySets6082CA18EF3FDD517070FE4F636DABB4671524FEFD6A7D639F18980D2150A5AD : System.Data.Mapping.EntityViewContainer
+    public sealed class ViewsForBaseEntitySets0E623AFEA1FA9922E8E64E2CD6B63579E02BA77D1A53D65400946DA3CB679280 : System.Data.Mapping.EntityViewContainer
     {
         
         /// <Summary>
         /// The constructor stores the views for the extents and also the hash values generated based on the metadata and mapping closure and views.
         /// </Summary>
-        public ViewsForBaseEntitySets6082CA18EF3FDD517070FE4F636DABB4671524FEFD6A7D639F18980D2150A5AD()
+        public ViewsForBaseEntitySets0E623AFEA1FA9922E8E64E2CD6B63579E02BA77D1A53D65400946DA3CB679280()
         {
             this.EdmEntityContainerName = "FujiyBlogDatabase";
             this.StoreEntityContainerName = "CodeFirstDatabase";
-            this.HashOverMappingClosure = "7717eb831fb3894066da00a5b13b072490489c3d33faeb1867d00d7c303c2473";
-            this.HashOverAllExtentViews = "a9c19cf772995aa0395234f3806b8ec595f3f0d003514a7993a7cb917bac41e2";
+            this.HashOverMappingClosure = "15ecd41b192161253a3127c80d26636a5bbb81ecbb0656e718176ebe85bb5f9c";
+            this.HashOverAllExtentViews = "4c676a5a252259320a60f70fbdd1a3bbc6a73c93b8995385acf738bc2949f77d";
             this.ViewCount = 25;
         }
         
@@ -231,7 +231,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("CodeFirstDatabase.User", @"
     SELECT VALUE -- Constructing User
-        [CodeFirstDatabaseSchema.User](T1.User_Id, T1.User_Username, T1.User_Email, T1.User_Password, T1.User_DisplayName, T1.User_FullName, T1.User_Location, T1.User_CreationDate, T1.User_LastLoginDate, T1.User_About, T1.User_BirthDate)
+        [CodeFirstDatabaseSchema.User](T1.User_Id, T1.User_Username, T1.User_Email, T1.User_Password, T1.User_DisplayName, T1.User_FullName, T1.User_Location, T1.User_CreationDate, T1.User_LastLoginDate, T1.User_About, T1.User_BirthDate, T1.User_Enabled)
     FROM (
         SELECT 
             T.Id AS User_Id, 
@@ -245,6 +245,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.LastLoginDate AS User_LastLoginDate, 
             T.About AS User_About, 
             T.BirthDate AS User_BirthDate, 
+            T.Enabled AS User_Enabled, 
             True AS _from0
         FROM FujiyBlogDatabase.Users AS T
     ) AS T1");
@@ -394,7 +395,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new System.Collections.Generic.KeyValuePair<string, string>("FujiyBlogDatabase.Users", @"
     SELECT VALUE -- Constructing Users
-        [FujiyBlog.EntityFramework.User](T1.User_Id, T1.User_Username, T1.User_Email, T1.User_Password, T1.User_DisplayName, T1.User_FullName, T1.User_Location, T1.User_CreationDate, T1.User_LastLoginDate, T1.User_About, T1.User_BirthDate)
+        [FujiyBlog.EntityFramework.User](T1.User_Id, T1.User_Username, T1.User_Email, T1.User_Password, T1.User_DisplayName, T1.User_FullName, T1.User_Location, T1.User_CreationDate, T1.User_LastLoginDate, T1.User_About, T1.User_BirthDate, T1.User_Enabled)
     FROM (
         SELECT 
             T.Id AS User_Id, 
@@ -408,6 +409,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.LastLoginDate AS User_LastLoginDate, 
             T.About AS User_About, 
             T.BirthDate AS User_BirthDate, 
+            T.Enabled AS User_Enabled, 
             True AS _from0
         FROM CodeFirstDatabase.User AS T
     ) AS T1");

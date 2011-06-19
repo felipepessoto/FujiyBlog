@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Infrastructure;
+using FujiyBlog.Web.Infrastructure.AutoMapper;
 using FujiyBlog.Web.Models;
-using Microsoft.Practices.Unity;
-using FujiyBlog.EntityFramework;
-using System.Configuration;
-using FujiyBlog.Core.Infrastructure;
 
 namespace FujiyBlog.Web
 {
@@ -57,6 +51,7 @@ namespace FujiyBlog.Web
             RegisterRoutes(RouteTable.Routes);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
+            AutoMapperConfiguration.Configure();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)

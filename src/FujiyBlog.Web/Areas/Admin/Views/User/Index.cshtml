@@ -1,0 +1,85 @@
+﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.User>
+@{
+    Layout = MVC.Admin.User.Views._Layout;
+}
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            Username
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            DisplayName
+        </th>
+        <th>
+            FullName
+        </th>
+        <th>
+            CreationDate
+        </th>
+        <th>
+            LastLoginDate
+        </th>
+        <th>
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr id="item-row-@item.Id">
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastLoginDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                
+                <span id="disable-link-@item.Id"@if(!item.Enabled){<text> style="display:none"</text>}>
+                    @Ajax.ActionLink("Disable", MVC.Admin.User.Disable(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterDisable(arguments[0], " + item.Id + ");" })
+                </span>
+                <span id="enable-link-@item.Id"@if(item.Enabled){<text> style="display:none"</text>}>
+                    @Ajax.ActionLink("Enable", MVC.Admin.User.Enable(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterEnable(arguments[0], " + item.Id + ");" })
+                </span>
+            </td>
+        </tr>
+    }
+</table>
+<script type="text/javascript">
+    function AfterDisable(response, itemId) {
+        if (!response.errorMessage) {
+            $('#disable-link-' + itemId).hide();
+            $('#enable-link-' + itemId).show();
+        }
+        else {
+            alert(response.errorMessage);
+        }
+    }
+
+    function AfterEnable(response, itemId) {
+        if (!response.errorMessage) {
+            $('#disable-link-' + itemId).show();
+            $('#enable-link-' + itemId).hide();
+        }
+        else {
+            alert(response.errorMessage);
+        }
+    }
+</script>

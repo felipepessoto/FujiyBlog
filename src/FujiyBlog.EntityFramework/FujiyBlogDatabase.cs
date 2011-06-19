@@ -24,11 +24,6 @@ namespace FujiyBlog.EntityFramework
             builder.Configurations.Add(new WidgetSettingConfiguration());
         }
 
-        //public string Script()
-        //{
-        //    return ((System.Data.Entity.Infrastructure.IObjectContextAdapter)this).ObjectContext.CreateDatabaseScript();
-        //}
-
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<User> Users { get; set; }

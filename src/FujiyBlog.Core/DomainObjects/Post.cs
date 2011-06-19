@@ -25,6 +25,7 @@ namespace FujiyBlog.Core.DomainObjects
         public string Slug { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Content { get; set; }
 
         public DateTime CreationDate { get; set; }
