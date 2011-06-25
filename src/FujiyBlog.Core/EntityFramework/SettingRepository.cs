@@ -41,10 +41,10 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSettings(SettingNames.Theme, value); }
         }
 
-        public TimeZoneInfo TimeZoneId
+        public TimeZoneInfo TimeZone
         {
-            get { return TimeZoneInfo.FindSystemTimeZoneById(Database.Settings.Find((int)SettingNames.TimeZoneId).Value); }
-            set { SaveSettings(SettingNames.TimeZoneId, value.Id); }
+            get { return TimeZoneInfo.FindSystemTimeZoneById(Database.Settings.Find((int)SettingNames.TimeZone).Value); }
+            set { SaveSettings(SettingNames.TimeZone, value.Id); }
         }
 
         private void SaveSettings(SettingNames settings, string value)
@@ -60,7 +60,7 @@ namespace FujiyBlog.Core.EntityFramework
             BlogName = 3,
             BlogDescription = 4,
             Theme = 5,
-            TimeZoneId = 6,
+            TimeZone = 6,
         }
     }
 }

@@ -148,6 +148,7 @@
     </Compile>
     <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminUserViewModel.cs" />
+    <Compile Include="Common\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\UnityDependencyResolver.cs" />
     <Compile Include="JavaScriptController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>

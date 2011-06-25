@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using FujiyBlog.Core.Common;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
@@ -11,6 +10,7 @@ using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Common;
 using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers

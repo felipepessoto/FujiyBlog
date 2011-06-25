@@ -9,6 +9,6 @@ namespace FujiyBlog.Core.Repositories
         string BlogName { get; set; }
         string BlogDescription { get; set; }
         string Theme { get; set; }
-        TimeZoneInfo TimeZoneId { get; set; }
+        TimeZoneInfo TimeZone { get; set; }
     }
 }

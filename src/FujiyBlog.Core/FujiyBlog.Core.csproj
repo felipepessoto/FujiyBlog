@@ -51,7 +51,6 @@
   <ItemGroup>
     <Compile Include="BlogML\BlogMLImporter.cs" />
     <Compile Include="BlogML\BlogMLExtendedPost.cs" />
-    <Compile Include="Common\DateTimeUtil.cs" />
     <Compile Include="DomainObjects\Category.cs" />
     <Compile Include="DomainObjects\Post.cs" />
     <Compile Include="DomainObjects\PostComment.cs" />
