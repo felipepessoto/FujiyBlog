@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using FujiyBlog.Core.Common;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.Extensions;
@@ -65,8 +66,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.Post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
                                  : new Post
                                        {
-                                           PublicationDate =
-                                               DateTime.UtcNow.AddHours(Settings.SettingRepository.UtcOffset),
+                                           PublicationDate = DateTime.UtcNow,
                                            IsPublished = true,
                                            IsCommentEnabled = true
                                        };
@@ -91,7 +91,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             editedPost.Description = postSave.Description;
             editedPost.Slug = postSave.Slug;
             editedPost.Content = postSave.Content;
-            editedPost.PublicationDate = postSave.PublicationDate.AddHours(-Settings.SettingRepository.UtcOffset);
+            editedPost.PublicationDate = DateTimeUtil.ConvertMyTimeZoneToUtc(postSave.PublicationDate);
             editedPost.IsPublished = postSave.IsPublished;
             editedPost.IsCommentEnabled = postSave.IsCommentEnabled;
 

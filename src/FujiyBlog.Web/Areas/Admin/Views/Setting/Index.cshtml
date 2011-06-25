@@ -1,0 +1,50 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminBasicSettings
+@{
+    ViewBag.Title = "Index";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+<h2>
+    Basic Settings</h2>
+
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>Basic</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BlogName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BlogName)
+            @Html.ValidationMessageFor(model => model.BlogName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BlogDescription)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BlogDescription)
+            @Html.ValidationMessageFor(model => model.BlogDescription)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Theme)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Theme)
+            @Html.ValidationMessageFor(model => model.Theme)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PostsPerPage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PostsPerPage)
+            @Html.ValidationMessageFor(model => model.PostsPerPage)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TimeZoneId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TimeZoneId)
+            @Html.ValidationMessageFor(model => model.TimeZoneId)
+        </div>
+    </fieldset>
+}

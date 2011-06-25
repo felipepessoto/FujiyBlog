@@ -1,4 +1,6 @@
-﻿namespace FujiyBlog.Core.Repositories
+﻿using System;
+
+namespace FujiyBlog.Core.Repositories
 {
     public interface ISettingRepository
     {
@@ -7,6 +9,6 @@
         string BlogName { get; }
         string BlogDescription { get; }
         string Theme { get; }
-        int UtcOffset { get; }
+        TimeZoneInfo TimeZoneId { get; }
     }
 }

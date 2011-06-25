@@ -1,4 +1,5 @@
-﻿using FujiyBlog.Core.DomainObjects;
+﻿using System;
+using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.EntityFramework
@@ -35,9 +36,9 @@ namespace FujiyBlog.EntityFramework
             get { return Database.Settings.Find((int)SettingNames.Theme).Value; }
         }
 
-        public int UtcOffset
+        public TimeZoneInfo TimeZoneId
         {
-            get { return int.Parse(Database.Settings.Find((int)SettingNames.UtcOffset).Value); }
+            get { return TimeZoneInfo.FindSystemTimeZoneById(Database.Settings.Find((int)SettingNames.TimeZoneId).Value); }
         }
 
         private enum SettingNames
@@ -47,7 +48,7 @@ namespace FujiyBlog.EntityFramework
             BlogName = 3,
             BlogDescription = 4,
             Theme = 5,
-            UtcOffset = 6,
+            TimeZoneId = 6,
         }
     }
 }
