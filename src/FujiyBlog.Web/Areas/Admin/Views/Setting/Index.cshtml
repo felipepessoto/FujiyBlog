@@ -5,7 +5,6 @@
 }
 <h2>
     Basic Settings</h2>
-
 @using (Html.BeginForm())
 {
 
@@ -43,8 +42,11 @@
             @Html.LabelFor(model => model.TimeZoneId)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.TimeZoneId)
+            @Html.DropDownListFor(model => model.TimeZoneId, TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem() { Text = x.DisplayName, Value = x.Id }))
             @Html.ValidationMessageFor(model => model.TimeZoneId)
         </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
     </fieldset>
 }

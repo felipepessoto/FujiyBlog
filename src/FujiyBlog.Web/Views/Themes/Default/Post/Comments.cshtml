@@ -3,7 +3,7 @@
     @foreach (FujiyBlog.Core.DomainObjects.PostComment comment in Model)
     { 
         <div id="comment_id@(comment.Id)" class="comment@(comment.Post.Author == comment.Author ? " self" : "")">
-            <p class="date">@comment.CreationDate.ToLocalTime()</p>
+            <p class="date">@FujiyBlog.Core.Common.DateTimeUtil.ConvertUtcToMyTimeZone(comment.CreationDate)</p>
             <p class="gravatar">
                 GRAVATAR</p>
             <p class="content">@Html.Raw(comment.Comment)</p>

@@ -49,7 +49,7 @@ namespace FujiyBlog.EntityFramework
             {
                 Id = 6,
                 Description = "Utc Offset",
-                Value = "0"
+                Value = "Central Standard Time"
             };
 
             context.Settings.Add(minRequiredPasswordLength);
