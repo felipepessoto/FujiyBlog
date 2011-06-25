@@ -2,8 +2,8 @@
 using System.Web.Mvc;
 using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Services;
-using FujiyBlog.EntityFramework;
 using FujiyBlog.Web.Models;
 using System.Linq;
 

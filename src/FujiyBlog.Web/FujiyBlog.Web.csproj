@@ -469,10 +469,6 @@
       <Project>{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}</Project>
       <Name>FujiyBlog.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FujiyBlog.EntityFramework\FujiyBlog.EntityFramework.csproj">
-      <Project>{BC27F124-0971-4CE6-B0B6-70970C761AF2}</Project>
-      <Name>FujiyBlog.EntityFramework</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Web.config" />

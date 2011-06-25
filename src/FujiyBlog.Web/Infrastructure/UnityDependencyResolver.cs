@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
-using FujiyBlog.EntityFramework;
 using Microsoft.Practices.Unity;
 using System.Web;
 

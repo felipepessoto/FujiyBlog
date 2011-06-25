@@ -6,8 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
-using FujiyBlog.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers

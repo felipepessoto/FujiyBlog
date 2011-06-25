@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.EntityFramework;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers

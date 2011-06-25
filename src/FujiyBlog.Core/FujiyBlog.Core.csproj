@@ -34,9 +34,13 @@
     <Reference Include="BlogML">
       <HintPath>..\packages\blogml.2.2.0\lib\BlogML.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,6 +61,23 @@
     <Compile Include="DomainObjects\WidgetSetting.cs" />
     <Compile Include="Dto\PostSummary.cs" />
     <Compile Include="Dto\TagWithCount.cs" />
+    <Compile Include="EntityFramework\BlogMLRepository.cs" />
+    <Compile Include="EntityFramework\Configuration\CategoryConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\PostCommentConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\PostConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\SettingConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\TagConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\UserConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\WidgetSettingConfiguration.cs" />
+    <Compile Include="EntityFramework\FeedRepository.cs" />
+    <Compile Include="EntityFramework\FujiyBlogDatabase.cs" />
+    <Compile Include="EntityFramework\FujiyBlogDatabase.Views.cs" />
+    <Compile Include="EntityFramework\FujiyBlogDatabaseInitializer.cs" />
+    <Compile Include="EntityFramework\PostRepository.cs" />
+    <Compile Include="EntityFramework\RepositoryBase.cs" />
+    <Compile Include="EntityFramework\SettingRepository.cs" />
+    <Compile Include="EntityFramework\UserRepository.cs" />
+    <Compile Include="EntityFramework\WidgetSettingRepository.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="FeedGenerator.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />

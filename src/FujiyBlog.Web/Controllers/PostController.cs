@@ -5,11 +5,11 @@ using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Core.Infrastructure;
-using FujiyBlog.EntityFramework;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
 

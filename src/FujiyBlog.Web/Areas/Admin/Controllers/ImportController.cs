@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.BlogML;
-using FujiyBlog.EntityFramework;
+using FujiyBlog.Core.EntityFramework;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {

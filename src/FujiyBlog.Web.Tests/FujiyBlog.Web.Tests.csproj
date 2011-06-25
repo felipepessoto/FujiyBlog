@@ -83,10 +83,6 @@
       <Project>{C788BAAD-44AA-4E77-96B9-9D2ED25EE098}</Project>
       <Name>FujiyBlog.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\FujiyBlog.EntityFramework\FujiyBlog.EntityFramework.csproj">
-      <Project>{BC27F124-0971-4CE6-B0B6-70970C761AF2}</Project>
-      <Name>FujiyBlog.EntityFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\FujiyBlog.Web\FujiyBlog.Web.csproj">
       <Project>{A92F8E10-632A-41CD-B741-F6137CF17414}</Project>
       <Name>FujiyBlog.Web</Name>
