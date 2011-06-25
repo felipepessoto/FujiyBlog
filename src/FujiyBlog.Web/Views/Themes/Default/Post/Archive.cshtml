@@ -37,7 +37,7 @@
             @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Post.Categories.Any(y => y == category)))
             {
                 <tr>
-                    <td class="date">@FujiyBlog.Core.Common.DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToShortDateString()
+                    <td class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToShortDateString()
                     </td>
                     <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
                     </td>
@@ -69,7 +69,7 @@
             @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.UncategorizedPosts)
             {
                 <tr>
-                    <td class="date">@FujiyBlog.Core.Common.DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToShortDateString()
+                    <td class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToShortDateString()
                     </td>
                     <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
                     </td>

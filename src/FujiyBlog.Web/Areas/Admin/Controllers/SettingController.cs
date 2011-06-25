@@ -17,7 +17,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    BlogDescription = Settings.SettingRepository.BlogDescription,
                                                    Theme = Settings.SettingRepository.Theme,
                                                    PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                                                   TimeZoneId = Settings.SettingRepository.TimeZoneId.Id,
+                                                   TimeZoneId = Settings.SettingRepository.TimeZone.Id,
                                                    TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
                                                    Themes = new DirectoryInfo(Server.MapPath("~/Views/Themes/")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
                                                };
@@ -37,7 +37,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.BlogDescription = settings.BlogDescription;
             Settings.SettingRepository.Theme = settings.Theme;
             Settings.SettingRepository.PostsPerPage = settings.PostsPerPage;
-            Settings.SettingRepository.TimeZoneId = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
+            Settings.SettingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
 
             return RedirectToAction(MVC.Admin.Setting.Index());
         }

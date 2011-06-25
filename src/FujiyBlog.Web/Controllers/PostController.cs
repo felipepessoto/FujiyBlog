@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Repositories;
-using FujiyBlog.Core.Services;
-using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
 
@@ -17,14 +11,12 @@ namespace FujiyBlog.Web.Controllers
 {
     public partial class PostController : Controller
     {
-        private readonly IUnitOfWork unitOfWork;
         private readonly FujiyBlogDatabase db;
         private readonly IPostRepository postRepository;
         private readonly IUserRepository userRepository;
 
-        public PostController(IUnitOfWork unitOfWork, FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
+        public PostController(FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
         {
-            this.unitOfWork = unitOfWork;
             this.db = db;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
@@ -180,7 +172,7 @@ namespace FujiyBlog.Web.Controllers
             }
 
             db.PostComments.Add(postComment);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
 
             return View("Comments", new[] { postComment });
         }

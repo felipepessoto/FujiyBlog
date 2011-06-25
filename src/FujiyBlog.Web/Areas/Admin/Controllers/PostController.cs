@@ -7,7 +7,6 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
-using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Common;
@@ -17,14 +16,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
     public partial class PostController : AdminController
     {
-        private readonly IUnitOfWork unitOfWork;
         private readonly FujiyBlogDatabase db;
         private readonly IPostRepository postRepository;
         private readonly IUserRepository userRepository;
 
-        public PostController(IUnitOfWork unitOfWork, FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
+        public PostController(FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
         {
-            this.unitOfWork = unitOfWork;
             this.db = db;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
@@ -141,7 +138,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult DeleteConfirmed(int id)
         {
             postRepository.DeletePost(id);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 
@@ -165,7 +162,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Category category = db.Categories.Single(x => x.Id == id);
 
             category.Name = name;
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return Json(true);
         }
 
@@ -178,7 +175,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             db.Categories.Add(newCategory);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return Json(newCategory);
         }
 
@@ -187,7 +184,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             Category category = db.Categories.Single(x => x.Id == id);
             db.Categories.Remove(category);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return Json(true);
         }
 
@@ -211,7 +208,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Tag tag = db.Tags.Single(x => x.Id == id);
 
             tag.Name = name;
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return Json(true);
         }
 
@@ -220,7 +217,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             Tag tag = db.Tags.Single(x => x.Id == id);
             db.Tags.Remove(tag);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return Json(true);
         }
     }

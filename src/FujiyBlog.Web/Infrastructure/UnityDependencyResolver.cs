@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Infrastructure;
 using FujiyBlog.Core.Repositories;
 using Microsoft.Practices.Unity;
-using System.Web;
 
 namespace FujiyBlog.Web.Infrastructure
 {
@@ -20,7 +19,6 @@ namespace FujiyBlog.Web.Infrastructure
                 {
                     container = new UnityContainer();
                     container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new ContainerControlledLifetimeManager());
-                    container.RegisterType<IUnitOfWork, FujiyBlogDatabase>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IUserRepository, UserRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IPostRepository, PostRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<ISettingRepository, SettingRepository>(new ContainerControlledLifetimeManager());

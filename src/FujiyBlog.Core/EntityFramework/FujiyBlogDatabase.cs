@@ -1,11 +1,10 @@
 ﻿using System.Data.Entity;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework.Configuration;
-using FujiyBlog.Core.Infrastructure;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class FujiyBlogDatabase : DbContext, IUnitOfWork
+    public class FujiyBlogDatabase : DbContext
     {
         public FujiyBlogDatabase()
         {
@@ -31,10 +30,5 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<WidgetSetting> WidgetSettings { get; set; }
-
-        void IUnitOfWork.SaveChanges()
-        {
-            SaveChanges();
-        } 
     }
 }

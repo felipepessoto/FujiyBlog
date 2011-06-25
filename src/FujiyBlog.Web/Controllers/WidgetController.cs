@@ -1,26 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Infrastructure;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.ViewModels;
-using System.IO;
 
 namespace FujiyBlog.Web.Controllers
 {
     public partial class WidgetController : Controller
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly FujiyBlogDatabase db;
         private readonly IWidgetSettingRepository widgetSettingRepository;
         private static string[] widgets;
 
-        public WidgetController(IUnitOfWork unitOfWork, IWidgetSettingRepository widgetSettingRepository)
+        public WidgetController(FujiyBlogDatabase db, IWidgetSettingRepository widgetSettingRepository)
         {
-            this.unitOfWork = unitOfWork;
+            this.db = db;
             this.widgetSettingRepository = widgetSettingRepository;
         }
 
@@ -65,7 +61,7 @@ namespace FujiyBlog.Web.Controllers
                                               };
 
             widgetSettingRepository.Add(widgetSetting);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return View(widgetSetting.Name, widgetSetting);
         }
 
@@ -74,7 +70,7 @@ namespace FujiyBlog.Web.Controllers
         {
             WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(settingsId);
             widgetSettingRepository.Remove(setting);
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return Json(true);
         }
 
@@ -93,7 +89,7 @@ namespace FujiyBlog.Web.Controllers
 
             setting.Settings = settings;
 
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
 
             return View(setting.Name, setting);
         }
@@ -107,7 +103,7 @@ namespace FujiyBlog.Web.Controllers
                 WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(widgetSettingId);
                 setting.Position = position++;
             }
-            unitOfWork.SaveChanges();
+            db.SaveChanges();
             return null;
         }
     }
