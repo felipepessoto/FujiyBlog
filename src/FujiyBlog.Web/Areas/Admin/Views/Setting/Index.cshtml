@@ -28,7 +28,7 @@
             @Html.LabelFor(model => model.Theme)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Theme)
+            @Html.DropDownListFor(model => model.Theme, Model.Themes)
             @Html.ValidationMessageFor(model => model.Theme)
         </div>
         <div class="editor-label">
@@ -42,7 +42,7 @@
             @Html.LabelFor(model => model.TimeZoneId)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(model => model.TimeZoneId, TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem() { Text = x.DisplayName, Value = x.Id }))
+            @Html.DropDownListFor(model => model.TimeZoneId, Model.TimeZones)
             @Html.ValidationMessageFor(model => model.TimeZoneId)
         </div>
         <p>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Models;
@@ -15,7 +17,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    BlogDescription = Settings.SettingRepository.BlogDescription,
                                                    Theme = Settings.SettingRepository.Theme,
                                                    PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                                                   TimeZoneId = Settings.SettingRepository.TimeZoneId.Id
+                                                   TimeZoneId = Settings.SettingRepository.TimeZoneId.Id,
+                                                   TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
+                                                   Themes = new DirectoryInfo(Server.MapPath("~/Views/Themes/")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
                                                };
 
             return View(viewModel);
