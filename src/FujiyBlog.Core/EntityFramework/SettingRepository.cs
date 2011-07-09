@@ -4,7 +4,7 @@ using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class SettingRepository : RepositoryBase<Setting>, ISettingRepository
+    public class SettingRepository : RepositoryBase<Setting>
     {
         public SettingRepository(FujiyBlogDatabase database)
             : base(database)
@@ -47,6 +47,48 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSettings(SettingNames.TimeZone, value.Id); }
         }
 
+        public string EmailFrom
+        {
+            get { return Database.Settings.Find((int)SettingNames.EmailFrom).Value; }
+            set { SaveSettings(SettingNames.EmailFrom, value); }
+        }
+
+        public string EmailSmtpAddress
+        {
+            get { return Database.Settings.Find((int)SettingNames.EmailSmtpAddress).Value; }
+            set { SaveSettings(SettingNames.EmailSmtpAddress, value); }
+        }
+
+        public int EmailSmtpPort
+        {
+            get { return int.Parse(Database.Settings.Find((int)SettingNames.EmailSmtpPort).Value); }
+            set { SaveSettings(SettingNames.EmailSmtpPort, value.ToString()); }
+        }
+
+        public string EmailUserName
+        {
+            get { return Database.Settings.Find((int)SettingNames.EmailUserName).Value; }
+            set { SaveSettings(SettingNames.EmailUserName, value); }
+        }
+
+        public string EmailPassword
+        {
+            get { return Database.Settings.Find((int)SettingNames.EmailPassword).Value; }
+            set { SaveSettings(SettingNames.EmailPassword, value); }
+        }
+
+        public string EmailSubjectPrefix
+        {
+            get { return Database.Settings.Find((int)SettingNames.EmailSubjectPrefix).Value; }
+            set { SaveSettings(SettingNames.EmailSubjectPrefix, value); }
+        }
+
+        public bool EmailSsl
+        {
+            get { return bool.Parse(Database.Settings.Find((int)SettingNames.EmailSsl).Value); }
+            set { SaveSettings(SettingNames.EmailSsl, value.ToString()); }
+        }
+
         private void SaveSettings(SettingNames settings, string value)
         {
             Database.Settings.Find((int) settings).Value = value;
@@ -61,6 +103,15 @@ namespace FujiyBlog.Core.EntityFramework
             BlogDescription = 4,
             Theme = 5,
             TimeZone = 6,
+
+            EmailFrom = 7,
+            EmailSmtpAddress = 8,
+            EmailSmtpPort = 9,
+            EmailUserName = 10,
+            EmailPassword = 11,
+            EmailSubjectPrefix = 12,
+            EmailSsl = 13,
+
         }
     }
 }

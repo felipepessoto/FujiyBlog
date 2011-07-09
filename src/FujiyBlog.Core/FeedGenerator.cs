@@ -4,16 +4,17 @@ using System.ServiceModel.Syndication;
 using System.Text;
 using System.Xml;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core
 {
     public class FeedGenerator
     {
-        private readonly ISettingRepository settingRepository;
+        private readonly SettingRepository settingRepository;
         private readonly IFeedRepository feedRepository;
 
-        public FeedGenerator(ISettingRepository settingRepository, IFeedRepository feedRepository)
+        public FeedGenerator(SettingRepository settingRepository, IFeedRepository feedRepository)
         {
             this.settingRepository = settingRepository;
             this.feedRepository = feedRepository;
