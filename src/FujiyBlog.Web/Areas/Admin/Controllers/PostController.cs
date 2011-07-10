@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
+using AutoMapper;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
@@ -60,13 +61,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Edit(int? id)
         {
             AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
-                                 : new Post
-                                       {
-                                           PublicationDate = DateTime.UtcNow,
-                                           IsPublished = true,
-                                           IsCommentEnabled = true
-                                       };
+            Post post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
+                            : new Post
+                                  {
+                                      PublicationDate = DateTime.UtcNow,
+                                      IsPublished = true,
+                                      IsCommentEnabled = true
+                                  };
+
+            viewModel.Post = Mapper.Map<Post, AdminPostSave>(post);
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
 
@@ -81,18 +84,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                         {
                                             Author = userRepository.GetByUsername(User.Identity.Name),
                                             CreationDate = DateTime.UtcNow,
-                                            LastModificationDate = DateTime.UtcNow
                                         });
 
-            editedPost.Title = postSave.Title;
-            editedPost.Description = postSave.Description;
-            editedPost.Slug = postSave.Slug;
-            editedPost.Content = postSave.Content;
-            editedPost.PublicationDate = DateTimeUtil.ConvertMyTimeZoneToUtc(postSave.PublicationDate);
-            editedPost.IsPublished = postSave.IsPublished;
-            editedPost.IsCommentEnabled = postSave.IsCommentEnabled;
-
-            //TryUpdateModel(editedPost, "Post", new[] { "Title", "Description", "Slug", "Content", "PublicationDate", "IsPublished", "IsCommentEnabled" });
+            editedPost.LastModificationDate = DateTime.UtcNow;
+            Mapper.Map(postSave, editedPost);
 
             if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
             {
@@ -100,13 +95,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             editedPost.Tags.Clear();
-            foreach (Tag tag in postRepository.GetOrCreateTags(postSave.Tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
+            if (postSave.Tags != null)
             {
-                editedPost.Tags.Add(tag);
+                foreach (Tag tag in postRepository.GetOrCreateTags(postSave.Tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
+                {
+                    editedPost.Tags.Add(tag);
+                }
             }
 
             editedPost.Categories.Clear();
-
             if (postSave.SelectedCategories != null)
             {
                 foreach (Category category in db.Categories.Where(x => postSave.SelectedCategories.Contains(x.Id)))
@@ -121,7 +118,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Post = editedPost;
+            viewModel.Post = Mapper.Map<Post, AdminPostSave>(editedPost);
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
 

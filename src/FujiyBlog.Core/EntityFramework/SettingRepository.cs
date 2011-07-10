@@ -1,98 +1,146 @@
 ﻿using System;
-using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class SettingRepository : RepositoryBase<Setting>
+    public class SettingRepository
     {
+        private readonly FujiyBlogDatabase database;
+
         public SettingRepository(FujiyBlogDatabase database)
-            : base(database)
         {
+            this.database = database;
         }
 
         public int  MinRequiredPasswordLength
         {
-            get { return int.Parse(Database.Settings.Find((int)SettingNames.MinRequiredPasswordLength).Value); }
+            get { return int.Parse(database.Settings.Find((int)SettingNames.MinRequiredPasswordLength).Value); }
             set { SaveSettings(SettingNames.MinRequiredPasswordLength, value.ToString()); }
         }
 
         public int PostsPerPage
         {
-            get { return int.Parse(Database.Settings.Find((int)SettingNames.PostsPerPage).Value); }
+            get { return int.Parse(database.Settings.Find((int)SettingNames.PostsPerPage).Value); }
             set { SaveSettings(SettingNames.PostsPerPage, value.ToString()); }
         }
 
         public string BlogName
         {
-            get { return Database.Settings.Find((int)SettingNames.BlogName).Value; }
+            get { return database.Settings.Find((int)SettingNames.BlogName).Value; }
             set { SaveSettings(SettingNames.BlogName, value); }
         }
 
         public string BlogDescription
         {
-            get { return Database.Settings.Find((int)SettingNames.BlogDescription).Value; }
+            get { return database.Settings.Find((int)SettingNames.BlogDescription).Value; }
             set { SaveSettings(SettingNames.BlogDescription, value); }
         }
 
         public string Theme
         {
-            get { return Database.Settings.Find((int)SettingNames.Theme).Value; }
+            get { return database.Settings.Find((int)SettingNames.Theme).Value; }
             set { SaveSettings(SettingNames.Theme, value); }
         }
 
         public TimeZoneInfo TimeZone
         {
-            get { return TimeZoneInfo.FindSystemTimeZoneById(Database.Settings.Find((int)SettingNames.TimeZone).Value); }
+            get { return TimeZoneInfo.FindSystemTimeZoneById(database.Settings.Find((int)SettingNames.TimeZone).Value); }
             set { SaveSettings(SettingNames.TimeZone, value.Id); }
         }
 
+
+
+
         public string EmailFrom
         {
-            get { return Database.Settings.Find((int)SettingNames.EmailFrom).Value; }
+            get { return database.Settings.Find((int)SettingNames.EmailFrom).Value; }
             set { SaveSettings(SettingNames.EmailFrom, value); }
-        }
-
-        public string EmailSmtpAddress
-        {
-            get { return Database.Settings.Find((int)SettingNames.EmailSmtpAddress).Value; }
-            set { SaveSettings(SettingNames.EmailSmtpAddress, value); }
-        }
-
-        public int EmailSmtpPort
-        {
-            get { return int.Parse(Database.Settings.Find((int)SettingNames.EmailSmtpPort).Value); }
-            set { SaveSettings(SettingNames.EmailSmtpPort, value.ToString()); }
-        }
-
-        public string EmailUserName
-        {
-            get { return Database.Settings.Find((int)SettingNames.EmailUserName).Value; }
-            set { SaveSettings(SettingNames.EmailUserName, value); }
-        }
-
-        public string EmailPassword
-        {
-            get { return Database.Settings.Find((int)SettingNames.EmailPassword).Value; }
-            set { SaveSettings(SettingNames.EmailPassword, value); }
         }
 
         public string EmailSubjectPrefix
         {
-            get { return Database.Settings.Find((int)SettingNames.EmailSubjectPrefix).Value; }
+            get { return database.Settings.Find((int)SettingNames.EmailSubjectPrefix).Value; }
             set { SaveSettings(SettingNames.EmailSubjectPrefix, value); }
         }
 
-        public bool EmailSsl
+        public string SmtpAddress
         {
-            get { return bool.Parse(Database.Settings.Find((int)SettingNames.EmailSsl).Value); }
-            set { SaveSettings(SettingNames.EmailSsl, value.ToString()); }
+            get { return database.Settings.Find((int)SettingNames.SmtpAddress).Value; }
+            set { SaveSettings(SettingNames.SmtpAddress, value); }
+        }
+
+        public int SmtpPort
+        {
+            get { return int.Parse(database.Settings.Find((int)SettingNames.SmtpPort).Value); }
+            set { SaveSettings(SettingNames.SmtpPort, value.ToString()); }
+        }
+
+        public string SmtpUserName
+        {
+            get { return database.Settings.Find((int)SettingNames.SmtpUserName).Value; }
+            set { SaveSettings(SettingNames.SmtpUserName, value); }
+        }
+
+        public string SmtpPassword
+        {
+            get { return database.Settings.Find((int)SettingNames.SmtpPassword).Value; }
+            set { SaveSettings(SettingNames.SmtpPassword, value); }
+        }
+
+        public bool SmtpSsl
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.SmtpSsl).Value); }
+            set { SaveSettings(SettingNames.SmtpSsl, value.ToString()); }
+        }
+
+
+
+
+        public bool EnableComments
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.EnableComments).Value); }
+            set { SaveSettings(SettingNames.EnableComments, value.ToString()); }
+        }
+
+        public bool ModerateComments
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.ModerateComments).Value); }
+            set { SaveSettings(SettingNames.ModerateComments, value.ToString()); }
+        }
+
+        public bool EnableNestedComments
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.EnableNestedComments).Value); }
+            set { SaveSettings(SettingNames.EnableNestedComments, value.ToString()); }
+        }
+
+        public int? CloseCommentsAfterDays
+        {
+            get
+            {
+                string value = database.Settings.Find((int)SettingNames.CloseCommentsAfterDays).Value;
+                if (value == null)
+                    return null;
+                return int.Parse(value);
+            }
+            set { SaveSettings(SettingNames.CloseCommentsAfterDays, value.HasValue ? value.ToString() : null); }
+        }
+
+        public int CommentsPerPage
+        {
+            get { return int.Parse(database.Settings.Find((int)SettingNames.CommentsPerPage).Value); }
+            set { SaveSettings(SettingNames.CommentsPerPage, value.ToString()); }
+        }
+
+        public string CommentsAvatar
+        {
+            get { return database.Settings.Find((int)SettingNames.CommentsAvatar).Value; }
+            set { SaveSettings(SettingNames.CommentsAvatar, value); }
         }
 
         private void SaveSettings(SettingNames settings, string value)
         {
-            Database.Settings.Find((int) settings).Value = value;
-            Database.SaveChanges();
+            database.Settings.Find((int) settings).Value = value;
+            database.SaveChanges();
         }
 
         private enum SettingNames
@@ -105,13 +153,19 @@ namespace FujiyBlog.Core.EntityFramework
             TimeZone = 6,
 
             EmailFrom = 7,
-            EmailSmtpAddress = 8,
-            EmailSmtpPort = 9,
-            EmailUserName = 10,
-            EmailPassword = 11,
-            EmailSubjectPrefix = 12,
-            EmailSsl = 13,
+            EmailSubjectPrefix = 8,
+            SmtpAddress = 9,
+            SmtpPort = 10,
+            SmtpUserName = 11,
+            SmtpPassword = 12,
+            SmtpSsl = 13,
 
+            EnableComments = 14,
+            ModerateComments = 15,
+            EnableNestedComments = 16,
+            CloseCommentsAfterDays = 17,
+            CommentsPerPage = 18,
+            CommentsAvatar = 19,
         }
     }
 }

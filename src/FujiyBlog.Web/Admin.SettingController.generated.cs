@@ -48,6 +48,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
+            public readonly string Email = "Email";
+            public readonly string Comments = "Comments";
         }
 
 
@@ -57,6 +59,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string _Layout = "~/Areas/Admin/Views/Setting/_Layout.cshtml";
+            public readonly string Comments = "~/Areas/Admin/Views/Setting/Comments.cshtml";
+            public readonly string Email = "~/Areas/Admin/Views/Setting/Email.cshtml";
+            public readonly string Index = "~/Areas/Admin/Views/Setting/Index.cshtml";
         }
     }
 
@@ -66,6 +71,34 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Index() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Index(FujiyBlog.Web.Areas.Admin.ViewModels.AdminBasicSettings settings) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            callInfo.RouteValueDictionary.Add("settings", settings);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Email() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Email);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Email(FujiyBlog.Web.Areas.Admin.ViewModels.AdminEmailSettings settings) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Email);
+            callInfo.RouteValueDictionary.Add("settings", settings);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Comments() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Comments);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Comments(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings settings) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Comments);
+            callInfo.RouteValueDictionary.Add("settings", settings);
             return callInfo;
         }
 

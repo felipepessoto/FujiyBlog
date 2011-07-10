@@ -5,7 +5,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
     public class AdminPostEdit
     {
-        public Post Post { get; set; }
+        public AdminPostSave Post { get; set; }
         public IEnumerable<Tag> AllTags { get; set; }
         public IEnumerable<Category> AllCategories { get; set; }
     }

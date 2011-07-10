@@ -41,5 +41,73 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             return RedirectToAction(MVC.Admin.Setting.Index());
         }
+
+        public virtual ActionResult Email()
+        {
+            AdminEmailSettings viewModel = new AdminEmailSettings
+            {
+                EmailFrom = Settings.SettingRepository.EmailFrom,
+                EmailSubjectPrefix = Settings.SettingRepository.EmailSubjectPrefix,
+                SmtpAddress = Settings.SettingRepository.SmtpAddress,
+                SmtpPort = Settings.SettingRepository.SmtpPort,
+                SmtpUserName = Settings.SettingRepository.SmtpUserName,
+                SmtpPassword = Settings.SettingRepository.SmtpPassword,
+                SmtpSsl = Settings.SettingRepository.SmtpSsl,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public virtual ActionResult Email(AdminEmailSettings settings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Settings.SettingRepository.EmailFrom = settings.EmailFrom;
+            Settings.SettingRepository.EmailSubjectPrefix = settings.EmailSubjectPrefix;
+            Settings.SettingRepository.SmtpAddress = settings.SmtpAddress;
+            Settings.SettingRepository.SmtpPort = settings.SmtpPort;
+            Settings.SettingRepository.SmtpUserName = settings.SmtpUserName;
+            Settings.SettingRepository.SmtpPassword = settings.SmtpPassword;
+            Settings.SettingRepository.SmtpSsl = settings.SmtpSsl;
+
+            return RedirectToAction(MVC.Admin.Setting.Email());
+        }
+
+        public virtual ActionResult Comments()
+        {
+            AdminCommentsSettings viewModel = new AdminCommentsSettings
+            {
+                EnableComments = Settings.SettingRepository.EnableComments,
+                ModerateComments = Settings.SettingRepository.ModerateComments,
+                EnableNestedComments = Settings.SettingRepository.EnableNestedComments,
+                CloseCommentsAfterDays = Settings.SettingRepository.CloseCommentsAfterDays,
+                CommentsPerPage = Settings.SettingRepository.CommentsPerPage,
+                CommentsAvatar = Settings.SettingRepository.CommentsAvatar,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public virtual ActionResult Comments(AdminCommentsSettings settings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Settings.SettingRepository.EnableComments = settings.EnableComments;
+            Settings.SettingRepository.ModerateComments = settings.ModerateComments;
+            Settings.SettingRepository.EnableNestedComments = settings.EnableNestedComments;
+            Settings.SettingRepository.CloseCommentsAfterDays = settings.CloseCommentsAfterDays;
+            Settings.SettingRepository.CommentsPerPage = settings.CommentsPerPage;
+            Settings.SettingRepository.CommentsAvatar = settings.CommentsAvatar;
+
+            return RedirectToAction(MVC.Admin.Setting.Comments());
+        }
     }
 }

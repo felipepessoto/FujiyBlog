@@ -1,0 +1,59 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings
+@{
+    ViewBag.Title = "Comments Settings";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+<h2>
+    Email Settings</h2>
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>Basic</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableComments)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableComments)
+            @Html.ValidationMessageFor(model => model.EnableComments)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModerateComments)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ModerateComments)
+            @Html.ValidationMessageFor(model => model.ModerateComments)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableNestedComments)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableNestedComments)
+            @Html.ValidationMessageFor(model => model.EnableNestedComments)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CloseCommentsAfterDays)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CloseCommentsAfterDays)
+            @Html.ValidationMessageFor(model => model.CloseCommentsAfterDays)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CommentsPerPage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CommentsPerPage)
+            @Html.ValidationMessageFor(model => model.CommentsPerPage)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.CommentsAvatar)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CommentsAvatar)
+            @Html.ValidationMessageFor(model => model.CommentsAvatar)
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}

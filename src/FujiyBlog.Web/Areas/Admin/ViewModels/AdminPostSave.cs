@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -28,5 +29,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public bool IsPublished { get; set; }
 
         public bool IsCommentEnabled { get; set; }
+
+        public IEnumerable<Category> Categories { get; set; }
     }
 }

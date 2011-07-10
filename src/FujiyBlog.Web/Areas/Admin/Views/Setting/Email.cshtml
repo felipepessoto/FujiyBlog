@@ -1,0 +1,66 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminEmailSettings
+@{
+    ViewBag.Title = "Email Settings";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+<h2>
+    Email Settings</h2>
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>Basic</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmailFrom)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmailFrom)
+            @Html.ValidationMessageFor(model => model.EmailFrom)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EmailSubjectPrefix)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EmailSubjectPrefix)
+            @Html.ValidationMessageFor(model => model.EmailSubjectPrefix)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SmtpAddress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SmtpAddress)
+            @Html.ValidationMessageFor(model => model.SmtpAddress)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SmtpPort)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SmtpPort)
+            @Html.ValidationMessageFor(model => model.SmtpPort)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SmtpUserName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SmtpUserName)
+            @Html.ValidationMessageFor(model => model.SmtpUserName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SmtpPassword)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SmtpPassword)
+            @Html.ValidationMessageFor(model => model.SmtpPassword)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SmtpSsl)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SmtpSsl)
+            @Html.ValidationMessageFor(model => model.SmtpSsl)
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}

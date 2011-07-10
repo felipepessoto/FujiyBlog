@@ -152,12 +152,24 @@ namespace FujiyBlog.Web.Controllers
         public virtual ActionResult DoComment(int id)
         {
             bool isLogged = Request.IsAuthenticated;
+            Post post = postRepository.GetPost(id, !isLogged);
+
+            if (post == null || !post.IsCommentEnabled || !Settings.SettingRepository.EnableComments)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (Settings.SettingRepository.CloseCommentsAfterDays.HasValue && post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) > DateTime.UtcNow)
+            {
+                throw new InvalidOperationException();
+            }
 
             PostComment postComment = new PostComment
                                           {
                                               CreationDate = DateTime.UtcNow,
                                               IpAddress = Request.UserHostAddress,
-                                              Post = postRepository.GetPost(id, !isLogged)
+                                              Post = post,
+                                              IsApproved = isLogged || !Settings.SettingRepository.ModerateComments,
                                           };
 
             if (isLogged)

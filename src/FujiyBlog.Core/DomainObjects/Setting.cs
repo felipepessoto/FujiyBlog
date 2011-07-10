@@ -10,7 +10,6 @@ namespace FujiyBlog.Core.DomainObjects
         [Required, StringLength(500)]
         public string Description { get; set; }
 
-        [Required]
         public string Value { get; set; }
     }
 }

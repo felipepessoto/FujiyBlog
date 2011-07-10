@@ -8,6 +8,7 @@ namespace FujiyBlog.Web.Infrastructure.AutoMapper
         public static void Configure()
         {
             Mapper.AddProfile(new AdminUserViewModel());
+            Mapper.AddProfile(new AdminPostViewModel());
         }
     }
 }

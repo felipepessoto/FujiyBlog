@@ -93,12 +93,17 @@
             @Html.ValidationMessageFor(model => model.Post.IsCommentEnabled)
         </div>
 
-        <ul id="categories-list">
-        @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
-        {
-            <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
-        }
-        </ul>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.Categories)
+        </div>
+        <div class="editor-field">
+            <ul id="categories-list">
+            @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+            {
+                <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
+            }
+            </ul>
+        </div>
 
         <label for="new-category-name">Add new category</label>
         <input type="text" id="new-category-name" />
@@ -106,8 +111,12 @@
         
         <a href="javascript:void(0);" id="add-category">Add</a>
 
-        @Html.TextBox("Post.Tags", string.Join(",", Model.Post.Tags.Select(x=>x.Name)))
-
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Post.Tags)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Post.Tags)
+        </div>
 
         <p>
             <input type="submit" value="Save" />
@@ -135,10 +144,8 @@
             success: function (response) {
                 if (!response.errorMessage) {
                     var container = $('#categories-list');
-                    var inputs = container.find('input');
-                    var id = inputs.length + 1;
 
-                    var html = '<li><input checked=checked type="checkbox" name="selectedCategories" value="' + response.Id + '" />' + response.Name + '</li>';
+                    var html = '<li><input checked=checked type="checkbox" name="Post.selectedCategories" value="' + response.Id + '" />' + response.Name + '</li>';
                     container.append($(html));
                 }
                 else {
