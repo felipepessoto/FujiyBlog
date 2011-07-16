@@ -1,4 +1,5 @@
-﻿@model FujiyBlog.Web.ViewModels.PostDetails
+﻿@using FujiyBlog.Web.Models
+@model FujiyBlog.Web.ViewModels.PostDetails
            
 @{
     Layout = "../Shared/_Layout.cshtml";
@@ -21,4 +22,7 @@
         Comentários</h1>
     @{Html.RenderPartial(MVC.Themes.Views.Default.Post.Comments, Model.Post.Comments);}
 </div>
-@{Html.RenderPartial(MVC.Themes.Views.Default.Post.DoComment, new FujiyBlog.Core.DomainObjects.PostComment { Post = Model.Post });}
+@if (Model.Post.IsCommentEnabled && Settings.SettingRepository.EnableComments && (!Settings.SettingRepository.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
+{
+    Html.RenderPartial(MVC.Themes.Views.Default.Post.DoComment, new FujiyBlog.Core.DomainObjects.PostComment {Post = Model.Post});
+}

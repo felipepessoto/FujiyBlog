@@ -159,7 +159,7 @@ namespace FujiyBlog.Web.Controllers
                 throw new InvalidOperationException();
             }
 
-            if (Settings.SettingRepository.CloseCommentsAfterDays.HasValue && post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) > DateTime.UtcNow)
+            if (Settings.SettingRepository.CloseCommentsAfterDays.HasValue && post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) < DateTime.UtcNow)
             {
                 throw new InvalidOperationException();
             }
