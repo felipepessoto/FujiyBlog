@@ -1,4 +1,5 @@
-﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.User>
+﻿@using FujiyBlog.Web.Common
+@model IEnumerable<FujiyBlog.Core.DomainObjects.User>
 @{
     Layout = MVC.Admin.User.Views._Layout;
 }
@@ -44,19 +45,19 @@
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CreationDate)
+                @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastLoginDate)
+                @DateTimeUtil.ConvertUtcToMyTimeZone(item.LastLoginDate)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 
                 <span id="disable-link-@item.Id"@if(!item.Enabled){<text> style="display:none"</text>}>
-                    @Ajax.ActionLink("Disable", MVC.Admin.User.Disable(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterDisable(arguments[0], " + item.Id + ");" })
+                    @Ajax.ActionLink("Disable", MVC.Admin.User.Disable(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterDisable(arguments[0], " + item.Id + ");" })
                 </span>
                 <span id="enable-link-@item.Id"@if(item.Enabled){<text> style="display:none"</text>}>
-                    @Ajax.ActionLink("Enable", MVC.Admin.User.Enable(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterEnable(arguments[0], " + item.Id + ");" })
+                    @Ajax.ActionLink("Enable", MVC.Admin.User.Enable(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterEnable(arguments[0], " + item.Id + ");" })
                 </span>
             </td>
         </tr>

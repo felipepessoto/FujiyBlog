@@ -1,11 +1,12 @@
-﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostIndex
+﻿@using FujiyBlog.Web.Common
+@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostIndex
 
 @{
     Layout = MVC.Admin.Post.Views._Layout;
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Posts";
 }
 
-<h2>Index</h2>
+<h2>Posts</h2>
 
 <p>
     @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
@@ -40,6 +41,9 @@
         <th>
             PublicationDate
         </th>
+        <th>
+            Comments
+        </th>
         <th></th>
     </tr>
 
@@ -62,10 +66,13 @@
             @string.Join(", ", item.Post.Tags.Select(x => x.Name).ToList())
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Post.CreationDate)
+            @DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.CreationDate)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Post.PublicationDate)
+            @DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.PublicationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelitem => item.CommentsTotal)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id = item.Post.Id }) |
