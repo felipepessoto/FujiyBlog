@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class JavaScriptController : Controller
+    public partial class JavaScriptController : AbstractController
     {
         public virtual ActionResult FujiyBlog()
         {

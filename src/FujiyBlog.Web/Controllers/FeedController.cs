@@ -6,7 +6,7 @@ using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class FeedController : Controller
+    public partial class FeedController : AbstractController
     {
         private readonly FeedGenerator feedGenerator;
 

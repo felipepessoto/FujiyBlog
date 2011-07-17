@@ -8,7 +8,7 @@ using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class WidgetController : Controller
+    public partial class WidgetController : AbstractController
     {
         private readonly FujiyBlogDatabase db;
         private readonly IWidgetSettingRepository widgetSettingRepository;

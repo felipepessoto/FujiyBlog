@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class AccountController : Controller
+    public partial class AccountController : AbstractController
     {
         private readonly UserService userService;
         private readonly FujiyBlogDatabase db;

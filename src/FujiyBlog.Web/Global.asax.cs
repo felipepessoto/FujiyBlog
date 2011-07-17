@@ -54,37 +54,6 @@ namespace FujiyBlog.Web
             AutoMapperConfiguration.Configure();
         }
 
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            RazorViewEngine engine = (RazorViewEngine) ViewEngines.Engines.Single();
-
-            string themeName = Settings.SettingRepository.Theme;
-
-            engine.MasterLocationFormats = new[]
-                                               {
-                                                   "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
-                                                   "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
-                                                   "~/Views/{1}/{0}.cshtml",
-                                                   "~/Views/Shared/{0}.cshtml",
-                                               };
-
-            engine.ViewLocationFormats = new[]
-                                             {
-                                                 "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
-                                                 "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
-                                                  "~/Views/{1}/{0}.cshtml",
-                                                   "~/Views/Shared/{0}.cshtml",
-                                             };
-
-            engine.PartialViewLocationFormats = new[]
-                                                    {
-                                                        "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
-                                                        "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
-                                                        "~/Views/{1}/{0}.cshtml",
-                                                        "~/Views/Shared/{0}.cshtml",
-                                                    };
-        }
-
         protected void Application_EndRequest(object sender, EventArgs e)
         {
             using (DependencyResolver.Current as IDisposable)

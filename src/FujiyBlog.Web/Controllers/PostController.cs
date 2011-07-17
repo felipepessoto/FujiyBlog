@@ -9,7 +9,7 @@ using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class PostController : Controller
+    public partial class PostController : AbstractController
     {
         private readonly FujiyBlogDatabase db;
         private readonly IPostRepository postRepository;
