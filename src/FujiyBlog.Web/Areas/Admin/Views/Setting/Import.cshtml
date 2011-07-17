@@ -2,11 +2,22 @@
     ViewBag.Title = "BlogML Importer";
     Layout = MVC.Admin.Setting.Views._Layout;
 }
-
-<h2>Index</h2>
-
-@using(Html.BeginForm(MVC.Admin.Setting.ImportBlogML(), FormMethod.Post, new { enctype = "multipart/form-data" }))
+<h2>
+    BlogML Importer</h2>
+@using (Html.BeginForm(MVC.Admin.Setting.Import(), FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-<input name="uploadFile" type="file" />
-<input type="submit" value="Upload File" />
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Import</legend>
+        <div class="editor-label">
+            @Html.Label("File to import")
+        </div>
+        <div class="editor-field">
+            <input name="uploadFile" type="file" data-val="true" data-val-required="The file is required." />
+            @Html.ValidationMessage("uploadFile")
+        </div>
+        <p>
+            <input type="submit" value="Upload File" />
+        </p>
+    </fieldset>
 }

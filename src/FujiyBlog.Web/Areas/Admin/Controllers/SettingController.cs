@@ -124,8 +124,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View();
         }
 
-        [HttpPost]
-        public virtual ActionResult ImportBlogML()
+        [HttpPost, ActionName("Import")]
+        public virtual ActionResult ImportPost()
         {
             var file = Request.Files[0];
 
@@ -138,7 +138,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             importer.Import(file.InputStream);
             db.SaveChanges();
-            return Content("OK");
+            return RedirectToAction(MVC.Admin.Setting.ImportSuccessful());
+        }
+
+        public virtual ActionResult ImportSuccessful()
+        {
+            return View();
         }
     }
 }

@@ -48,7 +48,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Email = "Email";
             public readonly string Comments = "Comments";
             public readonly string Import = "Import";
-            public readonly string ImportBlogML = "ImportBlogML";
+            public readonly string ImportPost = "Import";
+            public readonly string ImportSuccessful = "ImportSuccessful";
         }
 
 
@@ -61,6 +62,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Comments = "~/Areas/Admin/Views/Setting/Comments.cshtml";
             public readonly string Email = "~/Areas/Admin/Views/Setting/Email.cshtml";
             public readonly string Import = "~/Areas/Admin/Views/Setting/Import.cshtml";
+            public readonly string ImportSuccessful = "~/Areas/Admin/Views/Setting/ImportSuccessful.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Setting/Index.cshtml";
         }
     }
@@ -107,8 +109,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ImportBlogML() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportBlogML);
+        public override System.Web.Mvc.ActionResult ImportPost() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportPost);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ImportSuccessful() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportSuccessful);
             return callInfo;
         }
 
