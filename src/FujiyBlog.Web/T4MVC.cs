@@ -39,7 +39,6 @@ namespace T4MVC {
     public class AdminClass {
         public readonly string Name = "Admin";
         public FujiyBlog.Web.Areas.Admin.Controllers.CommentController Comment = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_CommentController();
-        public FujiyBlog.Web.Areas.Admin.Controllers.ImportController Import = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_ImportController();
         public FujiyBlog.Web.Areas.Admin.Controllers.PostController Post = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_PostController();
         public FujiyBlog.Web.Areas.Admin.Controllers.SettingController Setting = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_SettingController();
         public FujiyBlog.Web.Areas.Admin.Controllers.UserController User = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_UserController();

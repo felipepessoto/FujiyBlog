@@ -2,6 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
+using FujiyBlog.Core.BlogML;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Models;
 
@@ -9,6 +11,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
     public partial class SettingController : Controller
     {
+        private readonly FujiyBlogDatabase db;
+
+        public SettingController(FujiyBlogDatabase db)
+        {
+            this.db = db;
+        }
+
         public virtual ActionResult Index()
         {
             AdminBasicSettings viewModel = new AdminBasicSettings
@@ -108,6 +117,28 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.CommentsAvatar = settings.CommentsAvatar;
 
             return RedirectToAction(MVC.Admin.Setting.Comments());
+        }
+
+        public virtual ActionResult Import()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public virtual ActionResult ImportBlogML()
+        {
+            var file = Request.Files[0];
+
+            if (file == null || file.ContentLength == 0)
+            {
+                return Content("Select a file");
+            }
+
+            BlogMLImporter importer = new BlogMLImporter(new BlogMLRepository(db));
+
+            importer.Import(file.InputStream);
+            db.SaveChanges();
+            return Content("OK");
         }
     }
 }

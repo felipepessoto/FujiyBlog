@@ -102,9 +102,7 @@ namespace FujiyBlog.Core.BlogML
         {
             foreach (BlogMLExtendedPost blogMLPost in blogPosts.Where(x => blogMLRepository.GetPost(GenerateSlug(x.Post.PostUrl)) == null))
             {
-                string postUrl = blogMLPost.Post.PostUrl.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last();
-                postUrl = postUrl.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).First();
-                string slug = GenerateSlug(postUrl);
+                string slug = GenerateSlug(blogMLPost.Post.PostUrl);
 
                 Post post = new Post
                                 {
@@ -198,16 +196,19 @@ namespace FujiyBlog.Core.BlogML
             return list;
         }
 
-        private static string GenerateSlug(string phrase)
+        private static string GenerateSlug(string postUrl)
         {
-            phrase = RemoveAccent(phrase).ToLower();
+            postUrl = postUrl.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last();
+            postUrl = postUrl.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).First();
 
-            phrase = Regex.Replace(phrase, @"[^a-z0-9\s-]", ""); // invalid chars           
-            phrase = Regex.Replace(phrase, @"\s+", " ").Trim(); // convert multiple spaces into one space   
-            phrase = phrase.Substring(0, phrase.Length <= 200 ? phrase.Length : 200).Trim(); // cut and trim it   
-            phrase = Regex.Replace(phrase, @"\s", "-"); // hyphens   
+            postUrl = RemoveAccent(postUrl).ToLower();
 
-            return phrase;
+            postUrl = Regex.Replace(postUrl, @"[^a-z0-9\s-]", ""); // invalid chars           
+            postUrl = Regex.Replace(postUrl, @"\s+", " ").Trim(); // convert multiple spaces into one space   
+            postUrl = postUrl.Substring(0, postUrl.Length <= 200 ? postUrl.Length : 200).Trim(); // cut and trim it   
+            postUrl = Regex.Replace(postUrl, @"\s", "-"); // hyphens   
+
+            return postUrl;
         }
 
         private static string RemoveAccent(string txt)

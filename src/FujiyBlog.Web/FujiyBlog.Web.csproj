@@ -100,9 +100,6 @@
     <Compile Include="Admin.CommentController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Admin.ImportController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Admin.PostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -119,7 +116,6 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminController.cs" />
     <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ImportController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -483,7 +479,7 @@
     <Content Include="Areas\Admin\Views\Post\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Post\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
-    <Content Include="Areas\Admin\Views\Import\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Setting\Import.cshtml" />
     <Content Include="Areas\Admin\Views\Post\Categories.cshtml" />
     <Content Include="Areas\Admin\Views\Post\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Post\Tags.cshtml" />

@@ -23,9 +23,6 @@ using T4MVC;
 namespace FujiyBlog.Web.Areas.Admin.Controllers {
     public partial class SettingController {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public SettingController() { }
-
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected SettingController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -50,6 +47,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Index = "Index";
             public readonly string Email = "Email";
             public readonly string Comments = "Comments";
+            public readonly string Import = "Import";
+            public readonly string ImportBlogML = "ImportBlogML";
         }
 
 
@@ -61,6 +60,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string _Layout = "~/Areas/Admin/Views/Setting/_Layout.cshtml";
             public readonly string Comments = "~/Areas/Admin/Views/Setting/Comments.cshtml";
             public readonly string Email = "~/Areas/Admin/Views/Setting/Email.cshtml";
+            public readonly string Import = "~/Areas/Admin/Views/Setting/Import.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Setting/Index.cshtml";
         }
     }
@@ -99,6 +99,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public override System.Web.Mvc.ActionResult Comments(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Comments);
             callInfo.RouteValueDictionary.Add("settings", settings);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Import() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Import);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ImportBlogML() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportBlogML);
             return callInfo;
         }
 
