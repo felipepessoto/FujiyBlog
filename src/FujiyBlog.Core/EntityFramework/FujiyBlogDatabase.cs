@@ -8,7 +8,6 @@ namespace FujiyBlog.Core.EntityFramework
     {
         public FujiyBlogDatabase()
         {
-            Configuration.LazyLoadingEnabled = false;
             Database.SetInitializer(new FujiyBlogDatabaseInitializer());
         }
 
