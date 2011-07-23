@@ -1,4 +1,5 @@
-﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+﻿@using FujiyBlog.Core.EntityFramework
+@model FujiyBlog.Core.DomainObjects.WidgetSetting
 @{
     Layout = "Widget.cshtml";
 
@@ -11,7 +12,7 @@
     {
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
     }
-    FujiyBlog.Core.Repositories.IPostRepository postRepository = DependencyResolver.Current.GetService<FujiyBlog.Core.Repositories.IPostRepository>();
+    PostRepository postRepository = DependencyResolver.Current.GetService<PostRepository>();
     var tagCloud = postRepository.GetTagsCloud((int)settings["MinimumPosts"]);
     int minTag = tagCloud.Select(x=>x.PostsCount).DefaultIfEmpty().Min();
     int maxTag = tagCloud.Select(x => x.PostsCount).DefaultIfEmpty().Max();

@@ -20,7 +20,6 @@ namespace FujiyBlog.Web.Infrastructure
                     container = new UnityContainer();
                     container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IUserRepository, UserRepository>(new ContainerControlledLifetimeManager());
-                    container.RegisterType<IPostRepository, PostRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<SettingRepository, SettingRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IBlogMLRepository, BlogMLRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<IFeedRepository, FeedRepository>(new ContainerControlledLifetimeManager());

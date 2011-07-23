@@ -18,10 +18,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
     public partial class PostController : AdminController
     {
         private readonly FujiyBlogDatabase db;
-        private readonly IPostRepository postRepository;
+        private readonly PostRepository postRepository;
         private readonly IUserRepository userRepository;
 
-        public PostController(FujiyBlogDatabase db, IPostRepository postRepository, IUserRepository userRepository)
+        public PostController(FujiyBlogDatabase db, PostRepository postRepository, IUserRepository userRepository)
         {
             this.db = db;
             this.postRepository = postRepository;

@@ -3,22 +3,16 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using FujiyBlog.Core.Dto;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Extensions;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class PostRepository : RepositoryBase<Post>, IPostRepository
+    public class PostRepository : RepositoryBase<Post>
     {
         public PostRepository(FujiyBlogDatabase database)
             : base(database)
         {
-        }
-
-        private static DateTime UtcNow
-        {
-            get { return DateTime.UtcNow; }
         }
 
         private Post GetPost(string slug, int? id, bool isPublic = true)
