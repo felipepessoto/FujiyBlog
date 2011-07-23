@@ -45,10 +45,10 @@ namespace FujiyBlog.Core.DomainObjects
 
         public bool Enabled { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public ICollection<Post> Posts { get; set; }
 
-        public virtual ICollection<PostComment> AuthoredPostComments { get; set; }
+        public ICollection<PostComment> AuthoredPostComments { get; set; }
 
-        public virtual ICollection<PostComment> ModeratedPostComments { get; set; }
+        public ICollection<PostComment> ModeratedPostComments { get; set; }
     }
 }

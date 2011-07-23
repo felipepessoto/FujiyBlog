@@ -15,6 +15,6 @@ namespace FujiyBlog.Core.DomainObjects
         [Required, StringLength(50)]
         public string Name { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public ICollection<Post> Posts { get; set; }
     }
 }

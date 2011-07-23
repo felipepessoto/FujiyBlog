@@ -48,15 +48,15 @@ namespace FujiyBlog.Core.DomainObjects
         public bool IsDeleted { get; set; }
 
         [Required]
-        public virtual Post Post { get; set; }
+        public Post Post { get; set; }
 
-        public virtual PostComment ParentComment { get; set; }
+        public PostComment ParentComment { get; set; }
 
-        public virtual ICollection<PostComment> NestedComments { get; set; }
+        public ICollection<PostComment> NestedComments { get; set; }
 
-        public virtual User Author { get; set; }
+        public User Author { get; set; }
 
-        public virtual User ModeratedBy { get; set; }
+        public User ModeratedBy { get; set; }
 
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

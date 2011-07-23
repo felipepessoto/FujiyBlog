@@ -45,12 +45,12 @@ namespace FujiyBlog.Core.DomainObjects
         public bool IsDeleted { get; set; }
 
         [Required]
-        public virtual User Author { get; set; }
+        public User Author { get; set; }
 
-        public virtual ICollection<PostComment> Comments { get; set; }
+        public ICollection<PostComment> Comments { get; set; }
 
-        public virtual ICollection<Tag> Tags { get; set; }
+        public ICollection<Tag> Tags { get; set; }
 
-        public virtual ICollection<Category> Categories { get; set; }
+        public ICollection<Category> Categories { get; set; }
     }
 }
