@@ -1,0 +1,127 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageSave
+
+@{
+    Layout = MVC.Admin.Shared.Views._Layout;
+    ViewBag.Title = "Edit";
+}
+<!-- Load TinyMCE -->
+<script type="text/javascript" src="@Url.Content(Links.Scripts.tiny_mce.jquery_tinymce_js)"></script>
+<script type="text/javascript">
+    $().ready(function () {
+        $('#Content').tinymce({
+            // Location of TinyMCE script
+            script_url: '@(Url.Content(Links.Scripts.tiny_mce.tiny_mce_js))',
+
+            // General options
+            theme: "advanced",
+            plugins: "inlinepopups,fullscreen,contextmenu,emotions,table,iespell,advlink",
+
+            // Theme options
+            theme_advanced_buttons1: "fullscreen,code,|,cut,copy,paste,pastetext,pasteword,|,undo,redo,|,bold,italic,underline,strikethrough,|,blockquote,sub,sup,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,outdent,indent",
+            theme_advanced_buttons2: "iespell,link,unlink,removeformat,cleanup,charmap,emotions,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor",
+            theme_advanced_toolbar_location: "top",
+            theme_advanced_toolbar_align: "left",
+            theme_advanced_statusbar_location: "bottom",
+            theme_advanced_resizing: true
+        });
+    });
+</script>
+<!-- /TinyMCE -->
+
+<h2>@(Model.Id > 0 ? "Edit" : "Add") page</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Page</legend>
+
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Description)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Description)
+            @Html.ValidationMessageFor(model => model.Description)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Slug)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Slug)
+            @Html.ValidationMessageFor(model => model.Slug)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Content)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Content)
+            @Html.ValidationMessageFor(model => model.Content)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Keywords)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Keywords)
+            @Html.ValidationMessageFor(model => model.Keywords)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PublicationDate)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PublicationDate)
+            @Html.ValidationMessageFor(model => model.PublicationDate)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPublished)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsPublished)
+            @Html.ValidationMessageFor(model => model.IsPublished)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsFrontPage)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IsFrontPage)
+            @Html.ValidationMessageFor(model => model.IsFrontPage)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ShowInList)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ShowInList)
+            @Html.ValidationMessageFor(model => model.ShowInList)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ParentId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x=>x.ParentId, Model.Pages, "Select")
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

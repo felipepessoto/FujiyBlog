@@ -52,6 +52,7 @@
     <Compile Include="BlogML\BlogMLImporter.cs" />
     <Compile Include="BlogML\BlogMLExtendedPost.cs" />
     <Compile Include="DomainObjects\Category.cs" />
+    <Compile Include="DomainObjects\Page.cs" />
     <Compile Include="DomainObjects\Post.cs" />
     <Compile Include="DomainObjects\PostComment.cs" />
     <Compile Include="DomainObjects\Setting.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Dto\TagWithCount.cs" />
     <Compile Include="EntityFramework\BlogMLRepository.cs" />
     <Compile Include="EntityFramework\Configuration\CategoryConfiguration.cs" />
+    <Compile Include="EntityFramework\Configuration\PageConfiguration.cs" />
     <Compile Include="EntityFramework\Configuration\PostCommentConfiguration.cs" />
     <Compile Include="EntityFramework\Configuration\PostConfiguration.cs" />
     <Compile Include="EntityFramework\Configuration\SettingConfiguration.cs" />

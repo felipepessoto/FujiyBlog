@@ -20,6 +20,7 @@ namespace FujiyBlog.Core.EntityFramework
             builder.Configurations.Add(new TagConfiguration());
             builder.Configurations.Add(new CategoryConfiguration());
             builder.Configurations.Add(new WidgetSettingConfiguration());
+            builder.Configurations.Add(new PageConfiguration());
         }
 
         public DbSet<PostComment> PostComments { get; set; }
@@ -29,5 +30,6 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<WidgetSetting> WidgetSettings { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }

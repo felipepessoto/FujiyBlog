@@ -50,7 +50,7 @@
 @foreach (var item in Model.RecentPosts)
 {
     <tr>
-        <td class="@(item.Post.IsPublished ? "postpublished" : "postnotpublished")">
+        <td class="@(item.Post.IsPublished ? "published" : "notpublished")">
             @Html.DisplayFor(modelItem => item.Post.IsPublished)
         </td>
         <td>

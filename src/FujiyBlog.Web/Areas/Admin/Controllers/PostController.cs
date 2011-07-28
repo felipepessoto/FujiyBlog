@@ -10,8 +10,6 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
-using FujiyBlog.Web.Common;
-using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -20,6 +18,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         private readonly FujiyBlogDatabase db;
         private readonly PostRepository postRepository;
         private readonly IUserRepository userRepository;
+        private const int PageSize = 10;
 
         public PostController(FujiyBlogDatabase db, PostRepository postRepository, IUserRepository userRepository)
         {
@@ -38,7 +37,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             IQueryable<Post> pagePosts = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
-                .Paging(page.GetValueOrDefault(1), 10);
+                .Paging(page.GetValueOrDefault(1), PageSize);
 
             Dictionary<int, int> counts = (from post in pagePosts
                       select new { post.Id, C = post.Comments.Where(x => !x.IsDeleted).Count() }).ToDictionary(e => e.Id, e => e.C);
@@ -52,7 +51,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                               Post = post,
                                               CommentsTotal = counts[post.Id]
                                           }),
-                TotalPages = (int)Math.Ceiling(posts.Count() / (double)Settings.SettingRepository.PostsPerPage),
+                TotalPages = (int)Math.Ceiling((double)posts.Count() / PageSize),
             };
 
             return View(model);
