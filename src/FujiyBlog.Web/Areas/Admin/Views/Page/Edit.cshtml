@@ -28,7 +28,7 @@
 </script>
 <!-- /TinyMCE -->
 
-<h2>@(Model.Id > 0 ? "Edit" : "Add") page</h2>
+<h2>@(Model.Id.HasValue ? "Edit" : "Add") page</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)

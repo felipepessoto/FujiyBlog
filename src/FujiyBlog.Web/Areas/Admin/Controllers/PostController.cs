@@ -69,6 +69,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                   };
 
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(post);
+            viewModel.Post.Id = id;
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
 
