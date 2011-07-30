@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
@@ -17,6 +18,11 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Details(string pageSlug)
         {
+            if (pageSlug.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return RedirectToActionPermanent("Details", new { pageSlug = pageSlug.Substring(0, pageSlug.Length - 5) });
+            }
+
             return Details(pageSlug, null);
         }
 
