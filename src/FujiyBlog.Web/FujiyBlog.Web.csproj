@@ -135,6 +135,7 @@
     <Compile Include="Areas\Admin\ViewModels\AdminPageSave.cs" />
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\JavaScriptController.cs" />
     <Compile Include="Controllers\PostController.cs" />
@@ -160,6 +161,9 @@
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\ValidatePasswordLengthAttribute.cs" />
+    <Compile Include="PageController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="PostController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -505,6 +509,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.t4" />
+    <Content Include="Views\Themes\Default\Page\Details.cshtml" />
     <None Include="Views\Shared\FujiyBlogJs.cshtml" />
     <Content Include="Views\Widget\Widget.cshtml" />
     <Content Include="Views\Widget\Categories.cshtml" />

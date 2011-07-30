@@ -28,6 +28,7 @@ public static class MVC {
     public static FujiyBlog.Web.Controllers.AccountController Account = new FujiyBlog.Web.Controllers.T4MVC_AccountController();
     public static FujiyBlog.Web.Controllers.FeedController Feed = new FujiyBlog.Web.Controllers.T4MVC_FeedController();
     public static FujiyBlog.Web.Controllers.JavaScriptController JavaScript = new FujiyBlog.Web.Controllers.T4MVC_JavaScriptController();
+    public static FujiyBlog.Web.Controllers.PageController Page = new FujiyBlog.Web.Controllers.T4MVC_PageController();
     public static FujiyBlog.Web.Controllers.PostController Post = new FujiyBlog.Web.Controllers.T4MVC_PostController();
     public static FujiyBlog.Web.Controllers.WidgetController Widget = new FujiyBlog.Web.Controllers.T4MVC_WidgetController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();

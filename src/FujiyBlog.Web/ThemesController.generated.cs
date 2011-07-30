@@ -40,6 +40,11 @@ namespace T4MVC {
                     public readonly string ForgotPasswordSuccess = "~/Views/Themes/Default/Account/ForgotPasswordSuccess.cshtml";
                     public readonly string LogOn = "~/Views/Themes/Default/Account/LogOn.cshtml";
                 }
+                static readonly _Page s_Page = new _Page();
+                public _Page Page { get { return s_Page; } }
+                public partial class _Page{
+                    public readonly string Details = "~/Views/Themes/Default/Page/Details.cshtml";
+                }
                 static readonly _Post s_Post = new _Post();
                 public _Post Post { get { return s_Post; } }
                 public partial class _Post{

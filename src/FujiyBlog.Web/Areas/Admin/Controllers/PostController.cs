@@ -125,18 +125,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            Post post = db.Posts.Find(id);
-            return View(post);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public virtual ActionResult DeleteConfirmed(int id)
-        {
-            postRepository.DeletePost(id);
+            db.Posts.Include(x => x.Author).Single(x => x.Id == id).IsDeleted = true;
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(true);
         }
 
         public virtual ActionResult Categories()

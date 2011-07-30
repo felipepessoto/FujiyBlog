@@ -1,0 +1,17 @@
+﻿@model FujiyBlog.Core.DomainObjects.Page
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+<div id="page">
+    <h1>
+        @Model.Title</h1>
+    <div>
+        <p>
+            @Html.Raw(Model.Content)</p>
+    </div>
+    @if (Request.IsAuthenticated)
+    {
+        <div id="admin">
+            @Html.ActionLink("Edit", MVC.Admin.Page.Edit(Model.Id))</div>
+    }
+</div>

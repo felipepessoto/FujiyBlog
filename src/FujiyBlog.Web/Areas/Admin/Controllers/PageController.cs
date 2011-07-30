@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
-using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -98,18 +94,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
         public virtual ActionResult Delete(int id)
-        {
-            Page page = db.Pages.Find(id);
-            return View(page);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public virtual ActionResult DeleteConfirmed(int id)
         {
             db.Pages.Find(id).IsDeleted = true;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json(true);
         }
     }
 }

@@ -1,0 +1,60 @@
+﻿using System.Linq;
+using System.Web.Mvc;
+using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Core.Extensions;
+
+namespace FujiyBlog.Web.Controllers
+{
+    public partial class PageController : AbstractController
+    {
+        private readonly FujiyBlogDatabase db;
+
+        public PageController(FujiyBlogDatabase db)
+        {
+            this.db = db;
+        }
+
+        public virtual ActionResult Details(string pageSlug)
+        {
+            return Details(pageSlug, null);
+        }
+
+        public virtual ActionResult DetailsById(int id)
+        {
+            return Details(null, id);
+        }
+
+        private ActionResult Details(string slug, int? id)
+        {
+            IQueryable<Page> pageQuery = db.Pages.Where(x => !x.IsDeleted);
+
+            if (!Request.IsAuthenticated)
+            {
+                pageQuery = pageQuery.WhereIsPublicPage();
+            }
+
+            Page page;
+
+            if (id.HasValue)
+            {
+                page = pageQuery.SingleOrDefault(x => x.Id == id.Value);
+            }
+            else
+            {
+                page = pageQuery.SingleOrDefault(x => x.Slug == slug);
+            }
+
+            if (page == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.Title = page.Title;
+            ViewBag.Keywords = page.Keywords;
+            ViewBag.Description = page.Description;
+
+            return View("Details", page);
+        }
+    }
+}

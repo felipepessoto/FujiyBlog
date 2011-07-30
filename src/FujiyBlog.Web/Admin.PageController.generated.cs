@@ -51,11 +51,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DeleteConfirmed() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public PageController Actions { get { return MVC.Admin.Page; } }
@@ -73,7 +68,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Edit = "Edit";
             public readonly string EditPost = "Edit";
             public readonly string Delete = "Delete";
-            public readonly string DeleteConfirmed = "Delete";
         }
 
 
@@ -113,12 +107,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Delete(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            callInfo.RouteValueDictionary.Add("id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult DeleteConfirmed(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteConfirmed);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }

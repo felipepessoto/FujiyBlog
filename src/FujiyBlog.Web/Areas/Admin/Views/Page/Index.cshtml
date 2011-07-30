@@ -40,12 +40,12 @@
 
 @foreach (var item in Model.Pages)
 {
-    <tr>
+    <tr id="item-row-@item.Id">
         <td class="@(item.IsPublished ? "published" : "notpublished")">
             @Html.DisplayFor(modelItem => item.IsPublished)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
+            @Html.ActionLink(item.Title, MVC.Page.Details(item.Slug))
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ShowInList)
@@ -57,10 +57,18 @@
             @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Id)) |
+            @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
         </td>
     </tr>
 }
 </table>
+
+<script type="text/javascript">
+    function RemoveItemRow(itemId) {
+        $('#item-row-' + itemId).hide();
+    }
+    
+</script>
+
 @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")

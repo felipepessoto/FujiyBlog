@@ -284,11 +284,5 @@ namespace FujiyBlog.Core.EntityFramework
             }
             return tags;
         }
-
-        public void DeletePost(int id)
-        {
-            Post post = Database.Posts.Include(x => x.Author).Single(x => x.Id == id);
-            post.IsDeleted = true;
-        }
     }
 }

@@ -25,5 +25,10 @@ namespace FujiyBlog.Core.Extensions
         {
             return query.Where(post => post.IsPublished && post.PublicationDate < UtcNow);
         }
+
+        public static IQueryable<Page> WhereIsPublicPage(this IQueryable<Page> query)
+        {
+            return query.Where(page => page.IsPublished && page.PublicationDate < UtcNow);
+        }
     }
 }
