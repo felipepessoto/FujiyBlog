@@ -115,6 +115,11 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Details(string postSlug)
         {
+            if(postSlug.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return RedirectToActionPermanent("Details", new {postSlug = postSlug.Substring(0, postSlug.Length - 5)});
+            }
+
             return Details(postSlug, null);
         }
 

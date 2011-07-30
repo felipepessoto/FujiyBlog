@@ -24,10 +24,10 @@ namespace FujiyBlog.Web
 
             routes.MapRoute("Home", "", MVC.Post.Index(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PostDetailId", "postid/{Id}", MVC.Post.DetailsById(), new[] { "FujiyBlog.Web.Controllers" });
-            routes.MapRoute("PostDetail", "posts/{*PostSlug}", MVC.Post.Details(), new[] { "FujiyBlog.Web.Controllers" });
+            routes.MapRoute("PostDetail", "post/{*PostSlug}", MVC.Post.Details(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PageById", "pageid/{Id}", MVC.Page.DetailsById(), new[] { "FujiyBlog.Web.Controllers" });
-            routes.MapRoute("Page", "pages/{*PageSlug}", MVC.Page.Details(), new[] { "FujiyBlog.Web.Controllers" });
-            routes.MapRoute("TagHome", "tags/{tag}", MVC.Post.Tag(), new[] { "FujiyBlog.Web.Controllers" });
+            routes.MapRoute("Page", "page/{*PageSlug}", MVC.Page.Details(), new[] { "FujiyBlog.Web.Controllers" });
+            routes.MapRoute("TagHome", "tag/{tag}", MVC.Post.Tag(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("CategoryHome", "category/{category}", MVC.Post.Category(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("AuthorHome", "author/{author}", MVC.Post.Author(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("Archive", "archive", MVC.Post.Archive(), new[] { "FujiyBlog.Web.Controllers" });
