@@ -66,11 +66,6 @@ namespace FujiyBlog.Web.Controllers {
         public System.Web.Mvc.ActionResult DetailsById() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
         }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DoComment() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
-        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public PostController Actions { get { return MVC.Post; } }
@@ -92,7 +87,6 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string ArchiveDate = "ArchiveDate";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
-            public readonly string DoComment = "DoComment";
         }
 
 
@@ -156,12 +150,6 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult DetailsById(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
-            callInfo.RouteValueDictionary.Add("id", id);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult DoComment(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }

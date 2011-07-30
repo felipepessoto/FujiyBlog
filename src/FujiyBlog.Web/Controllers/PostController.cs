@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
 
@@ -11,15 +10,11 @@ namespace FujiyBlog.Web.Controllers
 {
     public partial class PostController : AbstractController
     {
-        private readonly FujiyBlogDatabase db;
         private readonly PostRepository postRepository;
-        private readonly IUserRepository userRepository;
 
-        public PostController(FujiyBlogDatabase db, PostRepository postRepository, IUserRepository userRepository)
+        public PostController(PostRepository postRepository)
         {
-            this.db = db;
             this.postRepository = postRepository;
-            this.userRepository = userRepository;
         }
 
         public virtual ActionResult Index(int? page)
@@ -152,46 +147,6 @@ namespace FujiyBlog.Web.Controllers
             };
 
             return View("Details", postDetails);
-        }
-
-        public virtual ActionResult DoComment(int id)
-        {
-            bool isLogged = Request.IsAuthenticated;
-            Post post = postRepository.GetPost(id, !isLogged);
-
-            if (post == null || !post.IsCommentEnabled || !Settings.SettingRepository.EnableComments)
-            {
-                throw new InvalidOperationException();
-            }
-
-            if (Settings.SettingRepository.CloseCommentsAfterDays.HasValue && post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) < DateTime.UtcNow)
-            {
-                throw new InvalidOperationException();
-            }
-
-            PostComment postComment = new PostComment
-                                          {
-                                              CreationDate = DateTime.UtcNow,
-                                              IpAddress = Request.UserHostAddress,
-                                              Post = post,
-                                              IsApproved = isLogged || !Settings.SettingRepository.ModerateComments,
-                                          };
-
-            if (isLogged)
-            {
-                postComment.Author = userRepository.GetByUsername(User.Identity.Name);
-                postComment.IsApproved = true;
-                UpdateModel(postComment, new[] { "Comment" });
-            }
-            else
-            {
-                UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
-            }
-
-            db.PostComments.Add(postComment);
-            db.SaveChanges();
-
-            return View("Comments", new[] { postComment });
         }
     }
 }

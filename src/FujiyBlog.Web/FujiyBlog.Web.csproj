@@ -133,8 +133,12 @@
     <Compile Include="Areas\Admin\ViewModels\AdminCommentsSettings.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPageIndex.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPageSave.cs" />
+    <Compile Include="CommentController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\JavaScriptController.cs" />
@@ -523,9 +527,9 @@
     <Content Include="Views\Themes\Default\Account\ChangePasswordSuccess.cshtml" />
     <Content Include="Views\Themes\Default\Account\LogOn.cshtml" />
     <Content Include="Views\Themes\Default\Post\Archive.cshtml" />
-    <Content Include="Views\Themes\Default\Post\Comments.cshtml" />
+    <Content Include="Views\Themes\Default\Comment\Comments.cshtml" />
     <Content Include="Views\Themes\Default\Post\Details.cshtml" />
-    <Content Include="Views\Themes\Default\Post\DoComment.cshtml" />
+    <Content Include="Views\Themes\Default\Comment\DoComment.cshtml" />
     <Content Include="Views\Themes\Default\Post\Index.cshtml" />
     <Content Include="Views\Themes\Default\Post\Post.cshtml" />
     <Content Include="Views\Themes\Default\Shared\_Layout.cshtml" />

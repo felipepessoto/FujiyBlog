@@ -20,9 +20,9 @@
 <div id="commentlist">
     <h1 id="comment">
         Comentários</h1>
-    @{Html.RenderPartial(MVC.Themes.Views.Default.Post.Comments, Model.Post.Comments);}
+    @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, Model.Post.Comments);}
 </div>
 @if (Model.Post.IsCommentEnabled && Settings.SettingRepository.EnableComments && (!Settings.SettingRepository.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
 {
-    Html.RenderPartial(MVC.Themes.Views.Default.Post.DoComment, new FujiyBlog.Core.DomainObjects.PostComment {Post = Model.Post});
+    Html.RenderPartial(MVC.Themes.Views.Default.Comment.DoComment, new FujiyBlog.Core.DomainObjects.PostComment {Post = Model.Post});
 }
