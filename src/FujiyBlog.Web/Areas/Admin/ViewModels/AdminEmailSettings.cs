@@ -10,10 +10,10 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Display(Name = "Subject Prefix")]
         public string EmailSubjectPrefix { get; set; }
 
-        [Display(Name = "SMTP Server")]
+        [Display(Name = "Smtp Address")]
         public string SmtpAddress { get; set; }
 
-        [Display(Name = "SMTP Port")]
+        [Display(Name = "Smtp Port")]
         public int SmtpPort { get; set; }
 
         [Display(Name = "Smtp UserName")]
