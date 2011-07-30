@@ -122,6 +122,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(editedPost);
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
+            viewModel.AllUsers = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == editedPost.Author });
 
             return View(viewModel);
         }

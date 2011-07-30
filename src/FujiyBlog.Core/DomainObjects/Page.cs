@@ -16,7 +16,6 @@ namespace FujiyBlog.Core.DomainObjects
         [Required, StringLength(200)]
         public string Slug { get; set; }
 
-        [Required]
         public string Content { get; set; }
 
         [StringLength(500)]

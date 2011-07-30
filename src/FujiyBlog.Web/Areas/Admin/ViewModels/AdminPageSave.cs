@@ -18,7 +18,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Required, StringLength(200)]
         public string Slug { get; set; }
 
-        [Required, AllowHtml]
+        [AllowHtml]
         public string Content { get; set; }
 
         [StringLength(500)]
