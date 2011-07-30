@@ -72,6 +72,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.Post.Id = id;
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
+            viewModel.AllUsers = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == post.Author });
 
             return View(viewModel);
         }
@@ -82,10 +83,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == postSave.Id)
                                   : db.Posts.Add(new Post
                                         {
-                                            Author = userRepository.GetByUsername(User.Identity.Name),
                                             CreationDate = DateTime.UtcNow,
                                         });
 
+            editedPost.Author = postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
             editedPost.LastModificationDate = DateTime.UtcNow;
             Mapper.Map(postSave, editedPost);
 
@@ -128,8 +129,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            db.Posts.Include(x => x.Author).Single(x => x.Id == id).IsDeleted = true;
+            db.Posts.Single(x => x.Id == id).IsDeleted = true;
+            db.Configuration.ValidateOnSaveEnabled = false;
             db.SaveChanges();
+            db.Configuration.ValidateOnSaveEnabled = true;
 
             return Json(true);
         }

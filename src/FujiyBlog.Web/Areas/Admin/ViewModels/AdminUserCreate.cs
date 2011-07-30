@@ -46,7 +46,5 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public string About { get; set; }
 
         public DateTime CreationDate { get; set; }
-
-        public bool Enabled { get; set; }
     }
 }

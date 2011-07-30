@@ -46,6 +46,14 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.Post.AuthorId)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(x => x.Post.AuthorId, Model.AllUsers)
+            @Html.ValidationMessageFor(model => model.Post.AuthorId)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.Post.Description)
         </div>
         <div class="editor-field">

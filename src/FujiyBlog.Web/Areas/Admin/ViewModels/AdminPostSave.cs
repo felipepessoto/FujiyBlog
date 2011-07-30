@@ -15,6 +15,9 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Required, StringLength(200)]
         public string Title { get; set; }
 
+        [Display(Name = "Author")]
+        public int? AuthorId { get; set; }
+
         [StringLength(500), AllowHtml]
         public string Description { get; set; }
 

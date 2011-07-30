@@ -37,6 +37,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 User newUser = Mapper.Map<AdminUserCreate, User>(userData);
+                newUser.Enabled = true;
                 db.Users.Add(newUser);
                 db.SaveChanges();
                 return RedirectToAction(MVC.Admin.User.Index());  
