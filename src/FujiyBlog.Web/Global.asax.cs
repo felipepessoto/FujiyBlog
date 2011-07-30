@@ -38,12 +38,12 @@ namespace FujiyBlog.Web
                 "{controller}/{action}/{id}", // URL with parameters
                 new {controller = "", action = "", id = UrlParameter.Optional}, // Parameter defaults
                 new[] {"FujiyBlog.Web.Controllers"});
-
-            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
         }
 
         protected void Application_Start()
         {
+            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.TempApi_InitializeForV42_CTP();
+
             foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
             {
                 ViewEngines.Engines.Remove(viewEngine);

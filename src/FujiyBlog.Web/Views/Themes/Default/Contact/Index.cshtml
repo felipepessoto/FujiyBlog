@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+<div id="contact">
+    <div id="ctl00_cphBody_divForm">
+      <h1>Contato</h1>
+      
+      <div><p>Envie sua mensagem</p></div>
+      
+      <label for="ctl00_cphBody_txtName">Nome</label>
+      <input name="ctl00$cphBody$txtName" type="text" value="fujiy" id="ctl00_cphBody_txtName" class="field">
+      <span id="ctl00_cphBody_ctl00" style="color:Red;visibility:hidden;">Required</span><br>
+      
+      <label for="ctl00_cphBody_txtEmail">E-mail</label>
+      <input name="ctl00$cphBody$txtEmail" type="text" value="fujiy@fujiy.net" id="ctl00_cphBody_txtEmail" class="field">
+      <span id="ctl00_cphBody_ctl01" style="color:Red;display:none;">Please enter a valid e-mail</span>
+      <span id="ctl00_cphBody_ctl02" style="color:Red;visibility:hidden;">Required</span><br>
+      
+      <label for="ctl00_cphBody_txtSubject">Assunto</label>
+      <input name="ctl00$cphBody$txtSubject" type="text" id="ctl00_cphBody_txtSubject" class="field">
+      <span id="ctl00_cphBody_ctl03" style="color:Red;visibility:hidden;">Required</span><br>
+      
+      <label for="ctl00_cphBody_txtMessage">Mensagem</label>
+      <textarea name="ctl00$cphBody$txtMessage" rows="5" cols="30" id="ctl00_cphBody_txtMessage"></textarea>
+      <span id="ctl00_cphBody_ctl04" style="color:Red;display:none;">Required</span>    
+      
+      
+      
+      <br><br>
+      
+      <input type="hidden" name="ctl00$cphBody$hfCaptcha" id="ctl00_cphBody_hfCaptcha" value="1672ce31-c7c1-4b2d-84a7-76280f20f807">
+      
+      <input type="submit" name="ctl00$cphBody$btnSend" value="Send" onclick="return beginSendMessage();WebForm_DoPostBackWithOptions(new WebForm_PostBackOptions(&quot;ctl00$cphBody$btnSend&quot;, &quot;&quot;, true, &quot;contact&quot;, &quot;&quot;, false, false))" id="ctl00_cphBody_btnSend">    
+      
+    </div>
+    
+    <div id="thanks">
+      
+    </div>
+  </div>

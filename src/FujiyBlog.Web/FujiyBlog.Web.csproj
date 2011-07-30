@@ -142,6 +142,7 @@
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
+    <Compile Include="Controllers\ContactController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\JavaScriptController.cs" />
@@ -539,6 +540,7 @@
     <Content Include="Views\Themes\Default\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Themes\Default\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Views\Widget\Administration.cshtml" />
+    <Content Include="Views\Themes\Default\Contact\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

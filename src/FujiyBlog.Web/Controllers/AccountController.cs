@@ -3,7 +3,6 @@ using System.Web.Mvc;
 using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Models;
 using System.Linq;
 
@@ -11,12 +10,10 @@ namespace FujiyBlog.Web.Controllers
 {
     public partial class AccountController : AbstractController
     {
-        private readonly UserService userService;
         private readonly FujiyBlogDatabase db;
 
-        public AccountController(UserService userService, FujiyBlogDatabase db)
+        public AccountController(FujiyBlogDatabase db)
         {
-            this.userService = userService;
             this.db = db;
         }
 
@@ -86,13 +83,16 @@ namespace FujiyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (userService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword))
+                User user = db.Users.Single(x => x.Username == User.Identity.Name);
+
+                if (user.Password == model.OldPassword)
                 {
+                    user.Password = model.NewPassword;
                     return RedirectToAction(MVC.Account.ChangePasswordSuccess());
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The current password is incorrect or the new password is invalid.");
+                    ModelState.AddModelError("", "The current password is incorrect.");
                 }
             }
 
@@ -120,7 +120,7 @@ namespace FujiyBlog.Web.Controllers
                 ModelState.AddModelError("email", "Email does not exist in our system");
                 return View();
             }
-            userService.RetrievePassword(user);
+            //TODO recuperar senha
             return RedirectToAction(MVC.Account.ForgotPasswordSuccess());
         }
 

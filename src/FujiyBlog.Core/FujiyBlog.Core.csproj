@@ -91,9 +91,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="Services\CreateUserResult.cs" />
-    <Compile Include="Services\ServiceResultBase.cs" />
-    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
