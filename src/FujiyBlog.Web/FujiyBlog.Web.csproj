@@ -139,6 +139,9 @@
     <Compile Include="CommentController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ContactController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AbstractController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentController.cs" />
@@ -186,6 +189,7 @@
     <Compile Include="ThemesController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ContactForm.cs" />
     <Compile Include="ViewModels\PostArchive.cs" />
     <Compile Include="ViewModels\PostDetails.cs" />
     <Compile Include="ViewModels\PostIndex.cs" />

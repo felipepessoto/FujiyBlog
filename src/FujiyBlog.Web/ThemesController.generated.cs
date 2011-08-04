@@ -46,6 +46,11 @@ namespace T4MVC {
                     public readonly string Comments = "~/Views/Themes/Default/Comment/Comments.cshtml";
                     public readonly string DoComment = "~/Views/Themes/Default/Comment/DoComment.cshtml";
                 }
+                static readonly _Contact s_Contact = new _Contact();
+                public _Contact Contact { get { return s_Contact; } }
+                public partial class _Contact{
+                    public readonly string Index = "~/Views/Themes/Default/Contact/Index.cshtml";
+                }
                 static readonly _Page s_Page = new _Page();
                 public _Page Page { get { return s_Page; } }
                 public partial class _Page{

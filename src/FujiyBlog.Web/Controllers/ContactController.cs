@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public class ContactController : Controller
+    public partial class ContactController : AbstractController
     {
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
-            return View();
+            return View(new ContactForm());
         }
 
     }

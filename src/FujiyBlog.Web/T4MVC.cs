@@ -27,6 +27,7 @@ public static class MVC {
     public static AdminClass Admin { get { return s_Admin; } }
     public static FujiyBlog.Web.Controllers.AccountController Account = new FujiyBlog.Web.Controllers.T4MVC_AccountController();
     public static FujiyBlog.Web.Controllers.CommentController Comment = new FujiyBlog.Web.Controllers.T4MVC_CommentController();
+    public static FujiyBlog.Web.Controllers.ContactController Contact = new FujiyBlog.Web.Controllers.T4MVC_ContactController();
     public static FujiyBlog.Web.Controllers.FeedController Feed = new FujiyBlog.Web.Controllers.T4MVC_FeedController();
     public static FujiyBlog.Web.Controllers.JavaScriptController JavaScript = new FujiyBlog.Web.Controllers.T4MVC_JavaScriptController();
     public static FujiyBlog.Web.Controllers.PageController Page = new FujiyBlog.Web.Controllers.T4MVC_PageController();
