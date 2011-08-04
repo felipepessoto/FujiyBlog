@@ -7,7 +7,7 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Repositories;
 
-namespace FujiyBlog.Core
+namespace FujiyBlog.Core.Services
 {
     public class FeedGenerator
     {
