@@ -22,7 +22,7 @@ namespace FujiyBlog.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("Home", "", MVC.Post.Index(), new[] { "FujiyBlog.Web.Controllers" });
+            //routes.MapRoute("Home", "", MVC.Post.Index(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PostDetailId", "postid/{Id}", MVC.Post.DetailsById(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PostDetail", "post/{*PostSlug}", MVC.Post.Details(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PageById", "pageid/{Id}", MVC.Page.DetailsById(), new[] { "FujiyBlog.Web.Controllers" });
@@ -36,7 +36,7 @@ namespace FujiyBlog.Web
             routes.MapRoute(
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
-                new {controller = "", action = "", id = UrlParameter.Optional}, // Parameter defaults
+                new { controller = "Post", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
                 new[] {"FujiyBlog.Web.Controllers"});
         }
 

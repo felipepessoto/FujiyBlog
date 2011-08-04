@@ -33,6 +33,7 @@ namespace FujiyBlog.Web.Controllers
             }
         }
 
+        [ChildActionOnly]
         public virtual ActionResult Index(string zoneName)
         {
             WidgetIndex viewModel = new WidgetIndex
