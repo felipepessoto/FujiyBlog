@@ -50,6 +50,7 @@ namespace T4MVC {
                 public _Contact Contact { get { return s_Contact; } }
                 public partial class _Contact{
                     public readonly string Index = "~/Views/Themes/Default/Contact/Index.cshtml";
+                    public readonly string Success = "~/Views/Themes/Default/Contact/Success.cshtml";
                 }
                 static readonly _Page s_Page = new _Page();
                 public _Page Page { get { return s_Page; } }

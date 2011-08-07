@@ -55,7 +55,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             AdminEmailSettings viewModel = new AdminEmailSettings
             {
-                EmailFrom = Settings.SettingRepository.EmailFrom,
+                EmailTo = Settings.SettingRepository.EmailTo,
                 EmailSubjectPrefix = Settings.SettingRepository.EmailSubjectPrefix,
                 SmtpAddress = Settings.SettingRepository.SmtpAddress,
                 SmtpPort = Settings.SettingRepository.SmtpPort,
@@ -75,7 +75,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return View();
             }
 
-            Settings.SettingRepository.EmailFrom = settings.EmailFrom;
+            Settings.SettingRepository.EmailTo = settings.EmailTo;
             Settings.SettingRepository.EmailSubjectPrefix = settings.EmailSubjectPrefix;
             Settings.SettingRepository.SmtpAddress = settings.SmtpAddress;
             Settings.SettingRepository.SmtpPort = settings.SmtpPort;

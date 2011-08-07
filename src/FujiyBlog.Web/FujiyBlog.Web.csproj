@@ -545,6 +545,7 @@
     <Content Include="Views\Themes\Default\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Views\Widget\Administration.cshtml" />
     <Content Include="Views\Themes\Default\Contact\Index.cshtml" />
+    <Content Include="Views\Themes\Default\Contact\Success.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

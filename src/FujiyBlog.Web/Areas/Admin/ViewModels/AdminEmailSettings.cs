@@ -4,8 +4,8 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
     public class AdminEmailSettings
     {
-        [Display(Name = "Email From")]
-        public string EmailFrom { get; set; }
+        [Display(Name = "Email To")]
+        public string EmailTo { get; set; }
 
         [Display(Name = "Subject Prefix")]
         public string EmailSubjectPrefix { get; set; }

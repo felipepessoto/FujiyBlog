@@ -50,10 +50,10 @@ namespace FujiyBlog.Core.EntityFramework
 
 
 
-        public string EmailFrom
+        public string EmailTo
         {
-            get { return database.Settings.Find((int)SettingNames.EmailFrom).Value; }
-            set { SaveSettings(SettingNames.EmailFrom, value); }
+            get { return database.Settings.Find((int)SettingNames.EmailTo).Value; }
+            set { SaveSettings(SettingNames.EmailTo, value); }
         }
 
         public string EmailSubjectPrefix
@@ -152,7 +152,7 @@ namespace FujiyBlog.Core.EntityFramework
             Theme = 5,
             TimeZone = 6,
 
-            EmailFrom = 7,
+            EmailTo = 7,
             EmailSubjectPrefix = 8,
             SmtpAddress = 9,
             SmtpPort = 10,

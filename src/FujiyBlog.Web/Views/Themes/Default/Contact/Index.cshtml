@@ -10,35 +10,27 @@
     <div id="contact">
         <div>
             <h1>Contact</h1>
-      
+
             <div><p>Send your message</p></div>
-      
+
             @Html.LabelFor(x => x.Name)
-            @Html.TextBoxFor(x => x.Name)
+            @Html.EditorFor(x => x.Name)
             @Html.ValidationMessageFor(x => x.Name)
       
             @Html.LabelFor(x => x.Email)
-            @Html.TextBoxFor(x => x.Email)
+            @Html.EditorFor(x => x.Email)
             @Html.ValidationMessageFor(x => x.Email)
       
             @Html.LabelFor(x => x.Subject)
-            @Html.TextBoxFor(x => x.Subject)
+            @Html.EditorFor(x => x.Subject)
             @Html.ValidationMessageFor(x => x.Subject)
       
             @Html.LabelFor(x => x.Body)
-            @Html.TextBoxFor(x => x.Body)
+            @Html.EditorFor(x => x.Body)
             @Html.ValidationMessageFor(x => x.Body) 
-      
-      
-      
-            <br><br>
-      
+
+            <br /><br />
                 <input type="submit" value="Send" />
-      
-        </div>
-    
-        <div id="thanks">
-      
         </div>
     </div>
 }

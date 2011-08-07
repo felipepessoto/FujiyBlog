@@ -34,6 +34,11 @@ namespace FujiyBlog.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult IndexPost() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.IndexPost);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ContactController Actions { get { return MVC.Contact; } }
@@ -48,6 +53,8 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
+            public readonly string IndexPost = "Index";
+            public readonly string Success = "Success";
         }
 
 
@@ -65,6 +72,17 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Index() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult IndexPost(FujiyBlog.Web.ViewModels.ContactForm contactForm) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.IndexPost);
+            callInfo.RouteValueDictionary.Add("contactForm", contactForm);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Success() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Success);
             return callInfo;
         }
 

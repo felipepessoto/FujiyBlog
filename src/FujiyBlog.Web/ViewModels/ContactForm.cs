@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace FujiyBlog.Web.ViewModels
 {
@@ -13,7 +14,7 @@ namespace FujiyBlog.Web.ViewModels
         [Required, StringLength(50)]
         public string Subject { get; set; }
 
-        [Required, StringLength(5000), DataType(DataType.MultilineText)]
+        [Required, StringLength(5000), AllowHtml, DataType(DataType.MultilineText)]
         public string Body { get; set; }
     }
 }

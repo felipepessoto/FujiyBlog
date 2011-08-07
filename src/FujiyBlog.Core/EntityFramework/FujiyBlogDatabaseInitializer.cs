@@ -54,10 +54,10 @@ namespace FujiyBlog.Core.EntityFramework
 
 
 
-            Setting emailFrom = new Setting
+            Setting emailTo = new Setting
                                     {
                                         Id = 7,
-                                        Description = "Email From",
+                                        Description = "Email To",
                                         Value = "example@domain.com"
                                     };
 
@@ -154,7 +154,7 @@ namespace FujiyBlog.Core.EntityFramework
             context.Settings.Add(theme);
             context.Settings.Add(utcOffset);
 
-            context.Settings.Add(emailFrom);
+            context.Settings.Add(emailTo);
             context.Settings.Add(emailSubjectPrefix);
             context.Settings.Add(smtpAddress);
             context.Settings.Add(smtpPort);
