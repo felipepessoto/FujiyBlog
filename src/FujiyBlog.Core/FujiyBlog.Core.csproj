@@ -83,7 +83,6 @@
     <Compile Include="Services\FeedGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IWidgetSettingRepository.cs" />
-    <Compile Include="Repositories\IBlogMLRepository.cs" />
     <Compile Include="Repositories\IFeedRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />

@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using BlogML.Xml;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Repositories;
+using FujiyBlog.Core.EntityFramework;
 
 namespace FujiyBlog.Core.BlogML
 {
@@ -15,12 +15,12 @@ namespace FujiyBlog.Core.BlogML
     /// </summary>
     public class BlogMLImporter
     {
-        private readonly IBlogMLRepository blogMLRepository;
+        private readonly BlogMLRepository blogMLRepository;
         private List<Category> allCategories;
         private List<Tag> allTags;
         private List<User> allUsers;
 
-        public BlogMLImporter(IBlogMLRepository blogMLRepository)
+        public BlogMLImporter(BlogMLRepository blogMLRepository)
         {
             this.blogMLRepository = blogMLRepository;
         }
@@ -115,6 +115,7 @@ namespace FujiyBlog.Core.BlogML
                                     PublicationDate = blogMLPost.Post.DateCreated,
                                     IsPublished = blogMLPost.Post.Approved,
                                     Author = allUsers.Single(x=> x.Username == blogMLPost.Post.Authors[0].Ref),
+                                    IsCommentEnabled = true,
                                 };
 
                 foreach (BlogMLComment blogMLComment in blogMLPost.Post.Comments)
