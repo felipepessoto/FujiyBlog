@@ -25,7 +25,7 @@
                 <ul style="display: none">
                     @foreach (var mes in datesCount.Where(x => x.Item1.Year == year))
                     {
-                        <li>@Html.ActionLink(mes.Item1.Month + "(" + mes.Item2 + ")", MVC.Post.ArchiveDate(mes.Item1.Year, mes.Item1.Month, null))</li>
+                        <li>@Html.ActionLink(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(mes.Item1.Month) + "(" + mes.Item2 + ")", MVC.Post.ArchiveDate(mes.Item1.Year, mes.Item1.Month, null))</li>
                     }
                 </ul>
             </li>
