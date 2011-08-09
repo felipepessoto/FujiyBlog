@@ -6,7 +6,7 @@ using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class BlogMLRepository : IBlogMLRepository
+    public class BlogMLRepository
     {
         private readonly FujiyBlogDatabase database;
 
