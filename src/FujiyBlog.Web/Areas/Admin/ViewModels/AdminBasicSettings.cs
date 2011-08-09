@@ -23,8 +23,14 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Display(Name = "Time Zone")]
         public string TimeZoneId { get; set; }
 
-        public IEnumerable<SelectListItem> TimeZones { get; set; }
+        [Required]
+        [Display(Name = "Language")]
+        public string Language { get; set; }
 
         public IEnumerable<SelectListItem> Themes { get; set; }
+
+        public IEnumerable<SelectListItem> TimeZones { get; set; }
+
+        public IEnumerable<SelectListItem> Languages { get; set; }
     }
 }

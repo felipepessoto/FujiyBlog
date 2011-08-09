@@ -38,12 +38,21 @@
             @Html.EditorFor(model => model.PostsPerPage)
             @Html.ValidationMessageFor(model => model.PostsPerPage)
         </div>
+
         <div class="editor-label">
             @Html.LabelFor(model => model.TimeZoneId)
         </div>
         <div class="editor-field">
             @Html.DropDownListFor(model => model.TimeZoneId, Model.TimeZones)
             @Html.ValidationMessageFor(model => model.TimeZoneId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Language)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Language, Model.Languages)
+            @Html.ValidationMessageFor(model => model.Language)
         </div>
         <p>
             <input type="submit" value="Save" />

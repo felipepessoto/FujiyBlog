@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -25,10 +26,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    BlogName = Settings.SettingRepository.BlogName,
                                                    BlogDescription = Settings.SettingRepository.BlogDescription,
                                                    Theme = Settings.SettingRepository.Theme,
+                                                   Themes = new DirectoryInfo(Server.MapPath("~/Views/Themes/")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
                                                    PostsPerPage = Settings.SettingRepository.PostsPerPage,
                                                    TimeZoneId = Settings.SettingRepository.TimeZone.Id,
                                                    TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
-                                                   Themes = new DirectoryInfo(Server.MapPath("~/Views/Themes/")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
+                                                   Language = Settings.SettingRepository.Culture,
+                                                   Languages = new List<SelectListItem> { new SelectListItem { Text = "Auto", Value = "Auto" }, new SelectListItem { Text = "English", Value = "en" }, new SelectListItem { Text = "Português (Brasil)", Value = "pt-BR" } },
                                                };
 
             return View(viewModel);
@@ -47,6 +50,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.Theme = settings.Theme;
             Settings.SettingRepository.PostsPerPage = settings.PostsPerPage;
             Settings.SettingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
+            Settings.SettingRepository.Culture = settings.Language;
 
             return RedirectToAction(MVC.Admin.Setting.Index());
         }

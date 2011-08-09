@@ -147,6 +147,13 @@ namespace FujiyBlog.Core.EntityFramework
                                                  Value = null
                                              };
 
+            Setting culture = new Setting
+            {
+                Id = 20,
+                Description = "Blog Culture",
+                Value = "auto"
+            };
+
             context.Settings.Add(minRequiredPasswordLength);
             context.Settings.Add(postsPerPage);
             context.Settings.Add(blogName);
@@ -168,6 +175,8 @@ namespace FujiyBlog.Core.EntityFramework
             context.Settings.Add(closeCommentsAfterDays);
             context.Settings.Add(commentsPerPage);
             context.Settings.Add(commentsAvatar);
+
+            context.Settings.Add(culture);
 
             User admin = new User
                              {

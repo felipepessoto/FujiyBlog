@@ -137,6 +137,12 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSettings(SettingNames.CommentsAvatar, value); }
         }
 
+        public string Culture
+        {
+            get { return database.Settings.Find((int)SettingNames.Culture).Value; }
+            set { SaveSettings(SettingNames.Culture, value); }
+        }
+
         private void SaveSettings(SettingNames settings, string value)
         {
             database.Settings.Find((int) settings).Value = value;
@@ -166,6 +172,8 @@ namespace FujiyBlog.Core.EntityFramework
             CloseCommentsAfterDays = 17,
             CommentsPerPage = 18,
             CommentsAvatar = 19,
+
+            Culture = 20,
         }
     }
 }

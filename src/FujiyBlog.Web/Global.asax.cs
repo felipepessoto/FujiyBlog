@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 using System.Web.Routing;
 using FujiyBlog.Web.Infrastructure;
@@ -56,6 +58,17 @@ namespace FujiyBlog.Web
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
             AutoMapperConfiguration.Configure();
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            var culture = Settings.SettingRepository.Culture;
+            if (!string.IsNullOrWhiteSpace(culture) && !culture.Equals("Auto", StringComparison.InvariantCultureIgnoreCase))
+            {
+                CultureInfo selectedCulture = CultureInfo.CreateSpecificCulture(culture);
+                Thread.CurrentThread.CurrentUICulture = selectedCulture;
+                Thread.CurrentThread.CurrentCulture = selectedCulture;
+            }
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)
