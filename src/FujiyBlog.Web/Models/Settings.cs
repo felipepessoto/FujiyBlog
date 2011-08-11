@@ -1,6 +1,5 @@
 ﻿using System.Web.Mvc;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Web.Models
 {

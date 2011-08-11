@@ -52,12 +52,19 @@ namespace FujiyBlog.Core.EntityFramework
                 Database.Entry(post).Collection(x => x.Comments).Query().Where(x => !x.IsDeleted).Include(x => x.Author).Load();
             }
 
+            int moreIndex = post.Content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
+
+            if (moreIndex >= 0)
+            {
+                post.Content = post.Content.Remove(moreIndex, 6);
+            }
+
             return post;
         }
 
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.AsNoTracking().Where(x => !x.IsDeleted).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
 
             if (tag != null)
             {
@@ -115,6 +122,11 @@ namespace FujiyBlog.Core.EntityFramework
                                                  Post = post,
                                                  CommentsTotal = counts[post.Id]
                                              }).ToList();
+
+            foreach (PostSummary postSummary in postSummaries.Where(x => x.Post.Content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase) >= 0))
+            {
+                postSummary.Post.Content = postSummary.Post.Content.Substring(0, postSummary.Post.Content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase));
+            }
 
             return postSummaries;
         }

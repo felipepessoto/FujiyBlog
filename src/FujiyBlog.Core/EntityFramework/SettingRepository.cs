@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 
 namespace FujiyBlog.Core.EntityFramework
 {
@@ -9,6 +10,7 @@ namespace FujiyBlog.Core.EntityFramework
         public SettingRepository(FujiyBlogDatabase database)
         {
             this.database = database;
+            database.Settings.Load();
         }
 
         public int  MinRequiredPasswordLength
