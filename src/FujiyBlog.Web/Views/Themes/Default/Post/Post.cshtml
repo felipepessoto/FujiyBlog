@@ -4,7 +4,7 @@
         @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))</h1>
     <span class="author">by @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))</span>
     <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate)</span>
-    <div class="text">@Html.Raw(Model.Post.Content.IndexOf("[more]") >= 0 ? Model.Post.Content.Substring(0, Model.Post.Content.IndexOf("[more]")) : Model.Post.Content)</div>
+    <div class="text">@Html.Raw(Model.Post.Content)</div>
     <div class="bottom">
         @*RATING*@
         @if (@Model.Post.Tags.Any())
