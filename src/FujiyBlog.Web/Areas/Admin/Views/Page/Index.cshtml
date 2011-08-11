@@ -57,7 +57,7 @@
             @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Id)) |
+            @Html.ActionLink("Edit", MVC.Admin.Page.Edit(item.Id)) |
             @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
         </td>
     </tr>
