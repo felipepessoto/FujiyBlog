@@ -1,31 +1,31 @@
-﻿@model FujiyBlog.Core.DomainObjects.Post
-<div class="post xfolkentry" id="post@(Model.Id)">
+﻿@model FujiyBlog.Core.Dto.PostSummary
+<div class="post xfolkentry" id="post@(Model.Post.Id)">
     <h1>
-        @Html.ActionLink(Model.Title, MVC.Post.Details(Model.Slug))</h1>
-    <span class="author">by @Html.ActionLink(Model.Author.DisplayName ?? Model.Author.Username, MVC.Post.Author(Model.Author.Username, null))</span>
-    <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.PublicationDate)</span>
-    <div class="text">@Html.Raw(Model.Content)</div>
+        @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))</h1>
+    <span class="author">by @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))</span>
+    <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate)</span>
+    <div class="text">@Html.Raw(Model.Post.Content.IndexOf("[more]") >= 0 ? Model.Post.Content.Substring(0, Model.Post.Content.IndexOf("[more]")) : Model.Post.Content)</div>
     <div class="bottom">
         @*RATING*@
-        @if (@Model.Tags.Any())
+        @if (@Model.Post.Tags.Any())
         { 
             <p class="tags">
-                Tags: @Html.Raw(Model.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</p>
+                Tags: @Html.Raw(Model.Post.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</p>
         }
-        @if (@Model.Categories.Any())
+        @if (@Model.Post.Categories.Any())
         { 
             <p class="categories">
-                Categories: @Html.Raw(Model.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
+                Categories: @Html.Raw(Model.Post.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
             </p>
         }
     </div>
     <div class="footer">
-    @if (Request.IsAuthenticated)
-    { 
-        @Html.ActionLink("Edit", MVC.Admin.Post.Edit(Model.Id)) <text>|</text>
-        @Html.ActionLink("Delete", MVC.Admin.Post.Delete(Model.Id)) <text>|</text>
-    }
-        @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Id), new { rel = "bookmark", title = Model.Title })
-        | <a href="@Url.Action(MVC.Post.Details(Model.Slug))#commentlist" >Comments (@Model.Comments.Count)</a>
+@if (Request.IsAuthenticated)
+{ 
+    @Html.ActionLink("Edit", MVC.Admin.Post.Edit(Model.Post.Id)) <text>|</text>
+    @Html.ActionLink("Delete", MVC.Admin.Post.Delete(Model.Post.Id)) <text>|</text>
+}
+        @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Post.Id), new { rel = "bookmark", title = Model.Post.Title })
+        | <a href="@Url.Action(MVC.Post.Details(Model.Post.Slug))#commentlist" >Comments (@Model.CommentsTotal)</a>
     </div>
 </div>

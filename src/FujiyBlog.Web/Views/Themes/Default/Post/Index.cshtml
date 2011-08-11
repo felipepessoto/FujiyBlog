@@ -4,36 +4,6 @@
 }
 @foreach (var item in Model.RecentPosts)
 {
-    <div class="post xfolkentry" id="post@(item.Post.Id)">
-        <h1>
-            @Html.ActionLink(item.Post.Title, MVC.Post.Details(item.Post.Slug))</h1>
-        <span class="author">by @Html.ActionLink(item.Post.Author.DisplayName ?? item.Post.Author.Username, MVC.Post.Author(item.Post.Author.Username, null))</span>
-        <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.PublicationDate)</span>
-        <div class="text">@Html.Raw(item.Post.Content)</div>
-        <div class="bottom">
-            @*RATING*@
-            @if (@item.Post.Tags.Any())
-            { 
-                <p class="tags">
-                    Tags: @Html.Raw(item.Post.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</p>
-            }
-            @if (@item.Post.Categories.Any())
-            { 
-                <p class="categories">
-                    Categories: @Html.Raw(item.Post.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
-                </p>
-            }
-        </div>
-        <div class="footer">
-    @if (Request.IsAuthenticated)
-    { 
-        @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id)) <text>|</text>
-        @Html.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id)) <text>|</text>
-    }
-            @Html.ActionLink("Permalink", MVC.Post.DetailsById(item.Post.Id), new { rel = "bookmark", title = item.Post.Title })
-            | <a href="@Url.Action(MVC.Post.Details(item.Post.Slug))#commentlist" >Comments (@item.CommentsTotal)</a>
-        </div>
-    </div>
-
+    @Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, item);
 }
 @Pager.Links(Model.CurrentPage, Model.TotalPages, "Previous posts", "Next posts")

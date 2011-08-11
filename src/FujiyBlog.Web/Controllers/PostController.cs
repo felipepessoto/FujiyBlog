@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
@@ -139,7 +140,7 @@ namespace FujiyBlog.Web.Controllers
             Post previousPost = postRepository.GetPreviousPost(post, !Request.IsAuthenticated);
             Post nextPost = postRepository.GetNextPost(post, !Request.IsAuthenticated);
 
-            PostDetails postDetails = new PostDetails
+            PostSummary postDetails = new PostSummary
             {
                 Post = post,
                 PreviousPost = previousPost,

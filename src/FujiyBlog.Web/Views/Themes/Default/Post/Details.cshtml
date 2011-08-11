@@ -1,5 +1,5 @@
 ﻿@using FujiyBlog.Web.Models
-@model FujiyBlog.Web.ViewModels.PostDetails
+@model FujiyBlog.Core.Dto.PostSummary
            
 @{
     Layout = "../Shared/_Layout.cshtml";
@@ -16,7 +16,7 @@
         @Html.ActionLink(Model.NextPost.Title, MVC.Post.Details(Model.NextPost.Slug))
     }
 </div>
-@{Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, Model.Post);}
+@{Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, Model);}
 <div id="commentlist">
     <h1 id="comment">
         Comentários</h1>

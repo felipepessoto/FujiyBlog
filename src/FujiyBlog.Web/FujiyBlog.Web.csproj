@@ -191,7 +191,6 @@
     </Compile>
     <Compile Include="ViewModels\ContactForm.cs" />
     <Compile Include="ViewModels\PostArchive.cs" />
-    <Compile Include="ViewModels\PostDetails.cs" />
     <Compile Include="ViewModels\PostIndex.cs" />
     <Compile Include="ViewModels\WidgetIndex.cs" />
     <Compile Include="WidgetController.generated.cs">

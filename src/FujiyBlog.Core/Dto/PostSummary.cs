@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using FujiyBlog.Core.DomainObjects;
+﻿using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Core.Dto
 {
@@ -7,5 +6,8 @@ namespace FujiyBlog.Core.Dto
     {
         public Post Post { get; set; }
         public int CommentsTotal { get; set; }
+
+        public Post PreviousPost { get; set; }
+        public Post NextPost { get; set; }
     }
 }
