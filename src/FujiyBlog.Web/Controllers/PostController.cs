@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
@@ -46,6 +47,9 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(tag, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
+            ViewBag.Title = "All posts tagged '" + tag + "'";
+            ViewBag.Description = Settings.SettingRepository.BlogDescription;
+
             return View("Index", model);
         }
 
@@ -60,6 +64,9 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(category: category, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
+            ViewBag.Title = category;
+            ViewBag.Description = Settings.SettingRepository.BlogDescription;
+
             return View("Index", model);
         }
 
@@ -73,6 +80,9 @@ namespace FujiyBlog.Web.Controllers
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, authorUserName: author, isPublic: !Request.IsAuthenticated),
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(authorUserName: author, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
+
+            ViewBag.Title = "All posts by '" + author + "'";
+            ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
             return View("Index", model);
         }
@@ -105,6 +115,9 @@ namespace FujiyBlog.Web.Controllers
                 RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated),
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(startDate: startDate, endDate: endDate, isPublic: !Request.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
             };
+
+            ViewBag.Title = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
+            ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
             return View("Index", model);
         }
