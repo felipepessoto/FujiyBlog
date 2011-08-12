@@ -1,4 +1,5 @@
-﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostEdit
+﻿@using FujiyBlog.Web.Extensions
+@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostEdit
 
 @{
     Layout = MVC.Admin.Shared.Views._Layout;
@@ -65,7 +66,7 @@
             @Html.LabelFor(model => model.Post.Slug)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Post.Slug)
+            @Html.EditorFor(model => model.Post.Slug) <a href="javascript:void(0)" id="extract-from-title">Extract from title</a>
             @Html.ValidationMessageFor(model => model.Post.Slug)
         </div>
 
@@ -165,4 +166,23 @@
             }
         });
     });
+
+    $('#extract-from-title').click(function () {
+        var callUrl = '@(Url.Action(MVC.Admin.Page.GenerateSlug()))';
+        var postData = JSON.stringify({ text: $('#@Html.FieldIdFor(x=>x.Post.Title)').val() });
+
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            url: callUrl,
+            data: postData,
+            success: function (response) {
+                $('#@Html.FieldIdFor(x=>x.Post.Slug)').val(response);
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+    
 </script>

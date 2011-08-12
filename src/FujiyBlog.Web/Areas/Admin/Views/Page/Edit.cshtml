@@ -1,4 +1,5 @@
-﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageSave
+﻿@using FujiyBlog.Web.Extensions
+@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageSave
 
 @{
     Layout = MVC.Admin.Shared.Views._Layout;
@@ -57,7 +58,7 @@
             @Html.LabelFor(model => model.Slug)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Slug)
+            @Html.EditorFor(model => model.Slug) <a href="javascript:void(0)" id="extract-from-title">Extract from title</a>
             @Html.ValidationMessageFor(model => model.Slug)
         </div>
 
@@ -125,3 +126,24 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script type="text/javascript">
+    $('#extract-from-title').click(function () {
+        var callUrl = '@(Url.Action(MVC.Admin.Page.GenerateSlug()))';
+        var postData = JSON.stringify({ text: $('#@Html.FieldIdFor(x=>x.Title)').val() });
+
+        $.ajax({
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            url: callUrl,
+            data: postData,
+            success: function (response) {
+                $('#@Html.FieldIdFor(x=>x.Slug)').val(response);
+            },
+            error: function () {
+                alert('Error');
+            }
+        });
+    });
+
+</script>

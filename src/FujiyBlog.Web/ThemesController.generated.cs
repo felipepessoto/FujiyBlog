@@ -69,7 +69,6 @@ namespace T4MVC {
                 public _Shared Shared { get { return s_Shared; } }
                 public partial class _Shared{
                     public readonly string _Layout = "~/Views/Themes/Default/Shared/_Layout.cshtml";
-                    public readonly string Error = "~/Views/Themes/Default/Shared/Error.cshtml";
                 }
             }
         }

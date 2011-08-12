@@ -7,6 +7,7 @@ using System.Xml.Linq;
 using BlogML.Xml;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Core.Extensions;
 
 namespace FujiyBlog.Core.BlogML
 {
@@ -202,20 +203,7 @@ namespace FujiyBlog.Core.BlogML
             postUrl = postUrl.Split(new[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last();
             postUrl = postUrl.Split(new[] { '.' }, StringSplitOptions.RemoveEmptyEntries).First();
 
-            postUrl = RemoveAccent(postUrl).ToLower();
-
-            postUrl = Regex.Replace(postUrl, @"[^a-z0-9\s-]", ""); // invalid chars           
-            postUrl = Regex.Replace(postUrl, @"\s+", " ").Trim(); // convert multiple spaces into one space   
-            postUrl = postUrl.Substring(0, postUrl.Length <= 200 ? postUrl.Length : 200).Trim(); // cut and trim it   
-            postUrl = Regex.Replace(postUrl, @"\s", "-"); // hyphens   
-
-            return postUrl;
-        }
-
-        private static string RemoveAccent(string txt)
-        {
-            byte[] bytes = System.Text.Encoding.GetEncoding("Cyrillic").GetBytes(txt);
-            return System.Text.Encoding.ASCII.GetString(bytes);
+            return postUrl.GenerateSlug();
         }
     }
 }

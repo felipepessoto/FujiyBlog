@@ -101,5 +101,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             db.SaveChanges();
             return Json(true);
         }
+
+        [HttpPost]
+        public virtual ActionResult GenerateSlug(string text)
+        {
+            return Content(text.GenerateSlug());
+        }
     }
 }

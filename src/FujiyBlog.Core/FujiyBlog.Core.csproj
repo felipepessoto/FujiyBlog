@@ -79,6 +79,7 @@
     <Compile Include="EntityFramework\UserRepository.cs" />
     <Compile Include="EntityFramework\WidgetSettingRepository.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Services\EmailService.cs" />
     <Compile Include="Services\FeedGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
