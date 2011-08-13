@@ -54,6 +54,7 @@ namespace FujiyBlog.Web.Controllers {
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
+            public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
         }
@@ -70,6 +71,11 @@ namespace FujiyBlog.Web.Controllers {
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public class T4MVC_PageController: FujiyBlog.Web.Controllers.PageController {
         public T4MVC_PageController() : base(Dummy.Instance) { }
+
+        public override System.Web.Mvc.ActionResult Index() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+            return callInfo;
+        }
 
         public override System.Web.Mvc.ActionResult Details(string pageSlug) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);

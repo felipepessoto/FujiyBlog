@@ -37,6 +37,13 @@ namespace FujiyBlog.Web
                 "Default", // Route name
                 "{controller}/{action}/{id}", // URL with parameters
                 new { controller = "Post", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+                new { controller = new HomeConstraint() },
+                new[] {"FujiyBlog.Web.Controllers"});
+
+            routes.MapRoute(
+                "DefaultPage",
+                "",
+                new {controller = "Page", action = "Index"},
                 new[] {"FujiyBlog.Web.Controllers"});
         }
 

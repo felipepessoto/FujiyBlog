@@ -16,6 +16,12 @@ namespace FujiyBlog.Web.Controllers
             this.db = db;
         }
 
+        public virtual ActionResult Index()
+        {
+            Page initialPage = db.Pages.WhereIsPublicPage().Single(x => x.IsFrontPage && !x.IsDeleted);
+            return ShowPage(initialPage);
+        }
+
         public virtual ActionResult Details(string pageSlug)
         {
             if (pageSlug.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase))
@@ -56,6 +62,11 @@ namespace FujiyBlog.Web.Controllers
                 return HttpNotFound();
             }
 
+            return ShowPage(page);
+        }
+
+        private ActionResult ShowPage(Page page)
+        {
             ViewBag.Title = page.Title;
             ViewBag.Keywords = page.Keywords;
             ViewBag.Description = page.Description;
