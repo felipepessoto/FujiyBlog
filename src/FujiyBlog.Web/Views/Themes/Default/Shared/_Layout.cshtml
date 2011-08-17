@@ -24,12 +24,12 @@
         <div id="frameinner">
         
       <div id="header">
-        <p id="blogname">@Html.ActionLink(FujiyBlog.Web.Models.Settings.SettingRepository.BlogName, MVC.Post.Index())</p>
+        <p id="blogname"><a href="@Url.Content("~/")">@FujiyBlog.Web.Models.Settings.SettingRepository.BlogName</a></p>
         <p id="blogdesc">@FujiyBlog.Web.Models.Settings.SettingRepository.BlogDescription</p>
         
         <div id="menu">
         <ul>
-          <li>@Html.ActionLink("Home", MVC.Post.Index())</li>
+          <li><a href="@Url.Content("~/")">Home</a></li>
           <li>@Html.ActionLink("Archive", MVC.Post.Archive())</li>
           <li>@Html.ActionLink("Contact", MVC.Contact.Index())</li>
           <li>@Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) / @Html.ActionLink("Atom 1.0", MVC.Feed.Atom10())</li>

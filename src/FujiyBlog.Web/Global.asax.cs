@@ -22,7 +22,6 @@ namespace FujiyBlog.Web
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            //routes.MapRoute("Home", "", MVC.Post.Index(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PostDetailId", "postid/{Id}", MVC.Post.DetailsById(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PostDetail", "post/{*PostSlug}", MVC.Post.Details(), new[] { "FujiyBlog.Web.Controllers" });
             routes.MapRoute("PageById", "pageid/{Id}", MVC.Page.DetailsById(), new[] { "FujiyBlog.Web.Controllers" });
@@ -34,17 +33,25 @@ namespace FujiyBlog.Web
             routes.MapRoute("ArchiveByMonth", "archive/{year}/{month}", MVC.Post.ArchiveDate(), null, new { year = @"\d{4}", month = @"\d{1,2}" }, new[] { "FujiyBlog.Web.Controllers" });
 
             routes.MapRoute(
-                "Default", // Route name
-                "{controller}/{action}/{id}", // URL with parameters
-                new { controller = "Post", action = "Index", id = UrlParameter.Optional }, // Parameter defaults
+                "HomePosts",
+                "",
+                new { controller = "Post", action = "Index" },
                 new { controller = new HomeConstraint() },
-                new[] {"FujiyBlog.Web.Controllers"});
+                new[] { "FujiyBlog.Web.Controllers" });
+
+            routes.MapRoute("BlogHome", "blog", new { controller = "Post", action = "Index" }, new[] { "FujiyBlog.Web.Controllers" });
 
             routes.MapRoute(
                 "DefaultPage",
                 "",
                 new {controller = "Page", action = "Index"},
                 new[] {"FujiyBlog.Web.Controllers"});
+
+            routes.MapRoute(
+                "Default", // Route name
+                "{controller}/{action}/{id}", // URL with parameters
+                new { controller = "", action = "", id = UrlParameter.Optional }, // Parameter defaults
+                new[] { "FujiyBlog.Web.Controllers" });
         }
 
         protected void Application_Start()

@@ -11,7 +11,7 @@ namespace FujiyBlog.Web.Infrastructure
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            if (string.Compare(values["controller"] as string, MVC.Post.Name, true) == 0 && string.Compare(values["action"] as string, MVC.Post.ActionNames.Index, true) == 0 && routeDirection == RouteDirection.IncomingRequest)
+            if (string.Compare(values["controller"] as string, MVC.Post.Name, true) == 0 && string.Compare(values["action"] as string, MVC.Post.ActionNames.Index, true) == 0)
             {
                 bool match = !DependencyResolver.Current.GetService<FujiyBlogDatabase>().Pages.WhereIsPublicPage().Any(x => x.IsFrontPage && !x.IsDeleted);
                 return match;
