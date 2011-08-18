@@ -1,0 +1,25 @@
+﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+    Layout = "Widget.cshtml";
+
+    IDictionary<string, object> settings;
+    if (Model.Settings == null)
+    {
+        settings = new Dictionary<string, object> { { "Title", "Search" } };
+    }
+    else
+    {
+        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
+    }
+
+}
+<h4>@Html.Raw(settings["Title"] as string)</h4>
+<div class="search">
+    <div class="content">
+        <div id="searchbox">
+            <input type="text" id="@(Model.Id)_searchWidgetTerms" value="@Request.QueryString["terms"]" />
+            <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#@(Model.Id)_searchWidgetTerms').val());">
+                Search</a>
+        </div>
+    </div>
+</div>

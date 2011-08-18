@@ -620,6 +620,8 @@
     <Content Include="Views\Themes\Default\Contact\Index.cshtml" />
     <Content Include="Views\Themes\Default\Contact\Success.cshtml" />
     <Content Include="Views\Themes\Default\Search\Index.cshtml" />
+    <Content Include="Views\Widget\SearchBox.cshtml" />
+    <Content Include="Views\Widget\SearchBoxEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
