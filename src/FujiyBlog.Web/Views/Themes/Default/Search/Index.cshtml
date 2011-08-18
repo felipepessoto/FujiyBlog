@@ -26,11 +26,14 @@
 
 <div class="searchpage post">
     <h1>@ViewBag.Title</h1>
-    <br>
+    <br />    
+    <div id="searchpage">    
+
+
+    <input type="text" id="searchPageTerms" value="@Request.QueryString["terms"]" />
+    <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#searchPageTerms').val());">Search</a>
     
-    <div id="searchpage">
-      <input type="text" name="q" id="q" value="mvc" onkeypress="if(event.keyCode==13) SearchPage()">
-      <input type="button" value="Busca" onclick="SearchPage()" onkeypress="SearchPage()">      
+      
     </div>  
     @foreach (var item in Model.Posts)
     {

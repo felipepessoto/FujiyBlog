@@ -5,6 +5,11 @@
 
 @*<script type="text/javascript">*@
     fujiyBlog = {
+        searchForm: {
+            sendSearch: function(terms) {
+                window.location.href = '@Url.Action(MVC.Search.Index())/?terms=' + terms;
+            }
+        },
         widget: {
 
             currentDialog: null,
