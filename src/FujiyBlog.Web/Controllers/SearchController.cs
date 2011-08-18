@@ -10,7 +10,7 @@ using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public class SearchController : AbstractController
+    public partial class SearchController : AbstractController
     {
         private readonly FujiyBlogDatabase db;
 
@@ -19,7 +19,7 @@ namespace FujiyBlog.Web.Controllers
             this.db = db;
         }
 
-        public ActionResult Index(int? page, string terms)
+        public virtual ActionResult Index(int? page, string terms)
         {
             int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
             string[] termsSplit = terms.Split(' ');

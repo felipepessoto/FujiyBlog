@@ -65,6 +65,11 @@ namespace T4MVC {
                     public readonly string Index = "~/Views/Themes/Default/Post/Index.cshtml";
                     public readonly string Post = "~/Views/Themes/Default/Post/Post.cshtml";
                 }
+                static readonly _Search s_Search = new _Search();
+                public _Search Search { get { return s_Search; } }
+                public partial class _Search{
+                    public readonly string Index = "~/Views/Themes/Default/Search/Index.cshtml";
+                }
                 static readonly _Shared s_Shared = new _Shared();
                 public _Shared Shared { get { return s_Shared; } }
                 public partial class _Shared{
