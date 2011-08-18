@@ -1,4 +1,20 @@
-﻿@helper Links(int currentPage, int totalPages, string nextPageText, string previousPageText){
+﻿@using System.Collections.Specialized
+
+@functions {
+
+    
+    private static string GenerateQueryString(int page)
+    {
+        NameValueCollection queryString = HttpUtility.ParseQueryString(Request.QueryString.ToString());
+        queryString.Set("page", page.ToString());
+        return queryString.ToString();
+    }
+    
+    
+
+}
+
+@helper Links(int currentPage, int totalPages, string nextPageText, string previousPageText){
     
     totalPages = Math.Max(totalPages, 1);
     int numbersToShow = Math.Min(13, totalPages);
@@ -33,12 +49,12 @@
     }
     else
     { 
-        <li class="PagerLink"><a href="?page=@(currentPage - 1)">@previousPageText</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(currentPage - 1)">@previousPageText</a></li>
     }
     @if (showTwoFirst)
     {
-        <li class="PagerLink"><a href="?page=1">1</a></li>
-        <li class="PagerLink"><a href="?page=2">2</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(1)">1</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(2)">2</a></li>
         <li class="PagerEllipses">...</li>
     }
     @foreach (int page in Enumerable.Range(initialPage, numbersToShow))
@@ -49,14 +65,14 @@
         }
         else
         {
-        <li class="PagerLink"><a href="?page=@page">@page</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(page)">@page</a></li>
         }
     }
     @if (showTwoLasts)
     {
         <li class="PagerEllipses">...</li>
-        <li class="PagerLink"><a href="?page=@(totalPages - 1)">@( totalPages - 1)</a></li>
-        <li class="PagerLink"><a href="?page=@totalPages">@totalPages</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(totalPages - 1)">@( totalPages - 1)</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(totalPages)">@totalPages</a></li>
     }
     @if (currentPage == totalPages)
     {
@@ -64,7 +80,7 @@
     }
     else
     { 
-        <li class="PagerLink"><a href="?page=@(currentPage + 1)">@nextPageText</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(currentPage + 1)">@nextPageText</a></li>
     }
 </ul>
 
