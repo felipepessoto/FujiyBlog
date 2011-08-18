@@ -1,0 +1,45 @@
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+@model FujiyBlog.Web.ViewModels.SearchResult
+
+@{
+    Layout = "../Shared/_Layout.cshtml";
+}
+
+
+    @helper GetDescription(Post item)
+    {
+        string text = item.Description;
+        
+         if (string.IsNullOrWhiteSpace(text))
+            {
+                text = item.Content.StripHtml();
+
+                if (text.Length > 200)
+                {
+                    text = text.Substring(0, 200) + " ...";
+                }
+            }
+        @text
+    }
+
+
+<div class="searchpage post">
+    <h1>@ViewBag.Title</h1>
+    <br>
+    
+    <div id="searchpage">
+      <input type="text" name="q" id="q" value="mvc" onkeypress="if(event.keyCode==13) SearchPage()">
+      <input type="button" value="Busca" onclick="SearchPage()" onkeypress="SearchPage()">      
+    </div>  
+    @foreach (var item in Model.Posts)
+    {
+        <div class="searchresult">
+            @Html.ActionLink(item.Title, MVC.Post.Details(item.Slug))
+            <span class="text">"@GetDescription(item)"</span>
+            <span><strong>Categorias</strong> : Livros, Notícias<br><strong>Tags</strong> : asp.net mvc</span>
+        </div>
+    }   
+  </div>
+
+  @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next page", "Previous page")

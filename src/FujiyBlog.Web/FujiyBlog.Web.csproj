@@ -150,6 +150,7 @@
     <Compile Include="Controllers\FeedController.cs" />
     <Compile Include="Controllers\JavaScriptController.cs" />
     <Compile Include="Controllers\PostController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
@@ -193,6 +194,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ContactForm.cs" />
+    <Compile Include="ViewModels\SearchResult.cs" />
     <Compile Include="ViewModels\PostArchive.cs" />
     <Compile Include="ViewModels\PostIndex.cs" />
     <Compile Include="ViewModels\WidgetIndex.cs" />
@@ -614,6 +616,7 @@
     <Content Include="Views\Widget\Administration.cshtml" />
     <Content Include="Views\Themes\Default\Contact\Index.cshtml" />
     <Content Include="Views\Themes\Default\Contact\Success.cshtml" />
+    <Content Include="Views\Themes\Default\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

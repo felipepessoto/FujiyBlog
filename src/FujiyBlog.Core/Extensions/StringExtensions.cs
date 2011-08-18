@@ -22,5 +22,11 @@ namespace FujiyBlog.Core.Extensions
             byte[] bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
             return Encoding.ASCII.GetString(bytes);
         }
+
+        private static readonly Regex RegexStripHtml = new Regex("<[^>]*>", RegexOptions.Compiled);
+        public static string StripHtml(this string html)
+        {
+            return string.IsNullOrWhiteSpace(html) ? string.Empty : RegexStripHtml.Replace(html, string.Empty).Trim();
+        }
     }
 }
