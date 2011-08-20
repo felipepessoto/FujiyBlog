@@ -6,12 +6,12 @@
     ViewBag.Title = "Edit";
 }
 <!-- Load TinyMCE -->
-<script type="text/javascript" src="@Url.Content(Links.Scripts.tiny_mce.jquery_tinymce_js)"></script>
+<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce_3_4_4.jquery_tinymce_js)"></script>
 <script type="text/javascript">
     $().ready(function () {
         $('#Content').tinymce({
             // Location of TinyMCE script
-            script_url: '@(Url.Content(Links.Scripts.tiny_mce.tiny_mce_js))',
+            script_url: '@(Url.Content(Links.Scripts.tinymce_3_4_4.tiny_mce_js))',
 
             // General options
             theme: "advanced",
