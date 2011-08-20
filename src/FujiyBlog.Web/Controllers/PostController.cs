@@ -156,6 +156,7 @@ namespace FujiyBlog.Web.Controllers
             PostSummary postDetails = new PostSummary
             {
                 Post = post,
+                ShowFullPost = true,
                 CommentsTotal = post.Comments.Count,
                 PreviousPost = previousPost,
                 NextPost = nextPost,

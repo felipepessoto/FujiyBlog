@@ -1,10 +1,47 @@
-﻿@model FujiyBlog.Core.Dto.PostSummary
+﻿@using HtmlAgilityPack
+@model FujiyBlog.Core.Dto.PostSummary
+           
+@functions {
+
+private string ShowPostContent(string content)
+{
+    if (Model.ShowFullPost)
+    {
+        int moreIndex = content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
+
+        if (moreIndex >= 0)
+        {
+            content = content.Remove(moreIndex, 6);
+            content = content.Insert(moreIndex, "<span id=\"continue\"></span>");
+        }
+    }
+    else
+    {
+        if (content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase) >= 0)
+        {
+            content = content.Substring(0, content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase)) + " " + Html.ActionLink("Read more...", MVC.Post.Details(Model.Post.Slug), null, fragment:"continue");
+        }
+    }
+    return CloseOpenedTags(content);
+}
+
+    private string CloseOpenedTags(string html)
+{
+    HtmlDocument doc = new HtmlDocument();
+    doc.LoadHtml(html);
+    StringWriter stringWriter = new StringWriter();
+    doc.Save(stringWriter);
+    return stringWriter.ToString(); 
+}
+
+}
+
 <div class="post xfolkentry" id="post@(Model.Post.Id)">
     <h1>
         @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))</h1>
     <span class="author">by @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))</span>
     <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate)</span>
-    <div class="text">@Html.Raw(Model.Post.Content)</div>
+    <div class="text">@Html.Raw(ShowPostContent(Model.Post.Content))</div>
     <div class="bottom">
         @*RATING*@
         @if (@Model.Post.Tags.Any())
