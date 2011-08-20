@@ -52,13 +52,6 @@ namespace FujiyBlog.Core.EntityFramework
                 Database.Entry(post).Collection(x => x.Comments).Query().Where(x => !x.IsDeleted).Include(x => x.Author).Load();
             }
 
-            int moreIndex = post.Content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
-
-            if (moreIndex >= 0)
-            {
-                post.Content = post.Content.Remove(moreIndex, 6);
-            }
-
             return post;
         }
 
@@ -122,11 +115,6 @@ namespace FujiyBlog.Core.EntityFramework
                                                  Post = post,
                                                  CommentsTotal = counts[post.Id]
                                              }).ToList();
-
-            foreach (PostSummary postSummary in postSummaries.Where(x => x.Post.Content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase) >= 0))
-            {
-                postSummary.Post.Content = postSummary.Post.Content.Substring(0, postSummary.Post.Content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase));
-            }
 
             return postSummaries;
         }
