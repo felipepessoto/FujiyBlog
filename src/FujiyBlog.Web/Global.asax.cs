@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Infrastructure.AutoMapper;
+using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web
 {
@@ -70,6 +71,7 @@ namespace FujiyBlog.Web
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
             AutoMapperConfiguration.Configure();
+            RegisterThemes();
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)
@@ -77,6 +79,37 @@ namespace FujiyBlog.Web
             using (DependencyResolver.Current as IDisposable)
             {
             }
+        }
+
+        private void RegisterThemes()
+        {
+            RazorViewEngine engine = (RazorViewEngine)ViewEngines.Engines.Single();
+
+            string themeName = Settings.SettingRepository.Theme;
+
+            engine.MasterLocationFormats = new[]
+                                               {
+                                                   "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
+                                                   "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
+                                                   "~/Views/{1}/{0}.cshtml",
+                                                   "~/Views/Shared/{0}.cshtml",
+                                               };
+
+            engine.ViewLocationFormats = new[]
+                                             {
+                                                 "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
+                                                 "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
+                                                  "~/Views/{1}/{0}.cshtml",
+                                                   "~/Views/Shared/{0}.cshtml",
+                                             };
+
+            engine.PartialViewLocationFormats = new[]
+                                                    {
+                                                        "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
+                                                        "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
+                                                        "~/Views/{1}/{0}.cshtml",
+                                                        "~/Views/Shared/{0}.cshtml",
+                                                    };
         }
     }
 }
