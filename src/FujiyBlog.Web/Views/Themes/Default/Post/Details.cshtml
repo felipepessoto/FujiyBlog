@@ -18,8 +18,11 @@
 </div>
 @{Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, Model);}
 <div id="commentlist">
+@if (Model.Post.Comments.Count > 0)
+{
     <h1 id="comment">
-        Comentários</h1>
+        Comments</h1>
+}
     @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, Model.Post.Comments);}
 </div>
 @if (Model.Post.IsCommentEnabled && Settings.SettingRepository.EnableComments && (!Settings.SettingRepository.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
