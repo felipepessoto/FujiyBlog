@@ -5,6 +5,7 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Models;
+using System.Data.Entity;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -59,7 +60,7 @@ namespace FujiyBlog.Web.Controllers
 
         private Post GetPost(int id, bool isPublic)
         {
-            IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted);
+            IQueryable<Post> posts = db.Posts.Include(x => x.Author).Where(x => !x.IsDeleted);
 
             if (isPublic)
             {
