@@ -7,6 +7,7 @@
 }
 <!-- Load TinyMCE -->
 <script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce_3_4_4.jquery_tinymce_js)"></script>
+<script type="text/javascript" src="@Url.Content(Links.Scripts.jquery_form_js)"></script>
 <script type="text/javascript">
     $().ready(function () {
         $('#Content').tinymce({
@@ -16,6 +17,7 @@
             // General options
             theme: "advanced",
             plugins: "inlinepopups,fullscreen,contextmenu,emotions,table,iespell,advlink",
+            relative_urls: false,
 
             // Theme options
             theme_advanced_buttons1: "fullscreen,code,|,cut,copy,paste,pastetext,pasteword,|,undo,redo,|,bold,italic,underline,strikethrough,|,blockquote,sub,sup,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,outdent,indent",
@@ -30,6 +32,14 @@
 <!-- /TinyMCE -->
 
 <h2>@(Model.Id.HasValue ? "Edit" : "Add") page</h2>
+
+    <form id="ajaxUploadForm" action="@Url.Action(MVC.Admin.File.Upload(null, "Page" + Model.Id))" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Upload a file</legend>
+            <label>File to Upload: <input type="file" name="uploadFile" />(100MB max size)</label>
+            <input id="ajaxUploadButton" type="submit" value="Submit" />
+        </fieldset>
+    </form>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -145,5 +155,26 @@
             }
         });
     });
+    
+        $("#ajaxUploadForm").ajaxForm({
+            iframe: true,
+            dataType: "json",
+            beforeSubmit: function() {
+                $('#ajaxUploadButton').attr('disabled', 'disabled');
+            },
+            success: function (response) {
+                $('#ajaxUploadButton').removeAttr('disabled');
+                if (response.errorMessage) {
+                    alert(response.errorMessage);
+                }
+                else {
+                    $('#Content').tinymce().execCommand('mceInsertContent', false, '<img src="' + response.url + '" />');
+                }
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                $('#ajaxUploadButton').removeAttr('disabled');
+                alert('Error uploading file');
+            }
+        });
 
 </script>

@@ -43,6 +43,7 @@ namespace T4MVC {
     public class AdminClass {
         public readonly string Name = "Admin";
         public FujiyBlog.Web.Areas.Admin.Controllers.CommentController Comment = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_CommentController();
+        public FujiyBlog.Web.Areas.Admin.Controllers.FileController File = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_FileController();
         public FujiyBlog.Web.Areas.Admin.Controllers.PageController Page = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_PageController();
         public FujiyBlog.Web.Areas.Admin.Controllers.PostController Post = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_PostController();
         public FujiyBlog.Web.Areas.Admin.Controllers.SettingController Setting = new FujiyBlog.Web.Areas.Admin.Controllers.T4MVC_SettingController();
@@ -343,6 +344,8 @@ namespace Links {
         public static readonly string jquery_ui_1_8_15_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.15.min.js") ? Url("jquery-ui-1.8.15.min.js") : Url("jquery-ui-1.8.15.js");
                       
         public static readonly string jquery_ui_1_8_15_min_js = Url("jquery-ui-1.8.15.min.js");
+        public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
+                      
         public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
                       
