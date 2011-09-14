@@ -48,7 +48,7 @@ namespace FujiyBlog.Core.Services
 
                 items.Add(new SyndicationItem(
                               post.Title,
-                              content,
+                              new TextSyndicationContent(content, TextSyndicationContentKind.Html), 
                               new Uri(getPostUrl(post)),
                               post.Id.ToString(),
                               post.LastModificationDate));
