@@ -1132,7 +1132,7 @@ div.post .text a[rel~="sweetheart"][rel~="met"] {
 /* nested comments */
 
 .comment-replies {
-    background: transparent url(../../pics/reply-arrow.gif) no-repeat 2px 2px;
+    background: transparent url(img/reply-arrow.gif) no-repeat 2px 2px;
     padding: 0 0 0 15px;
     margin: 5px 0 0 0;
 }
