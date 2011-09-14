@@ -7,7 +7,6 @@
             <p class="gravatar">
                 GRAVATAR</p>
             <p class="content">@Html.Raw(comment.Comment)</p>
-            <p class="author">
 
             @if (comment.Author == null)
             { 
@@ -23,19 +22,18 @@
             else { 
                 @Html.ActionLink(comment.Author.DisplayName ?? comment.Author.Username, MVC.Post.Author(comment.Author.Username, null))
             }
-            </p>
-                @*    <%= ((BlogEngine.Core.BlogSettings.Instance.IsCommentNestingEnabled && Comment.IsApproved) ? " | " : "") %>
-    <%= ReplyToLink %>    
-    *@
-    @if (!comment.IsApproved)
-    {
-        @(Ajax.ActionLink("Approve", MVC.Admin.Comment.ActionNames.ApproveSelected, MVC.Admin.Comment.Name, new { Area = "Admin", selectedComments = comment.Id }, new AjaxOptions { HttpMethod = "POST" }))
-        @(Ajax.ActionLink("Disapprove", MVC.Admin.Comment.ActionNames.DisapproveSelected, MVC.Admin.Comment.Name, new { Area = "Admin", selectedComments = comment.Id }, new AjaxOptions { HttpMethod = "POST" }))
-    }
+
+            | @Ajax.ActionLink("Reply", MVC.Comment.ReplyComment(comment.Id), new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "reply-comment-" + comment.Id }) <div id="reply-comment-@comment.Id"></div>
+
+            @if (!comment.IsApproved)
+            {
+                @(Ajax.ActionLink("Approve", MVC.Admin.Comment.ActionNames.ApproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))
+                @(Ajax.ActionLink("Disapprove", MVC.Admin.Comment.ActionNames.DisapproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))
+            }
             
-            @*  <div class="comment-replies" id="replies_<%=Comment.Id %>" <%= (Comment.Comments.Count == 0) ? " style=\"display:none;\"" : "" %>>
-    <asp:PlaceHolder ID="phSubComments" runat="server" />
-  </div>*@
+            <div class="comment-replies" id="replies_@(comment.Id)">
+                @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, comment.NestedComments);}
+            </div>
         </div>
     }
 

@@ -18,7 +18,7 @@ namespace FujiyBlog.Web.Controllers
             this.db = db;
         }
 
-        public virtual ActionResult DoComment(int id)
+        public virtual ActionResult DoComment(int id, int? parentCommentId)
         {
             bool isLogged = Request.IsAuthenticated;
             Post post = GetPost(id, !isLogged);
@@ -52,10 +52,24 @@ namespace FujiyBlog.Web.Controllers
                 UpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" });
             }
 
+            if (parentCommentId.HasValue)
+            {
+                postComment.ParentComment = db.PostComments.Single(x => x.Id == parentCommentId.Value);
+            }
+
             db.PostComments.Add(postComment);
             db.SaveChanges();
 
             return View("Comments", new[] { postComment });
+        }
+
+        public virtual ActionResult ReplyComment(int id)
+        {
+            PostComment comment = db.PostComments.Include(x => x.Post).Single(x => x.Id == id);
+
+            PostComment newComment = new PostComment {Post = comment.Post, ParentComment = comment};
+
+            return View(MVC.Themes.Views.Default.Comment.DoComment, newComment);
         }
 
         private Post GetPost(int id, bool isPublic)

@@ -36,6 +36,11 @@ namespace FujiyBlog.Web.Controllers {
         public System.Web.Mvc.ActionResult DoComment() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult ReplyComment() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.ReplyComment);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public CommentController Actions { get { return MVC.Comment; } }
@@ -50,6 +55,7 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string DoComment = "DoComment";
+            public readonly string ReplyComment = "ReplyComment";
         }
 
 
@@ -65,8 +71,15 @@ namespace FujiyBlog.Web.Controllers {
     public class T4MVC_CommentController: FujiyBlog.Web.Controllers.CommentController {
         public T4MVC_CommentController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult DoComment(int id) {
+        public override System.Web.Mvc.ActionResult DoComment(int id, int? parentCommentId) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
+            callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("parentCommentId", parentCommentId);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ReplyComment(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ReplyComment);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }

@@ -1,8 +1,12 @@
 ﻿@model FujiyBlog.Core.DomainObjects.PostComment
 
-@using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = "commentlist" }))
+@using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = Model.ParentComment == null ? "commentlist" : "replies_" + Model.ParentComment.Id, OnSuccess = Model.ParentComment == null ? string.Empty : "$('#reply-comment-" + @Model.ParentComment.Id + "').html('');" }))
 {
-<div id="comment-form">
+    if (Model.ParentComment != null)
+    {
+        @Html.Hidden("ParentCommentId", Model.ParentComment.Id)
+    }
+    <div id="comment-form">
     <div class="commentForm">
         <p id="addcomment">
             Comment</p>
