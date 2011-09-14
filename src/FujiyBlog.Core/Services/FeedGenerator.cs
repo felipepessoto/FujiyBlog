@@ -38,9 +38,17 @@ namespace FujiyBlog.Core.Services
 
             foreach (Post post in feedRepository.GetPosts(settingRepository.PostsPerPage))
             {
+                string content = post.Content;
+
+                int moreIndex = content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
+                if (moreIndex >= 0)
+                {
+                    content = content.Remove(moreIndex, 6);
+                }
+
                 items.Add(new SyndicationItem(
                               post.Title,
-                              post.Content,
+                              content,
                               new Uri(getPostUrl(post)),
                               post.Id.ToString(),
                               post.LastModificationDate));
