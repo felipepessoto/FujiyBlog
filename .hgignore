@@ -7,3 +7,4 @@ bin/
 *.suo
 _ReSharper.*
 *.user
+src/FujiyBlog.Web/Upload/
