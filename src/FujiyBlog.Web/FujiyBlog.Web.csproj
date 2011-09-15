@@ -613,7 +613,6 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.t4" />
-    <None Include="Views\Shared\FujiyBlogJs.cshtml" />
     <Content Include="Views\Widget\Widget.cshtml" />
     <Content Include="Views\Widget\Categories.cshtml" />
     <Content Include="Views\Widget\CategoriesEdit.cshtml" />
@@ -640,6 +639,7 @@
     <Content Include="Views\Themes\Default\Search\Index.cshtml" />
     <Content Include="Views\Widget\SearchBox.cshtml" />
     <Content Include="Views\Widget\SearchBoxEdit.cshtml" />
+    <Content Include="Views\Shared\FujiyBlogJs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
