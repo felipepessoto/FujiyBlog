@@ -280,6 +280,7 @@
     <Content Include="Content\Themes\Default\img\mainbg.jpg" />
     <Content Include="Content\Themes\Default\img\postheadingbottombg.jpg" />
     <Content Include="Content\Themes\Default\img\postheadingsideripbg.jpg" />
+    <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
     <Content Include="Content\Themes\Default\img\searchbg.jpg" />
     <Content Include="Content\Themes\Default\img\topbg.jpg" />
     <Content Include="Content\Themes\Default\img\widgetheadingbg.jpg" />
