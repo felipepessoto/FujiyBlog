@@ -55,6 +55,7 @@
     <Compile Include="DomainObjects\Page.cs" />
     <Compile Include="DomainObjects\Post.cs" />
     <Compile Include="DomainObjects\PostComment.cs" />
+    <Compile Include="DomainObjects\Permission.cs" />
     <Compile Include="DomainObjects\Setting.cs" />
     <Compile Include="DomainObjects\Tag.cs" />
     <Compile Include="DomainObjects\User.cs" />

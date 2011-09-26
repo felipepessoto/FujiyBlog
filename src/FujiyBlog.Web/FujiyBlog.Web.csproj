@@ -171,11 +171,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AuthorizePermissionAttribute.cs" />
     <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminUserViewModel.cs" />
     <Compile Include="Common\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPostViewModel.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPageViewModel.cs" />
+    <Compile Include="Infrastructure\FujiyBlogRoleProvider.cs" />
     <Compile Include="Infrastructure\HomeConstraint.cs" />
     <Compile Include="Infrastructure\SetCultureAttribute.cs" />
     <Compile Include="Infrastructure\UnityDependencyResolver.cs" />
@@ -286,6 +288,7 @@
     <Content Include="Content\Themes\Default\img\widgetheadingbg.jpg" />
     <Content Include="Content\Themes\Default\img\widgetmainbg.jpg" />
     <Content Include="Content\Themes\Default\Site.css" />
+    <Content Include="Errors\401.htm" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\jquery-1.6.2-vsdoc.js" />
     <Content Include="Scripts\jquery-1.6.2.js" />
