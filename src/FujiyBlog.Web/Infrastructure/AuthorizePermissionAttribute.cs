@@ -8,14 +8,14 @@ namespace FujiyBlog.Web.Infrastructure
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
     public class AuthorizePermissionAttribute : AuthorizeAttribute
     {
-        public AuthorizePermissionAttribute(params Permission[] roles)
+        public AuthorizePermissionAttribute(params Permission[] permissions)
         {
-            if (roles == null)
+            if (permissions == null)
             {
-                throw new ArgumentNullException("roles");
+                throw new ArgumentNullException("permissions");
             }
 
-            Roles = string.Join(",", roles.Select(r => r.ToString()));
+            Roles = string.Join(",", permissions.Select(r => r.ToString()));
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
