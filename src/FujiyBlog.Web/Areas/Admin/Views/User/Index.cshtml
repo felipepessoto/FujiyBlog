@@ -2,10 +2,16 @@
 @model IEnumerable<FujiyBlog.Core.DomainObjects.User>
 @{
     Layout = MVC.Admin.User.Views._Layout;
+    ViewBag.Title = "Users";
 }
+
+<h2>Users</h2>
+
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
 <table>
     <tr>
         <th>
