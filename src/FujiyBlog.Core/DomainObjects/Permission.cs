@@ -7,27 +7,23 @@
         /// <summary>
         /// A user is allowed to view exception messages.
         /// </summary>
-        
-        ViewDetailedErrorMessages,
+        //ViewDetailedErrorMessages,
 
         /// <summary>
         /// A user is allowed to access administration pages.
         /// Typically, a blog where self-registration is allowed
         /// would restrict this right from guest users.
         /// </summary>
-        
         AccessAdminPages,
 
         /// <summary>
         /// A user is allowed to access admin settings pages.
         /// </summary>
-        
         AccessAdminSettingsPages,
 
         /// <summary>
         /// A user is allowed to manage widgets.
         /// </summary>
-        
         ManageWidgets,
 
         #endregion
@@ -37,30 +33,25 @@
         /// <summary>
         /// A user is allowed to view comments on a post.
         /// </summary>
-        
         ViewPublicComments,
 
         /// <summary>
         /// A user is allowed to view comments that have not been moderation yet.
         /// </summary>
-        
         ViewUnmoderatedComments,
 
         /// <summary>
         /// A user is allowed to create and submit comments for posts or pages.
         /// </summary>
-        
         CreateComments,
 
         /// <summary>
         /// User can approve, delete, or mark comments as spam.
         /// </summary>
-        
         ModerateComments,
 
         #endregion
-
-
+        
         #region Posts
 
         /// <summary>
@@ -185,18 +176,15 @@
         #endregion
 
         #region "Ratings"
-
         /// <summary>
         /// A user can view ratings on posts.
         /// </summary>
-        
-        ViewRatingsOnPosts,
+        //ViewRatingsOnPosts,
 
         /// <summary>
         /// A user can submit ratings on posts.
         /// </summary>
-        
-        SubmitRatingsOnPosts,
+        //SubmitRatingsOnPosts,
         #endregion
 
         #region Roles
@@ -204,37 +192,31 @@
         /// <summary>
         /// A user can view roles.
         /// </summary>
-        
         ViewRoles,
 
         /// <summary>
         /// A user can create new roles.
         /// </summary>
-        
         CreateNewRoles,
 
         /// <summary>
         /// A user can edit existing roles.
         /// </summary>
-        
         EditRoles,
 
         /// <summary>
         /// A user can delete existing roles.
         /// </summary>
-        
         DeleteRoles,
 
         /// <summary>
         /// A user is allowed to edit their own roles.
         /// </summary>
-        
         EditOwnRoles,
 
         /// <summary>
         /// A user is allowed to edit the roles of other users.
         /// </summary>
-        
         EditOtherUsersRoles,
 
         #endregion
@@ -244,31 +226,26 @@
         /// <summary>
         /// A user is allowed to register/create a new account. 
         /// </summary>
-        
         CreateNewUsers,
 
         /// <summary>
         /// A user is allowed to delete their own account.
         /// </summary>
-        
         DeleteUserSelf,
 
         /// <summary>
         /// A user is allowed to delete accounts they do not own.
         /// </summary>
-        
         DeleteUsersOtherThanSelf,
 
         /// <summary>
         /// A user is allowed to edit their own account information.
         /// </summary>
-        
         EditOwnUser,
 
         /// <summary>
         /// A user is allowed to edit the account information of other users.
         /// </summary>
-        
         EditOtherUsers,
 
         #endregion

@@ -1,6 +1,10 @@
-﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Infrastructure
+
+@model WidgetSetting
+           
 <div class="widget @(Model.Name.ToLower())" id="widget@(Model.Id)">
-    @if (Request.IsAuthenticated)
+    @if (User.IsInRole(Permission.ManageWidgets))
     {
         @Ajax.ActionLink("X", MVC.Widget.Remove(Model.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "(function(){$('#widget"+@Model.Id+"').remove();})()" }, new { @class = "delete" })
         if (ViewEngines.Engines.FindView(ViewContext, Model.Name + "Edit", null).View != null)

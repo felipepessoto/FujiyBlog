@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Repositories;
+using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
@@ -46,7 +47,7 @@ namespace FujiyBlog.Web.Controllers
             return View(viewModel);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, AuthorizePermission(Permission.ManageWidgets)]
         public virtual ActionResult Add(string zoneName, string widgetName)
         {
             if (string.IsNullOrEmpty(widgetName))
@@ -66,7 +67,7 @@ namespace FujiyBlog.Web.Controllers
             return View(widgetSetting.Name, widgetSetting);
         }
 
-        [HttpPost, Authorize]
+        [HttpPost, AuthorizePermission(Permission.ManageWidgets)]
         public virtual ActionResult Remove(int settingsId)
         {
             WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(settingsId);
@@ -75,7 +76,7 @@ namespace FujiyBlog.Web.Controllers
             return Json(true);
         }
 
-        [Authorize]
+        [AuthorizePermission(Permission.ManageWidgets)]
         public virtual ActionResult Edit(int widgetSettingId)
         {
             WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(widgetSettingId);
@@ -83,7 +84,7 @@ namespace FujiyBlog.Web.Controllers
             return View(setting.Name + "Edit", setting);
         }
 
-        [Authorize, HttpPost, ValidateInput(false)]
+        [AuthorizePermission(Permission.ManageWidgets), HttpPost, ValidateInput(false)]
         public virtual ActionResult Edit(int widgetSettingId, string settings)
         {
             WidgetSetting setting = widgetSettingRepository.GetWidgetSetting(widgetSettingId);
@@ -95,7 +96,7 @@ namespace FujiyBlog.Web.Controllers
             return View(setting.Name, setting);
         }
 
-        [Authorize, HttpPost]
+        [AuthorizePermission(Permission.ManageWidgets), HttpPost]
         public virtual ActionResult Sort(string widgetsOrder)
         {
             int position = 1;

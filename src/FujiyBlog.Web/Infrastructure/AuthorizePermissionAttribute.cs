@@ -21,7 +21,9 @@ namespace FujiyBlog.Web.Infrastructure
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             base.HandleUnauthorizedRequest(filterContext);
-            filterContext.Result = new RedirectResult("~/errors/401.htm");
+            filterContext.HttpContext.Response.StatusCode = 401;
+            filterContext.HttpContext.Response.WriteFile("~/errors/401.htm"); 
+            filterContext.HttpContext.Response.End();
         }
     }
 }

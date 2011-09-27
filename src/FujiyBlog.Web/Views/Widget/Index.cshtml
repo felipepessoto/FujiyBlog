@@ -1,11 +1,15 @@
-﻿@model FujiyBlog.Web.ViewModels.WidgetIndex
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Infrastructure
+
+@model FujiyBlog.Web.ViewModels.WidgetIndex
+           
 <div class="widgetzone" id="widgetzone_@(Model.ZoneName)">
-    @foreach (FujiyBlog.Core.DomainObjects.WidgetSetting widgetSetting in Model.WidgetSettings)
+    @foreach (WidgetSetting widgetSetting in Model.WidgetSettings)
     {
         Html.RenderPartial(widgetSetting.Name, widgetSetting);
     }
 </div>
-@if (Request.IsAuthenticated)
+@if (User.IsInRole(Permission.ManageWidgets))
 {
     <script type="text/javascript">fujiyBlog.widget.startDragAndDrop();</script>
     <div id="addedwidgets"></div>

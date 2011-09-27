@@ -4,12 +4,15 @@ using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.BlogML;
+using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
+    [AuthorizePermission(Permission.AccessAdminSettingsPages)]
     public partial class SettingController : Controller
     {
         private readonly FujiyBlogDatabase db;
