@@ -50,5 +50,7 @@ namespace FujiyBlog.Core.DomainObjects
         public ICollection<PostComment> AuthoredPostComments { get; set; }
 
         public ICollection<PostComment> ModeratedPostComments { get; set; }
+
+        public ICollection<PermissionGroup> PermissionGroups { get; set; }
     }
 }
