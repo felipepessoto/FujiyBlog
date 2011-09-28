@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 
 namespace FujiyBlog.Web.Infrastructure
@@ -17,8 +17,11 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override string[] GetRolesForUser(string username)
         {
-            return new[] {"AccessAdminPages"};
-            //return DependencyResolver.Current.GetService<FujiyBlogDatabase>();
+            FujiyBlogDatabase db = DependencyResolver.Current.GetService<FujiyBlogDatabase>();
+
+            List<PermissionGroup> permissionGroups = db.PermissionGroups.AsNoTracking().Where(x => x.Users.Any(y => y.Username == username && y.Enabled)).ToList();
+
+            return permissionGroups.SelectMany(x => x.Permissions).Select(x => x.ToString()).ToArray();
         }
 
         public override void CreateRole(string roleName)
@@ -63,7 +66,7 @@ namespace FujiyBlog.Web.Infrastructure
 
         public override string ApplicationName
         {
-            get { throw new NotImplementedException(); }
+            get { return "FujiyBlog"; }
             set { throw new NotImplementedException(); }
         }
     }

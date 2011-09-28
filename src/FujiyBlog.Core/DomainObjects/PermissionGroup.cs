@@ -7,6 +7,11 @@ namespace FujiyBlog.Core.DomainObjects
 {
     public class PermissionGroup
     {
+        public PermissionGroup()
+        {
+            Users = new List<User>();
+        }
+
         public int Id { get; set; }
 
         [Required, StringLength(50)]

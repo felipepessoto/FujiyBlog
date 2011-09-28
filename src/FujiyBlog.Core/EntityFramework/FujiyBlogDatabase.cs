@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework.Configuration;
 
@@ -13,6 +14,8 @@ namespace FujiyBlog.Core.EntityFramework
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
+            builder.Conventions.Remove<IncludeMetadataConvention>();
+
             builder.Configurations.Add(new PostCommentConfiguration());
             builder.Configurations.Add(new PostConfiguration());
             builder.Configurations.Add(new UserConfiguration());

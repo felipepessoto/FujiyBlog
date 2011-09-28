@@ -9,6 +9,9 @@ namespace FujiyBlog.Core.DomainObjects
         public User()
         {
             Posts = new List<Post>();
+            AuthoredPostComments = new List<PostComment>();
+            ModeratedPostComments = new List<PostComment>();
+            PermissionGroups = new List<PermissionGroup>();
         }
 
         public int Id { get; set; }

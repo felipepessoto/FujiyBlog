@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Core.EntityFramework
@@ -188,6 +190,50 @@ namespace FujiyBlog.Core.EntityFramework
                              };
 
             context.Users.Add(admin);
+
+            PermissionGroup adminGroup = new PermissionGroup {Name = "Admin"};
+            adminGroup.Permissions = Enum.GetValues(typeof (Permission)).Cast<Permission>();
+            adminGroup.Users.Add(admin);
+
+            PermissionGroup editorGroup = new PermissionGroup { Name = "Editor" };
+            List<Permission> editorPermissions = new List<Permission>
+                                                     {
+                                                         Permission.AccessAdminPages,
+                                                         Permission.ViewPublicPosts,
+                                                         Permission.ViewUnpublishedPosts,
+                                                         Permission.CreateNewPosts,
+                                                         Permission.EditOwnPosts,
+                                                         Permission.DeleteOwnPosts,
+                                                         Permission.PublishOwnPosts,
+                                                         Permission.EditOwnUser,
+                                                         Permission.ViewPublicComments,
+                                                         Permission.ViewUnmoderatedComments,
+                                                         Permission.CreateComments,
+                                                         Permission.ModerateComments,
+                                                         Permission.ViewPublicPages,
+                                                         Permission.ViewUnpublishedPages,
+                                                         Permission.CreateNewPages,
+                                                         Permission.EditOwnPages,
+                                                         Permission.DeleteOwnPages,
+                                                         Permission.PublishOwnPages,
+                                                     };
+
+            editorGroup.Permissions = editorPermissions;
+
+            PermissionGroup anonymGroup = new PermissionGroup { Name = "Anonymous" };
+            List<Permission> anonymPermissions = new List<Permission>
+                                                     {
+                                                         Permission.ViewPublicPosts,
+                                                         Permission.ViewPublicComments,
+                                                         Permission.CreateComments,
+                                                         Permission.ViewPublicPages,
+                                                     };
+
+            anonymGroup.Permissions = anonymPermissions;
+
+            context.PermissionGroups.Add(adminGroup);
+            context.PermissionGroups.Add(editorGroup);
+            context.PermissionGroups.Add(anonymGroup);
 
             Post examplePost = new Post
                                    {
