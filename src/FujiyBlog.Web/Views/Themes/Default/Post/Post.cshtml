@@ -5,6 +5,7 @@
 
 private string ShowPostContent(string content)
 {
+    content = content ?? string.Empty;
     int moreIndex = content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
     
     if (Model.ShowFullPost)

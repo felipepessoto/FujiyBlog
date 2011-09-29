@@ -42,6 +42,8 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,6 +83,7 @@
     <Compile Include="EntityFramework\SettingRepository.cs" />
     <Compile Include="EntityFramework\UserRepository.cs" />
     <Compile Include="EntityFramework\WidgetSettingRepository.cs" />
+    <Compile Include="Extensions\PrincipalExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Services\EmailService.cs" />
@@ -95,6 +98,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TextMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\RolesService.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -27,7 +27,7 @@ namespace FujiyBlog.Web.Controllers
             var encodedTerm = Server.HtmlEncode(terms);
             ViewBag.Title = "Search for" + " '" + encodedTerm + "'";
 
-            IQueryable<Post> query = from post in db.Posts.Where(x => !x.IsDeleted).WhereIsPublicPost().Include(x => x.Tags).Include(x => x.Categories)
+            IQueryable<Post> query = from post in db.Posts.WhereHavePermissions().Include(x => x.Tags).Include(x => x.Categories)
                                      orderby post.PublicationDate descending 
                                      where termsSplit.Any(x => post.Content.Contains(x)) || termsSplit.Any(x => post.Title.Contains(x)) || termsSplit.Any(x => post.Description.Contains(x))
                                      select post;

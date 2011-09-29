@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 
-namespace FujiyBlog.Web.Infrastructure
+namespace FujiyBlog.Core.Extensions
 {
     public static class PrincipalExtensions
     {
@@ -16,14 +16,19 @@ namespace FujiyBlog.Web.Infrastructure
                 return principal.IsInRole(permission.ToString());
             }
 
-            if(HttpContext.Current.Items["AnonymousPermissionGroup"] == null)
+            return GetAnonymousPermissions(permission);
+        }
+
+        public static bool GetAnonymousPermissions(Permission permission)
+        {
+            if (HttpContext.Current.Items["AnonymousPermissionGroup"] == null)
             {
                 FujiyBlogDatabase db = DependencyResolver.Current.GetService<FujiyBlogDatabase>();
                 PermissionGroup permissionGroup = db.PermissionGroups.AsNoTracking().Single(x => x.Name == "Anonymous");
                 HttpContext.Current.Items["AnonymousPermissionGroup"] = permissionGroup;
             }
 
-            return ((PermissionGroup)HttpContext.Current.Items["AnonymousPermissionGroup"]).Permissions.Any(x=>x == permission);
+            return ((PermissionGroup)HttpContext.Current.Items["AnonymousPermissionGroup"]).Permissions.Any(x => x == permission);
         }
     }
 }

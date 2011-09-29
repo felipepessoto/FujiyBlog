@@ -18,7 +18,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            Page initialPage = db.Pages.WhereIsPublicPage().Single(x => x.IsFrontPage && !x.IsDeleted);
+            Page initialPage = db.Pages.WhereHavePermissions().Single(x => x.IsFrontPage);
             return ShowPage(initialPage);
         }
 
@@ -39,12 +39,7 @@ namespace FujiyBlog.Web.Controllers
 
         private ActionResult Details(string slug, int? id)
         {
-            IQueryable<Page> pageQuery = db.Pages.Where(x => !x.IsDeleted);
-
-            if (!Request.IsAuthenticated)
-            {
-                pageQuery = pageQuery.WhereIsPublicPage();
-            }
+            IQueryable<Page> pageQuery = db.Pages.WhereHavePermissions();
 
             Page page;
 

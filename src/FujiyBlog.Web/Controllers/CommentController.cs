@@ -21,7 +21,7 @@ namespace FujiyBlog.Web.Controllers
         public virtual ActionResult DoComment(int id, int? parentCommentId)
         {
             bool isLogged = Request.IsAuthenticated;
-            Post post = GetPost(id, !isLogged);
+            Post post = db.Posts.Include(x => x.Author).WhereHavePermissions().SingleOrDefault(x => x.Id == id);
 
             if (post == null || !post.IsCommentEnabled || !Settings.SettingRepository.EnableComments)
             {
@@ -70,24 +70,6 @@ namespace FujiyBlog.Web.Controllers
             PostComment newComment = new PostComment {Post = comment.Post, ParentComment = comment};
 
             return View(MVC.Themes.Views.Default.Comment.DoComment, newComment);
-        }
-
-        private Post GetPost(int id, bool isPublic)
-        {
-            IQueryable<Post> posts = db.Posts.Include(x => x.Author).Where(x => !x.IsDeleted);
-
-            if (isPublic)
-            {
-                posts = posts.WhereIsPublicPost();
-            }
-
-            Post post = posts.SingleOrDefault(x => x.Id == id);
-
-            if (post == null)
-            {
-                return null;
-            }
-            return post;
         }
     }
 }
