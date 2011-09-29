@@ -1,6 +1,10 @@
-﻿@model IEnumerable<FujiyBlog.Core.DomainObjects.PostComment>
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Models
+@using FujiyBlog.Core.Extensions
 
-    @foreach (FujiyBlog.Core.DomainObjects.PostComment comment in Model)
+@model IEnumerable<PostComment>
+
+    @foreach (PostComment comment in Model)
     { 
         <div id="comment_id@(comment.Id)" class="comment@(comment.Post.Author == comment.Author ? " self" : "")">
             <p class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(comment.CreationDate)</p>
@@ -23,8 +27,10 @@
                 @Html.ActionLink(comment.Author.DisplayName ?? comment.Author.Username, MVC.Post.Author(comment.Author.Username, null))
             }
 
-            | @Ajax.ActionLink("Reply", MVC.Comment.ReplyComment(comment.Id), new AjaxOptions { HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "reply-comment-" + comment.Id }) <div id="reply-comment-@comment.Id"></div>
-
+            @if (User.IsInRole(Permission.CreateComments))
+            {
+                <text>| @Ajax.ActionLink("Reply", MVC.Comment.ReplyComment(comment.Id), new AjaxOptions {HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "reply-comment-" + comment.Id}) <div id="reply-comment-@comment.Id"></div></text>
+            }
             @if (!comment.IsApproved)
             {
                 @(Ajax.ActionLink("Approve", MVC.Admin.Comment.ActionNames.ApproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))

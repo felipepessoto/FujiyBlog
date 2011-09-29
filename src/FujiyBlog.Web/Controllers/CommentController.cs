@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
+using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using System.Data.Entity;
 
@@ -18,6 +19,7 @@ namespace FujiyBlog.Web.Controllers
             this.db = db;
         }
 
+        [AuthorizePermission(Permission.CreateComments)]
         public virtual ActionResult DoComment(int id, int? parentCommentId)
         {
             bool isLogged = Request.IsAuthenticated;
@@ -63,6 +65,7 @@ namespace FujiyBlog.Web.Controllers
             return View("Comments", new[] { postComment });
         }
 
+        [AuthorizePermission(Permission.CreateComments)]
         public virtual ActionResult ReplyComment(int id)
         {
             PostComment comment = db.PostComments.Include(x => x.Post).Single(x => x.Id == id);
