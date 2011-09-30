@@ -10,6 +10,7 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Extensions;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -59,6 +60,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ActionResult Edit(int? id)
         {
+            if (!id.HasValue && !User.IsInRole(Permission.CreateNewPosts))
+            {
+                Response.SendToUnauthorized();
+            }
+
             AdminPostEdit viewModel = new AdminPostEdit();
             Post post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
                             : new Post
@@ -68,11 +74,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                       IsCommentEnabled = true
                                   };
 
+            viewModel.AllUsers = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == post.Author });
+
+            if (id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
+            {
+                Response.SendToUnauthorized();
+            }
+
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(post);
             viewModel.Post.Id = id;
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
-            viewModel.AllUsers = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == post.Author });
 
             return View(viewModel);
         }
@@ -80,11 +92,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("Edit")]
         public virtual ActionResult EditPost([Bind(Prefix="Post")]AdminPostSave postSave)
         {
+            if (!postSave.Id.HasValue && !User.IsInRole(Permission.CreateNewPosts))
+            {
+                Response.SendToUnauthorized();
+            }
+
             Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == postSave.Id)
                                   : db.Posts.Add(new Post
                                         {
                                             CreationDate = DateTime.UtcNow,
                                         });
+
+            if (postSave.Id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(editedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
+            {
+                Response.SendToUnauthorized();
+            }
 
             editedPost.Author = postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
             editedPost.LastModificationDate = DateTime.UtcNow;

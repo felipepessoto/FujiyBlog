@@ -165,6 +165,7 @@
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
+    <Compile Include="Extensions\HttpResponseExtensions.cs" />
     <Compile Include="FeedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>

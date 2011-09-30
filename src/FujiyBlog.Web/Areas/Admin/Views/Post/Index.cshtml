@@ -1,4 +1,6 @@
-﻿@using FujiyBlog.Web.Common
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+@using FujiyBlog.Web.Common
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostIndex
 
 @{
@@ -8,9 +10,13 @@
 
 <h2>Posts</h2>
 
-<p>
-    @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
-</p>
+@if (User.IsInRole(Permission.CreateNewPosts))
+{
+    <p>
+        @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
+    </p>
+}
+    
 
 <div id="posts-type-filters">
 @Html.ActionLink("All", MVC.Admin.Post.Index()) | @Html.ActionLink("Drafts", MVC.Admin.Post.Index(null, false))| @Html.ActionLink("Published", MVC.Admin.Post.Index(null, true))
@@ -75,8 +81,13 @@
             @Html.DisplayFor(modelitem => item.CommentsTotal)
         </td>
         <td>
-            @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id)) |
-            @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");" })
+        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)) || User.IsInRole(Permission.EditOtherUsersPosts))
+        {
+            <text>
+                @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id))
+            </text>
+        }
+            | @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");"})
         </td>
     </tr>
 }
