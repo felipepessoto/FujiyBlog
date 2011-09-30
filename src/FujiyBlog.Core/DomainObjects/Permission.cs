@@ -57,26 +57,16 @@
         /// <summary>
         /// A user is allowed to view posts that are both published and public.
         /// </summary>
-        
         ViewPublicPosts,
 
         /// <summary>
         /// A user is allowed to view unpublished posts.
         /// </summary>
-        
         ViewUnpublishedPosts,
-
-        /// <summary>
-        /// A user is allowed to view non-public posts.
-        /// </summary>
-        // 11/6/2010 - commented out, we don't currently have "private" posts, just unpublished.
-        //
-        //ViewPrivatePosts,
 
         /// <summary>
         /// A user can create new posts. 
         /// </summary>
-        
         CreateNewPosts,
 
         /// <summary>

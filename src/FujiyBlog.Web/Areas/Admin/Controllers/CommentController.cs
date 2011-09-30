@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Infrastructure;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
+    [AuthorizePermission(Permission.ModerateComments)]
     public partial class CommentController : AdminController
     {
         private readonly FujiyBlogDatabase db;
