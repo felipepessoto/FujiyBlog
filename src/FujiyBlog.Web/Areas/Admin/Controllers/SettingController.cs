@@ -13,7 +13,7 @@ using FujiyBlog.Web.Models;
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
     [AuthorizePermission(Permission.AccessAdminSettingsPages)]
-    public partial class SettingController : Controller
+    public partial class SettingController : AdminController
     {
         private readonly FujiyBlogDatabase db;
 

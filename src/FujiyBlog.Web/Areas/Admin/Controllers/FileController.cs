@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    public partial class FileController : Controller
+    public partial class FileController : AdminController
     {
         [HttpPost]
         public virtual ActionResult Upload(HttpPostedFileBase uploadFile, string folderName)
