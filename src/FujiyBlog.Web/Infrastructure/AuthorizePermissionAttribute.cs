@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Extensions;
+using FujiyBlog.Web.Extensions;
 
 namespace FujiyBlog.Web.Infrastructure
 {
@@ -49,9 +50,7 @@ namespace FujiyBlog.Web.Infrastructure
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             base.HandleUnauthorizedRequest(filterContext);
-            filterContext.HttpContext.Response.StatusCode = 401;
-            filterContext.HttpContext.Response.WriteFile("~/errors/401.htm"); 
-            filterContext.HttpContext.Response.End();
+            filterContext.HttpContext.Response.SendToUnauthorized();
         }
 
         static string[] SplitString(string original)
