@@ -152,10 +152,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            db.Posts.Single(x => x.Id == id).IsDeleted = true;
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
+            Post deletedPost = db.Posts.Include(x=>x.Author).Single(x => x.Id == id);
+
+            if (!User.IsInRole(Permission.DeleteOtherUsersPosts) && !(deletedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            deletedPost.IsDeleted = true;
+
+            try
+            {
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Configuration.ValidateOnSaveEnabled = true;
+            }
 
             return Json(true);
         }

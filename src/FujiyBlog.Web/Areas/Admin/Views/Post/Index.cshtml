@@ -83,11 +83,14 @@
         <td>
         @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)) || User.IsInRole(Permission.EditOtherUsersPosts))
         {
+            @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id))
+        }
+        @if (User.IsInRole(Permission.DeleteOtherUsersPosts) || (item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)))
+        {
             <text>
-                @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id))
+            | @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");"})
             </text>
         }
-            | @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");"})
         </td>
     </tr>
 }

@@ -84,25 +84,21 @@
         /// <summary>
         /// A user can delete their own posts.
         /// </summary>
-        
         DeleteOwnPosts,
 
         /// <summary>
         /// A user can delete posts created by other users.
         /// </summary>
-        
         DeleteOtherUsersPosts,
 
         /// <summary>
         /// A user can set whether or not their own posts are published.
         /// </summary>
-        
         PublishOwnPosts,
 
         /// <summary>
         /// A user can set whether or not another user's posts are published.
         /// </summary>
-        
         PublishOtherUsersPosts,
 
         #endregion
