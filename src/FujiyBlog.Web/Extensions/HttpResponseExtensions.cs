@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 
 namespace FujiyBlog.Web.Extensions
 {
@@ -9,6 +10,7 @@ namespace FujiyBlog.Web.Extensions
             response.StatusCode = 401;
             response.WriteFile("~/errors/401.htm");
             response.End();
+            throw new Exception("The user has no permission");
         }
 
         public static void SendToUnauthorized(this HttpResponseBase response)
@@ -16,6 +18,7 @@ namespace FujiyBlog.Web.Extensions
             response.StatusCode = 401;
             response.WriteFile("~/errors/401.htm");
             response.End();
+            throw new Exception("The user has no permission");
         }
     }
 }

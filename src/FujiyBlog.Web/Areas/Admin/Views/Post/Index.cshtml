@@ -85,7 +85,7 @@
         {
             @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id))
         }
-        @if (User.IsInRole(Permission.DeleteOtherUsersPosts) || (item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)))
+        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)) || (item.Post.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPosts)))
         {
             <text>
             | @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");"})

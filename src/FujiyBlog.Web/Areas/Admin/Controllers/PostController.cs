@@ -92,23 +92,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("Edit")]
         public virtual ActionResult EditPost([Bind(Prefix="Post")]AdminPostSave postSave)
         {
-            if (!postSave.Id.HasValue && !User.IsInRole(Permission.CreateNewPosts))
-            {
-                Response.SendToUnauthorized();
-            }
-
             Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == postSave.Id)
                                   : db.Posts.Add(new Post
                                         {
                                             CreationDate = DateTime.UtcNow,
                                         });
 
-            if (postSave.Id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(editedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
-            {
-                Response.SendToUnauthorized();
-            }
+            User newAuthor = userRepository.GetById(postSave.AuthorId.Value); //postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
 
-            editedPost.Author = postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
+            CheckPostsSavePermissions(postSave, editedPost, newAuthor);
+
+            editedPost.Author = newAuthor;
             editedPost.LastModificationDate = DateTime.UtcNow;
             Mapper.Map(postSave, editedPost);
 
@@ -149,12 +143,42 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        private void CheckPostsSavePermissions(AdminPostSave postSave, Post editedPost, User newAuthor)
+        {
+            if (!postSave.Id.HasValue && !User.IsInRole(Permission.CreateNewPosts))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (postSave.Id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) &&
+                !(editedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (!User.IsInRole(Permission.EditOtherUsersPosts) && newAuthor.Username != User.Identity.Name)
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (postSave.IsPublished && (!postSave.Id.HasValue || !editedPost.IsPublished))
+            {
+                string authorUserName = newAuthor.Username;
+
+                if (!(authorUserName != User.Identity.Name && User.IsInRole(Permission.PublishOtherUsersPosts)) &&
+                    !(authorUserName == User.Identity.Name && User.IsInRole(Permission.PublishOwnPosts)))
+                {
+                    Response.SendToUnauthorized();
+                }
+            }
+        }
+
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
             Post deletedPost = db.Posts.Include(x=>x.Author).Single(x => x.Id == id);
 
-            if (!User.IsInRole(Permission.DeleteOtherUsersPosts) && !(deletedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)))
+            if (!(deletedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)) && !(deletedPost.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPosts)))
             {
                 Response.SendToUnauthorized();
             }
