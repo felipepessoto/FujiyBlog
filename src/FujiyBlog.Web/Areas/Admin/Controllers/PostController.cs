@@ -66,15 +66,20 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             AdminPostEdit viewModel = new AdminPostEdit();
-            Post post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == id)
+            Post post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Include(x => x.Author).Single(x => x.Id == id)
                             : new Post
                                   {
                                       PublicationDate = DateTime.UtcNow,
-                                      IsPublished = true,
                                       IsCommentEnabled = true
                                   };
 
-            viewModel.AllUsers = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == post.Author });
+            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
+            if (!User.IsInRole(Permission.EditOtherUsersPosts))
+            {
+                authors = authors.Where(x => x.Username == User.Identity.Name);
+            }
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == post.Author || (!id.HasValue && x.Username == User.Identity.Name)) });
+
 
             if (id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
             {
@@ -138,7 +143,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(editedPost);
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
-            viewModel.AllUsers = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == editedPost.Author });
+            viewModel.Authors = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == editedPost.Author });
 
             return View(viewModel);
         }

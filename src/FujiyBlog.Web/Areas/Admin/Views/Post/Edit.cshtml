@@ -1,4 +1,7 @@
-﻿@using FujiyBlog.Web.Extensions
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Extensions
+@using FujiyBlog.Core.Extensions
+
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostEdit
 
 @{
@@ -59,7 +62,7 @@
             @Html.LabelFor(model => model.Post.AuthorId)
         </div>
         <div class="editor-field">
-            @Html.DropDownListFor(x => x.Post.AuthorId, Model.AllUsers)
+            @Html.DropDownListFor(x => x.Post.AuthorId, Model.Authors)
             @Html.ValidationMessageFor(model => model.Post.AuthorId)
         </div>
 
@@ -122,7 +125,7 @@
         </div>
         <div class="editor-field">
             <ul id="categories-list">
-            @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
+            @foreach (Category category in Model.AllCategories)
             {
                 <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
             }
@@ -153,6 +156,31 @@
 </div>
 
 <script type="text/javascript">
+
+    function CheckPublishPermission () {
+        
+        var hasPublishOwnPages = @(User.IsInRole(Permission.PublishOwnPosts)?"true":"false");;
+        var hasPublishOtherUsersPages = @(User.IsInRole(Permission.PublishOtherUsersPosts)?"true":"false");
+        var userName = '@(User.Identity.Name)';
+        var currentPublishedValue = @(Model.Post.IsPublished?"true":"false");
+
+        var publishedField = $('#@(Html.FieldIdFor(x=> x.Post.IsPublished))');
+        var newAuthor = $('#@(Html.FieldIdFor(x=> x.Post.AuthorId)) :selected').text();
+        
+        if (!currentPublishedValue) {
+            if (!(newAuthor != userName && hasPublishOtherUsersPages) && !(newAuthor == userName && hasPublishOwnPages)) {
+                publishedField.attr('disabled', true);
+                publishedField.prop('checked', false);
+            }
+            else {
+                publishedField.attr('disabled', false);
+            }
+        }
+    }
+    
+    CheckPublishPermission();
+    
+    $('#@(Html.FieldIdFor(x=> x.Post.AuthorId))').change(CheckPublishPermission);
 
     $('#add-category').click(function () {
 
@@ -221,72 +249,72 @@
                     alert('Error');
                 }
             });
-        });
+    });
 
-        var currentDialog = null;
+    var currentDialog = null;
 
-        function openUploadDiv(divId) {
+    function openUploadDiv(divId) {
 
-            var uploadDiv = $('#' + divId);
-            $('input:file', uploadDiv).attr({ value: '' });
+        var uploadDiv = $('#' + divId);
+        $('input:file', uploadDiv).attr({ value: '' });
 
-            if (currentDialog) {
-                currentDialog.dialog('close');
-            }
-
-            currentDialog = uploadDiv.dialog({ height: 200,
-                width: 550,
-                modal: true,
-                overlay: { opacity: 0.7, background: 'black' }
-            });
+        if (currentDialog) {
+            currentDialog.dialog('close');
         }
 
-        $('#link-upload-image').click(function () {
-            openUploadDiv('div-upload-image');
+        currentDialog = uploadDiv.dialog({ height: 200,
+            width: 550,
+            modal: true,
+            overlay: { opacity: 0.7, background: 'black' }
         });
+    }
 
-        $('#link-upload-video').click(function () {
-            openUploadDiv('div-upload-video');
-        });
+    $('#link-upload-image').click(function () {
+        openUploadDiv('div-upload-image');
+    });
 
-        $('#link-upload-file').click(function () {
-            openUploadDiv('div-upload-file');
-        });
+    $('#link-upload-video').click(function () {
+        openUploadDiv('div-upload-video');
+    });
 
-        $("#form-upload-image,#form-upload-video,#form-upload-file").ajaxForm({
-            iframe: true,
-            dataType: "json",
-            beforeSubmit: function () {
-                $('.ajaxUploadButton').attr('disabled', 'disabled');
-            },
-            success: function (response, statusText, xhr, elem) {
-                $('.ajaxUploadButton').removeAttr('disabled');
-                if (response.errorMessage) {
-                    alert(response.errorMessage);
-                }
-                else {
-                    var insertedContent = null;
-                    if (elem.attr('id') === 'form-upload-image') {
-                        insertedContent = '<img src="' + response.url + '" />';
-                    }
-                    else if (elem.attr('id') === 'form-upload-video') {
-                        insertedContent = '<video controls="controls" src="' + response.url + '"></video>';
-                    }
-                    else if (elem.attr('id') === 'form-upload-file') {
-                        insertedContent = '<a href="' + response.url + '">' + response.url.substr(response.url.lastIndexOf('/') + 1) + '</a>';
-                    }
+    $('#link-upload-file').click(function () {
+        openUploadDiv('div-upload-file');
+    });
 
-                    tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
-
-                    if (currentDialog) {
-                        currentDialog.dialog('close');
-                    }
-                }
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                $('.ajaxUploadButton').removeAttr('disabled');
-                alert('Error uploading file');
+    $("#form-upload-image,#form-upload-video,#form-upload-file").ajaxForm({
+        iframe: true,
+        dataType: "json",
+        beforeSubmit: function () {
+            $('.ajaxUploadButton').attr('disabled', 'disabled');
+        },
+        success: function (response, statusText, xhr, elem) {
+            $('.ajaxUploadButton').removeAttr('disabled');
+            if (response.errorMessage) {
+                alert(response.errorMessage);
             }
-        });
+            else {
+                var insertedContent = null;
+                if (elem.attr('id') === 'form-upload-image') {
+                    insertedContent = '<img src="' + response.url + '" />';
+                }
+                else if (elem.attr('id') === 'form-upload-video') {
+                    insertedContent = '<video controls="controls" src="' + response.url + '"></video>';
+                }
+                else if (elem.attr('id') === 'form-upload-file') {
+                    insertedContent = '<a href="' + response.url + '">' + response.url.substr(response.url.lastIndexOf('/') + 1) + '</a>';
+                }
+
+                tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
+
+                if (currentDialog) {
+                    currentDialog.dialog('close');
+                }
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $('.ajaxUploadButton').removeAttr('disabled');
+            alert('Error uploading file');
+        }
+    });
     
 </script>
