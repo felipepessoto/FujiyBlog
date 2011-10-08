@@ -79,8 +79,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [HttpPost, ActionName("Edit")]
-        public virtual ActionResult EditPost(AdminPageSave pageSave)
+        [HttpPost]
+        public virtual ActionResult Edit(AdminPageSave pageSave)
         {
             Page editedPage = pageSave.Id.HasValue ? db.Pages.Include(x => x.Author).Single(x => x.Id == pageSave.Id)
                                   : db.Pages.Add(new Page

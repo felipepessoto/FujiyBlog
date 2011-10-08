@@ -8,7 +8,7 @@
     Layout = MVC.Admin.Shared.Views._Layout;
     ViewBag.Title = "Edit";
 }
-<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce_3_4_4.jquery_tinymce_js)"></script>
+<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce_3_4_5.jquery_tinymce_js)"></script>
 <script type="text/javascript" src="@Url.Content(Links.Scripts.jquery_form_js)"></script>
 
 <h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
@@ -215,7 +215,7 @@
     $().ready(function () {
         tinymceContent = $('#Post_Content').tinymce({
             // Location of TinyMCE script
-            script_url: '@(Url.Content(Links.Scripts.tinymce_3_4_4.tiny_mce_js))',
+            script_url: '@(Url.Content(Links.Scripts.tinymce_3_4_5.tiny_mce_js))',
 
             // General options
             theme: "advanced",

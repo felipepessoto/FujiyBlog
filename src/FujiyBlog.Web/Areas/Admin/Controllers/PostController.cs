@@ -93,8 +93,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [HttpPost, ActionName("Edit")]
-        public virtual ActionResult EditPost([Bind(Prefix="Post")]AdminPostSave postSave)
+        [HttpPost]
+        public virtual ActionResult Edit([Bind(Prefix="Post")]AdminPostSave postSave)
         {
             Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == postSave.Id)
                                   : db.Posts.Add(new Post

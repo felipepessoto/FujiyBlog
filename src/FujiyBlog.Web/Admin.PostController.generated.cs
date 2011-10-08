@@ -43,11 +43,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult EditPost() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.EditPost);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Delete() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
         }
@@ -91,7 +86,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public class ActionNamesClass {
             public readonly string Index = "Index";
             public readonly string Edit = "Edit";
-            public readonly string EditPost = "Edit";
             public readonly string Delete = "Delete";
             public readonly string Categories = "Categories";
             public readonly string UpdateCategory = "UpdateCategory";
@@ -133,8 +127,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult EditPost(FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostSave postSave) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditPost);
+        public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostSave postSave) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
             callInfo.RouteValueDictionary.Add("Post", postSave);
             return callInfo;
         }
