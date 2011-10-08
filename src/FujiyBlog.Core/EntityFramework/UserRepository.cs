@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class UserRepository : RepositoryBase<User>, IUserRepository
+    public class UserRepository : RepositoryBase<User>
     {
         public UserRepository(FujiyBlogDatabase database)
             : base(database)

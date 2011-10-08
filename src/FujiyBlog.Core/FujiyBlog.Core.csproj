@@ -92,7 +92,6 @@
     <Compile Include="Repositories\IWidgetSettingRepository.cs" />
     <Compile Include="Repositories\IFeedRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Resources\TextMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
