@@ -42,5 +42,8 @@ namespace FujiyBlog.Core.DomainObjects
 
         [Display(Name = "Deleted")]
         public bool IsDeleted { get; set; }
+
+        [Required]
+        public User Author { get; set; }
     }
 }
