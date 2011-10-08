@@ -159,8 +159,8 @@
 
     function CheckPublishPermission () {
         
-        var hasPublishOwnPages = @(User.IsInRole(Permission.PublishOwnPosts)?"true":"false");;
-        var hasPublishOtherUsersPages = @(User.IsInRole(Permission.PublishOtherUsersPosts)?"true":"false");
+        var hasPublishOwn = @(User.IsInRole(Permission.PublishOwnPosts)?"true":"false");;
+        var hasPublishOtherUsers = @(User.IsInRole(Permission.PublishOtherUsersPosts)?"true":"false");
         var userName = '@(User.Identity.Name)';
         var currentPublishedValue = @(Model.Post.IsPublished?"true":"false");
 
@@ -168,7 +168,7 @@
         var newAuthor = $('#@(Html.FieldIdFor(x=> x.Post.AuthorId)) :selected').text();
         
         if (!currentPublishedValue) {
-            if (!(newAuthor != userName && hasPublishOtherUsersPages) && !(newAuthor == userName && hasPublishOwnPages)) {
+            if (!(newAuthor != userName && hasPublishOtherUsers) && !(newAuthor == userName && hasPublishOwn)) {
                 publishedField.attr('disabled', true);
                 publishedField.prop('checked', false);
             }
