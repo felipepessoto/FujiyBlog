@@ -28,12 +28,22 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ActionResult Create()
         {
+            if (!User.IsInRole(Role.CreateNewUsers))
+            {
+                Response.SendToUnauthorized();
+            }
+
             return View(new AdminUserCreate());
         }
 
         [HttpPost]
         public virtual ActionResult Create(AdminUserCreate userData)
         {
+            if (!User.IsInRole(Role.CreateNewUsers))
+            {
+                Response.SendToUnauthorized();
+            }
+
             if (ModelState.IsValid)
             {
                 User newUser = Mapper.Map<AdminUserCreate, User>(userData);
@@ -49,30 +59,51 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Edit(int id)
         {
             User user = db.Users.Find(id);
+
+            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
+                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            {
+                Response.SendToUnauthorized();
+            }
+
             return View(user);
         }
 
         [HttpPost]
         public virtual ActionResult Edit(AdminUserSave userData)
         {
-            if (ModelState.IsValid)
+            User user = db.Users.Single(x => x.Id == userData.Id);
+
+            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
+                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
             {
-                User user = db.Users.Single(x => x.Id == userData.Id);
+                Response.SendToUnauthorized();
+            }
+
+            if (ModelState.IsValid)
+            {    
                 Mapper.Map(userData, user);
                 db.SaveChanges();
                 return RedirectToAction(MVC.Admin.User.Index());
             }
-            return View(userData);
+            return View(user);
         }
 
         [HttpPost]
         public virtual ActionResult Disable(int id)
         {
-            if (!db.Users.Any(x => x.Enabled && x.Id != id))
+            if (!db.Users.Any(x => x.Enabled && x.Id != id && x.RoleGroups.Any(y => y.Name == "Admin")))
             {
-                return Json(new { errorMessage = "You can´t disable the unique enabled user" });
+                return Json(new { errorMessage = "You can´t disable the unique enabled admin" });
             }
             User user = db.Users.Find(id);
+
+            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
+                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            {
+                Response.SendToUnauthorized();
+            }
+
             user.Enabled = false;
             db.SaveChanges();
             return Json(true);
@@ -82,6 +113,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Enable(int id)
         {
             User user = db.Users.Find(id);
+
+            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
+                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            {
+                Response.SendToUnauthorized();
+            }
+
             user.Enabled = true;
             db.SaveChanges();
             return Json(true);

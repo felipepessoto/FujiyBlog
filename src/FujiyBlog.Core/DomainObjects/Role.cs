@@ -215,16 +215,6 @@
         CreateNewUsers,
 
         /// <summary>
-        /// A user is allowed to delete their own account.
-        /// </summary>
-        DeleteUserSelf,
-
-        /// <summary>
-        /// A user is allowed to delete accounts they do not own.
-        /// </summary>
-        DeleteUsersOtherThanSelf,
-
-        /// <summary>
         /// A user is allowed to edit their own account information.
         /// </summary>
         EditOwnUser,

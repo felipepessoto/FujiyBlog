@@ -1,4 +1,7 @@
-﻿@using FujiyBlog.Web.Common
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Common
+@using FujiyBlog.Core.Extensions
+
 @model IEnumerable<FujiyBlog.Core.DomainObjects.User>
 @{
     Layout = MVC.Admin.User.Views._Layout;
@@ -7,10 +10,12 @@
 
 <h2>Users</h2>
 
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+@if (User.IsInRole(Role.CreateNewUsers))
+{
+    <p>
+        @Html.ActionLink("Create New User", "Create")
+    </p>
+}
 
 <table>
     <tr>
@@ -57,6 +62,10 @@
                 @DateTimeUtil.ConvertUtcToMyTimeZone(item.LastLoginDate)
             </td>
             <td>
+            @if ((item.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) ||
+                (item.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            {
+                <text>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 
                 <span id="disable-link-@item.Id"@if(!item.Enabled){<text> style="display:none"</text>}>
@@ -65,6 +74,8 @@
                 <span id="enable-link-@item.Id"@if(item.Enabled){<text> style="display:none"</text>}>
                     @Ajax.ActionLink("Enable", MVC.Admin.User.Enable(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterEnable(arguments[0], " + item.Id + ");" })
                 </span>
+                </text>
+            }
             </td>
         </tr>
     }
