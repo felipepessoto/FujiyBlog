@@ -127,7 +127,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            db.PostComments.Find(id).IsDeleted = true;
+            db.PostComments.Single(x => x.Id == id).IsDeleted = true;
             db.Configuration.ValidateOnSaveEnabled = false;
             db.SaveChanges();
             db.Configuration.ValidateOnSaveEnabled = true;
