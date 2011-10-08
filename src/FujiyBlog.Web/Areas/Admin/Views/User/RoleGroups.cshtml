@@ -1,0 +1,56 @@
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+
+@model IEnumerable<RoleGroup>
+
+@{
+    Layout = MVC.Admin.User.Views._Layout;
+    ViewBag.Title = "RoleGroups";
+}
+
+<h2>Role Groups</h2>
+
+@if (User.IsInRole(Role.CreateRoleGroups))
+{
+    <p>
+        @Html.ActionLink("Create Role Group", MVC.Admin.User.EditRoleGroup())
+    </p>
+}
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr id="item-row-@item.Id">
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+        @if (!string.Equals(item.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+        {
+            if (User.IsInRole(Role.EditRoleGroups))
+            {
+                @Html.ActionLink("Edit", MVC.Admin.User.EditRoleGroup(item.Id))
+            }
+            if (User.IsInRole(Role.DeleteRoleGroups) && item.Name != "Anonymous")
+            {
+                <text>
+                | @Ajax.ActionLink("Delete", MVC.Admin.User.DeleteRoleGroup(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
+                </text>
+            }
+        }
+        </td>
+    </tr>
+}
+</table>
+
+<script type="text/javascript">
+    function RemoveItemRow(itemId) {
+        $('#item-row-' + itemId).hide();
+    }
+    
+</script>

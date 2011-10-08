@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Extensions;
+using FujiyBlog.Web.Infrastructure;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -87,10 +87,94 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return Json(true);
         }
 
-        protected override void Dispose(bool disposing)
+        [AuthorizeRole(Role.ViewRoleGroups)]
+        public virtual ViewResult RoleGroups()
         {
-            db.Dispose();
-            base.Dispose(disposing);
+            return View(db.RoleGroups.ToList());
+        }
+
+        public virtual ActionResult EditRoleGroup(int? id)
+        {
+            RoleGroup roleGroup = id.HasValue ? db.RoleGroups.Find(id) : new RoleGroup();
+
+            if (!id.HasValue && !User.IsInRole(Role.CreateRoleGroups))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (id.HasValue && !User.IsInRole(Role.EditRoleGroups))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (string.Equals(roleGroup.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("Cannot edit admin roles");
+            }
+
+            return View(roleGroup);
+        }
+
+        [HttpPost]
+        public virtual ActionResult EditRoleGroup(int? id, string name, IEnumerable<string> roles)
+        {
+            RoleGroup roleGroup = id.HasValue ? db.RoleGroups.Find(id) : db.RoleGroups.Add(new RoleGroup());
+            roles = roles ?? Enumerable.Empty<string>();
+
+            if (!id.HasValue && !User.IsInRole(Role.CreateRoleGroups))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (id.HasValue && !User.IsInRole(Role.EditRoleGroups))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (string.Equals(roleGroup.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("Cannot edit admin roles");
+            }
+
+            if (!string.Equals(roleGroup.Name, "Anonymous", StringComparison.OrdinalIgnoreCase))
+            {
+                roleGroup.Name = name;
+            }
+
+            if (db.RoleGroups.Any(x => x.Name == roleGroup.Name && x.Id != id))
+            {
+                ModelState.AddModelError("Name", "This name already exists");
+            }
+
+            if (ModelState.IsValid)
+            {
+                roleGroup.Roles = roles.Select(x => (Role) Enum.Parse(typeof (Role), x));
+                db.SaveChanges();
+                return RedirectToAction(MVC.Admin.User.RoleGroups());
+            }
+
+            return View(roleGroup);
+        }
+
+        [HttpPost]
+        public virtual ActionResult DeleteRoleGroup(int id)
+        {
+            RoleGroup deletedRoleGorup = db.RoleGroups.Single(x => x.Id == id);
+
+            if (string.Equals(deletedRoleGorup.Name, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(deletedRoleGorup.Name, "Anonymous", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new Exception("Cannot delete " + deletedRoleGorup.Name + " roles");
+            }
+
+            if (!User.IsInRole(Role.DeleteRoleGroups))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            db.RoleGroups.Remove(deletedRoleGorup);
+            db.SaveChanges();
+
+            return Json(true);
         }
     }
 }

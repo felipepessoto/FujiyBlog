@@ -131,7 +131,6 @@
     <Compile Include="Areas\Admin\Controllers\CommentController.cs" />
     <Compile Include="Areas\Admin\Controllers\FileController.cs" />
     <Compile Include="Areas\Admin\Controllers\PageController.cs" />
-    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\PostController.cs" />
     <Compile Include="Areas\Admin\Controllers\SettingController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
@@ -614,6 +613,8 @@
     <Content Include="Areas\Admin\Views\Page\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Page\Edit.cshtml" />
     <Content Include="Views\Themes\Default\Page\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\User\RoleGroups.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditRoleGroup.cshtml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

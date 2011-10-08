@@ -46,6 +46,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public System.Web.Mvc.ActionResult Enable() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Enable);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult EditRoleGroup() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult DeleteRoleGroup() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public UserController Actions { get { return MVC.Admin.User; } }
@@ -64,6 +74,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Edit = "Edit";
             public readonly string Disable = "Disable";
             public readonly string Enable = "Enable";
+            public readonly string RoleGroups = "RoleGroups";
+            public readonly string EditRoleGroup = "EditRoleGroup";
+            public readonly string DeleteRoleGroup = "DeleteRoleGroup";
         }
 
 
@@ -75,7 +88,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string _Layout = "~/Areas/Admin/Views/User/_Layout.cshtml";
             public readonly string Create = "~/Areas/Admin/Views/User/Create.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/User/Edit.cshtml";
+            public readonly string EditRoleGroup = "~/Areas/Admin/Views/User/EditRoleGroup.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/User/Index.cshtml";
+            public readonly string RoleGroups = "~/Areas/Admin/Views/User/RoleGroups.cshtml";
         }
     }
 
@@ -119,6 +134,31 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Enable(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Enable);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ViewResult RoleGroups() {
+            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.RoleGroups);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult EditRoleGroup(int? id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult EditRoleGroup(int? id, string name, System.Collections.Generic.IEnumerable<string> roles) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
+            callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("name", name);
+            callInfo.RouteValueDictionary.Add("roles", roles);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult DeleteRoleGroup(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
