@@ -18,10 +18,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
     {
         private readonly FujiyBlogDatabase db;
         private readonly PostRepository postRepository;
-        private readonly IUserRepository userRepository;
+        private readonly UserRepository userRepository;
         private const int PageSize = 10;
 
-        public PostController(FujiyBlogDatabase db, PostRepository postRepository, IUserRepository userRepository)
+        public PostController(FujiyBlogDatabase db, PostRepository postRepository, UserRepository userRepository)
         {
             this.db = db;
             this.postRepository = postRepository;
@@ -65,7 +65,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            AdminPostEdit viewModel = new AdminPostEdit();
             Post post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Include(x => x.Author).Single(x => x.Id == id)
                             : new Post
                                   {
@@ -73,18 +72,18 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                       IsCommentEnabled = true
                                   };
 
+            if (id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
+            {
+                Response.SendToUnauthorized();
+            }
+
             IQueryable<User> authors = db.Users.Where(x => x.Enabled);
             if (!User.IsInRole(Permission.EditOtherUsersPosts))
             {
                 authors = authors.Where(x => x.Username == User.Identity.Name);
             }
+            AdminPostEdit viewModel = new AdminPostEdit();
             viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == post.Author || (!id.HasValue && x.Username == User.Identity.Name)) });
-
-
-            if (id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
-            {
-                Response.SendToUnauthorized();
-            }
 
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(post);
             viewModel.Post.Id = id;
@@ -143,7 +142,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(editedPost);
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
-            viewModel.Authors = db.Users.Where(x => x.Enabled).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = x == editedPost.Author });
+            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
+            if (!User.IsInRole(Permission.EditOtherUsersPosts))
+            {
+                authors = authors.Where(x => x.Username == User.Identity.Name);
+            }
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == editedPost.Author) });
 
             return View(viewModel);
         }
