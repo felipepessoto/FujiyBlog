@@ -1,4 +1,7 @@
-﻿@using FujiyBlog.Web.Common
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Common
+@using FujiyBlog.Core.Extensions
+
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageIndex
 
 @{
@@ -8,9 +11,12 @@
 
 <h2>Pages</h2>
 
-<p>
-    @Html.ActionLink("Add new page", MVC.Admin.Page.Edit())
-</p>
+@if (User.IsInRole(Permission.CreateNewPages))
+{
+    <p>
+        @Html.ActionLink("Add new page", MVC.Admin.Page.Edit())
+    </p>
+}
 
 <div id="pages-type-filters">
 @Html.ActionLink("All", MVC.Admin.Page.Index()) | @Html.ActionLink("Drafts", MVC.Admin.Page.Index(null, false))| @Html.ActionLink("Published", MVC.Admin.Page.Index(null, true))
@@ -57,8 +63,16 @@
             @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", MVC.Admin.Page.Edit(item.Id)) |
-            @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
+            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPages)) || User.IsInRole(Permission.EditOtherUsersPages))
+            {
+                @Html.ActionLink("Edit", MVC.Admin.Page.Edit(item.Id))
+            }
+            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPages)) || (item.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPages)))
+            {
+                <text>|
+                @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");"})
+                </text>
+            }
         </td>
     </tr>
 }

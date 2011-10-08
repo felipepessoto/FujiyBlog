@@ -12,6 +12,9 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Required, StringLength(200)]
         public string Title { get; set; }
 
+        [Display(Name = "Author")]
+        public int? AuthorId { get; set; }
+
         [StringLength(500), AllowHtml]
         public string Description { get; set; }
 
@@ -42,5 +45,6 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public bool IsDeleted { get; set; }
 
         public IEnumerable<SelectListItem> Pages { get; set; }
+        public IEnumerable<SelectListItem> Authors { get; set; }
     }
 }

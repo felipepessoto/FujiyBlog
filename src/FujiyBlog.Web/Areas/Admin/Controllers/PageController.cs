@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -6,6 +7,7 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Extensions;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -21,7 +23,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ViewResult Index(int? page, bool? published)
         {
-            IQueryable<Page> pages = db.Pages.Where(x => !x.IsDeleted);
+            IQueryable<Page> pages = db.Pages.Include(x => x.Author).Where(x => !x.IsDeleted);
 
             if (published.HasValue)
             {
@@ -42,8 +44,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ActionResult Edit(int? id)
         {
+            if (!id.HasValue && !User.IsInRole(Permission.CreateNewPages))
+            {
+                Response.SendToUnauthorized();
+            }
+
             Page page = id.HasValue
-                            ? db.Pages.Single(x => x.Id == id)
+                            ? db.Pages.Include(x => x.Author).Single(x => x.Id == id)
                             : new Page
                                   {
                                       PublicationDate = DateTime.UtcNow,
@@ -51,8 +58,19 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                       ShowInList = true,
                                   };
 
+            if (id.HasValue && !User.IsInRole(Permission.EditOtherUsersPages) && !(page.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPages)))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
+            if (!User.IsInRole(Permission.EditOtherUsersPages))
+            {
+                authors = authors.Where(x => x.Username == User.Identity.Name);
+            }
 
             AdminPageSave viewModel = Mapper.Map<Page, AdminPageSave>(page);
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == page.Author || (!id.HasValue && x.Username == User.Identity.Name)) });
             viewModel.Id = id;
             viewModel.Pages = (from p in db.Pages
                                where p.Id != page.Id
@@ -64,11 +82,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost, ActionName("Edit")]
         public virtual ActionResult EditPost(AdminPageSave pageSave)
         {
-            Page editedPage = pageSave.Id.HasValue ? db.Pages.Single(x => x.Id == pageSave.Id)
+            Page editedPage = pageSave.Id.HasValue ? db.Pages.Include(x => x.Author).Single(x => x.Id == pageSave.Id)
                                   : db.Pages.Add(new Page
                                         {
                                             CreationDate = DateTime.UtcNow,
                                         });
+
+            User newAuthor = db.Users.Single(x => x.Id == pageSave.AuthorId);
+
+            CheckPagesSavePermissions(pageSave, editedPage, newAuthor);
+
+            editedPage.Author = newAuthor;
 
             editedPage.LastModificationDate = DateTime.UtcNow;
 
@@ -87,6 +111,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             AdminPageSave viewModel = Mapper.Map<Page, AdminPageSave>(editedPage);
 
+            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
+            if (!User.IsInRole(Permission.EditOtherUsersPages))
+            {
+                authors = authors.Where(x => x.Username == User.Identity.Name);
+            }
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == editedPage.Author) });
+
             viewModel.Pages = (from p in db.Pages
                                where p.Id != editedPage.Id
                                select new { p.Id, p.Title }).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Title, Selected = x.Id == editedPage.ParentId });
@@ -94,11 +125,58 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
+        private void CheckPagesSavePermissions(AdminPageSave pageSave, Page editedPage, User newAuthor)
+        {
+            if (!pageSave.Id.HasValue && !User.IsInRole(Permission.CreateNewPages))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (pageSave.Id.HasValue && !User.IsInRole(Permission.EditOtherUsersPages) &&
+                !(editedPage.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPages)))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (!User.IsInRole(Permission.EditOtherUsersPages) && newAuthor.Username != User.Identity.Name)
+            {
+                Response.SendToUnauthorized();
+            }
+
+            if (pageSave.IsPublished && (!pageSave.Id.HasValue || !editedPage.IsPublished))
+            {
+                string authorUserName = newAuthor.Username;
+
+                if (!(authorUserName != User.Identity.Name && User.IsInRole(Permission.PublishOtherUsersPages)) &&
+                    !(authorUserName == User.Identity.Name && User.IsInRole(Permission.PublishOwnPages)))
+                {
+                    Response.SendToUnauthorized();
+                }
+            }
+        }
+
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            db.Pages.Find(id).IsDeleted = true;
-            db.SaveChanges();
+            Page deletedPage = db.Pages.Include(x => x.Author).Single(x => x.Id == id);
+
+            if (!(deletedPage.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPages)) && !(deletedPage.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPages)))
+            {
+                Response.SendToUnauthorized();
+            }
+
+            deletedPage.IsDeleted = true;
+
+            try
+            {
+                db.Configuration.ValidateOnSaveEnabled = false;
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Configuration.ValidateOnSaveEnabled = true;
+            }
+
             return Json(true);
         }
 
