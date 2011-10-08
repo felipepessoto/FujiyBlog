@@ -1,6 +1,6 @@
 ﻿namespace FujiyBlog.Core.DomainObjects
 {
-    public enum Permission
+    public enum Role
     {
         #region Misc
 
@@ -178,32 +178,32 @@
         /// <summary>
         /// A user can view roles.
         /// </summary>
-        ViewRoles,
+        ViewRoleGroups,
 
         /// <summary>
         /// A user can create new roles.
         /// </summary>
-        CreateNewRoles,
+        CreateRoleGroups,
 
         /// <summary>
         /// A user can edit existing roles.
         /// </summary>
-        EditRoles,
+        EditRoleGroups,
 
         /// <summary>
         /// A user can delete existing roles.
         /// </summary>
-        DeleteRoles,
+        DeleteRoleGroups,
 
         /// <summary>
         /// A user is allowed to edit their own roles.
         /// </summary>
-        EditOwnRoles,
+        EditOwnRoleGroups,
 
         /// <summary>
         /// A user is allowed to edit the roles of other users.
         /// </summary>
-        EditOtherUsersRoles,
+        EditOtherUsersRoleGroups,
 
         #endregion
 

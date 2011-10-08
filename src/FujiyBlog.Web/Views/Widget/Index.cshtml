@@ -9,7 +9,7 @@
         Html.RenderPartial(widgetSetting.Name, widgetSetting);
     }
 </div>
-@if (User.IsInRole(Permission.ManageWidgets))
+@if (User.IsInRole(Role.ManageWidgets))
 {
     <script type="text/javascript">fujiyBlog.widget.startDragAndDrop();</script>
     <div id="addedwidgets"></div>

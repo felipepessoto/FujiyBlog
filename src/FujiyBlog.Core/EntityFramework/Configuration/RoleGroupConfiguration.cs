@@ -8,13 +8,13 @@ using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Core.EntityFramework.Configuration
 {
-    public class PermissionGroupConfiguration : EntityTypeConfiguration<PermissionGroup>
+    public class RoleGroupConfiguration : EntityTypeConfiguration<RoleGroup>
     {
-        public PermissionGroupConfiguration()
+        public RoleGroupConfiguration()
         {
             Property(b => b.Name).IsUnicode(false);
-            PropertyStr(this, "AssignedPermissions").IsUnicode(false);
-            Ignore(x => x.Permissions);
+            PropertyStr(this, "AssignedRoles").IsUnicode(false);
+            Ignore(x => x.Roles);
         }
 
         private static StringPropertyConfiguration PropertyStr<T>(EntityTypeConfiguration<T> mapper, String propertyName)

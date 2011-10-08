@@ -157,10 +157,10 @@
 
 <script type="text/javascript">
 
-    function CheckPublishPermission () {
+    function CheckPublishRoles () {
         
-        var hasPublishOwn = @(User.IsInRole(Permission.PublishOwnPosts)?"true":"false");;
-        var hasPublishOtherUsers = @(User.IsInRole(Permission.PublishOtherUsersPosts)?"true":"false");
+        var hasPublishOwn = @(User.IsInRole(Role.PublishOwnPosts)?"true":"false");;
+        var hasPublishOtherUsers = @(User.IsInRole(Role.PublishOtherUsersPosts)?"true":"false");
         var userName = '@(User.Identity.Name)';
         var currentPublishedValue = @(Model.Post.IsPublished?"true":"false");
 
@@ -178,9 +178,9 @@
         }
     }
     
-    CheckPublishPermission();
+    CheckPublishRoles();
     
-    $('#@(Html.FieldIdFor(x=> x.Post.AuthorId))').change(CheckPublishPermission);
+    $('#@(Html.FieldIdFor(x=> x.Post.AuthorId))').change(CheckPublishRoles);
 
     $('#add-category').click(function () {
 

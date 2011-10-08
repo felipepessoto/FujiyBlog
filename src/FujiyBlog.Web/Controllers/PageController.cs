@@ -18,7 +18,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Index()
         {
-            Page initialPage = db.Pages.WhereHavePermissions().Single(x => x.IsFrontPage);
+            Page initialPage = db.Pages.WhereHaveRoles().Single(x => x.IsFrontPage);
             return ShowPage(initialPage);
         }
 
@@ -39,7 +39,7 @@ namespace FujiyBlog.Web.Controllers
 
         private ActionResult Details(string slug, int? id)
         {
-            IQueryable<Page> pageQuery = db.Pages.WhereHavePermissions();
+            IQueryable<Page> pageQuery = db.Pages.WhereHaveRoles();
 
             Page page;
 

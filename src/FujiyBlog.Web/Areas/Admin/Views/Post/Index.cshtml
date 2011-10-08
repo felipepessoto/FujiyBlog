@@ -10,7 +10,7 @@
 
 <h2>Posts</h2>
 
-@if (User.IsInRole(Permission.CreateNewPosts))
+@if (User.IsInRole(Role.CreateNewPosts))
 {
     <p>
         @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
@@ -81,11 +81,11 @@
             @Html.DisplayFor(modelitem => item.CommentsTotal)
         </td>
         <td>
-        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)) || User.IsInRole(Permission.EditOtherUsersPosts))
+        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)) || User.IsInRole(Role.EditOtherUsersPosts))
         {
             @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id))
         }
-        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)) || (item.Post.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPosts)))
+        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPosts)) || (item.Post.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPosts)))
         {
             <text>
             | @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");"})

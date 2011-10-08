@@ -24,7 +24,7 @@ namespace FujiyBlog.Core.EntityFramework
             builder.Configurations.Add(new CategoryConfiguration());
             builder.Configurations.Add(new WidgetSettingConfiguration());
             builder.Configurations.Add(new PageConfiguration());
-            builder.Configurations.Add(new PermissionGroupConfiguration());
+            builder.Configurations.Add(new RoleGroupConfiguration());
         }
 
         public DbSet<PostComment> PostComments { get; set; }
@@ -35,6 +35,6 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<Tag> Tags { get; set; }
         public DbSet<WidgetSetting> WidgetSettings { get; set; }
         public DbSet<Page> Pages { get; set; }
-        public DbSet<PermissionGroup> PermissionGroups { get; set; }
+        public DbSet<RoleGroup> RoleGroups { get; set; }
     }
 }

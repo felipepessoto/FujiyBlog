@@ -9,26 +9,26 @@ namespace FujiyBlog.Core.Extensions
 {
     public static class PrincipalExtensions
     {
-        public static bool IsInRole(this IPrincipal principal, Permission permission)
+        public static bool IsInRole(this IPrincipal principal, Role role)
         {
             if (principal.Identity.IsAuthenticated)
             {
-                return principal.IsInRole(permission.ToString());
+                return principal.IsInRole(role.ToString());
             }
 
-            return GetAnonymousPermissions(permission);
+            return GetAnonymousRoles(role);
         }
 
-        public static bool GetAnonymousPermissions(Permission permission)
+        public static bool GetAnonymousRoles(Role role)
         {
-            if (HttpContext.Current.Items["AnonymousPermissionGroup"] == null)
+            if (HttpContext.Current.Items["AnonymousRoleGroup"] == null)
             {
                 FujiyBlogDatabase db = DependencyResolver.Current.GetService<FujiyBlogDatabase>();
-                PermissionGroup permissionGroup = db.PermissionGroups.AsNoTracking().Single(x => x.Name == "Anonymous");
-                HttpContext.Current.Items["AnonymousPermissionGroup"] = permissionGroup;
+                RoleGroup roleGroup = db.RoleGroups.AsNoTracking().Single(x => x.Name == "Anonymous");
+                HttpContext.Current.Items["AnonymousRoleGroup"] = roleGroup;
             }
 
-            return ((PermissionGroup)HttpContext.Current.Items["AnonymousPermissionGroup"]).Permissions.Any(x => x == permission);
+            return ((RoleGroup)HttpContext.Current.Items["AnonymousRoleGroup"]).Roles.Any(x => x == role);
         }
     }
 }

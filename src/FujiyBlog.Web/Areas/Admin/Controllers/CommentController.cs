@@ -11,7 +11,7 @@ using FujiyBlog.Web.Infrastructure;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    [AuthorizePermission(Permission.ModerateComments)]
+    [AuthorizeRole(Role.ModerateComments)]
     public partial class CommentController : AdminController
     {
         private readonly FujiyBlogDatabase db;

@@ -11,7 +11,7 @@ namespace FujiyBlog.Core.DomainObjects
             Posts = new List<Post>();
             AuthoredPostComments = new List<PostComment>();
             ModeratedPostComments = new List<PostComment>();
-            PermissionGroups = new List<PermissionGroup>();
+            RoleGroups = new List<RoleGroup>();
         }
 
         public int Id { get; set; }
@@ -54,6 +54,6 @@ namespace FujiyBlog.Core.DomainObjects
 
         public ICollection<PostComment> ModeratedPostComments { get; set; }
 
-        public ICollection<PermissionGroup> PermissionGroups { get; set; }
+        public ICollection<RoleGroup> RoleGroups { get; set; }
     }
 }

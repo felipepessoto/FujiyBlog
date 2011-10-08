@@ -6,9 +6,9 @@ namespace FujiyBlog.Core.Services
 {
     public class RolesService
     {
-        public static bool UserHasPermission(Permission permission)
+        public static bool UserHasRole(Role role)
         {
-            return HttpContext.Current.User.IsInRole(permission);
+            return HttpContext.Current.User.IsInRole(role);
 
         }
     }

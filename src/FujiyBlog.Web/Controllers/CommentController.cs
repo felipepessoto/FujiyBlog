@@ -19,11 +19,11 @@ namespace FujiyBlog.Web.Controllers
             this.db = db;
         }
 
-        [AuthorizePermission(Permission.CreateComments)]
+        [AuthorizeRole(Role.CreateComments)]
         public virtual ActionResult DoComment(int id, int? parentCommentId)
         {
             bool isLogged = Request.IsAuthenticated;
-            Post post = db.Posts.Include(x => x.Author).WhereHavePermissions().SingleOrDefault(x => x.Id == id);
+            Post post = db.Posts.Include(x => x.Author).WhereHaveRoles().SingleOrDefault(x => x.Id == id);
 
             if (post == null || !post.IsCommentEnabled || !Settings.SettingRepository.EnableComments)
             {
@@ -65,7 +65,7 @@ namespace FujiyBlog.Web.Controllers
             return View("Comments", new[] { postComment });
         }
 
-        [AuthorizePermission(Permission.CreateComments)]
+        [AuthorizeRole(Role.CreateComments)]
         public virtual ActionResult ReplyComment(int id)
         {
             PostComment comment = db.PostComments.Include(x => x.Post).Single(x => x.Id == id);

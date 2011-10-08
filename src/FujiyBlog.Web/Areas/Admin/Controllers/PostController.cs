@@ -60,7 +60,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ActionResult Edit(int? id)
         {
-            if (!id.HasValue && !User.IsInRole(Permission.CreateNewPosts))
+            if (!id.HasValue && !User.IsInRole(Role.CreateNewPosts))
             {
                 Response.SendToUnauthorized();
             }
@@ -72,13 +72,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                       IsCommentEnabled = true
                                   };
 
-            if (id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
+            if (id.HasValue && !User.IsInRole(Role.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)))
             {
                 Response.SendToUnauthorized();
             }
 
             IQueryable<User> authors = db.Users.Where(x => x.Enabled);
-            if (!User.IsInRole(Permission.EditOtherUsersPosts))
+            if (!User.IsInRole(Role.EditOtherUsersPosts))
             {
                 authors = authors.Where(x => x.Username == User.Identity.Name);
             }
@@ -104,7 +104,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             User newAuthor = userRepository.GetById(postSave.AuthorId.Value); //postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
 
-            CheckPostsSavePermissions(postSave, editedPost, newAuthor);
+            CheckPostsSaveRoles(postSave, editedPost, newAuthor);
 
             editedPost.Author = newAuthor;
             editedPost.LastModificationDate = DateTime.UtcNow;
@@ -143,7 +143,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTags = db.Tags.ToList();
             IQueryable<User> authors = db.Users.Where(x => x.Enabled);
-            if (!User.IsInRole(Permission.EditOtherUsersPosts))
+            if (!User.IsInRole(Role.EditOtherUsersPosts))
             {
                 authors = authors.Where(x => x.Username == User.Identity.Name);
             }
@@ -152,20 +152,20 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        private void CheckPostsSavePermissions(AdminPostSave postSave, Post editedPost, User newAuthor)
+        private void CheckPostsSaveRoles(AdminPostSave postSave, Post editedPost, User newAuthor)
         {
-            if (!postSave.Id.HasValue && !User.IsInRole(Permission.CreateNewPosts))
+            if (!postSave.Id.HasValue && !User.IsInRole(Role.CreateNewPosts))
             {
                 Response.SendToUnauthorized();
             }
 
-            if (postSave.Id.HasValue && !User.IsInRole(Permission.EditOtherUsersPosts) &&
-                !(editedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPosts)))
+            if (postSave.Id.HasValue && !User.IsInRole(Role.EditOtherUsersPosts) &&
+                !(editedPost.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)))
             {
                 Response.SendToUnauthorized();
             }
 
-            if (!User.IsInRole(Permission.EditOtherUsersPosts) && newAuthor.Username != User.Identity.Name)
+            if (!User.IsInRole(Role.EditOtherUsersPosts) && newAuthor.Username != User.Identity.Name)
             {
                 Response.SendToUnauthorized();
             }
@@ -174,8 +174,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             {
                 string authorUserName = newAuthor.Username;
 
-                if (!(authorUserName != User.Identity.Name && User.IsInRole(Permission.PublishOtherUsersPosts)) &&
-                    !(authorUserName == User.Identity.Name && User.IsInRole(Permission.PublishOwnPosts)))
+                if (!(authorUserName != User.Identity.Name && User.IsInRole(Role.PublishOtherUsersPosts)) &&
+                    !(authorUserName == User.Identity.Name && User.IsInRole(Role.PublishOwnPosts)))
                 {
                     Response.SendToUnauthorized();
                 }
@@ -187,7 +187,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             Post deletedPost = db.Posts.Include(x=>x.Author).Single(x => x.Id == id);
 
-            if (!(deletedPost.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPosts)) && !(deletedPost.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPosts)))
+            if (!(deletedPost.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPosts)) && !(deletedPost.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPosts)))
             {
                 Response.SendToUnauthorized();
             }

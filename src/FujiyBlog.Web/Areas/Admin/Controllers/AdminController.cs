@@ -4,7 +4,7 @@ using FujiyBlog.Web.Infrastructure;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    [AuthorizePermission(Permission.AccessAdminPages)]
+    [AuthorizeRole(Role.AccessAdminPages)]
     public abstract partial class AdminController : AbstractController
     {
     }

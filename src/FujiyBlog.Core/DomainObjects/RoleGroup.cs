@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace FujiyBlog.Core.DomainObjects
 {
-    public class PermissionGroup
+    public class RoleGroup
     {
-        public PermissionGroup()
+        public RoleGroup()
         {
             Users = new List<User>();
         }
@@ -17,20 +17,20 @@ namespace FujiyBlog.Core.DomainObjects
         [Required, StringLength(50)]
         public string Name { get; set; }
 
-        public IEnumerable<Permission> Permissions
+        public IEnumerable<Role> Roles
         {
             get
             {
-                return (AssignedPermissions ?? string.Empty).Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(x => (Permission)Enum.Parse(typeof(Permission), x));
+                return (AssignedRoles ?? string.Empty).Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(x => (Role)Enum.Parse(typeof(Role), x));
             }
             set
             {
-                AssignedPermissions = string.Join(",", value.Select(x => x.ToString()));
+                AssignedRoles = string.Join(",", value.Select(x => x.ToString()));
             }
         }
 
         public ICollection<User> Users { get; set; }
 
-        private string AssignedPermissions { get; set; }
+        private string AssignedRoles { get; set; }
     }
 }

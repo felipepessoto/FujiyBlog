@@ -18,7 +18,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         private Post GetPost(string slug, int? id)
         {
-            IQueryable<Post> posts = Database.Posts.WhereHavePermissions().Include(x => x.Author);
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().Include(x => x.Author);
 
             Post post;
 
@@ -39,14 +39,14 @@ namespace FujiyBlog.Core.EntityFramework
 
             Database.Entry(post).Collection(x=>x.Tags).Load();
             Database.Entry(post).Collection(x => x.Categories).Load();
-            Database.Entry(post).Collection(x => x.Comments).Query().WhereHavePermissions().Include(x => x.Author).Load();
+            Database.Entry(post).Collection(x => x.Comments).Query().WhereHaveRoles().Include(x => x.Author).Load();
 
             return post;
         }
 
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
         {
-            IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHavePermissions().OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
 
             if (tag != null)
             {
@@ -94,8 +94,8 @@ namespace FujiyBlog.Core.EntityFramework
 
         private Dictionary<int, int> GetPostsCounts(IQueryable<Post> posts)
         {
-            bool publicComments = RolesService.UserHasPermission(Permission.ViewPublicComments);
-            bool unmoderatedComments = RolesService.UserHasPermission(Permission.ViewUnmoderatedComments);
+            bool publicComments = RolesService.UserHasRole(Role.ViewPublicComments);
+            bool unmoderatedComments = RolesService.UserHasRole(Role.ViewUnmoderatedComments);
 
             if (publicComments && unmoderatedComments)
             {
@@ -123,7 +123,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<PostSummary> GetArchive()
         {
-            IQueryable<Post> posts = Database.Posts.WhereHavePermissions().OrderByDescending(x => x.PublicationDate).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Include(x => x.Categories);
 
             Dictionary<int, int> counts = GetPostsCounts(posts);
 
@@ -139,7 +139,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public int GetTotal(string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
         {
-            IQueryable<Post> posts = Database.Posts.WhereHavePermissions();
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles();
 
             if (tag != null)
             {
@@ -181,14 +181,14 @@ namespace FujiyBlog.Core.EntityFramework
 
         public Post GetPreviousPost(Post post, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.WhereHavePermissions().OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
 
             return posts.FirstOrDefault();
         }
 
         public Post GetNextPost(Post post, bool isPublic = true)
         {
-            IQueryable<Post> posts = Database.Posts.WhereHavePermissions().OrderBy(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().OrderBy(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
 
             return posts.FirstOrDefault();
         }
@@ -214,7 +214,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending)
         {
-            var months = Database.Posts.WhereHavePermissions().GroupBy(data => new {data.PublicationDate.Year, data.PublicationDate.Month});
+            var months = Database.Posts.WhereHaveRoles().GroupBy(data => new {data.PublicationDate.Year, data.PublicationDate.Month});
 
             if(descending)
             {

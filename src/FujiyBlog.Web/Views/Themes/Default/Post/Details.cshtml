@@ -28,7 +28,7 @@
 }
     @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, Model.Post.Comments.Where(x => x.ParentComment == null));}
 </div>
-@if (User.IsInRole(Permission.CreateComments) && Model.Post.IsCommentEnabled && Settings.SettingRepository.EnableComments && (!Settings.SettingRepository.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
+@if (User.IsInRole(Role.CreateComments) && Model.Post.IsCommentEnabled && Settings.SettingRepository.EnableComments && (!Settings.SettingRepository.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
 {
     Html.RenderPartial(MVC.Themes.Views.Default.Comment.DoComment, new PostComment {Post = Model.Post});
 }

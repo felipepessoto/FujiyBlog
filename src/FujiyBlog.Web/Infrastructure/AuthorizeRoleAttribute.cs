@@ -10,16 +10,16 @@ using FujiyBlog.Web.Extensions;
 namespace FujiyBlog.Web.Infrastructure
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, Inherited = true, AllowMultiple = true)]
-    public class AuthorizePermissionAttribute : AuthorizeAttribute
+    public class AuthorizeRoleAttribute : AuthorizeAttribute
     {
-        public AuthorizePermissionAttribute(params Permission[] permissions)
+        public AuthorizeRoleAttribute(params Role[] roles)
         {
-            if (permissions == null)
+            if (roles == null)
             {
-                throw new ArgumentNullException("permissions");
+                throw new ArgumentNullException("roles");
             }
 
-            Roles = string.Join(",", permissions.Select(r => r.ToString()));
+            Roles = string.Join(",", roles.Select(r => r.ToString()));
         }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
@@ -32,7 +32,7 @@ namespace FujiyBlog.Web.Infrastructure
             IPrincipal user = httpContext.User;
 
             var usersSplit = SplitString(Users);
-            var rolesSplit = SplitString(Roles).Select(x => (Permission) Enum.Parse(typeof (Permission), x)).ToArray();
+            var rolesSplit = SplitString(Roles).Select(x => (Role) Enum.Parse(typeof (Role), x)).ToArray();
 
             if (usersSplit.Length > 0 && !usersSplit.Contains(user.Identity.Name, StringComparer.OrdinalIgnoreCase))
             {

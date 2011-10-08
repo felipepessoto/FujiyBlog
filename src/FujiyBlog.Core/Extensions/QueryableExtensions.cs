@@ -22,10 +22,10 @@ namespace FujiyBlog.Core.Extensions
             return query.Take(pageSize);
         }
 
-        public static IQueryable<Post> WhereHavePermissions(this IQueryable<Post> query)
-        {
-            bool publicPost = RolesService.UserHasPermission(Permission.ViewPublicPosts);
-            bool unpublishedPost = RolesService.UserHasPermission(Permission.ViewUnpublishedPosts);
+        public static IQueryable<Post> WhereHaveRoles(this IQueryable<Post> query)
+        { 
+            bool publicPost = RolesService.UserHasRole(Role.ViewPublicPosts);
+            bool unpublishedPost = RolesService.UserHasRole(Role.ViewUnpublishedPosts);
 
             if (publicPost && unpublishedPost)
             {
@@ -45,10 +45,10 @@ namespace FujiyBlog.Core.Extensions
             return query.Where(x => false);
         }
 
-        public static IQueryable<PostComment> WhereHavePermissions(this IQueryable<PostComment> query)
+        public static IQueryable<PostComment> WhereHaveRoles(this IQueryable<PostComment> query)
         {
-            bool publicComments = RolesService.UserHasPermission(Permission.ViewPublicComments);
-            bool unmoderatedComments = RolesService.UserHasPermission(Permission.ViewUnmoderatedComments);
+            bool publicComments = RolesService.UserHasRole(Role.ViewPublicComments);
+            bool unmoderatedComments = RolesService.UserHasRole(Role.ViewUnmoderatedComments);
 
             if (publicComments && unmoderatedComments)
             {
@@ -68,10 +68,10 @@ namespace FujiyBlog.Core.Extensions
             return query.Where(x => false);
         }
 
-        public static IQueryable<Page> WhereHavePermissions(this IQueryable<Page> query)
+        public static IQueryable<Page> WhereHaveRoles(this IQueryable<Page> query)
         {
-            bool publicPages = RolesService.UserHasPermission(Permission.ViewPublicPages);
-            bool unpublishedPages = RolesService.UserHasPermission(Permission.ViewUnpublishedPages);
+            bool publicPages = RolesService.UserHasRole(Role.ViewPublicPages);
+            bool unpublishedPages = RolesService.UserHasRole(Role.ViewUnpublishedPages);
 
             if (publicPages && unpublishedPages)
             {

@@ -27,11 +27,11 @@
                 @Html.ActionLink(comment.Author.DisplayName ?? comment.Author.Username, MVC.Post.Author(comment.Author.Username, null))
             }
 
-            @if (User.IsInRole(Permission.CreateComments))
+            @if (User.IsInRole(Role.CreateComments))
             {
                 <text>| @Ajax.ActionLink("Reply", MVC.Comment.ReplyComment(comment.Id), new AjaxOptions {HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "reply-comment-" + comment.Id}) <div id="reply-comment-@comment.Id"></div></text>
             }
-            @if (!comment.IsApproved && User.IsInRole(Permission.ModerateComments))
+            @if (!comment.IsApproved && User.IsInRole(Role.ModerateComments))
             {
                 @(Ajax.ActionLink("Approve", MVC.Admin.Comment.ActionNames.ApproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))
                 @(Ajax.ActionLink("Disapprove", MVC.Admin.Comment.ActionNames.DisapproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))

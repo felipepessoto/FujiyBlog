@@ -4,7 +4,7 @@
 @model WidgetSetting
            
 <div class="widget @(Model.Name.ToLower())" id="widget@(Model.Id)">
-    @if (User.IsInRole(Permission.ManageWidgets))
+    @if (User.IsInRole(Role.ManageWidgets))
     {
         @Ajax.ActionLink("X", MVC.Widget.Remove(Model.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "(function(){$('#widget"+@Model.Id+"').remove();})()" }, new { @class = "delete" })
         if (ViewEngines.Engines.FindView(ViewContext, Model.Name + "Edit", null).View != null)

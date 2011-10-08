@@ -19,9 +19,9 @@ namespace FujiyBlog.Web.Infrastructure
         {
             FujiyBlogDatabase db = DependencyResolver.Current.GetService<FujiyBlogDatabase>();
 
-            List<PermissionGroup> permissionGroups = db.PermissionGroups.AsNoTracking().Where(x => x.Users.Any(y => y.Username == username && y.Enabled)).ToList();
+            List<RoleGroup> roleGroups = db.RoleGroups.AsNoTracking().Where(x => x.Users.Any(y => y.Username == username && y.Enabled)).ToList();
 
-            return permissionGroups.SelectMany(x => x.Permissions).Select(x => x.ToString()).ToArray();
+            return roleGroups.SelectMany(x => x.Roles).Select(x => x.ToString()).ToArray();
         }
 
         public override void CreateRole(string roleName)

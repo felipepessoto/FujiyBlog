@@ -11,7 +11,7 @@
 
 <h2>Pages</h2>
 
-@if (User.IsInRole(Permission.CreateNewPages))
+@if (User.IsInRole(Role.CreateNewPages))
 {
     <p>
         @Html.ActionLink("Add new page", MVC.Admin.Page.Edit())
@@ -63,11 +63,11 @@
             @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
         </td>
         <td>
-            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Permission.EditOwnPages)) || User.IsInRole(Permission.EditOtherUsersPages))
+            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPages)) || User.IsInRole(Role.EditOtherUsersPages))
             {
                 @Html.ActionLink("Edit", MVC.Admin.Page.Edit(item.Id))
             }
-            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Permission.DeleteOwnPages)) || (item.Author.Username != User.Identity.Name && User.IsInRole(Permission.DeleteOtherUsersPages)))
+            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPages)) || (item.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPages)))
             {
                 <text>|
                 @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");"})

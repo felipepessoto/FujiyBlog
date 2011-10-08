@@ -155,10 +155,10 @@
 
 <script type="text/javascript">
 
-    function CheckPublishPermission () {
+    function CheckPublishRoles () {
         
-        var hasPublishOwn = @(User.IsInRole(Permission.PublishOwnPages)?"true":"false");;
-        var hasPublishOtherUsers = @(User.IsInRole(Permission.PublishOtherUsersPages)?"true":"false");
+        var hasPublishOwn = @(User.IsInRole(Role.PublishOwnPages)?"true":"false");;
+        var hasPublishOtherUsers = @(User.IsInRole(Role.PublishOtherUsersPages)?"true":"false");
         var userName = '@(User.Identity.Name)';
         var currentPublishedValue = @(Model.IsPublished?"true":"false");
 
@@ -176,9 +176,9 @@
         }
     }
     
-    CheckPublishPermission();
+    CheckPublishRoles();
     
-    $('#@(Html.FieldIdFor(x=> x.AuthorId))').change(CheckPublishPermission);
+    $('#@(Html.FieldIdFor(x=> x.AuthorId))').change(CheckPublishRoles);
 
     var tinymceContent = null;
     $().ready(function () {
