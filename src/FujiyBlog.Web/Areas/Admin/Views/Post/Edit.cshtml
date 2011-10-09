@@ -162,7 +162,7 @@
         var hasPublishOwn = @(User.IsInRole(Role.PublishOwnPosts)?"true":"false");;
         var hasPublishOtherUsers = @(User.IsInRole(Role.PublishOtherUsersPosts)?"true":"false");
         var userName = '@(User.Identity.Name)';
-        var currentPublishedValue = @(Model.Post.IsPublished?"true":"false");
+        var currentPublishedValue = @(Model.Post.Id.HasValue && Model.Post.IsPublished?"true":"false");
 
         var publishedField = $('#@(Html.FieldIdFor(x=> x.Post.IsPublished))');
         var newAuthor = $('#@(Html.FieldIdFor(x=> x.Post.AuthorId)) :selected').text();
