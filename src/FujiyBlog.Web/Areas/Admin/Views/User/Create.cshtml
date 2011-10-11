@@ -1,4 +1,5 @@
-﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserCreate
+﻿@using FujiyBlog.Core.DomainObjects
+@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserCreate
 @{
     Layout = MVC.Admin.User.Views._Layout;
 }
@@ -57,6 +58,17 @@
         <div class="editor-field">
             @Html.EditorFor(model => model.Location)
             @Html.ValidationMessageFor(model => model.Location)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SelectedRoleGroups)
+        </div>
+        <div class="editor-field">
+            <ul id="categories-list">
+            @foreach (RoleGroup roleGroup in Model.AllRoleGroups)
+            {
+                <li><input type="checkbox" name="SelectedRoleGroups" value="@roleGroup.Id" @(Model.SelectedRoleGroups.Any(x => x == roleGroup.Id) ? "checked=checked" : string.Empty) />@roleGroup.Name</li>
+            }
+            </ul>
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.About)

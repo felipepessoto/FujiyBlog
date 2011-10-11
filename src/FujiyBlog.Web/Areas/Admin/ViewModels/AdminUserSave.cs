@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -11,6 +13,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public string Username { get; set; }
 
         [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         [StringLength(20)]
@@ -25,6 +28,12 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public string Location { get; set; }
 
         [StringLength(500)]
+        [DataType(DataType.MultilineText)]
         public string About { get; set; }
+
+        [Display(Name = "Role Groups")]
+        public IEnumerable<int> SelectedRoleGroups { get; set; }
+
+        public IEnumerable<RoleGroup> AllRoleGroups { get; set; }
     }
 }

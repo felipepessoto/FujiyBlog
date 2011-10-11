@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
@@ -15,6 +16,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
     public partial class UserController : AdminController
     {
         private readonly FujiyBlogDatabase db;
+        private const string AnonymousGroup = "Anonymous";
+        private const string AdminGroup = "Admin";
 
         public UserController(FujiyBlogDatabase db)
         {
@@ -33,7 +36,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            return View(new AdminUserCreate());
+            AdminUserCreate viewModel = new AdminUserCreate();
+            viewModel.SelectedRoleGroups = Enumerable.Empty<int>();
+            viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -48,6 +55,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             {
                 User newUser = Mapper.Map<AdminUserCreate, User>(userData);
                 newUser.Enabled = true;
+                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Count() > 0)
+                {
+                    newUser.RoleGroups = db.RoleGroups.Where(x => userData.SelectedRoleGroups.Any(y => x.Id == y)).ToList();
+                }
                 db.Users.Add(newUser);
                 db.SaveChanges();
                 return RedirectToAction(MVC.Admin.User.Index());  
@@ -58,7 +69,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ActionResult Edit(int id)
         {
-            User user = db.Users.Find(id);
+            User user = db.Users.Include(x => x.RoleGroups).Single(x => x.Id == id);
 
             if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
                     !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
@@ -66,13 +77,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            return View(user);
+            AdminUserSave viewModel = Mapper.Map<User, AdminUserSave>(user);
+            viewModel.SelectedRoleGroups = user.RoleGroups.Select(x => x.Id);
+            viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+
+            return View(viewModel);
         }
 
         [HttpPost]
         public virtual ActionResult Edit(AdminUserSave userData)
         {
-            User user = db.Users.Single(x => x.Id == userData.Id);
+            User user = db.Users.Include(x => x.RoleGroups).Single(x => x.Id == userData.Id);
 
             if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
                     !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
@@ -83,6 +98,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {    
                 Mapper.Map(userData, user);
+                user.RoleGroups = null;
+                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Count() > 0)
+                {
+                    user.RoleGroups = db.RoleGroups.Where(x => userData.SelectedRoleGroups.Any(y => x.Id == y)).ToList();
+                }
                 db.SaveChanges();
                 return RedirectToAction(MVC.Admin.User.Index());
             }
@@ -92,7 +112,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult Disable(int id)
         {
-            if (!db.Users.Any(x => x.Enabled && x.Id != id && x.RoleGroups.Any(y => y.Name == "Admin")))
+            if (!db.Users.Any(x => x.Enabled && x.Id != id && x.RoleGroups.Any(y => y.Name == AdminGroup)))
             {
                 return Json(new { errorMessage = "You can´t disable the unique enabled admin" });
             }
@@ -145,7 +165,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            if (string.Equals(roleGroup.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(roleGroup.Name, AdminGroup, StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Cannot edit admin roles");
             }
@@ -169,12 +189,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            if (string.Equals(roleGroup.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(roleGroup.Name, AdminGroup, StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Cannot edit admin roles");
             }
 
-            if (!string.Equals(roleGroup.Name, "Anonymous", StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(roleGroup.Name, AnonymousGroup, StringComparison.OrdinalIgnoreCase))
             {
                 roleGroup.Name = name;
             }
@@ -199,7 +219,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             RoleGroup deletedRoleGorup = db.RoleGroups.Single(x => x.Id == id);
 
-            if (string.Equals(deletedRoleGorup.Name, "Admin", StringComparison.OrdinalIgnoreCase) || string.Equals(deletedRoleGorup.Name, "Anonymous", StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(deletedRoleGorup.Name, AdminGroup, StringComparison.OrdinalIgnoreCase) || string.Equals(deletedRoleGorup.Name, AnonymousGroup, StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Cannot delete " + deletedRoleGorup.Name + " roles");
             }

@@ -9,6 +9,7 @@ namespace FujiyBlog.Web.Infrastructure.AutoMapper.Profiles
         protected override void Configure()
         {
             Mapper.CreateMap<AdminUserSave, User>().ForMember(dest => dest.Username, opt => opt.Ignore());
+            Mapper.CreateMap<User, AdminUserSave>();
             Mapper.CreateMap<AdminUserCreate, User>();
         }
     }
