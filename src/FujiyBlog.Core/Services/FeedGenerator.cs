@@ -37,7 +37,7 @@ namespace FujiyBlog.Core.Services
 
             foreach (Post post in feedRepository.GetPosts(settingRepository.PostsPerPage))
             {
-                string content = post.Content;
+                string content = post.Content ?? string.Empty;
 
                 int moreIndex = content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
                 if (moreIndex >= 0)
