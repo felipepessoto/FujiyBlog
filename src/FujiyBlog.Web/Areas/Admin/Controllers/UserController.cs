@@ -42,6 +42,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost, AuthorizeRole(Role.CreateNewUsers)]
         public virtual ActionResult Create(AdminUserCreate userData)
         {
+            if (db.Users.Any(x => x.Username == userData.Username && x.Id != userData.Id))
+            {
+                ModelState.AddModelError("Username", "This Username already exists");
+            }
+
             if (ModelState.IsValid)
             {
                 User newUser = Mapper.Map<AdminUserCreate, User>(userData);
@@ -58,6 +63,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return RedirectToAction(MVC.Admin.User.Index());  
             }
 
+            userData.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
             return View(userData);
         }
 
@@ -81,6 +87,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult Edit(AdminUserSave userData)
         {
+            if (db.Users.Any(x => x.Username == userData.Username && x.Id != userData.Id))
+            {
+                ModelState.AddModelError("Username", "This Username already exists");
+            }
+
             User user = db.Users.Include(x => x.RoleGroups).Single(x => x.Id == userData.Id);
 
             if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
@@ -102,7 +113,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction(MVC.Admin.User.Index());
             }
-            return View(user);
+
+            userData.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+
+            return View(userData);
         }
 
         private void CheckEditRolesPermission(AdminUserSave userData, User user)
