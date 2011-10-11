@@ -1,7 +1,10 @@
 ﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserSave
 @{
     Layout = MVC.Admin.User.Views._Layout;
+    bool canEditRoles = (Model.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsersRoleGroups)) || (Model.Username == User.Identity.Name && User.IsInRole(Role.EditOwnRoleGroups));
 }
 @using (Html.BeginForm())
 {
@@ -58,7 +61,7 @@
             <ul id="categories-list">
             @foreach (RoleGroup roleGroup in Model.AllRoleGroups)
             {
-                <li><input type="checkbox" name="SelectedRoleGroups" value="@roleGroup.Id" @(Model.SelectedRoleGroups.Any(x => x == roleGroup.Id) ? "checked=checked" : string.Empty) />@roleGroup.Name</li>
+                <li><input type="checkbox" name="SelectedRoleGroups" value="@roleGroup.Id" @(Model.SelectedRoleGroups.Any(x => x == roleGroup.Id) ? "checked=checked" : string.Empty) @(canEditRoles ? string.Empty : "disabled=disabled")  />@roleGroup.Name</li>
             }
             </ul>
         </div>

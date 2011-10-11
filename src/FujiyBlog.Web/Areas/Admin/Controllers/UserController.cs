@@ -29,13 +29,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(db.Users.ToList());
         }
 
+        [AuthorizeRole(Role.CreateNewUsers)]
         public virtual ActionResult Create()
         {
-            if (!User.IsInRole(Role.CreateNewUsers))
-            {
-                Response.SendToUnauthorized();
-            }
-
             AdminUserCreate viewModel = new AdminUserCreate();
             viewModel.SelectedRoleGroups = Enumerable.Empty<int>();
             viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
@@ -43,17 +39,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
+        [HttpPost, AuthorizeRole(Role.CreateNewUsers)]
         public virtual ActionResult Create(AdminUserCreate userData)
         {
-            if (!User.IsInRole(Role.CreateNewUsers))
-            {
-                Response.SendToUnauthorized();
-            }
-
             if (ModelState.IsValid)
             {
                 User newUser = Mapper.Map<AdminUserCreate, User>(userData);
+
+                CheckEditRolesPermission(userData, newUser);
+
                 newUser.Enabled = true;
                 if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Count() > 0)
                 {
@@ -95,6 +89,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
+            CheckEditRolesPermission(userData, user);
+
             if (ModelState.IsValid)
             {    
                 Mapper.Map(userData, user);
@@ -107,6 +103,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return RedirectToAction(MVC.Admin.User.Index());
             }
             return View(user);
+        }
+
+        private void CheckEditRolesPermission(AdminUserSave userData, User user)
+        {
+            var currentRoles = user.RoleGroups.Select(x => x.Id);
+            var newRoles = userData.SelectedRoleGroups ?? Enumerable.Empty<int>();
+            //If changed some role
+            if (currentRoles.Except(newRoles).Count() != 0 || newRoles.Except(currentRoles).Count() != 0)
+            {
+                if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsersRoleGroups)) &&
+                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnRoleGroups)))
+                {
+                    Response.SendToUnauthorized();
+                }
+            }
         }
 
         [HttpPost]
