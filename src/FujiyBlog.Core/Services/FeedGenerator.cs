@@ -5,16 +5,15 @@ using System.Text;
 using System.Xml;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.Services
 {
     public class FeedGenerator
     {
         private readonly SettingRepository settingRepository;
-        private readonly IFeedRepository feedRepository;
+        private readonly FeedRepository feedRepository;
 
-        public FeedGenerator(SettingRepository settingRepository, IFeedRepository feedRepository)
+        public FeedGenerator(SettingRepository settingRepository, FeedRepository feedRepository)
         {
             this.settingRepository = settingRepository;
             this.feedRepository = feedRepository;

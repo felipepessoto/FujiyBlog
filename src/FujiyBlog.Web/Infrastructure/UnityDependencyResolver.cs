@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Repositories;
 using Microsoft.Practices.Unity;
 
 namespace FujiyBlog.Web.Infrastructure
@@ -21,8 +20,8 @@ namespace FujiyBlog.Web.Infrastructure
                     container.RegisterType<FujiyBlogDatabase, FujiyBlogDatabase>(new ContainerControlledLifetimeManager());
                     container.RegisterType<UserRepository, UserRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<SettingRepository, SettingRepository>(new ContainerControlledLifetimeManager());
-                    container.RegisterType<IFeedRepository, FeedRepository>(new ContainerControlledLifetimeManager());
-                    container.RegisterType<IWidgetSettingRepository, WidgetSettingRepository>(new ContainerControlledLifetimeManager());
+                    container.RegisterType<FeedRepository, FeedRepository>(new ContainerControlledLifetimeManager());
+                    container.RegisterType<WidgetSettingRepository, WidgetSettingRepository>(new ContainerControlledLifetimeManager());
 
                     HttpContext.Current.Items["Container"] = container;
                 }

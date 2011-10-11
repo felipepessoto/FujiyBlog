@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class WidgetSettingRepository : RepositoryBase<WidgetSetting>, IWidgetSettingRepository
+    public class WidgetSettingRepository : RepositoryBase<WidgetSetting>
     {
         public WidgetSettingRepository(FujiyBlogDatabase database)
             : base(database)

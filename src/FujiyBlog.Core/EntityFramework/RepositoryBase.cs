@@ -1,9 +1,8 @@
 ﻿using System;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public abstract class RepositoryBase<T> : IRepository<T> where T : class
+    public abstract class RepositoryBase<T> where T : class
     {
         protected readonly FujiyBlogDatabase Database;
 

@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.ViewModels;
 
@@ -12,10 +11,10 @@ namespace FujiyBlog.Web.Controllers
     public partial class WidgetController : AbstractController
     {
         private readonly FujiyBlogDatabase db;
-        private readonly IWidgetSettingRepository widgetSettingRepository;
+        private readonly WidgetSettingRepository widgetSettingRepository;
         private static string[] widgets;
 
-        public WidgetController(FujiyBlogDatabase db, IWidgetSettingRepository widgetSettingRepository)
+        public WidgetController(FujiyBlogDatabase db, WidgetSettingRepository widgetSettingRepository)
         {
             this.db = db;
             this.widgetSettingRepository = widgetSettingRepository;

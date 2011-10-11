@@ -8,7 +8,6 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
-using FujiyBlog.Core.Repositories;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Extensions;
 

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class FeedRepository : IFeedRepository
+    public class FeedRepository
     {
         private readonly FujiyBlogDatabase database;
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Repositories;
 
 namespace FujiyBlog.Core.EntityFramework
 {
