@@ -20,7 +20,7 @@
     <ul id="categorylist">
     @foreach (var category in postRepository.GetCategories())
     {
-        <li>@Html.ActionLink(category.Name + "(" + postRepository.GetTotal(category: category.Name, isPublic: Request.IsAuthenticated) + ")", MVC.Post.Category(category.Name, null))</li>    
+        <li>@Html.ActionLink(category.Name + "(" + postRepository.GetTotal(category: category.Name) + ")", MVC.Post.Category(category.Name, null))</li>    
     }    
     </ul>
 </div>
