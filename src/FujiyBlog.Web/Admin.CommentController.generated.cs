@@ -38,8 +38,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ViewResult Pending() {
-            return new T4MVC_ViewResult(Area, Name, ActionNames.Pending);
+        public System.Web.Mvc.ViewResult Approved() {
+            return new T4MVC_ViewResult(Area, Name, ActionNames.Approved);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -80,7 +80,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string Index = "Index";
-            public readonly string Pending = "Pending";
+            public readonly string Approved = "Approved";
             public readonly string ApproveSelected = "ApproveSelected";
             public readonly string DisapproveSelected = "DisapproveSelected";
             public readonly string DeleteSelected = "DeleteSelected";
@@ -110,8 +110,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ViewResult Pending(int? page) {
-            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Pending);
+        public override System.Web.Mvc.ViewResult Approved(int? page) {
+            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Approved);
             callInfo.RouteValueDictionary.Add("page", page);
             return callInfo;
         }

@@ -23,14 +23,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ViewResult Index(int? page)
         {
-            AdminCommentIndex model = GetCommentsViewModel(page, true);
+            AdminCommentIndex model = GetCommentsViewModel(page, false);
 
             return View(model);
         }
 
-        public virtual ViewResult Pending(int? page)
+        public virtual ViewResult Approved(int? page)
         {
-            AdminCommentIndex model = GetCommentsViewModel(page, false);
+            AdminCommentIndex model = GetCommentsViewModel(page, true);
 
             return View(MVC.Admin.Comment.Views.Index, model);
         }

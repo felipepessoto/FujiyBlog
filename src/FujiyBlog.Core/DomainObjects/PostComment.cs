@@ -25,7 +25,7 @@ namespace FujiyBlog.Core.DomainObjects
         public string AuthorEmail { get; set; }
 
         [DisplayName("Site")]
-        [StringLength(200)]
+        [StringLength(200), Url]
         [DataType(DataType.Url)]
         public string AuthorWebsite { get; set; }
 

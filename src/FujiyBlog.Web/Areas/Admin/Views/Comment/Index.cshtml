@@ -81,16 +81,16 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", MVC.Admin.Comment.Edit(item.Id)) |
-                @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions() { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
+                @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
             </td>
         </tr>
     }
 </table>
-@if (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString() != "Index")
+@if (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString() == "Index")
 { 
     <a href="javascript:void(0);" id="approve-comments">Approve Selected</a>
 }
-@if (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString() != "Pending")
+else
 { 
     <a href="javascript:void(0);" id="disapprove-comments">Disapprove Selected</a>
 }

@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Services\RolesService.cs" />
     <Compile Include="Validation\EmailAddressAttribute.cs" />
+    <Compile Include="Validation\UrlAttribute.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
