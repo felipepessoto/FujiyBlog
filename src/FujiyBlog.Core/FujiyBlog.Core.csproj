@@ -95,6 +95,7 @@
       <DependentUpon>TextMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\RolesService.cs" />
+    <Compile Include="Validation\EmailAddressAttribute.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
