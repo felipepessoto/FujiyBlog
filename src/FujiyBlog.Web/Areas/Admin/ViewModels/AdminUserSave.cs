@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -9,10 +10,10 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
     {
         public int Id { get; set; }
 
-        [Required, StringLength(20)]
+        [Required, StringLength(20), RegularExpression(User.UsernameRegex)]
         public string Username { get; set; }
 
-        [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
+        [Required, StringLength(255), EmailAddress]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 

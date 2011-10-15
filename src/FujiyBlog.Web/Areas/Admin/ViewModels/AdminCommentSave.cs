@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -9,7 +10,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [StringLength(50)]
         public string AuthorName { get; set; }
 
-        [StringLength(255), RegularExpression(@"^([\w-_]+\.)*[\w-_]+@([\w-_]+\.)*[\w-_]+\.[\w-_]+$")]
+        [StringLength(255), EmailAddress]
         public string AuthorEmail { get; set; }
 
         [StringLength(200)]

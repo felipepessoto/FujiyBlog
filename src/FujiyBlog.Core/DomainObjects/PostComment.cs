@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Core.DomainObjects
 {
@@ -19,7 +20,7 @@ namespace FujiyBlog.Core.DomainObjects
         public string AuthorName { get; set; }
 
         [DisplayName("Email")]
-        [StringLength(255), RegularExpression(@"^([\w-_]+\.)*[\w-_]+@([\w-_]+\.)*[\w-_]+\.[\w-_]+$")]
+        [StringLength(255), EmailAddress]
         [DataType(DataType.EmailAddress)]
         public string AuthorEmail { get; set; }
 

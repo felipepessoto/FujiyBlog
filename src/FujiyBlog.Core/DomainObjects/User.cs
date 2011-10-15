@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Core.DomainObjects
 {
     public class User
     {
+        public const string UsernameRegex = @"^[a-zA-Z0-9_]{5,20}$";
+
         public User()
         {
             Posts = new List<Post>();
@@ -15,11 +18,11 @@ namespace FujiyBlog.Core.DomainObjects
         }
 
         public int Id { get; set; }
-        
-        [Required, StringLength(20)]
+
+        [Required, StringLength(20), RegularExpression(UsernameRegex)]
         public string Username { get; set; }
 
-        [Required, StringLength(255), RegularExpression(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")]
+        [Required, StringLength(255), EmailAddress]
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
         
