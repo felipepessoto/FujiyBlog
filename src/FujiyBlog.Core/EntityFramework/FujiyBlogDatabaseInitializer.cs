@@ -242,6 +242,7 @@ namespace FujiyBlog.Core.EntityFramework
                                        Content = "Example post",
                                        Author = admin,
                                        IsPublished = true,
+                                       IsCommentEnabled = true,
                                        CreationDate = utcNow,
                                        LastModificationDate = utcNow,
                                        PublicationDate = utcNow,
