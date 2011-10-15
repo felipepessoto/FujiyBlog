@@ -166,16 +166,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             deletedPage.IsDeleted = true;
-
-            try
-            {
-                db.Configuration.ValidateOnSaveEnabled = false;
-                db.SaveChanges();
-            }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled = true;
-            }
+            db.SaveChangesBypassingValidation();
 
             return Json(true);
         }

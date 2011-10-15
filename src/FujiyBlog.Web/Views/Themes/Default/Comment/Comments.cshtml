@@ -31,11 +31,21 @@
             {
                 <text>| @Ajax.ActionLink("Reply", MVC.Comment.ReplyComment(comment.Id), new AjaxOptions {HttpMethod = "POST", InsertionMode = InsertionMode.Replace, UpdateTargetId = "reply-comment-" + comment.Id}) <div id="reply-comment-@comment.Id"></div></text>
             }
-            @if (!comment.IsApproved && User.IsInRole(Role.ModerateComments))
+            
+            @if (User.IsInRole(Role.ModerateComments))
             {
-                @(Ajax.ActionLink("Approve", MVC.Admin.Comment.ActionNames.ApproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))
-                @(Ajax.ActionLink("Disapprove", MVC.Admin.Comment.ActionNames.DisapproveSelected, MVC.Admin.Comment.Name, new {Area = "Admin", selectedComments = comment.Id}, new AjaxOptions {HttpMethod = "POST"}))
+                if (!comment.IsApproved)
+                {
+                    @(Ajax.ActionLink("Approve", MVC.Comment.Approve(comment.Id), new AjaxOptions { HttpMethod = "POST" }))
+                }
+                else
+                {
+                    @(Ajax.ActionLink("Disapprove", MVC.Comment.Disapprove(comment.Id), new AjaxOptions {HttpMethod = "POST"}))
+                }
+                <text>|</text>
+                @(Ajax.ActionLink("Delete", MVC.Comment.Delete(comment.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');" }))
             }
+            
             
             <div class="comment-replies" id="replies_@(comment.Id)">
                 @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, comment.NestedComments);}

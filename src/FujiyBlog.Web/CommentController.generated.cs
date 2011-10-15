@@ -41,6 +41,21 @@ namespace FujiyBlog.Web.Controllers {
         public System.Web.Mvc.ActionResult ReplyComment() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.ReplyComment);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Approve() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Approve);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Disapprove() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Disapprove);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult Delete() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public CommentController Actions { get { return MVC.Comment; } }
@@ -56,6 +71,9 @@ namespace FujiyBlog.Web.Controllers {
         public class ActionNamesClass {
             public readonly string DoComment = "DoComment";
             public readonly string ReplyComment = "ReplyComment";
+            public readonly string Approve = "Approve";
+            public readonly string Disapprove = "Disapprove";
+            public readonly string Delete = "Delete";
         }
 
 
@@ -80,6 +98,24 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult ReplyComment(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ReplyComment);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Approve(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Approve);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Disapprove(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Disapprove);
+            callInfo.RouteValueDictionary.Add("id", id);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Delete(int id) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
             callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }

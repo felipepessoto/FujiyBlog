@@ -74,5 +74,38 @@ namespace FujiyBlog.Web.Controllers
 
             return View(MVC.Themes.Views.Default.Comment.DoComment, newComment);
         }
+
+        [AuthorizeRole(Role.ModerateComments), HttpPost]
+        public virtual ActionResult Approve(int id)
+        {
+            return ChangeCommentStatus(id, true);
+        }
+
+        [AuthorizeRole(Role.ModerateComments), HttpPost]
+        public virtual ActionResult Disapprove(int id)
+        {
+            return ChangeCommentStatus(id, false);
+        }
+
+        [AuthorizeRole(Role.ModerateComments), HttpPost]
+        public virtual ActionResult Delete(int id)
+        {
+            PostComment comment = db.PostComments.Single(x => x.Id == id);
+            comment.IsDeleted = true;
+            comment.ModeratedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+            db.SaveChangesBypassingValidation();
+
+            return Json(true);
+        }
+
+        private ActionResult ChangeCommentStatus(int id, bool approved)
+        {
+            PostComment comment = db.PostComments.Single(x => x.Id == id);
+            comment.IsApproved = approved;
+            comment.ModeratedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+            db.SaveChangesBypassingValidation();
+
+            return Json(true);
+        }
     }
 }

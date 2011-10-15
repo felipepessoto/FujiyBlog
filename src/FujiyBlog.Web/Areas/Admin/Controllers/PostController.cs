@@ -192,16 +192,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             }
 
             deletedPost.IsDeleted = true;
-
-            try
-            {
-                db.Configuration.ValidateOnSaveEnabled = false;
-                db.SaveChanges();
-            }
-            finally
-            {
-                db.Configuration.ValidateOnSaveEnabled = true;
-            }
+            db.SaveChangesBypassingValidation();
 
             return Json(true);
         }

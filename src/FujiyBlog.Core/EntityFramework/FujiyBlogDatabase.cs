@@ -7,6 +7,16 @@ namespace FujiyBlog.Core.EntityFramework
 {
     public class FujiyBlogDatabase : DbContext
     {
+        public DbSet<PostComment> PostComments { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Setting> Settings { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<WidgetSetting> WidgetSettings { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<RoleGroup> RoleGroups { get; set; }
+
         public FujiyBlogDatabase()
         {
             Database.SetInitializer(new FujiyBlogDatabaseInitializer());
@@ -27,14 +37,19 @@ namespace FujiyBlog.Core.EntityFramework
             builder.Configurations.Add(new RoleGroupConfiguration());
         }
 
-        public DbSet<PostComment> PostComments { get; set; }
-        public DbSet<Post> Posts { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Setting> Settings { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Tag> Tags { get; set; }
-        public DbSet<WidgetSetting> WidgetSettings { get; set; }
-        public DbSet<Page> Pages { get; set; }
-        public DbSet<RoleGroup> RoleGroups { get; set; }
+        public int SaveChangesBypassingValidation()
+        {
+            bool previousValue = Configuration.ValidateOnSaveEnabled;
+
+            try
+            {
+                Configuration.ValidateOnSaveEnabled = false;
+                return SaveChanges();
+            }
+            finally
+            {
+                Configuration.ValidateOnSaveEnabled = previousValue;
+            }
+        }
     }
 }

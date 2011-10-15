@@ -39,14 +39,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult ApproveSelected(IEnumerable<int> selectedComments)
         {
             List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
+            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
 
             foreach (PostComment postComment in comments)
             {
+                postComment.ModeratedBy = moderatedBy;
                 postComment.IsApproved = true;
             }
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
+            
+            db.SaveChangesBypassingValidation();
 
             return Json(true);
         }
@@ -55,14 +56,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult DisapproveSelected(IEnumerable<int> selectedComments)
         {
             List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
+            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
 
             foreach (PostComment postComment in comments)
             {
+                postComment.ModeratedBy = moderatedBy;
                 postComment.IsApproved = false;
             }
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
+            
+            db.SaveChangesBypassingValidation();
 
             return Json(true);
         }
@@ -71,14 +73,15 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult DeleteSelected(IEnumerable<int> selectedComments)
         {
             List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
+            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
 
             foreach (PostComment postComment in comments)
             {
+                postComment.ModeratedBy = moderatedBy;
                 postComment.IsDeleted = true;
             }
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
+            
+            db.SaveChangesBypassingValidation();
 
             return Json(true);
         }
@@ -128,9 +131,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Delete(int id)
         {
             db.PostComments.Single(x => x.Id == id).IsDeleted = true;
-            db.Configuration.ValidateOnSaveEnabled = false;
-            db.SaveChanges();
-            db.Configuration.ValidateOnSaveEnabled = true;
+            db.SaveChangesBypassingValidation();
             return Json(true);
         }
     }
