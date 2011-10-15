@@ -40,9 +40,12 @@
         <div class="searchresult">
             @Html.ActionLink(item.Title, MVC.Post.Details(item.Slug))
             <span class="text">"@GetDescription(item)"</span>
-            <span><strong>Categorias</strong> : Livros, Notícias<br><strong>Tags</strong> : asp.net mvc</span>
+            <span><strong>Categorias</strong> : @Html.Raw(item.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
+            <br />
+            <strong>Tags</strong> : @Html.Raw(item.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))
+            </span>
         </div>
-    }   
+    }
   </div>
 
   @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next page", "Previous page")

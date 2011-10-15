@@ -125,7 +125,7 @@ namespace FujiyBlog.Core.BlogML
                                                   {
                                                       AuthorName = blogMLComment.UserName,
                                                       AuthorEmail = blogMLComment.UserEMail,
-                                                      AuthorWebsite = blogMLComment.UserUrl,
+                                                      AuthorWebsite = string.IsNullOrWhiteSpace(blogMLComment.UserUrl) ? null : blogMLComment.UserUrl,
                                                       Comment = blogMLComment.Content.UncodedText,
                                                       CreationDate = blogMLComment.DateCreated,
                                                       IsApproved = blogMLComment.Approved,
