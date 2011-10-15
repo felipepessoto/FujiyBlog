@@ -34,16 +34,13 @@
             
             @if (User.IsInRole(Role.ModerateComments))
             {
-                if (!comment.IsApproved)
-                {
-                    @(Ajax.ActionLink("Approve", MVC.Comment.Approve(comment.Id), new AjaxOptions { HttpMethod = "POST" }))
-                }
-                else
-                {
-                    @(Ajax.ActionLink("Disapprove", MVC.Comment.Disapprove(comment.Id), new AjaxOptions {HttpMethod = "POST"}))
-                }
+                
+                @(Ajax.ActionLink("Approve", MVC.Comment.Approve(comment.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "$('#link-approve-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-disapprove-comment-" + comment.Id + "').fadeIn('normal');});" }, new { id = "link-approve-comment-" + comment.Id, style = comment.IsApproved ? "display: none;" : string.Empty }))
+                
+                @(Ajax.ActionLink("Disapprove", MVC.Comment.Disapprove(comment.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "$('#link-disapprove-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-approve-comment-" + comment.Id + "').fadeIn('normal');});" }, new { id = "link-disapprove-comment-" + comment.Id, style = !comment.IsApproved ? "display: none;" : string.Empty }))
+                
                 <text>|</text>
-                @(Ajax.ActionLink("Delete", MVC.Comment.Delete(comment.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');" }))
+                @(Ajax.ActionLink("Delete", MVC.Comment.Delete(comment.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" }))
             }
             
             

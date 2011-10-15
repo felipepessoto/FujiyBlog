@@ -69,10 +69,10 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 
                 <span id="disable-link-@item.Id"@if(!item.Enabled){<text> style="display:none"</text>}>
-                    @Ajax.ActionLink("Disable", MVC.Admin.User.Disable(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterDisable(arguments[0], " + item.Id + ");" })
+                    @Ajax.ActionLink("Disable", MVC.Admin.User.Disable(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "AfterDisable(arguments[0], " + item.Id + ");" })
                 </span>
                 <span id="enable-link-@item.Id"@if(item.Enabled){<text> style="display:none"</text>}>
-                    @Ajax.ActionLink("Enable", MVC.Admin.User.Enable(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "AfterEnable(arguments[0], " + item.Id + ");" })
+                    @Ajax.ActionLink("Enable", MVC.Admin.User.Enable(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "AfterEnable(arguments[0], " + item.Id + ");" })
                 </span>
                 </text>
             }

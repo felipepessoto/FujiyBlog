@@ -81,7 +81,7 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", MVC.Admin.Comment.Edit(item.Id)) |
-                @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
+                @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
             </td>
         </tr>
     }

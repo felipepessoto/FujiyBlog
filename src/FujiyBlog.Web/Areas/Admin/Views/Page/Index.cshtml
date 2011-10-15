@@ -70,7 +70,7 @@
             @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPages)) || (item.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPages)))
             {
                 <text>|
-                @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions {HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");"})
+                @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
                 </text>
             }
         </td>

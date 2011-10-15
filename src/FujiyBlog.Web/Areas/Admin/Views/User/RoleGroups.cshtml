@@ -39,7 +39,7 @@
             if (User.IsInRole(Role.DeleteRoleGroups) && item.Name != "Anonymous")
             {
                 <text>
-                | @Ajax.ActionLink("Delete", MVC.Admin.User.DeleteRoleGroup(item.Id), new AjaxOptions { HttpMethod = "POST", OnBegin = "return confirm('Sure?');", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
+                | @Ajax.ActionLink("Delete", MVC.Admin.User.DeleteRoleGroup(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
                 </text>
             }
         }
