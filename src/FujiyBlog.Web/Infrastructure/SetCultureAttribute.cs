@@ -17,7 +17,6 @@ namespace FujiyBlog.Web.Infrastructure
                 {
                     CultureInfo selectedCulture = CultureInfo.CreateSpecificCulture(culture);
                     Thread.CurrentThread.CurrentUICulture = selectedCulture;
-                    Thread.CurrentThread.CurrentCulture = selectedCulture;
                 }
             }
         }
