@@ -1,0 +1,10 @@
+﻿@using FujiyBlog.Web.Extensions
+@model DateTime
+
+@Html.TextBoxFor(model=> Model)
+
+<script type="text/javascript">
+    $('#@(Html.FieldIdFor(x=> x))').datetimepicker({
+        ampm: true
+    });
+</script>

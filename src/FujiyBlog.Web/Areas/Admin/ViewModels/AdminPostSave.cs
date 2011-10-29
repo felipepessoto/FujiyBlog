@@ -27,6 +27,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [AllowHtml]
         public string Content { get; set; }
 
+        [UIHint("DateTimePicker")]
         public DateTime PublicationDate { get; set; }
 
         public bool IsPublished { get; set; }
