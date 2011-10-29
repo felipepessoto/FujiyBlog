@@ -9,7 +9,7 @@
     <div id="comment-form">
     <div class="commentForm">
         <p id="addcomment">
-            Add Comment</p>
+            @Resources.Labels.AddComment</p>
             @if (!Request.IsAuthenticated)
             { 
         @Html.LabelFor(x => x.AuthorName)
@@ -29,7 +29,7 @@
             @Html.TextAreaFor(x => x.Comment)
             @Html.ValidationMessageFor(x => x.Comment)
         </div>
-        <input type="submit" value="Save comment" />
+        <input type="submit" value="@Resources.Labels.SaveComment" />
     </div>
 </div>
 }

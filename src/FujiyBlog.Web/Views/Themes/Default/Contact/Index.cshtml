@@ -1,7 +1,7 @@
 ﻿@using FujiyBlog.Web.ViewModels
 @model ContactForm
 @{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = Resources.Labels.Contact;
     Layout = "../Shared/_Layout.cshtml";
 }
 
@@ -9,9 +9,9 @@
 {
     <div id="contact">
         <div>
-            <h1>Contact</h1>
+            <h1>@Resources.Labels.Contact</h1>
 
-            <div><p>Send your message</p></div>
+            <div><p>@Resources.Labels.SendYourMessage</p></div>
 
             @Html.LabelFor(x => x.Name)
             @Html.EditorFor(x => x.Name)
@@ -30,7 +30,7 @@
             @Html.ValidationMessageFor(x => x.Body) 
 
             <br /><br />
-                <input type="submit" value="Send" />
+                <input type="submit" value="@Resources.Labels.Send" />
         </div>
     </div>
 }

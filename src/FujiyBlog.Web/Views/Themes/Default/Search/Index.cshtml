@@ -20,7 +20,7 @@
                     text = text.Substring(0, 200) + " ...";
                 }
             }
-        @text
+        @(new HtmlString(text))
     }
 
 
@@ -48,4 +48,4 @@
     }
   </div>
 
-  @Pager.Links(Model.CurrentPage, Model.TotalPages, "Next page", "Previous page")
+  @Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)

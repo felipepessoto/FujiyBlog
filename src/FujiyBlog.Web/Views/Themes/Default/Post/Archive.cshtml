@@ -2,23 +2,22 @@
            
 @{
     Layout = "../Shared/_Layout.cshtml";
-    ViewBag.Title = "Archive";
+    ViewBag.Title = Resources.Labels.Archive;
 }
 
 <div id="archive">
     <h1>
-        Archive</h1>
+        @Resources.Labels.Archive</h1>
     <ul>
         @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
         {
             <li><a href="#@category.Id">@category.Name</a></li>
         }
-        <li><a href="#Uncategorized">Uncategorized</a></li>
+        <li><a href="#Uncategorized">@Resources.Labels.Uncategorized</a></li>
     </ul>
     @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
     {
         <h2 id="@category.Id">
-            @*<a href="LINKSCATEGORYFEEDS"><img src="/blog/pics/rssButton.png" alt="RSS" /></a>*@
             @category.Name (@category.Posts.Count())
         </h2>
             
@@ -26,13 +25,13 @@
         <table>
             <tr>
                 <th>
-                    Date
+                    @Resources.Labels.Date
                 </th>
                 <th>
-                    Title
+                    @Resources.Labels.Title
                 </th>
                 <th class="comments">
-                    Comments
+                    @Resources.Labels.Comments
                 </th>
             </tr>
             @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Post.Categories.Any(y => y == category)))
@@ -50,21 +49,20 @@
     }
 
      <h2 id="Uncategorized">
-            @*<a href="LINKSCATEGORYFEEDS"><img src="/blog/pics/rssButton.png" alt="RSS" /></a>*@
-            Uncategorized (@Model.UncategorizedPosts.Count())
+            @Resources.Labels.Uncategorized (@Model.UncategorizedPosts.Count())
         </h2>
             
 
         <table>
             <tr>
                 <th>
-                    Date
+                    @Resources.Labels.Date
                 </th>
                 <th>
-                    Title
+                    @Resources.Labels.Title
                 </th>
                 <th class="comments">
-                    Comments
+                    @Resources.Labels.Comments
                 </th>
             </tr>
             @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.UncategorizedPosts)

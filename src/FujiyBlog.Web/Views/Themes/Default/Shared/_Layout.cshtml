@@ -30,8 +30,8 @@
         <div id="menu">
         <ul>
           <li><a href="@Url.Content("~/")">Home</a></li>
-          <li>@Html.ActionLink("Archive", MVC.Post.Archive())</li>
-          <li>@Html.ActionLink("Contact", MVC.Contact.Index())</li>
+          <li>@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
+          <li>@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
           <li>@Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) / @Html.ActionLink("Atom 1.0", MVC.Feed.Atom10())</li>
           <li>@if (Request.IsAuthenticated)
               {

@@ -27,7 +27,7 @@
 @if (Model.Post.Comments.Count > 0)
 {
     <h1 id="comment">
-        Comments</h1>
+        @Resources.Labels.Comments</h1>
 }
     @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, Model.Post.Comments.Where(x => x.ParentComment == null));}
 </div>
