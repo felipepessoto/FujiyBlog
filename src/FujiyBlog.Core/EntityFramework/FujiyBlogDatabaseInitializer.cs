@@ -51,7 +51,7 @@ namespace FujiyBlog.Core.EntityFramework
                                     {
                                         Id = 6,
                                         Description = "Utc Offset",
-                                        Value = "Central Standard Time"
+                                        Value = "UTC"
                                     };
 
 
