@@ -42,7 +42,7 @@ private string ShowPostContent(string content)
     <h1>
         @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))</h1>
     <span class="author">@Resources.Labels.By @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))</span>
-    <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate).ToString(System.Globalization.CultureInfo.CreateSpecificCulture(FujiyBlog.Web.Models.Settings.SettingRepository.Culture == "auto" ? UICulture : FujiyBlog.Web.Models.Settings.SettingRepository.Culture))</span>
+    <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate).ToString(System.Globalization.CultureInfo.CreateSpecificCulture(UICulture))</span>
     <div class="text">@Html.Raw(ShowPostContent(Model.Post.Content))</div>
     <div class="bottom">
         @*RATING*@

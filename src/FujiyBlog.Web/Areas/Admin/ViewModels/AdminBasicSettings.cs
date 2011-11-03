@@ -31,6 +31,6 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         public IEnumerable<SelectListItem> TimeZones { get; set; }
 
-        public IEnumerable<SelectListItem> Languages { get; set; }
+        public List<SelectListItem> Languages { get; set; }
     }
 }

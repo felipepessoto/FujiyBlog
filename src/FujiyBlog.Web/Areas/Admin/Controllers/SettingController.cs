@@ -9,6 +9,7 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
+using System.Globalization;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -34,8 +35,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    TimeZoneId = Settings.SettingRepository.TimeZone.Id,
                                                    TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
                                                    Language = Settings.SettingRepository.Culture,
-                                                   Languages = new List<SelectListItem> { new SelectListItem { Text = "Auto", Value = "Auto" }, new SelectListItem { Text = "English", Value = "en" }, new SelectListItem { Text = "Português (Brasil)", Value = "pt-BR" } },
+                                                   Languages = new List<SelectListItem> { new SelectListItem { Text = "Auto", Value = "Auto" }, new SelectListItem { Text = "English", Value = "en" } },
                                                };
+
+            foreach (FileInfo file in new DirectoryInfo(Server.MapPath("~/App_GlobalResources/")).GetFiles("Labels.*.resx"))
+            {
+                var culture = CultureInfo.CreateSpecificCulture(file.Name.Substring(7, file.Name.Length - 12));
+                viewModel.Languages.Add(new SelectListItem {Text = culture.DisplayName, Value = culture.Name});
+            }
 
             return View(viewModel);
         }
