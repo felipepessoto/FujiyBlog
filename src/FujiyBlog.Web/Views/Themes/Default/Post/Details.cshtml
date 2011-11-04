@@ -11,7 +11,7 @@
 <div id="postnavigation">
     @if (Model.PreviousPost != null)
     {
-        @Html.ActionLink(Model.PreviousPost.Title, MVC.Post.Details(Model.PreviousPost.Slug))
+        @Html.ActionLink("<< " + Model.PreviousPost.Title, MVC.Post.Details(Model.PreviousPost.Slug))
         if (Model.NextPost != null)
         {
              <text>|</text>
@@ -19,7 +19,7 @@
     }
     @if (Model.NextPost != null)
     {
-        @Html.ActionLink(Model.NextPost.Title, MVC.Post.Details(Model.NextPost.Slug))
+        @Html.ActionLink(Model.NextPost.Title + " >>", MVC.Post.Details(Model.NextPost.Slug))
     }
 </div>
 @{Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, Model);}
