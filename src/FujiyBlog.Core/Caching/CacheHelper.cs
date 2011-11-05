@@ -7,8 +7,13 @@ namespace FujiyBlog.Core.Caching
     public static class CacheHelper
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "MethodCallExpression"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Não há outra técnica para isto. E não aumenta a complexidade já que a expression é um syntactic sugar, o cliente apenas escreve um lambda")]
-        public static TResult FromCacheOrExecute<TResult>(Expression<Func<TResult>> func, string key=null, CacheItemPolicy cacheItemPolicy = null)
+        public static TResult FromCacheOrExecute<TResult>(Expression<Func<TResult>> func, string key = null, CacheItemPolicy cacheItemPolicy = null, bool condition = true)
         {
+            if (!condition)
+            {
+                return func.Compile()();
+            }
+
             MemoryCache cache = MemoryCache.Default;
 
             if (func == null)
