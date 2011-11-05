@@ -42,6 +42,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -54,6 +55,10 @@
   <ItemGroup>
     <Compile Include="BlogML\BlogMLImporter.cs" />
     <Compile Include="BlogML\BlogMLExtendedPost.cs" />
+    <Compile Include="Caching\CacheHelper.cs" />
+    <Compile Include="Caching\CacheKeyGenerator.cs" />
+    <Compile Include="Caching\InvalidCacheArgumentException.cs" />
+    <Compile Include="Caching\InvalidCachedFuncException.cs" />
     <Compile Include="DomainObjects\Category.cs" />
     <Compile Include="DomainObjects\Page.cs" />
     <Compile Include="DomainObjects\RoleGroup.cs" />
