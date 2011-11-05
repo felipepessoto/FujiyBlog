@@ -88,6 +88,7 @@ namespace FujiyBlog.Web.Controllers
                 if (user.Password == model.OldPassword)
                 {
                     user.Password = model.NewPassword;
+                    db.SaveChanges();
                     return RedirectToAction(MVC.Account.ChangePasswordSuccess());
                 }
                 else
