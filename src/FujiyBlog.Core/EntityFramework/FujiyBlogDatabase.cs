@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework.Configuration;
 
@@ -35,6 +36,12 @@ namespace FujiyBlog.Core.EntityFramework
             builder.Configurations.Add(new WidgetSettingConfiguration());
             builder.Configurations.Add(new PageConfiguration());
             builder.Configurations.Add(new RoleGroupConfiguration());
+        }
+
+        public override int SaveChanges()
+        {
+            CacheHelper.ClearCache();
+            return base.SaveChanges();
         }
 
         public int SaveChangesBypassingValidation()

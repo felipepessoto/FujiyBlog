@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Runtime.Caching;
 
@@ -43,6 +44,14 @@ namespace FujiyBlog.Core.Caching
             }
 
             return (TResult) returnObject;
+        }
+
+        public static void ClearCache()
+        {
+            foreach (KeyValuePair<string, object> a in DefaultCache)
+            {
+                DefaultCache.Remove(a.Key);
+            }
         }
     }
 }
