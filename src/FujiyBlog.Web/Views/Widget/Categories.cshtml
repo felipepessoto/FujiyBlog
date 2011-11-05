@@ -1,26 +1,34 @@
-﻿@using FujiyBlog.Core.EntityFramework
-@model FujiyBlog.Core.DomainObjects.WidgetSetting
+﻿@using System.Runtime.Caching
+@using FujiyBlog.Core.Caching
+@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.EntityFramework
+
+@model WidgetSetting
 @{
     Layout = "Widget.cshtml";
-    
+
     IDictionary<string, string> settings;
     if (Model.Settings == null)
     {
-        settings = new Dictionary<string, string>() { { "Title", "Categories" } };
+        settings = new Dictionary<string, string> { { "Title", "Categories" } };
     }
     else
     {
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, string>>(Model.Settings);
     }
+
     PostRepository postRepository = DependencyResolver.Current.GetService<PostRepository>();
-    
+    IEnumerable<Category> categories = CacheHelper.FromCacheOrExecute(() => postRepository.GetCategories(), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
+
 }
 <h4>@Html.Raw(settings["Title"])</h4>
 <div class="content">
     <ul id="categorylist">
-    @foreach (var category in postRepository.GetCategories())
+    @foreach (var category in categories)
     {
-        <li>@Html.ActionLink(category.Name + "(" + postRepository.GetTotal(category: category.Name) + ")", MVC.Post.Category(category.Name, null))</li>    
+        int postsCount = CacheHelper.FromCacheOrExecute(() => postRepository.GetTotal(null, category.Name, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
+        
+        <li>@Html.ActionLink(category.Name + "(" + postsCount + ")", MVC.Post.Category(category.Name, null))</li>    
     }    
     </ul>
 </div>

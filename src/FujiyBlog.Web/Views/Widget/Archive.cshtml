@@ -1,4 +1,7 @@
-﻿@using FujiyBlog.Core.EntityFramework
+﻿@using System.Runtime.Caching
+@using FujiyBlog.Core.Caching
+@using FujiyBlog.Core.EntityFramework
+
 @model FujiyBlog.Core.DomainObjects.WidgetSetting
 @{
     Layout = "Widget.cshtml";
@@ -6,14 +9,14 @@
     IDictionary<string, object> settings;
     if (Model.Settings == null)
     {
-        settings = new Dictionary<string, object>() { { "Title", "Archive" }, { "RecentDatesAtTop", false } };
+        settings = new Dictionary<string, object> { { "Title", "Archive" }, { "RecentDatesAtTop", false } };
     }
     else
     {
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
     }
-    PostRepository postRepository = DependencyResolver.Current.GetService<PostRepository>();
-    var datesCount = postRepository.GetArchiveCountByMonth((bool)settings["RecentDatesAtTop"]);
+
+    IEnumerable<Tuple<DateTime, int>> datesCount = CacheHelper.FromCacheOrExecute(() => DependencyResolver.Current.GetService<PostRepository>().GetArchiveCountByMonth((bool)settings["RecentDatesAtTop"]), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
     var years = datesCount.Select(x => x.Item1.Year).Distinct();
 }
 <h4>@Html.Raw(settings["Title"] as string)</h4>
@@ -25,7 +28,7 @@
                 <ul style="display: none">
                     @foreach (var mes in datesCount.Where(x => x.Item1.Year == year))
                     {
-                        <li>@Html.ActionLink(System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(mes.Item1.Month) + "(" + mes.Item2 + ")", MVC.Post.ArchiveDate(mes.Item1.Year, mes.Item1.Month, null))</li>
+                        <li>@Html.ActionLink(System.Globalization.CultureInfo.CurrentUICulture.DateTimeFormat.GetMonthName(mes.Item1.Month) + "(" + mes.Item2 + ")", MVC.Post.ArchiveDate(mes.Item1.Year, mes.Item1.Month, null))</li>
                     }
                 </ul>
             </li>
