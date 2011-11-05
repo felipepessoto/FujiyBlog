@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web.Mvc;
+using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
@@ -28,8 +30,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
                                   {
                                       CurrentPage = page.GetValueOrDefault(1),
-                                      RecentPosts = postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage),
-                                      TotalPages = (int)Math.Ceiling(postRepository.GetTotal() / (double)Settings.SettingRepository.PostsPerPage),
+                                      RecentPosts = CacheHelper.FromCacheOrExecute(() => postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, null, null, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated),
+                                      TotalPages =  (int)Math.Ceiling(CacheHelper.FromCacheOrExecute(() =>postRepository.GetTotal(null, null, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
                                   };
 
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;

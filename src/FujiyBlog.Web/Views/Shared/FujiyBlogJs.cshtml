@@ -67,3 +67,11 @@
             }
         }
     }
+
+    $(function() {
+        $('.searchWidgetTerms').keypress(function (e) {
+            if (e.which == 13) {
+                $(this).next().click();
+            }
+        });
+    });
