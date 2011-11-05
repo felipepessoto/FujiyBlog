@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Mvc;
@@ -9,8 +8,6 @@ using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
-using FujiyBlog.Web.Infrastructure;
-using System.Web.Security;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -31,7 +28,7 @@ namespace FujiyBlog.Web.Controllers
                                   {
                                       CurrentPage = page.GetValueOrDefault(1),
                                       RecentPosts = CacheHelper.FromCacheOrExecute(() => postRepository.GetRecentPosts(skip, Settings.SettingRepository.PostsPerPage, null, null, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated),
-                                      TotalPages =  (int)Math.Ceiling(CacheHelper.FromCacheOrExecute(() =>postRepository.GetTotal(null, null, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
+                                      TotalPages =  (int)Math.Ceiling(CacheHelper.FromCacheOrExecute(() =>postRepository.GetTotal(null, null, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated) / (double)Settings.SettingRepository.PostsPerPage),
                                   };
 
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
@@ -143,7 +140,9 @@ namespace FujiyBlog.Web.Controllers
 
         private ActionResult Details(string slug, int? id)
         {
-            Post post = id.HasValue ? postRepository.GetPost(id.GetValueOrDefault()) : postRepository.GetPost(slug);
+            Post post = id.HasValue ?
+                CacheHelper.FromCacheOrExecute(() => postRepository.GetPost(id.GetValueOrDefault()), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated) :
+                CacheHelper.FromCacheOrExecute(() => postRepository.GetPost(slug), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated);
 
             if (post == null)
             {
