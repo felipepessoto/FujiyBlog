@@ -1,6 +1,9 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
+using System.Runtime.Caching;
 using System.Web.Mvc;
+using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
@@ -38,7 +41,7 @@ namespace FujiyBlog.Web.Controllers
         {
             WidgetIndex viewModel = new WidgetIndex
                                         {
-                                            WidgetSettings = widgetSettingRepository.GetWidgetSettings(zoneName),
+                                            WidgetSettings = CacheHelper.FromCacheOrExecute(() => widgetSettingRepository.GetWidgetSettings(zoneName), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated),
                                             AvailableWidgets = widgets,
                                             ZoneName = zoneName
                                         };

@@ -95,7 +95,7 @@ namespace FujiyBlog.Web.Controllers
         {
             PostArchive model = new PostArchive
             {
-                AllPosts = postRepository.GetArchive()
+                AllPosts = CacheHelper.FromCacheOrExecute(() => postRepository.GetArchive(), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated)
             };
 
             model.UncategorizedPosts = model.AllPosts.Where(x => !x.Post.Categories.Any()).ToList();

@@ -13,7 +13,7 @@ namespace FujiyBlog.Web.Infrastructure
         {
             if (string.Compare(values["controller"] as string, MVC.Post.Name, true) == 0 && string.Compare(values["action"] as string, MVC.Post.ActionNames.Index, true) == 0)
             {
-                bool match = !DependencyResolver.Current.GetService<FujiyBlogDatabase>().Pages.WhereHaveRoles().Any(x => x.IsFrontPage);
+                bool match = DependencyResolver.Current.GetService<FujiyBlogDatabase>().Pages.WhereHaveRoles().Where(x => x.IsFrontPage).Select(x => (string)null).FirstOrDefault() == null;
                 return match;
             }
 
