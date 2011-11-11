@@ -1,6 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework.Configuration;
 
@@ -40,8 +40,15 @@ namespace FujiyBlog.Core.EntityFramework
 
         public override int SaveChanges()
         {
-            CacheHelper.ClearCache();
-            return base.SaveChanges();
+            int saveChanges = base.SaveChanges();
+
+            if (saveChanges > 0)
+            {
+                new SettingRepository(this).LastDatabaseChange = DateTime.UtcNow.Ticks;
+                base.SaveChanges();
+            }
+
+            return saveChanges;
         }
 
         public int SaveChangesBypassingValidation()

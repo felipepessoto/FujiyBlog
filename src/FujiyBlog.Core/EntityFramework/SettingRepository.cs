@@ -145,6 +145,35 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSettings(SettingNames.Culture, value); }
         }
 
+
+
+
+        public bool EnableFacebookLikePosts
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.EnableFacebookLikePosts).Value); }
+            set { SaveSettings(SettingNames.EnableFacebookLikePosts, value.ToString()); }
+        }
+
+        public bool EnableGooglePlusOnePosts
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.EnableGooglePlusOnePosts).Value); }
+            set { SaveSettings(SettingNames.EnableGooglePlusOnePosts, value.ToString()); }
+        }
+
+        public bool EnableTwitterSharePosts
+        {
+            get { return bool.Parse(database.Settings.Find((int)SettingNames.EnableTwitterSharePosts).Value); }
+            set { SaveSettings(SettingNames.EnableTwitterSharePosts, value.ToString()); }
+        }
+
+
+
+        public long LastDatabaseChange
+        {
+            get { return long.Parse(database.Settings.Find((int)SettingNames.LastDatabaseChange).Value); }
+            set { SaveSettings(SettingNames.LastDatabaseChange, value.ToString()); }
+        }
+
         private void SaveSettings(SettingNames settings, string value)
         {
             database.Settings.Find((int) settings).Value = value;
@@ -176,6 +205,12 @@ namespace FujiyBlog.Core.EntityFramework
             CommentsAvatar = 19,
 
             Culture = 20,
+
+            EnableFacebookLikePosts = 21,
+            EnableGooglePlusOnePosts = 22,
+            EnableTwitterSharePosts = 23,
+
+            LastDatabaseChange = 24,
         }
     }
 }
