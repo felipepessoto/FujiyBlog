@@ -8,6 +8,7 @@ using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
+using System.Web.UI;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace FujiyBlog.Web.Controllers
             this.postRepository = postRepository;
         }
 
+        [OutputCache(CacheProfile = "ByUserAndLastCache")]
         public virtual ActionResult Index(int? page)
         {
             int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;

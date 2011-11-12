@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Infrastructure.AutoMapper;
 
@@ -75,6 +77,30 @@ namespace FujiyBlog.Web
             using (DependencyResolver.Current as IDisposable)
             {
             }
+        }
+
+        public override string GetVaryByCustomString(HttpContext context, string arg)
+        {
+            string result = string.Empty;
+
+            foreach (string s in arg.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                if (s.ToLower() == "user")
+                {
+                    result += "user:" + context.User.Identity.Name;
+                }
+                if (s.ToLower() == "lastcache")
+                {
+                    result += "lastcache:" + DependencyResolver.Current.GetService<FujiyBlogDatabase>().LastCache;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                return result;
+            }
+
+            return base.GetVaryByCustomString(context, arg);
         }
     }
 }

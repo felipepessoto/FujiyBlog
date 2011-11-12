@@ -20,16 +20,20 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<Page> Pages { get; set; }
         public DbSet<RoleGroup> RoleGroups { get; set; }
 
-        public static string LastCache;
+        private static string lastCache;
+        public string LastCache
+        {
+            get { return lastCache; }
+        }
 
         public FujiyBlogDatabase()
         {
             Database.SetInitializer(new FujiyBlogDatabaseInitializer());
 
             string lastCacheAtDb = Settings.Single(x => x.Id == 24).Value;
-            if (lastCacheAtDb != LastCache)
+            if (lastCacheAtDb != lastCache)
             {
-                LastCache = lastCacheAtDb;
+                lastCache = lastCacheAtDb;
                 CacheHelper.ClearCache();
             }
         }
