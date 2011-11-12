@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using FujiyBlog.Core.Caching;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Infrastructure.AutoMapper;
 using FujiyBlog.Web.Models;
@@ -71,6 +74,17 @@ namespace FujiyBlog.Web
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
             AutoMapperConfiguration.Configure();
+        }
+
+        public static string LastCache;
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            string lastCacheAtDb = DependencyResolver.Current.GetService<FujiyBlogDatabase>().Settings.Single(x => x.Id == 24).Value;
+            if (lastCacheAtDb != LastCache)
+            {
+                LastCache = lastCacheAtDb;
+                CacheHelper.ClearCache();
+            }
             RegisterThemes();
         }
 
