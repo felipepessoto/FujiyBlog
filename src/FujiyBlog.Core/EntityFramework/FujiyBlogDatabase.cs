@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework.Configuration;
 
@@ -19,9 +20,18 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<Page> Pages { get; set; }
         public DbSet<RoleGroup> RoleGroups { get; set; }
 
+        public static string LastCache;
+
         public FujiyBlogDatabase()
         {
             Database.SetInitializer(new FujiyBlogDatabaseInitializer());
+
+            string lastCacheAtDb = Settings.Single(x => x.Id == 24).Value;
+            if (lastCacheAtDb != LastCache)
+            {
+                LastCache = lastCacheAtDb;
+                CacheHelper.ClearCache();
+            }
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)

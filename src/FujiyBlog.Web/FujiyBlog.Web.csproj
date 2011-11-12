@@ -191,6 +191,7 @@
     <Compile Include="Common\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPostViewModel.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPageViewModel.cs" />
+    <Compile Include="Infrastructure\ThemeAttribute.cs" />
     <Compile Include="Infrastructure\FujiyBlogRoleProvider.cs" />
     <Compile Include="Infrastructure\HomeConstraint.cs" />
     <Compile Include="Infrastructure\SetCultureAttribute.cs" />

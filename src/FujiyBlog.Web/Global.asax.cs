@@ -1,25 +1,19 @@
 ﻿using System;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
-using FujiyBlog.Core.Caching;
-using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Infrastructure.AutoMapper;
-using FujiyBlog.Web.Models;
 
 namespace FujiyBlog.Web
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
     public class MvcApplication : System.Web.HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new SetCultureAttribute());
+            filters.Add(new ThemeAttribute());
         }
 
         public static void RegisterRoutes(RouteCollection routes)
@@ -76,54 +70,11 @@ namespace FujiyBlog.Web
             AutoMapperConfiguration.Configure();
         }
 
-        public static string LastCache;
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            string lastCacheAtDb = DependencyResolver.Current.GetService<FujiyBlogDatabase>().Settings.Single(x => x.Id == 24).Value;
-            if (lastCacheAtDb != LastCache)
-            {
-                LastCache = lastCacheAtDb;
-                CacheHelper.ClearCache();
-            }
-            RegisterThemes();
-        }
-
         protected void Application_EndRequest(object sender, EventArgs e)
         {
             using (DependencyResolver.Current as IDisposable)
             {
             }
-        }
-
-        private void RegisterThemes()
-        {
-            RazorViewEngine engine = (RazorViewEngine)ViewEngines.Engines.Single();
-
-            string themeName = Settings.SettingRepository.Theme;
-
-            engine.MasterLocationFormats = new[]
-                                               {
-                                                   "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
-                                                   "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
-                                                   "~/Views/{1}/{0}.cshtml",
-                                                   "~/Views/Shared/{0}.cshtml",
-                                               };
-
-            engine.ViewLocationFormats = new[]
-                                             {
-                                                 "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
-                                                 "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
-                                                  "~/Views/{1}/{0}.cshtml",
-                                                   "~/Views/Shared/{0}.cshtml",
-                                             };
-
-            engine.PartialViewLocationFormats = new[]
-                                                    {
-                                                        "~/Views/Themes/" + themeName + "/{1}/{0}.cshtml",
-                                                        "~/Views/Themes/" + themeName + "/Shared/{0}.cshtml",
-                                                        "~/Views/{1}/{0}.cshtml",
-                                                        "~/Views/Shared/{0}.cshtml",
-                                                    };
         }
     }
 }
