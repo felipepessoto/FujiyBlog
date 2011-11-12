@@ -11,7 +11,9 @@
 </div>
 @if (User.IsInRole(Role.ManageWidgets))
 {
-    <script type="text/javascript">        $(function() { fujiyBlog.widget.startDragAndDrop(); }); </script>
+    <script type="text/javascript">
+        var shouldStartDragAndDrop = true;
+    </script>
     
     <div id="addedwidgets"></div>
     using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "fujiyBlog.widget.showAddedWidget('widgetzone_" + Model.ZoneName + "', arguments[0]);" }, new { id = "addwidgetform" + Model.ZoneName }))

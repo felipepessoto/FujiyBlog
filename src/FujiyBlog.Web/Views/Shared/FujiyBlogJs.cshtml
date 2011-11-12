@@ -78,4 +78,8 @@
         $('.datetime-picker').datetimepicker({
             ampm: true
         });
+
+        if(shouldStartDragAndDrop){
+            $(function() { fujiyBlog.widget.startDragAndDrop(); });
+        }
     });
