@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework.Configuration;
 
@@ -44,7 +45,7 @@ namespace FujiyBlog.Core.EntityFramework
 
             if (saveChanges > 0)
             {
-                new SettingRepository(this).LastDatabaseChange = DateTime.UtcNow.Ticks;
+                Settings.Single(x => x.Id == 24).Value = DateTime.UtcNow.Ticks.ToString();
                 base.SaveChanges();
             }
 
