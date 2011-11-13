@@ -1,0 +1,38 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks
+@{
+    ViewBag.Title = "Social Network Settings";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+<h2>
+    Social Network Settings</h2>
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>Social Network</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableFacebookLikePosts)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableFacebookLikePosts)
+            @Html.ValidationMessageFor(model => model.EnableFacebookLikePosts)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableGooglePlusOnePosts)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableGooglePlusOnePosts)
+            @Html.ValidationMessageFor(model => model.EnableGooglePlusOnePosts)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableTwitterSharePosts)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableTwitterSharePosts)
+            @Html.ValidationMessageFor(model => model.EnableTwitterSharePosts)
+        </div>
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}

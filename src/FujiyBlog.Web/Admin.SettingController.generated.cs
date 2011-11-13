@@ -50,6 +50,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Import = "Import";
             public readonly string ImportPost = "Import";
             public readonly string ImportSuccessful = "ImportSuccessful";
+            public readonly string SocialNetworks = "SocialNetworks";
         }
 
 
@@ -64,6 +65,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Import = "~/Areas/Admin/Views/Setting/Import.cshtml";
             public readonly string ImportSuccessful = "~/Areas/Admin/Views/Setting/ImportSuccessful.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Setting/Index.cshtml";
+            public readonly string SocialNetworks = "~/Areas/Admin/Views/Setting/SocialNetworks.cshtml";
         }
     }
 
@@ -116,6 +118,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult ImportSuccessful() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportSuccessful);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult SocialNetworks() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SocialNetworks);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult SocialNetworks(FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks settings) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SocialNetworks);
+            callInfo.RouteValueDictionary.Add("settings", settings);
             return callInfo;
         }
 

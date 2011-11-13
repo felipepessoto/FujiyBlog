@@ -159,5 +159,32 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             return View();
         }
+
+        public virtual ActionResult SocialNetworks()
+        {
+            AdminSettingsSocialNetworks viewModel = new AdminSettingsSocialNetworks
+            {
+                EnableFacebookLikePosts = Settings.SettingRepository.EnableFacebookLikePosts,
+                EnableGooglePlusOnePosts = Settings.SettingRepository.EnableGooglePlusOnePosts,
+                EnableTwitterSharePosts = Settings.SettingRepository.EnableTwitterSharePosts,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public virtual ActionResult SocialNetworks(AdminSettingsSocialNetworks settings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Settings.SettingRepository.EnableFacebookLikePosts = settings.EnableFacebookLikePosts;
+            Settings.SettingRepository.EnableGooglePlusOnePosts = settings.EnableGooglePlusOnePosts;
+            Settings.SettingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
+
+            return RedirectToAction(MVC.Admin.Setting.SocialNetworks());
+        }
     }
 }
