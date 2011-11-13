@@ -1,6 +1,7 @@
 ﻿@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Web.Models
 @using FujiyBlog.Core.Extensions
+@using FujiyBlog.Web.Extensions
 
 @model IEnumerable<PostComment>
 
@@ -8,8 +9,13 @@
     { 
         <div id="comment_id@(comment.Id)" class="comment@(comment.Post.Author == comment.Author ? " self" : "")">
             <p class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(comment.CreationDate)</p>
-            <p class="gravatar">
-                GRAVATAR</p>
+
+            @if (!string.IsNullOrEmpty(Settings.SettingRepository.CommentsAvatar))
+            {
+                <p class="gravatar">
+                    @Html.Gravatar(comment.Author == null ? comment.AuthorEmail : comment.Author.Email, 80, Settings.SettingRepository.CommentsAvatar)</p>
+            }
+            
             <p class="content">@Html.Raw(comment.Comment)</p>
 
             @if (comment.Author == null)

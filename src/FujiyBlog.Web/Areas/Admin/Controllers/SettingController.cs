@@ -109,7 +109,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 EnableNestedComments = Settings.SettingRepository.EnableNestedComments,
                 CloseCommentsAfterDays = Settings.SettingRepository.CloseCommentsAfterDays,
                 CommentsPerPage = Settings.SettingRepository.CommentsPerPage,
-                CommentsAvatar = Settings.SettingRepository.CommentsAvatar,
+                CommentsAvatar = Settings.SettingRepository.CommentsAvatar ?? string.Empty,
             };
 
             return View(viewModel);

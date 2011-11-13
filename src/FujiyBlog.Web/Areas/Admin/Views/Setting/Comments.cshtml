@@ -4,12 +4,12 @@
     Layout = MVC.Admin.Setting.Views._Layout;
 }
 <h2>
-    Email Settings</h2>
+    Comments Settings</h2>
 @using (Html.BeginForm())
 {
 
     <fieldset>
-        <legend>Basic</legend>
+        <legend>Comments</legend>
         <div class="editor-label">
             @Html.LabelFor(model => model.EnableComments)
         </div>
@@ -49,7 +49,12 @@
             @Html.LabelFor(model => model.CommentsAvatar)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.CommentsAvatar)
+            @Html.RadioButtonFor(model => model.CommentsAvatar, "") None  
+            @Html.RadioButtonFor(model => model.CommentsAvatar, "mm") mm
+            @Html.RadioButtonFor(model => model.CommentsAvatar, "identicon") identicon
+            @Html.RadioButtonFor(model => model.CommentsAvatar, "monsterid") monsterid
+            @Html.RadioButtonFor(model => model.CommentsAvatar, "wavatar") wavatar
+            @Html.RadioButtonFor(model => model.CommentsAvatar, "retro") retro
             @Html.ValidationMessageFor(model => model.CommentsAvatar)
         </div>
         <p>
