@@ -47,7 +47,7 @@ namespace FujiyBlog.Web.Controllers {
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
-            public readonly string FujiyBlog = "FujiyBlog";
+            public readonly string FujiyBlogUrls = "FujiyBlogUrls";
         }
 
 
@@ -56,6 +56,7 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string FujiyBlogUrls = "~/Views/JavaScript/FujiyBlogUrls.cshtml";
         }
     }
 
@@ -63,8 +64,8 @@ namespace FujiyBlog.Web.Controllers {
     public class T4MVC_JavaScriptController: FujiyBlog.Web.Controllers.JavaScriptController {
         public T4MVC_JavaScriptController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult FujiyBlog() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.FujiyBlog);
+        public override System.Web.Mvc.ActionResult FujiyBlogUrls() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.FujiyBlogUrls);
             return callInfo;
         }
 

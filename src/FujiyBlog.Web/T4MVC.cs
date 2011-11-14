@@ -336,6 +336,8 @@ namespace Links {
         private const string URLPATH = "~/Scripts";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+        public static readonly string fujiyblog_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fujiyblog.min.js") ? Url("fujiyblog.min.js") : Url("fujiyblog.js");
+                      
         public static readonly string jquery_1_6_4_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.6.4-vsdoc.min.js") ? Url("jquery-1.6.4-vsdoc.min.js") : Url("jquery-1.6.4-vsdoc.js");
                       
         public static readonly string jquery_1_6_4_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.6.4.min.js") ? Url("jquery-1.6.4.min.js") : Url("jquery-1.6.4.js");
