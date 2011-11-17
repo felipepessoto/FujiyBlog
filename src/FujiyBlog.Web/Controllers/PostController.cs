@@ -15,10 +15,12 @@ namespace FujiyBlog.Web.Controllers
     public partial class PostController : AbstractController
     {
         private readonly PostRepository postRepository;
+        private readonly FujiyBlogDatabase db;
 
-        public PostController(PostRepository postRepository)
+        public PostController(PostRepository postRepository, FujiyBlogDatabase db)
         {
             this.postRepository = postRepository;
+            this.db = db;
         }
 
         public virtual ActionResult Index(int? page)
@@ -131,19 +133,7 @@ namespace FujiyBlog.Web.Controllers
                 return RedirectToActionPermanent("Details", new {postSlug = postSlug.Substring(0, postSlug.Length - 5)});
             }
 
-            return Details(postSlug, null);
-        }
-
-        public virtual ActionResult DetailsById(int id)
-        {
-            return Details(null, id);
-        }
-
-        private ActionResult Details(string slug, int? id)
-        {
-            Post post = id.HasValue ?
-                CacheHelper.FromCacheOrExecute(() => postRepository.GetPost(id.GetValueOrDefault()), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated) :
-                CacheHelper.FromCacheOrExecute(() => postRepository.GetPost(slug), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated);
+            Post post = CacheHelper.FromCacheOrExecute(() => postRepository.GetPost(postSlug), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
 
             if (post == null)
             {
@@ -158,15 +148,22 @@ namespace FujiyBlog.Web.Controllers
             Post nextPost = postRepository.GetNextPost(post, !Request.IsAuthenticated);
 
             PostSummary postDetails = new PostSummary
-            {
-                Post = post,
-                ShowFullPost = true,
-                CommentsTotal = post.Comments.Count,
-                PreviousPost = previousPost,
-                NextPost = nextPost,
-            };
+                                          {
+                                              Post = post,
+                                              ShowFullPost = true,
+                                              CommentsTotal = post.Comments.Count,
+                                              PreviousPost = previousPost,
+                                              NextPost = nextPost,
+                                          };
 
             return View("Details", postDetails);
+        }
+
+        public virtual ActionResult DetailsById(int id)
+        {
+            string postSlug = db.Posts.Where(x => x.Id == id).Select(x => x.Slug).SingleOrDefault();
+
+            return RedirectToActionPermanent(ActionNames.Details, Name, new { postSlug });
         }
     }
 }
