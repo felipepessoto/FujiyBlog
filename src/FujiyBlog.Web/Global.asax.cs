@@ -56,8 +56,6 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
-            HibernatingRhinos.Profiler.Appender.EntityFramework.EntityFrameworkProfiler.Initialize();
-
             foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
             {
                 ViewEngines.Engines.Remove(viewEngine);

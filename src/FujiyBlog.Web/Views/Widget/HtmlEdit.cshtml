@@ -10,7 +10,7 @@
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, string>>(Model.Settings);
     }
 }
-Title: @Html.TextBox("Title" + Model.Id, settings["Title"])
-Body: @Html.TextArea("Text" + Model.Id, settings["Text"])
+Title: @Html.TextBox("Title" + Model.Id, settings["Title"])<br/><br/>
+Body: @Html.TextArea("Text" + Model.Id, settings["Text"], new {style="width: 700px; height: 300px;"})<br /><br/>
 <a href="javascript:void(0);" onclick="javascript:fujiyBlog.widget.saveWidgetSettings(@Model.Id, JSON.stringify({ Title: $('#Title@(Model.Id)').val(), Text: $('#Text@(Model.Id)').val() }));">
     Save</a>

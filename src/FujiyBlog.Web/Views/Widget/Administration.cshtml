@@ -18,11 +18,11 @@
 <div class="content">
     <ul class="toprounded">
         <li>@Html.ActionLink("Posts", MVC.Admin.Post.Index())</li>
-        <li>@Html.ActionLink("Comments", MVC.Admin.Comment.Index())</li>
+        <li>@Html.ActionLink(@Resources.Labels.Comments, MVC.Admin.Comment.Index())</li>
         <li>@Html.ActionLink("Pages", MVC.Admin.Page.Index())</li>
         <li>@Html.ActionLink("Users", MVC.Admin.User.Index())</li>
         <li>@Html.ActionLink("Settings", MVC.Admin.Setting.Index())</li>
-        <li>@Html.ActionLink("Change Password", MVC.Account.ChangePassword())</li>
+        <li>@Html.ActionLink(@Resources.Labels.ChangePassword, MVC.Account.ChangePassword())</li>
     </ul>
 </div>
 }

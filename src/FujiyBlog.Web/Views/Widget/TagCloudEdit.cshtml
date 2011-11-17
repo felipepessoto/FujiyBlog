@@ -10,7 +10,7 @@
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
     }
 }
-Title: @Html.TextBox("Title" + Model.Id, settings["Title"])
-Minimum posts in each tag: @Html.TextBox("MinimumPosts" + Model.Id, settings["MinimumPosts"].ToString())
+Title: @Html.TextBox("Title" + Model.Id, settings["Title"])<br/><br/>
+Minimum posts in each tag: @Html.TextBox("MinimumPosts" + Model.Id, settings["MinimumPosts"].ToString())<br/><br/>
 <a href="javascript:void(0);" onclick="javascript:fujiyBlog.widget.saveWidgetSettings(@Model.Id, JSON.stringify({ Title: $('#Title@(Model.Id)').val(), MinimumPosts: parseInt($('#MinimumPosts@(Model.Id)').val()) }));">
     Save</a>

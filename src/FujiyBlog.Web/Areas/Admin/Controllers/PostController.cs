@@ -134,7 +134,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction(MVC.Post.Details(editedPost.Slug));
             }
 
             AdminPostEdit viewModel = new AdminPostEdit();
