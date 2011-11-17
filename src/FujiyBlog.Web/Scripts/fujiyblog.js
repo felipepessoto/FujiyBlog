@@ -55,12 +55,12 @@
                         url: fujiyBlogUrls.Widget_Sort,
                         type: 'post',
                         data: { widgetsOrder: widgetsOrder }
-                    })
+                    });
                 }
             });
         }
     }
-}
+};
 
 $(function () {
     $('.searchWidgetTerms').keypress(function (e) {
