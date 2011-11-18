@@ -10,6 +10,12 @@ namespace FujiyBlog.Core.EntityFramework
     {
         protected override void Seed(FujiyBlogDatabase context)
         {
+            SeedDatabase(context);
+            base.Seed(context);
+        }
+
+        public static void SeedDatabase(FujiyBlogDatabase context)
+        {
             DateTime utcNow = DateTime.UtcNow;
 
             SeedSettings(context);
@@ -29,39 +35,39 @@ namespace FujiyBlog.Core.EntityFramework
             adminGroup.Roles = Enum.GetValues(typeof (Role)).Cast<Role>();
             adminGroup.Users.Add(admin);
 
-            RoleGroup editorGroup = new RoleGroup { Name = "Editor" };
+            RoleGroup editorGroup = new RoleGroup {Name = "Editor"};
             List<Role> editorRoles = new List<Role>
-                                                     {
-                                                         Role.AccessAdminPages,
-                                                         Role.ViewPublicPosts,
-                                                         Role.ViewUnpublishedPosts,
-                                                         Role.CreateNewPosts,
-                                                         Role.EditOwnPosts,
-                                                         Role.DeleteOwnPosts,
-                                                         Role.PublishOwnPosts,
-                                                         Role.EditOwnUser,
-                                                         Role.ViewPublicComments,
-                                                         Role.ViewUnmoderatedComments,
-                                                         Role.CreateComments,
-                                                         Role.ModerateComments,
-                                                         Role.ViewPublicPages,
-                                                         Role.ViewUnpublishedPages,
-                                                         Role.CreateNewPages,
-                                                         Role.EditOwnPages,
-                                                         Role.DeleteOwnPages,
-                                                         Role.PublishOwnPages,
-                                                     };
+                                         {
+                                             Role.AccessAdminPages,
+                                             Role.ViewPublicPosts,
+                                             Role.ViewUnpublishedPosts,
+                                             Role.CreateNewPosts,
+                                             Role.EditOwnPosts,
+                                             Role.DeleteOwnPosts,
+                                             Role.PublishOwnPosts,
+                                             Role.EditOwnUser,
+                                             Role.ViewPublicComments,
+                                             Role.ViewUnmoderatedComments,
+                                             Role.CreateComments,
+                                             Role.ModerateComments,
+                                             Role.ViewPublicPages,
+                                             Role.ViewUnpublishedPages,
+                                             Role.CreateNewPages,
+                                             Role.EditOwnPages,
+                                             Role.DeleteOwnPages,
+                                             Role.PublishOwnPages,
+                                         };
 
             editorGroup.Roles = editorRoles;
 
-            RoleGroup anonymGroup = new RoleGroup { Name = "Anonymous" };
+            RoleGroup anonymGroup = new RoleGroup {Name = "Anonymous"};
             List<Role> anonymRoles = new List<Role>
-                                                     {
-                                                         Role.ViewPublicPosts,
-                                                         Role.ViewPublicComments,
-                                                         Role.CreateComments,
-                                                         Role.ViewPublicPages,
-                                                     };
+                                         {
+                                             Role.ViewPublicPosts,
+                                             Role.ViewPublicComments,
+                                             Role.CreateComments,
+                                             Role.ViewPublicPages,
+                                         };
 
             anonymGroup.Roles = anonymRoles;
 
@@ -80,12 +86,9 @@ namespace FujiyBlog.Core.EntityFramework
                                        CreationDate = utcNow,
                                        LastModificationDate = utcNow,
                                        PublicationDate = utcNow,
-
                                    };
 
             context.Posts.Add(examplePost);
-
-            base.Seed(context);
         }
 
         private static void SeedSettings(FujiyBlogDatabase context)
