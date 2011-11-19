@@ -17,6 +17,7 @@ namespace FujiyBlog.Web.Extensions
         {
             response.StatusCode = 401;
             response.WriteFile("~/errors/401.htm");
+            response.TrySkipIisCustomErrors = true;
             response.End();
             throw new Exception("The user has no permission");
         }
