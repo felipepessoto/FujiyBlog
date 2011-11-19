@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Models;
 using System.Linq;
 
@@ -121,7 +122,12 @@ namespace FujiyBlog.Web.Controllers
                 ModelState.AddModelError("email", "Email does not exist in our system");
                 return View();
             }
-            //TODO recuperar senha
+
+            string retrievePasswordBody = @"{0}, If you didn´t request your password back at ""{1}"", please ignore this email.<br /><br />
+Your password: {2}";
+
+            new EmailService().Send(user.Email, "Password Retrieve", string.Format(retrievePasswordBody, user.FullName ?? user.DisplayName, Settings.SettingRepository.BlogName, user.Password), true);
+
             return RedirectToAction(MVC.Account.ForgotPasswordSuccess());
         }
 
