@@ -1612,17 +1612,7 @@ namespace Links {
                     private const string URLPATH = "~/Content/Themes/Default/img";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string download_png = Url("download.png");
-                    public static readonly string footerbg_jpg = Url("footerbg.jpg");
-                    public static readonly string grunge_header_jpg = Url("grunge-header.jpg");
-                    public static readonly string mainbg_jpg = Url("mainbg.jpg");
-                    public static readonly string postheadingbottombg_jpg = Url("postheadingbottombg.jpg");
-                    public static readonly string postheadingsideripbg_jpg = Url("postheadingsideripbg.jpg");
-                    public static readonly string reply_arrow_gif = Url("reply-arrow.gif");
-                    public static readonly string searchbg_jpg = Url("searchbg.jpg");
-                    public static readonly string topbg_jpg = Url("topbg.jpg");
-                    public static readonly string widgetheadingbg_jpg = Url("widgetheadingbg.jpg");
-                    public static readonly string widgetmainbg_jpg = Url("widgetmainbg.jpg");
+                    public static readonly string header_background_jpg = Url("header_background.jpg");
                 }
             
                 public static readonly string Site_css = Url("Site.css");

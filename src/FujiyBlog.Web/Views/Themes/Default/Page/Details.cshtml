@@ -6,8 +6,7 @@
     <h1>
         @Model.Title</h1>
     <div>
-        <p>
-            @Html.Raw(Model.Content)</p>
+        @Html.Raw(Model.Content)
     </div>
     @if (Request.IsAuthenticated)
     {

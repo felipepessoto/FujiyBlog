@@ -15,11 +15,7 @@
 }
 <h4>@Html.Raw(settings["Title"] as string)</h4>
 <div class="search">
-    <div class="content">
-        <div id="searchbox">
-            <input type="text" id="@(Model.Id)_searchWidgetTerms" value="@Request.QueryString["terms"]" class="searchWidgetTerms" />
-            <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#@(Model.Id)_searchWidgetTerms').val());">
-                Search</a>
-        </div>
-    </div>
+    <input type="text" id="@(Model.Id)_searchWidgetTerms" value="@Request.QueryString["terms"]" class="searchWidgetTerms" />
+    <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#@(Model.Id)_searchWidgetTerms').val());">
+        Search</a>
 </div>

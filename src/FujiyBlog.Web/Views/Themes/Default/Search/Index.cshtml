@@ -26,26 +26,21 @@
 
 <div class="searchpage post">
     <h1>@ViewBag.Title</h1>
-    <br />    
     <div id="searchpage">    
 
+        <input type="text" id="searchPageTerms" value="@Request.QueryString["terms"]" />
+        <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#searchPageTerms').val());">Search</a>
 
-    <input type="text" id="searchPageTerms" value="@Request.QueryString["terms"]" />
-    <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#searchPageTerms').val());">Search</a>
-    
-      
     </div>  
     @foreach (var item in Model.Posts)
     {
         <div class="searchresult">
             @Html.ActionLink(item.Title, MVC.Post.Details(item.Slug))
-            <span class="text">"@GetDescription(item)"</span>
-            <span><strong>Categorias</strong> : @Html.Raw(item.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
-            <br />
-            <strong>Tags</strong> : @Html.Raw(item.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))
-            </span>
+            <span>"@GetDescription(item)"</span>
+            <span><strong>Categorias</strong> : @Html.Raw(item.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))</span>
+            <span><strong>Tags</strong> : @Html.Raw(item.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</span>
         </div>
     }
-  </div>
+</div>
 
-  @Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)

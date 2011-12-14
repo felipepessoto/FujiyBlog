@@ -39,50 +39,57 @@ private string ShowPostContent(string content)
 
 }
 
-<div class="post xfolkentry" id="post@(Model.Post.Id)">
-    <h1>
-        @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))</h1>
-    <span class="author">@Resources.Labels.By @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))</span>
-    <span class="pubDate">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate).ToString(System.Globalization.CultureInfo.CreateSpecificCulture(UICulture))</span>
-    <div class="text">@Html.Raw(ShowPostContent(Model.Post.Content))</div>
-    <div class="bottom">
-        @*RATING*@
-        @if (@Model.Post.Tags.Any())
-        { 
-            <p class="tags">
-                Tags: @Html.Raw(Model.Post.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</p>
-        }
-        @if (@Model.Post.Categories.Any())
-        { 
-            <p class="categories">
-                @Resources.Labels.Categories: @Html.Raw(Model.Post.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
-            </p>
-        }
-    </div>
-    <div class="footer">
-        <div class="social-networks" style="float: left;">
-        @if (Settings.SettingRepository.EnableTwitterSharePosts)
-        {
-            <a href="https://twitter.com/share" class="twitter-share-button" data-url="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))" data-text="@(Model.Post.Title)" data-count="none">Tweet</a>
-        }
-        @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
-        {
-            <div class="g-plusone" data-size="medium" data-href="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))"></div>
-        }
-        @if (Settings.SettingRepository.EnableFacebookLikePosts)
-        {
-            <div class="fb-like" data-href="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
-        }
+<div class="post" id="post@(Model.Post.Id)">
+    <h2 class="title">
+        @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))</h2>
+
+    <p class="meta"><span class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate).ToString(System.Globalization.CultureInfo.CreateSpecificCulture(UICulture))</span><span class="posted">
+                                                                                                                                                                                                                   @Resources.Labels.By @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))</span></p>
+    
+    <div class="entry">
+        @Html.Raw(ShowPostContent(Model.Post.Content))
+        <div class="post-footer">
+            <div class="social-networks">
+                @if (Settings.SettingRepository.EnableTwitterSharePosts)
+                {
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))" data-text="@(Model.Post.Title)" data-count="none">Tweet</a>
+                }
+                @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
+                {
+                    <div class="g-plusone" data-size="medium" data-href="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))"></div>
+                }
+                @if (Settings.SettingRepository.EnableFacebookLikePosts)
+                {
+                    <div class="fb-like" data-href="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
+                }
+            </div>
+
+            <div class="post-links">
+                @if (Request.IsAuthenticated)
+                { 
+                    @Html.ActionLink(Resources.Labels.Edit, MVC.Admin.Post.Edit(Model.Post.Id)) <text>|</text>
+                    @Html.ActionLink(Resources.Labels.Delete, MVC.Admin.Post.Delete(Model.Post.Id)) <text>|</text>
+                }
+                @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Post.Id), new { rel = "bookmark", title = Model.Post.Title })
+                | <a href="@Url.Action(MVC.Post.Details(Model.Post.Slug))#commentlist" >@Resources.Labels.Comments (@Model.CommentsTotal)</a>        
+            </div>
+
+            <div class="bottom">
+                @if (@Model.Post.Tags.Any())
+                { 
+                    <div>
+                        Tags: @Html.Raw(Model.Post.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</div>
+                }
+                @if (@Model.Post.Categories.Any())
+                { 
+                    <div>
+                        @Resources.Labels.Categories: @Html.Raw(Model.Post.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
+                    </div>
+                }
+            </div>
+                
+
+
         </div>
-
-@if (Request.IsAuthenticated)
-{ 
-    @Html.ActionLink(Resources.Labels.Edit, MVC.Admin.Post.Edit(Model.Post.Id)) <text>|</text>
-    @Html.ActionLink(Resources.Labels.Delete, MVC.Admin.Post.Delete(Model.Post.Id)) <text>|</text>
-}
-        @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Post.Id), new { rel = "bookmark", title = Model.Post.Title })
-        | <a href="@Url.Action(MVC.Post.Details(Model.Post.Slug))#commentlist" >@Resources.Labels.Comments (@Model.CommentsTotal)</a>
-
-        
     </div>
 </div>

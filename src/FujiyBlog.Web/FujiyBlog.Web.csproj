@@ -289,17 +289,7 @@
     <Content Include="Content\Themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\Themes\Default\img\download.png" />
-    <Content Include="Content\Themes\Default\img\footerbg.jpg" />
-    <Content Include="Content\Themes\Default\img\grunge-header.jpg" />
-    <Content Include="Content\Themes\Default\img\mainbg.jpg" />
-    <Content Include="Content\Themes\Default\img\postheadingbottombg.jpg" />
-    <Content Include="Content\Themes\Default\img\postheadingsideripbg.jpg" />
-    <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
-    <Content Include="Content\Themes\Default\img\searchbg.jpg" />
-    <Content Include="Content\Themes\Default\img\topbg.jpg" />
-    <Content Include="Content\Themes\Default\img\widgetheadingbg.jpg" />
-    <Content Include="Content\Themes\Default\img\widgetmainbg.jpg" />
+    <Content Include="Content\Themes\Default\img\header_background.jpg" />
     <Content Include="Content\Themes\Default\Site.css" />
     <Content Include="Errors\401.htm" />
     <Content Include="Global.asax" />
@@ -626,7 +616,6 @@
     <Content Include="Areas\Admin\Views\Page\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Page\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Page\Edit.cshtml" />
-    <Content Include="Views\Themes\Default\Page\Details.cshtml" />
     <Content Include="Areas\Admin\Views\User\RoleGroups.cshtml" />
     <Content Include="Areas\Admin\Views\User\EditRoleGroup.cshtml" />
     <Content Include="Views\Widget\Widget.cshtml" />
@@ -637,22 +626,7 @@
     <Content Include="Views\Widget\Archive.cshtml" />
     <Content Include="Views\Widget\ArchiveEdit.cshtml" />
     <Content Include="App_Code\Pager.cshtml" />
-    <Content Include="Views\Themes\Default\Account\ChangePassword.cshtml" />
-    <Content Include="Views\Themes\Default\Account\ChangePasswordSuccess.cshtml" />
-    <Content Include="Views\Themes\Default\Account\LogOn.cshtml" />
-    <Content Include="Views\Themes\Default\Post\Archive.cshtml" />
-    <Content Include="Views\Themes\Default\Comment\Comments.cshtml" />
-    <Content Include="Views\Themes\Default\Post\Details.cshtml" />
-    <Content Include="Views\Themes\Default\Comment\DoComment.cshtml" />
-    <Content Include="Views\Themes\Default\Post\Index.cshtml" />
-    <Content Include="Views\Themes\Default\Post\Post.cshtml" />
-    <Content Include="Views\Themes\Default\Shared\_Layout.cshtml" />
-    <Content Include="Views\Themes\Default\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Themes\Default\Account\ForgotPasswordSuccess.cshtml" />
     <Content Include="Views\Widget\Administration.cshtml" />
-    <Content Include="Views\Themes\Default\Contact\Index.cshtml" />
-    <Content Include="Views\Themes\Default\Contact\Success.cshtml" />
-    <Content Include="Views\Themes\Default\Search\Index.cshtml" />
     <Content Include="Views\Widget\SearchBox.cshtml" />
     <Content Include="Views\Widget\SearchBoxEdit.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateTimePicker.cshtml" />
@@ -668,6 +642,22 @@
     </None>
     <None Include="T4MVC.tt.settings.t4" />
     <Content Include="Views\JavaScript\FujiyBlogUrls.cshtml" />
+    <Content Include="Views\Themes\Default\Post\Archive.cshtml" />
+    <Content Include="Views\Themes\Default\Post\Details.cshtml" />
+    <Content Include="Views\Themes\Default\Post\Index.cshtml" />
+    <Content Include="Views\Themes\Default\Post\Post.cshtml" />
+    <Content Include="Views\Themes\Default\Shared\_Layout.cshtml" />
+    <Content Include="Views\Themes\Default\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Themes\Default\Account\ChangePasswordSuccess.cshtml" />
+    <Content Include="Views\Themes\Default\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Themes\Default\Account\ForgotPasswordSuccess.cshtml" />
+    <Content Include="Views\Themes\Default\Account\LogOn.cshtml" />
+    <Content Include="Views\Themes\Default\Page\Details.cshtml" />
+    <Content Include="Views\Themes\Default\Comment\Comments.cshtml" />
+    <Content Include="Views\Themes\Default\Comment\DoComment.cshtml" />
+    <Content Include="Views\Themes\Default\Contact\Index.cshtml" />
+    <Content Include="Views\Themes\Default\Contact\Success.cshtml" />
+    <Content Include="Views\Themes\Default\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Labels.resx">
