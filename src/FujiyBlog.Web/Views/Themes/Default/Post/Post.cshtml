@@ -52,15 +52,15 @@ private string ShowPostContent(string content)
             <div class="social-networks">
                 @if (Settings.SettingRepository.EnableTwitterSharePosts)
                 {
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))" data-text="@(Model.Post.Title)" data-count="none">Tweet</a>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="@(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))" data-text="@(Model.Post.Title)" data-count="none">Tweet</a>
                 }
                 @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
                 {
-                    <div class="g-plusone" data-size="medium" data-href="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))"></div>
+                    <div class="g-plusone" data-size="medium" data-href="@(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))"></div>
                 }
                 @if (Settings.SettingRepository.EnableFacebookLikePosts)
                 {
-                    <div class="fb-like" data-href="@(Url.Action(MVC.Post.DetailsById(Model.Post.Id), Request.Url.Scheme))" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
+                    <div class="fb-like" data-href="@(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
                 }
             </div>
 

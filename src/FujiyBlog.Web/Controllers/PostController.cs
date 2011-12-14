@@ -37,6 +37,13 @@ namespace FujiyBlog.Web.Controllers
             ViewBag.Title = Settings.SettingRepository.BlogName + " - " + Settings.SettingRepository.BlogDescription;
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
+            if (page.HasValue)
+            {
+                ViewBag.Title += " - Page " + page.Value;
+                ViewBag.Description += " - Page " + page.Value;
+            }
+
+
             return View(model);
         }
 
@@ -53,6 +60,12 @@ namespace FujiyBlog.Web.Controllers
 
             ViewBag.Title = "All posts tagged '" + tag + "'";
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
+
+            if (page.HasValue)
+            {
+                ViewBag.Title += " - Page " + page.Value;
+                ViewBag.Description += " - Page " + page.Value;
+            }
 
             return View("Index", model);
         }
@@ -71,6 +84,12 @@ namespace FujiyBlog.Web.Controllers
             ViewBag.Title = category;
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
+            if (page.HasValue)
+            {
+                ViewBag.Title += " - Page " + page.Value;
+                ViewBag.Description += " - Page " + page.Value;
+            }
+
             return View("Index", model);
         }
 
@@ -87,6 +106,12 @@ namespace FujiyBlog.Web.Controllers
 
             ViewBag.Title = "All posts by '" + author + "'";
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
+
+            if (page.HasValue)
+            {
+                ViewBag.Title += " - Page " + page.Value;
+                ViewBag.Description += " - Page " + page.Value;
+            }
 
             return View("Index", model);
         }
@@ -122,6 +147,12 @@ namespace FujiyBlog.Web.Controllers
 
             ViewBag.Title = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
             ViewBag.Description = Settings.SettingRepository.BlogDescription;
+
+            if (page.HasValue)
+            {
+                ViewBag.Title += " - Page " + page.Value;
+                ViewBag.Description += " - Page " + page.Value;
+            }
 
             return View("Index", model);
         }
