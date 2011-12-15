@@ -60,7 +60,7 @@ private string ShowPostContent(string content)
                 }
                 @if (Settings.SettingRepository.EnableFacebookLikePosts)
                 {
-                    <div class="fb-like" data-href="@(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>
+                    @Facebook.Like(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))
                 }
             </div>
 
