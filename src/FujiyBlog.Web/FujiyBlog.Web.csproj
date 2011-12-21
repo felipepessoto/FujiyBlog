@@ -642,7 +642,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
     <None Include="T4MVC.tt.settings.t4" />
-    <Content Include="Views\JavaScript\FujiyBlogUrls.cshtml" />
+    <Content Include="Views\JavaScript\FujiyBlogBundle.cshtml" />
     <Content Include="Views\Themes\Default\Post\Archive.cshtml" />
     <Content Include="Views\Themes\Default\Post\Details.cshtml" />
     <Content Include="Views\Themes\Default\Post\Index.cshtml" />
