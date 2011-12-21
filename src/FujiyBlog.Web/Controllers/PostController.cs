@@ -145,8 +145,8 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(startDate: startDate, endDate: endDate) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            ViewBag.Title = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month);
-            ViewBag.Description = Settings.SettingRepository.BlogDescription;
+            ViewBag.Title = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + " - " + year;
+            ViewBag.Description = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + " - " + year;
 
             if (page.HasValue)
             {
