@@ -308,7 +308,6 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
-    <Content Include="Scripts\modernizr-2.0.6-development-only.js" />
     <Content Include="Scripts\tinymce.3.4.5\jquery.tinymce.js" />
     <Content Include="Scripts\tinymce.3.4.5\langs\en.js" />
     <Content Include="Scripts\tinymce.3.4.5\license.txt" />
