@@ -1,36 +1,37 @@
 ﻿<!DOCTYPE html>
 <html>
-<head>
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content(Links.Content.Admin.Site_css)" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content(Links.Content.Themes.@base.minified.jquery_ui_min_css)" rel="stylesheet" type="text/css" />
-    <script src="@Url.Action(MVC.JavaScript.FujiyBlogBundle())" type="text/javascript"></script>
-</head>
+    <head>
+        <title>@ViewBag.Title</title>
+        <link href="@Url.Content(Links.Content.Admin.Site_css)" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content(Links.Content.Themes.@base.minified.jquery_ui_min_css)" rel="stylesheet" type="text/css" />
+        <script src="@Url.Action(MVC.JavaScript.FujiyBlogBundle())" type="text/javascript"></script>
+    </head>
 
-<body>
-    <div class="page">
-        <header>
-            <div id="title">
-                <h1>Blog Admin</h1>
-            </div>
-            <div id="logindisplay">
-                Welcome @Context.User.Identity.Name | @Html.ActionLink("Go to Blog", MVC.Post.Index())
-            </div>
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Posts", MVC.Admin.Post.Index())</li>
-                    <li>@Html.ActionLink("Comments", MVC.Admin.Comment.Index())</li>
-                    <li>@Html.ActionLink("Users", MVC.Admin.User.Index())</li>
-                    <li>@Html.ActionLink("Settings", MVC.Admin.Setting.Index())</li>
-                    <li>@Html.ActionLink("Pages", MVC.Admin.Page.Index())</li>
-                </ul>
-            </nav>
-        </header>
-        <section id="main">
-            @RenderBody()
-        </section>
-        <footer>
-        </footer>
-    </div>
-</body>
+    <body>
+        @Html.Partial("NotifyBar")
+        <div class="page">
+            <header>
+                <div id="title">
+                    <h1>Blog Admin</h1>
+                </div>
+                <div id="logindisplay">
+                    Welcome @Context.User.Identity.Name | @Html.ActionLink("Go to Blog", MVC.Post.Index())
+                </div>
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Posts", MVC.Admin.Post.Index())</li>
+                        <li>@Html.ActionLink("Comments", MVC.Admin.Comment.Index())</li>
+                        <li>@Html.ActionLink("Users", MVC.Admin.User.Index())</li>
+                        <li>@Html.ActionLink("Settings", MVC.Admin.Setting.Index())</li>
+                        <li>@Html.ActionLink("Pages", MVC.Admin.Page.Index())</li>
+                    </ul>
+                </nav>
+            </header>
+            <section id="main">
+                @RenderBody()
+            </section>
+            <footer>
+            </footer>
+        </div>
+    </body>
 </html>

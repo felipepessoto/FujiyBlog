@@ -322,3 +322,69 @@ div#title {
 .tri-state {
     width: 6em;
 }
+
+
+/* Notify Bar */
+
+#notify-bar {
+    font-family:Arial,Helvetica,sans-serif;
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    z-index:105;
+    text-align:center;
+    font-weight:bold;
+    font-size:100%;
+    padding:10px 0px 10px 0px;
+    
+    -webkit-border-radius: .25em;
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    
+    -webkit-box-shadow: .125em .125em .125em #cfcfcf;
+    -moz-box-shadow: .125em .125em .125em #cfcfcf;
+    box-shadow: .125em .125em .125em #cfcfcf;
+}
+
+#notify-bar.success {
+    border-top: 1px solid #fefbcd;
+    border-bottom: 1px solid #e6e837;
+    
+    background-color: #feffb1;
+    
+    background: -webkit-gradient(linear, left top, left bottom, from(#feffb1), to(#f0f17f));
+    background: -moz-linear-gradient(top, #feffb1, #f0f17f);
+    background: linear-gradient(top, #feffb1, #f0f17f);
+    
+    color: #817134;
+}
+
+#notify-bar.error {
+    border-top: 1px solid #f7d0d0;
+    border-bottom: 1px solid #c87676;
+    
+    background-color: #f3c7c7;
+    
+    background: -webkit-gradient(linear, left top, left bottom, from(#f3c7c7), to(#eea2a2));
+    background: -moz-linear-gradient(top, #f3c7c7, #eea2a2);
+    background: linear-gradient(top, #f3c7c7, #eea2a2);
+    
+    color: #d12f19;
+}
+
+#notify-bar span {
+    text-align: center;
+    width: 95%;
+    float:left;
+}
+
+#close-notify {
+    white-space: nowrap;
+    float:right;
+    margin-right:10px;
+    color:#999;
+    text-decoration:none;
+    padding-left:3px;
+    padding-right:3px
+}
