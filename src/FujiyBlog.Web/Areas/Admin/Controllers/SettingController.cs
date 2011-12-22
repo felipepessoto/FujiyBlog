@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using FujiyBlog.Core.BlogML;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Web.Areas.Admin.Models;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
@@ -62,7 +63,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
             Settings.SettingRepository.Culture = settings.Language;
 
-            return RedirectToAction(MVC.Admin.Setting.Index());
+            return RedirectToAction(MVC.Admin.Setting.Index()).SetSuccessMessage("Settings saved");
         }
 
         public virtual ActionResult Email()
@@ -97,7 +98,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.SmtpPassword = settings.SmtpPassword;
             Settings.SettingRepository.SmtpSsl = settings.SmtpSsl;
 
-            return RedirectToAction(MVC.Admin.Setting.Email());
+            return RedirectToAction(MVC.Admin.Setting.Email()).SetSuccessMessage("Settings saved");
         }
 
         public virtual ActionResult Comments()
@@ -130,7 +131,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.CommentsPerPage = settings.CommentsPerPage;
             Settings.SettingRepository.CommentsAvatar = settings.CommentsAvatar;
 
-            return RedirectToAction(MVC.Admin.Setting.Comments());
+            return RedirectToAction(MVC.Admin.Setting.Comments()).SetSuccessMessage("Settings saved");
         }
 
         public virtual ActionResult Import()
@@ -184,7 +185,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.EnableGooglePlusOnePosts = settings.EnableGooglePlusOnePosts;
             Settings.SettingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
 
-            return RedirectToAction(MVC.Admin.Setting.SocialNetworks());
+            return RedirectToAction(MVC.Admin.Setting.SocialNetworks()).SetSuccessMessage("Settings saved");
         }
     }
 }
