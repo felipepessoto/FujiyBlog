@@ -388,3 +388,16 @@ div#title {
     padding-left:3px;
     padding-right:3px
 }
+
+
+/* Pager */
+
+.PostPager {
+    padding-left: 0px;
+}
+
+.PostPager li {
+    display: inline;
+    margin: 1px;
+    padding: 3px 5px;
+}
