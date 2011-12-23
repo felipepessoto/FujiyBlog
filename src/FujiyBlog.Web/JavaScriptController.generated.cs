@@ -56,7 +56,7 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
-            public readonly string FujiyBlogUrls = "~/Views/JavaScript/FujiyBlogUrls.cshtml";
+            public readonly string FujiyBlogBundle = "~/Views/JavaScript/FujiyBlogBundle.cshtml";
         }
     }
 
