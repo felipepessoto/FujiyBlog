@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
@@ -16,6 +17,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public int? AuthorId { get; set; }
 
         [StringLength(500), AllowHtml]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Required, StringLength(200)]
@@ -25,12 +27,14 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public string Content { get; set; }
 
         [StringLength(500)]
+        [DataType(DataType.MultilineText)]
         public string Keywords { get; set; }
 
         [UIHint("DateTimePicker")]
+        [DisplayName("Publish Date")]
         public DateTime PublicationDate { get; set; }
 
-        [Display(Name = "Published")]
+        [DisplayName("Publish")]
         public bool IsPublished { get; set; }
 
         [Display(Name = "Front Page")]
@@ -41,9 +45,6 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name = "Show In List")]
         public bool ShowInList { get; set; }
-
-        [Display(Name = "Deleted")]
-        public bool IsDeleted { get; set; }
 
         public IEnumerable<SelectListItem> Pages { get; set; }
         public IEnumerable<SelectListItem> Authors { get; set; }

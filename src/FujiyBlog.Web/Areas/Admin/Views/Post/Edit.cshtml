@@ -49,105 +49,136 @@
         <legend>Post</legend>
 
         @Html.HiddenFor(model => model.Post.Id)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.Title)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.Title)
-            @Html.ValidationMessageFor(model => model.Post.Title)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.AuthorId)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(x => x.Post.AuthorId, Model.Authors)
-            @Html.ValidationMessageFor(model => model.Post.AuthorId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.Description)
-            @Html.ValidationMessageFor(model => model.Post.Description)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.Slug)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.Slug) <a href="javascript:void(0)" id="extract-from-title">Extract from title</a>
-            @Html.ValidationMessageFor(model => model.Post.Slug)
-        </div>
-
-        <div class="upload-links">
-            <a href="javascript:void(0)" id="link-upload-image">Insert image</a>
-            <a href="javascript:void(0)" id="link-upload-video">Insert video</a>
-            <a href="javascript:void(0)" id="link-upload-file">Insert file</a>
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.Content)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.Content)
-            @Html.ValidationMessageFor(model => model.Post.Content)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.PublicationDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.PublicationDate)
-            @Html.ValidationMessageFor(model => model.Post.PublicationDate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.IsPublished)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.IsPublished)
-            @Html.ValidationMessageFor(model => model.Post.IsPublished)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.IsCommentEnabled)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Post.IsCommentEnabled)
-            @Html.ValidationMessageFor(model => model.Post.IsCommentEnabled)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.Categories)
-        </div>
-        <div class="editor-field">
-            <ul id="categories-list">
-            @foreach (Category category in Model.AllCategories)
-            {
-                <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
-            }
-            </ul>
-        </div>
-
-        <label for="new-category-name">Add new category</label>
-        <input type="text" id="new-category-name" />
-        <span id="new-category-name-error" class="field-validation-error" style="display:none"></span>
         
-        <a href="javascript:void(0);" id="add-category">Add</a>
+        <div class="edit-content-left">
+            
+            <div class="editor-wrapper-title">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.Title)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.Title)
+                    @Html.ValidationMessageFor(model => model.Post.Title)
+                </div>
+            </div>
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Post.Tags)
-        </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Post.Tags)
-        </div>
+            <div class="editor-wrapper-slug">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.Slug)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.Slug) <a href="javascript:void(0)" id="extract-from-title">Extract from title</a>
+                    @Html.ValidationMessageFor(model => model.Post.Slug)
+                </div>
+            </div>
+            
+            <div class="upload-links">
+                <a href="javascript:void(0)" id="link-upload-image">Insert image</a>
+                <a href="javascript:void(0)" id="link-upload-video">Insert video</a>
+                <a href="javascript:void(0)" id="link-upload-file">Insert file</a>
+            </div>
+            
+            <div class="editor-wrapper-content">
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.Content)
+                    @Html.ValidationMessageFor(model => model.Post.Content)
+                </div>
+            </div>
+            
+            <div class="editor-wrapper-description">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.Description) (Optional)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.Description)
+                    @Html.ValidationMessageFor(model => model.Post.Description)
+                </div>
+            </div>
+            
+            <div class="editor-wrapper-checkboxes">
+                <div class="editor-wrapper-ispublished">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Post.IsPublished)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Post.IsPublished)
+                        @Html.ValidationMessageFor(model => model.Post.IsPublished)
+                    </div>
+                </div>
+            
+                <div class="editor-wrapper-iscommentenabled">
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Post.IsCommentEnabled)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Post.IsCommentEnabled)
+                        @Html.ValidationMessageFor(model => model.Post.IsCommentEnabled)
+                    </div>
+                </div>
+            </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
+            <p class="submit-wrapper">
+                <input type="submit" value="Save" />
+            </p>
+        </div>
+        <div class="edit-content-right">
+            
+            <div class="editor-wrapper-author">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.AuthorId)
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownListFor(x => x.Post.AuthorId, Model.Authors)
+                    @Html.ValidationMessageFor(model => model.Post.AuthorId)
+                </div>
+            </div>
+            
+            <div class="editor-wrapper-publicationdate">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.PublicationDate)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.PublicationDate)
+                    @Html.ValidationMessageFor(model => model.Post.PublicationDate)
+                </div>
+            </div>
+            
+            <div class="editor-wrapper-categories">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.Categories)
+                </div>
+                <div class="editor-field">
+                    <ul id="categories-list">
+                        @foreach (Category category in Model.AllCategories)
+                        {
+                            <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="editor-label">
+                    <label for="new-category-name">Add new category</label>
+                </div>
+                <div class="editor-field">
+                    <input type="text" id="new-category-name" />
+                    <span id="new-category-name-error" class="field-validation-error" style="display:none"></span>
+                    <a href="javascript:void(0);" id="add-category">Add</a>
+                </div>
+
+            </div>
+
+            <div class="editor-wrapper-tags">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.Tags)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.Tags)
+                </div>
+                Separate each tag with a comma
+            </div>
+
+
+        </div>
     </fieldset>
 }
 
@@ -156,6 +187,50 @@
 </div>
 
 <script type="text/javascript">
+
+    $(function() {
+        var availableTags = @(Html.Raw(Model.AllTagsJson));
+
+        function split(val) {
+            return val.split( /,\s*/ );
+        }
+
+        function extractLast(term) {
+            return split(term).pop();
+        }
+
+        $('#@(Html.FieldIdFor(x=> x.Post.Tags))')
+            // don't navigate away from the field on tab when selecting an item
+            .bind("keydown", function(event) {
+                if (event.keyCode === $.ui.keyCode.TAB &&
+                    $(this).data("autocomplete").menu.active) {
+                    event.preventDefault();
+                }
+            })
+            .autocomplete({
+                minLength: 0,
+                source: function(request, response) {
+                    // delegate back to autocomplete, but extract the last term
+                    response($.ui.autocomplete.filter(
+                        availableTags, extractLast(request.term)));
+                },
+                focus: function() {
+                    // prevent value inserted on focus
+                    return false;
+                },
+                select: function(event, ui) {
+                    var terms = split(this.value);
+                    // remove the current input
+                    terms.pop();
+                    // add the selected item
+                    terms.push(ui.item.value);
+                    // add placeholder to get the comma-and-space at the end
+                    terms.push("");
+                    this.value = terms.join(", ");
+                    return false;
+                }
+            });
+    });
 
     function CheckPublishRoles () {
         

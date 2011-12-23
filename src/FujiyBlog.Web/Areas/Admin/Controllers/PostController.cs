@@ -10,6 +10,7 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Extensions;
+using System.Web.Script.Serialization;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -68,7 +69,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                             : new Post
                                   {
                                       PublicationDate = DateTime.UtcNow,
-                                      IsCommentEnabled = true
+                                      IsCommentEnabled = true,
+                                      IsPublished = true,
                                   };
 
             if (id.HasValue && !User.IsInRole(Role.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)))
@@ -87,7 +89,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(post);
             viewModel.Post.Id = id;
             viewModel.AllCategories = db.Categories.ToList();
-            viewModel.AllTags = db.Tags.ToList();
+            viewModel.AllTagsJson = new JavaScriptSerializer().Serialize(db.Tags.Select(x => x.Name));
 
             return View(viewModel);
         }
@@ -117,7 +119,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             editedPost.Tags.Clear();
             if (postSave.Tags != null)
             {
-                foreach (Tag tag in postRepository.GetOrCreateTags(postSave.Tags.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim())))
+                IEnumerable<string> tags = from tag in postSave.Tags.Split(new[] {','})
+                                           where !string.IsNullOrWhiteSpace(tag)
+                                           select tag.Trim();
+
+                foreach (Tag tag in postRepository.GetOrCreateTags(tags))
                 {
                     editedPost.Tags.Add(tag);
                 }
@@ -140,7 +146,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             AdminPostEdit viewModel = new AdminPostEdit();
             viewModel.Post = Mapper.Map<Post, AdminPostSave>(editedPost);
             viewModel.AllCategories = db.Categories.ToList();
-            viewModel.AllTags = db.Tags.ToList();
+            viewModel.AllTagsJson = new JavaScriptSerializer().Serialize(db.Tags.Select(x => x.Name));
             IQueryable<User> authors = db.Users.Where(x => x.Enabled);
             if (!User.IsInRole(Role.EditOtherUsersPosts))
             {

@@ -401,3 +401,66 @@ div#title {
     margin: 1px;
     padding: 3px 5px;
 }
+
+/* Edit Post */
+
+.edit-content-left {
+    float: left;
+    width: 67%;
+    margin-right: 2%;
+}
+
+.editor-wrapper-title input {
+    width: 100%;
+}
+
+.editor-wrapper-slug input {
+    width: 70%;
+}
+
+.upload-links {
+    margin-top: 20px;    
+}
+
+.editor-wrapper-content input {
+    width: 100%;
+    height: 400px;
+}
+
+.editor-wrapper-description {
+    float: left;
+    margin-right: 3%;
+}
+
+.submit-wrapper {
+    clear: both;
+}
+
+.edit-content-right {
+    float: left;
+    width: 30%;
+}
+
+.editor-wrapper-author select {
+    width: 100%;
+}
+
+.editor-wrapper-categories ul {
+    padding-left: 0px;
+}
+
+.editor-wrapper-categories li {
+    list-style-type: none;
+}
+
+.editor-wrapper-tags textarea {
+    width: 100%;
+}
+
+.editor-wrapper-keywords textarea {
+    width: 100%;
+}
+
+.editor-wrapper-checkboxes {
+    float: left;
+}
