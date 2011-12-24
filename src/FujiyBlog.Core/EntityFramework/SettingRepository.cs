@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FujiyBlog.Core.Caching;
+using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Core.EntityFramework
 {
@@ -176,15 +177,55 @@ namespace FujiyBlog.Core.EntityFramework
         //    get { return long.Parse(LoadSetting(SettingNames.LastDatabaseChange)); }
         //    set { SaveSetting(SettingNames.LastDatabaseChange, value.ToString()); }
         //}
+        
+        public string CustomCode
+        {
+            get { return LoadSetting(SettingNames.CustomCode); }
+            set { SaveSetting(SettingNames.CustomCode, value); }
+        }
+
+        public string AlternateFeedUrl
+        {
+            get { return LoadSetting(SettingNames.AlternateFeedUrl); }
+            set { SaveSetting(SettingNames.AlternateFeedUrl, value); }
+        }
+
+        public int ItemsShownInFeed
+        {
+            get
+            {
+                int itemsShownInFeed;
+                int.TryParse(LoadSetting(SettingNames.ItemsShownInFeed), out itemsShownInFeed);
+                return itemsShownInFeed;
+            }
+            set { SaveSetting(SettingNames.ItemsShownInFeed, value.ToString()); }
+        }
+
+        public string DefaultFeedOutput
+        {
+            get { return LoadSetting(SettingNames.DefaultFeedOutput); }
+            set { SaveSetting(SettingNames.DefaultFeedOutput, value); }
+        }
 
         private string LoadSetting(SettingNames setting)
         {
-            return settings[(int) setting];
+            string value;
+            settings.TryGetValue((int) setting, out value);
+            return value;
         }
 
-        private void SaveSetting(SettingNames setting, string value)
+        private void SaveSetting(SettingNames settingName, string value)
         {
-            database.Settings.Find((int) setting).Value = value;
+            int settingId = (int) settingName;
+            Setting setting = database.Settings.Find(settingId);
+
+            if (setting == null)
+            {
+                setting = new Setting {Id = settingId, Description = settingName.ToString()};
+                database.Settings.Add(setting);
+            }
+
+            setting.Value = value;
             database.SaveChanges();
         }
 
@@ -219,6 +260,13 @@ namespace FujiyBlog.Core.EntityFramework
             EnableTwitterSharePosts = 23,
 
             LastDatabaseChange = 24,
+
+            CustomCode = 25,
+
+            AlternateFeedUrl = 26,
+            ItemsShownInFeed = 27,
+            DefaultFeedOutput = 28,
+
         }
     }
 }

@@ -33,9 +33,9 @@ namespace FujiyBlog.Core.Services
                 feed.Categories.Add(new SyndicationCategory(category.Name));
             }
 
-            List<SyndicationItem> items = new List<SyndicationItem>(settingRepository.PostsPerPage);
+            List<SyndicationItem> items = new List<SyndicationItem>(settingRepository.ItemsShownInFeed);
 
-            foreach (Post post in feedRepository.GetPosts(settingRepository.PostsPerPage))
+            foreach (Post post in feedRepository.GetPosts(settingRepository.ItemsShownInFeed))
             {
                 string content = post.Content ?? string.Empty;
 

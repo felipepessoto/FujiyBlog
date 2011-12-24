@@ -21,7 +21,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<User> GetAllUsers()
         {
-            return database.Users.ToList();
+            return database.Users.Where(x => x.Enabled).ToList();
         }
 
         public IEnumerable<Category> GetAllCategories()

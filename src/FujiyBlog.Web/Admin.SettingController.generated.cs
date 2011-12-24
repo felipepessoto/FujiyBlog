@@ -51,6 +51,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string ImportPost = "Import";
             public readonly string ImportSuccessful = "ImportSuccessful";
             public readonly string SocialNetworks = "SocialNetworks";
+            public readonly string Feed = "Feed";
         }
 
 
@@ -62,6 +63,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string _Layout = "~/Areas/Admin/Views/Setting/_Layout.cshtml";
             public readonly string Comments = "~/Areas/Admin/Views/Setting/Comments.cshtml";
             public readonly string Email = "~/Areas/Admin/Views/Setting/Email.cshtml";
+            public readonly string Feed = "~/Areas/Admin/Views/Setting/Feed.cshtml";
             public readonly string Import = "~/Areas/Admin/Views/Setting/Import.cshtml";
             public readonly string ImportSuccessful = "~/Areas/Admin/Views/Setting/ImportSuccessful.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Setting/Index.cshtml";
@@ -128,6 +130,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult SocialNetworks(FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SocialNetworks);
+            callInfo.RouteValueDictionary.Add("settings", settings);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Feed() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Feed);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Feed(FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings settings) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Feed);
             callInfo.RouteValueDictionary.Add("settings", settings);
             return callInfo;
         }

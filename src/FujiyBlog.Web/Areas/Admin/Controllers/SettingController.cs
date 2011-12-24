@@ -37,6 +37,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
                                                    Language = Settings.SettingRepository.Culture,
                                                    Languages = new List<SelectListItem> { new SelectListItem { Text = "Auto", Value = "Auto" }, new SelectListItem { Text = "English", Value = "en" } },
+                                                   CustomCode = Settings.SettingRepository.CustomCode,
                                                };
 
             foreach (FileInfo file in new DirectoryInfo(Server.MapPath("~/App_GlobalResources/")).GetFiles("Labels.*.resx"))
@@ -62,6 +63,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.PostsPerPage = settings.PostsPerPage;
             Settings.SettingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
             Settings.SettingRepository.Culture = settings.Language;
+            Settings.SettingRepository.CustomCode = settings.CustomCode;
 
             return RedirectToAction(MVC.Admin.Setting.Index()).SetSuccessMessage("Settings saved");
         }
@@ -186,6 +188,34 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
 
             return RedirectToAction(MVC.Admin.Setting.SocialNetworks()).SetSuccessMessage("Settings saved");
+        }
+
+        public virtual ActionResult Feed()
+        {
+            AdminFeedSettings viewModel = new AdminFeedSettings
+            {
+                AlternateFeedUrl = Settings.SettingRepository.AlternateFeedUrl,
+                ItemsShownInFeed = Settings.SettingRepository.ItemsShownInFeed,
+                DefaultFeedOutput = Settings.SettingRepository.DefaultFeedOutput,
+                DefaultFeedOutputs = new List<SelectListItem> { new SelectListItem { Text = "RSS", Value = "RSS" }, new SelectListItem { Text = "Atom", Value = "Atom" } },
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public virtual ActionResult Feed(AdminFeedSettings settings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            Settings.SettingRepository.AlternateFeedUrl = settings.AlternateFeedUrl;
+            Settings.SettingRepository.ItemsShownInFeed = settings.ItemsShownInFeed;
+            Settings.SettingRepository.DefaultFeedOutput = settings.DefaultFeedOutput;
+
+            return RedirectToAction(MVC.Admin.Setting.Feed()).SetSuccessMessage("Settings saved");
         }
     }
 }

@@ -1,0 +1,39 @@
+﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings
+@{
+    ViewBag.Title = "Feed Settings";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+<h2>
+    Feed Settings</h2>
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>Feed</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.AlternateFeedUrl)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.AlternateFeedUrl)
+            @Html.ValidationMessageFor(model => model.AlternateFeedUrl)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ItemsShownInFeed)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ItemsShownInFeed)
+            @Html.ValidationMessageFor(model => model.ItemsShownInFeed)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.DefaultFeedOutput)
+        </div>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.DefaultFeedOutput, Model.DefaultFeedOutputs)
+            @Html.ValidationMessageFor(model => model.DefaultFeedOutput)
+        </div>
+        
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}

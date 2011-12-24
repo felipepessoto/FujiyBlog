@@ -159,6 +159,7 @@
     <Compile Include="Areas\Admin\ViewModels\AdminPageIndex.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminPageSave.cs" />
     <Compile Include="Areas\Admin\ViewModels\AdminSettingsSocialNetworks.cs" />
+    <Compile Include="Areas\Admin\ViewModels\AdminFeedSettings.cs" />
     <Compile Include="CommentController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -638,6 +639,7 @@
     <Content Include="Areas\Admin\Views\Setting\SocialNetworks.cshtml" />
     <Content Include="App_Code\Facebook.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\NotifyBar.cshtml" />
+    <Content Include="Areas\Admin\Views\Setting\Feed.cshtml" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>

@@ -263,6 +263,34 @@ namespace FujiyBlog.Core.EntityFramework
                                                  Value = DateTime.UtcNow.Ticks.ToString(),
                                              };
 
+            Setting customCode = new Setting
+                                     {
+                                         Id = 25,
+                                         Description = "Custom Code",
+                                         Value = string.Empty,
+                                     };
+
+            Setting alternateFeedUrl = new Setting
+                                           {
+                                               Id = 26,
+                                               Description = "Alternate Feed Url",
+                                               Value = string.Empty,
+                                           };
+
+            Setting itemsShownInFeed = new Setting
+                                           {
+                                               Id = 27,
+                                               Description = "Items Shown In Feed",
+                                               Value = "10",
+                                           };
+
+            Setting defaultFeedOutput = new Setting
+                                            {
+                                                Id = 28,
+                                                Description = "Default Feed Output",
+                                                Value = "RSS",
+                                            };
+
             context.Settings.Add(minRequiredPasswordLength);
             context.Settings.Add(postsPerPage);
             context.Settings.Add(blogName);
@@ -292,6 +320,11 @@ namespace FujiyBlog.Core.EntityFramework
             context.Settings.Add(enableTwitterSharePosts);
 
             context.Settings.Add(lastDatabaseChange);
+
+            context.Settings.Add(customCode);
+            context.Settings.Add(alternateFeedUrl);
+            context.Settings.Add(itemsShownInFeed);
+            context.Settings.Add(defaultFeedOutput);
         }
     }
 }

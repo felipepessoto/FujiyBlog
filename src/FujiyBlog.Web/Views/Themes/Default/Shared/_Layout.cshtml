@@ -26,7 +26,16 @@
                     <li class="current_page_item"><a href="@Url.Content("~/")">Home</a></li>
                     <li>@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
                     <li>@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
-                    <li>@Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) / @Html.ActionLink("Atom 1.0", MVC.Feed.Atom10())</li>
+                    <li>
+                    @if (!string.IsNullOrWhiteSpace(Settings.SettingRepository.AlternateFeedUrl))
+                    {
+                        <a href="@(Settings.SettingRepository.AlternateFeedUrl)">Feed</a>
+                    }
+                    else
+                    {
+                        @(Settings.SettingRepository.DefaultFeedOutput == "RSS" ? Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) : Html.ActionLink("Atom 1.0", MVC.Feed.Atom10()))
+                    }
+                    </li>
                     <li>@(Request.IsAuthenticated ? Html.ActionLink("Log Off", "LogOff", "Account") : Html.ActionLink("Log On", "LogOn", "Account"))</li>
                 </ul>
             </div>
@@ -63,5 +72,11 @@
     {
         <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
     }
+    
+    @if (!string.IsNullOrEmpty(Settings.SettingRepository.CustomCode))
+    {
+        @Html.Raw(Settings.SettingRepository.CustomCode)
+    }
+    
 </body>
 </html>

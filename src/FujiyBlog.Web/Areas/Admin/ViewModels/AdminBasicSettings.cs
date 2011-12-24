@@ -27,6 +27,9 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Display(Name = "Language")]
         public string Language { get; set; }
 
+        [Display(Name = "Custom Code"), AllowHtml, DataType(DataType.MultilineText)]
+        public string CustomCode { get; set; }
+
         public IEnumerable<SelectListItem> Themes { get; set; }
 
         public IEnumerable<SelectListItem> TimeZones { get; set; }
