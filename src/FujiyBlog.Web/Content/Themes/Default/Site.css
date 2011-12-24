@@ -32,7 +32,7 @@ a {
 /* Header */
 
 #header-wrapper {
-    background: url('img/header_background.jpg'); /* TODO: Criar */ 
+    background-color: #1582AB;
     border-bottom: 10px solid #666;
 }
 
