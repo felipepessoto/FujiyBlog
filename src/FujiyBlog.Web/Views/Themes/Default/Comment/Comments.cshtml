@@ -16,7 +16,7 @@
                     @Html.Gravatar(comment.Author == null ? comment.AuthorEmail : comment.Author.Email, 80, Settings.SettingRepository.CommentsAvatar)</p>
             }
             
-            <p class="content">@Html.Raw(comment.Comment)</p>
+            <p class="content">@Html.Raw(comment.Comment.Replace(Environment.NewLine, "<br />"))</p>
 
             @if (comment.Author == null)
             { 
