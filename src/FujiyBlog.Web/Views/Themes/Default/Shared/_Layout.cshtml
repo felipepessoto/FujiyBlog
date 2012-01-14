@@ -11,6 +11,9 @@
     <meta name="description" content="@ViewBag.Description" />
 
     <link type="application/rss+xml" rel="alternate" href="@Url.Action(MVC.Feed.Rss20())" />
+    
+    @RenderSection("Head", required: false)
+
 </head>
 
 <body>
