@@ -172,6 +172,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 EnableTwitterSharePosts = Settings.SettingRepository.EnableTwitterSharePosts,
                 FacebookAdminIds = Settings.SettingRepository.FacebookAdminIds,
                 FacebookAppId = Settings.SettingRepository.FacebookAppId,
+                OpenGraphImageUrl = Settings.SettingRepository.OpenGraphImageUrl,
             };
 
             return View(viewModel);
@@ -190,6 +191,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
             Settings.SettingRepository.FacebookAdminIds = settings.FacebookAdminIds;
             Settings.SettingRepository.FacebookAppId = settings.FacebookAppId;
+            Settings.SettingRepository.OpenGraphImageUrl = settings.OpenGraphImageUrl;
 
             return RedirectToAction(MVC.Admin.Setting.SocialNetworks()).SetSuccessMessage("Settings saved");
         }

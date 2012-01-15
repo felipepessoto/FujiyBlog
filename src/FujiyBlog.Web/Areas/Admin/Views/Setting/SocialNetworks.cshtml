@@ -45,6 +45,13 @@
             @Html.EditorFor(model => model.FacebookAppId)
             @Html.ValidationMessageFor(model => model.FacebookAppId)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.OpenGraphImageUrl)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.OpenGraphImageUrl)
+            @Html.ValidationMessageFor(model => model.OpenGraphImageUrl)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

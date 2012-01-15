@@ -18,5 +18,8 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name = "Facebook App ID")]
         public string FacebookAppId { get; set; }
+
+        [Display(Name = "Default Open Graph Image(used on facebook share)")]
+        public string OpenGraphImageUrl { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using System.ComponentModel;
@@ -220,6 +221,12 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.FacebookAppId, value); }
         }
 
+        public string OpenGraphImageUrl
+        {
+            get { return LoadSetting(SettingNames.OpenGraphImageUrl); }
+            set { SaveSetting(SettingNames.OpenGraphImageUrl, value); }
+        }
+
         private string LoadSetting(SettingNames setting)
         {
             string value;
@@ -247,7 +254,11 @@ namespace FujiyBlog.Core.EntityFramework
 
         private string GetSettingNameDefaultValue(SettingNames settingName)
         {
-            return ((DefaultValueAttribute)typeof(SettingNames).GetMember(settingName.ToString())[0].GetCustomAttributes(typeof(DefaultValueAttribute), false)[0]).Value.ToString();
+            MemberInfo enumValue = typeof (SettingNames).GetMember(settingName.ToString())[0];
+            DefaultValueAttribute defaultValue = (DefaultValueAttribute) enumValue.GetCustomAttributes(typeof (DefaultValueAttribute), false).FirstOrDefault();
+            if (defaultValue != null)
+                return defaultValue.Value.ToString();
+            return null;
         }
 
         private enum SettingNames
@@ -288,10 +299,14 @@ namespace FujiyBlog.Core.EntityFramework
             ItemsShownInFeed = 27,
             DefaultFeedOutput = 28,
 
-            [DefaultValue("fujiy")]
+            [Description("Comma-separated list of the user IDs or usernames of the Facebook accounts")]
             FacebookAdminIds = 29,
-            [DefaultValue(170099273094898)]
+
+            [Description("Facebook application ID")]
             FacebookAppId = 30,
+
+            [Description("")]
+            OpenGraphImageUrl = 31,
         }
     }
 }
