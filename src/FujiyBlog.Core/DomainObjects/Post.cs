@@ -26,6 +26,9 @@ namespace FujiyBlog.Core.DomainObjects
 
         public string Content { get; set; }
 
+        [StringLength(255)]
+        public string ImageUrl { get; set; }
+
         public DateTime CreationDate { get; set; }
 
         public DateTime LastModificationDate { get; set; }

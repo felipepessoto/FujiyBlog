@@ -116,6 +116,16 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="editor-wrapper-imageurl">
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Post.ImageUrl) (Optional)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Post.ImageUrl)
+                    @Html.ValidationMessageFor(model => model.Post.ImageUrl)
+                </div>
+            </div>
 
             <p class="submit-wrapper">
                 <input type="submit" value="Save" />
