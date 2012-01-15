@@ -170,6 +170,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 EnableFacebookLikePosts = Settings.SettingRepository.EnableFacebookLikePosts,
                 EnableGooglePlusOnePosts = Settings.SettingRepository.EnableGooglePlusOnePosts,
                 EnableTwitterSharePosts = Settings.SettingRepository.EnableTwitterSharePosts,
+                FacebookAdminIds = Settings.SettingRepository.FacebookAdminIds,
+                FacebookAppId = Settings.SettingRepository.FacebookAppId,
             };
 
             return View(viewModel);
@@ -186,6 +188,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.EnableFacebookLikePosts = settings.EnableFacebookLikePosts;
             Settings.SettingRepository.EnableGooglePlusOnePosts = settings.EnableGooglePlusOnePosts;
             Settings.SettingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
+            Settings.SettingRepository.FacebookAdminIds = settings.FacebookAdminIds;
+            Settings.SettingRepository.FacebookAppId = settings.FacebookAppId;
 
             return RedirectToAction(MVC.Admin.Setting.SocialNetworks()).SetSuccessMessage("Settings saved");
         }

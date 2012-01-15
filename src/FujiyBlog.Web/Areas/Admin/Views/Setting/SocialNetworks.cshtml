@@ -31,6 +31,20 @@
             @Html.EditorFor(model => model.EnableTwitterSharePosts)
             @Html.ValidationMessageFor(model => model.EnableTwitterSharePosts)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FacebookAdminIds)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FacebookAdminIds)
+            @Html.ValidationMessageFor(model => model.FacebookAdminIds)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.FacebookAppId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.FacebookAppId)
+            @Html.ValidationMessageFor(model => model.FacebookAppId)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

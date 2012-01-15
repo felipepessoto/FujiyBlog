@@ -8,14 +8,11 @@
     Layout = "../Shared/_Layout.cshtml";
 }
 
-@section Head
+@section OpenGraphTags
 {
     <meta property="og:title" content="@Model.Post.Title"/>
     <meta property="og:type" content="article"/>
     <meta property="og:url" content="@Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme)"/>
-    @*<meta property="og:image" content=""/>*@
-    <meta property="og:site_name" content="@Settings.SettingRepository.BlogName"/>
-    @*<meta property="fb:admins" content="USER_ID"/>*@
     <meta property="og:description" content="@Model.Post.Description"/>
 }
 

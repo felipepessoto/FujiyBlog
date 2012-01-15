@@ -12,5 +12,11 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name = "Enable Twitter Share Posts")]
         public bool EnableTwitterSharePosts { get; set; }
+
+        [Display(Name = "Facebook Admin Ids")]
+        public string FacebookAdminIds { get; set; }
+
+        [Display(Name = "Facebook App ID")]
+        public string FacebookAppId { get; set; }
     }
 }

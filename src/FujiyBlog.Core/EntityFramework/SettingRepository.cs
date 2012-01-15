@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
+using System.ComponentModel;
 
 namespace FujiyBlog.Core.EntityFramework
 {
@@ -207,11 +208,26 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.DefaultFeedOutput, value); }
         }
 
+        public string FacebookAdminIds
+        {
+            get { return LoadSetting(SettingNames.FacebookAdminIds); }
+            set { SaveSetting(SettingNames.FacebookAdminIds, value); }
+        }
+
+        public string FacebookAppId
+        {
+            get { return LoadSetting(SettingNames.FacebookAppId); }
+            set { SaveSetting(SettingNames.FacebookAppId, value); }
+        }
+
         private string LoadSetting(SettingNames setting)
         {
             string value;
-            settings.TryGetValue((int) setting, out value);
-            return value;
+            if (settings.TryGetValue((int)setting, out value))
+            {
+                return value;
+            }
+            return GetSettingNameDefaultValue(setting);
         }
 
         private void SaveSetting(SettingNames settingName, string value)
@@ -227,6 +243,11 @@ namespace FujiyBlog.Core.EntityFramework
 
             setting.Value = value;
             database.SaveChanges();
+        }
+
+        private string GetSettingNameDefaultValue(SettingNames settingName)
+        {
+            return ((DefaultValueAttribute)typeof(SettingNames).GetMember(settingName.ToString())[0].GetCustomAttributes(typeof(DefaultValueAttribute), false)[0]).Value.ToString();
         }
 
         private enum SettingNames
@@ -267,6 +288,10 @@ namespace FujiyBlog.Core.EntityFramework
             ItemsShownInFeed = 27,
             DefaultFeedOutput = 28,
 
+            [DefaultValue("fujiy")]
+            FacebookAdminIds = 29,
+            [DefaultValue(170099273094898)]
+            FacebookAppId = 30,
         }
     }
 }
