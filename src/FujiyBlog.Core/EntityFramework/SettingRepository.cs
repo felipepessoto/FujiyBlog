@@ -263,40 +263,69 @@ namespace FujiyBlog.Core.EntityFramework
 
         private enum SettingNames
         {
+            [DefaultValue(6), Description("MinRequiredPasswordLength")]
             MinRequiredPasswordLength = 1,
+
+            [DefaultValue(10), Description("PostsPerPage")]
             PostsPerPage = 2,
+            [DefaultValue("Blog Name"), Description("BlogName")]
             BlogName = 3,
+            [DefaultValue("Blog Description"), Description("Blog Description")]
             BlogDescription = 4,
+            [DefaultValue("Default"), Description("Theme")]
             Theme = 5,
+            [DefaultValue("UTC"), Description("Utc Offset")]
             TimeZone = 6,
 
+            [DefaultValue("example@domain.com"), Description("Email To")]
             EmailTo = 7,
+            [DefaultValue("Blog Contact"), Description("Subject Prefix")]
             EmailSubjectPrefix = 8,
+            [DefaultValue("smtp.domain.com"), Description("Smtp Address")]
             SmtpAddress = 9,
+            [DefaultValue("25"), Description("Smtp Port")]
             SmtpPort = 10,
+            [DefaultValue("user"), Description("Smtp UserName")]
             SmtpUserName = 11,
+            [Description("Smtp Password")]
             SmtpPassword = 12,
+            [DefaultValue(false), Description("Smtp SSL")]
             SmtpSsl = 13,
 
+            [DefaultValue(true), Description("Enable Comments")]
             EnableComments = 14,
+            [DefaultValue(true), Description("Moderate Comments")]
             ModerateComments = 15,
+            [DefaultValue(true), Description("Enable Nested Comments")]
             EnableNestedComments = 16,
+            [Description("Close Comments After Days")]
             CloseCommentsAfterDays = 17,
+            [DefaultValue(10), Description("Comments Per Page")]
             CommentsPerPage = 18,
+            [DefaultValue("mm"), Description("Comments Avatar")]
             CommentsAvatar = 19,
 
+            [DefaultValue("auto"), Description("Blog Culture")]
             Culture = 20,
 
+            [DefaultValue(true), Description("Enable Facebook Like Button For Posts")]
             EnableFacebookLikePosts = 21,
+            [DefaultValue(true), Description("Enable Google +1 Button For Posts")]
             EnableGooglePlusOnePosts = 22,
+            [DefaultValue(true), Description("Enable Twitter Share Button For Posts")]
             EnableTwitterSharePosts = 23,
 
+            [DefaultValue(0), Description("Last Database Change")]
             LastDatabaseChange = 24,
 
+            [Description("Custom Code")]
             CustomCode = 25,
 
+            [Description("Alternate Feed Url")]
             AlternateFeedUrl = 26,
+            [Description("Items Shown In Feed")]
             ItemsShownInFeed = 27,
+            [Description("Default Feed Output")]
             DefaultFeedOutput = 28,
 
             [Description("Comma-separated list of the user IDs or usernames of the Facebook accounts")]

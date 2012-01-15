@@ -30,7 +30,9 @@ namespace FujiyBlog.Core.EntityFramework
         {
             Database.SetInitializer(new FujiyBlogDatabaseInitializer());
 
-            string lastCacheAtDb = Settings.Single(x => x.Id == 24).Value;
+            Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
+            string lastCacheAtDb = setting != null ? setting.Value : "0";
+
             if (lastCacheAtDb != lastCache)
             {
                 lastCache = lastCacheAtDb;
@@ -59,7 +61,13 @@ namespace FujiyBlog.Core.EntityFramework
 
             if (saveChanges > 0)
             {
-                Settings.Single(x => x.Id == 24).Value = DateTime.UtcNow.Ticks.ToString();
+                Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
+                if (setting == null)
+                {
+                    setting = new Setting {Id = 24, Description = "Last Database Change"};
+                    Settings.Add(setting);
+                }
+                setting.Value = DateTime.UtcNow.Ticks.ToString();
                 base.SaveChanges();
             }
 
