@@ -294,6 +294,7 @@
     <Content Include="Content\Themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\Themes\Default\img\header_background.jpg" />
+    <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
     <Content Include="Content\Themes\Default\Site.css" />
     <Content Include="Errors\401.htm" />
     <Content Include="Global.asax" />
