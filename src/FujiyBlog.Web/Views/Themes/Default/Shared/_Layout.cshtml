@@ -1,4 +1,14 @@
 ﻿@using FujiyBlog.Web.Models
+@functions{
+    public string FeedsUrl()
+    {
+        if (!string.IsNullOrWhiteSpace(Settings.SettingRepository.AlternateFeedUrl))
+        {
+            return Settings.SettingRepository.AlternateFeedUrl;
+        }
+        return Settings.SettingRepository.DefaultFeedOutput == "RSS" ? Url.Action(MVC.Feed.Rss20()) : Url.Action(MVC.Feed.Atom10());
+    }
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +20,16 @@
     <meta name="keywords" content="@ViewBag.Keywords" />
     <meta name="description" content="@ViewBag.Description" />
 
-    <link type="application/rss+xml" rel="alternate" href="@Url.Action(MVC.Feed.Rss20())" />
+    <link type="application/rss+xml" rel="alternate" href="@FeedsUrl()" />
     
-    <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds"/>
-    <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId"/>
+    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAdminIds))
+    {
+        <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds"/>
+    }
+    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAppId))
+    {
+        <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId"/>
+    }
     <meta property="og:site_name" content="@Settings.SettingRepository.BlogName"/>
 
     @if (IsSectionDefined("OpenGraphTags"))
@@ -44,16 +60,7 @@
                     <li class="current_page_item"><a href="@Url.Content("~/")">Home</a></li>
                     <li>@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
                     <li>@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
-                    <li>
-                    @if (!string.IsNullOrWhiteSpace(Settings.SettingRepository.AlternateFeedUrl))
-                    {
-                        <a href="@(Settings.SettingRepository.AlternateFeedUrl)">Feed</a>
-                    }
-                    else
-                    {
-                        @(Settings.SettingRepository.DefaultFeedOutput == "RSS" ? Html.ActionLink("RSS 2.0", MVC.Feed.Rss20()) : Html.ActionLink("Atom 1.0", MVC.Feed.Atom10()))
-                    }
-                    </li>
+                    <li><a href="@FeedsUrl()">Feed</a></li>
                     <li>@(Request.IsAuthenticated ? Html.ActionLink("Log Off", "LogOff", "Account") : Html.ActionLink("Log On", "LogOn", "Account"))</li>
                 </ul>
             </div>
