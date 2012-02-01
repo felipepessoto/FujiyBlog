@@ -193,6 +193,7 @@
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPostViewModel.cs" />
     <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPageViewModel.cs" />
     <Compile Include="Infrastructure\CompressFilter.cs" />
+    <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\ThemeAttribute.cs" />
     <Compile Include="Infrastructure\FujiyBlogRoleProvider.cs" />
     <Compile Include="Infrastructure\HomeConstraint.cs" />

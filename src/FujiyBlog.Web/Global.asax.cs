@@ -6,7 +6,6 @@ using System.Web.Routing;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Infrastructure.AutoMapper;
-using System.Diagnostics;
 
 namespace FujiyBlog.Web
 {
@@ -57,7 +56,7 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
-            RegisterErrorTrace();
+            Logger.RegisterTrace();
 
             foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
             {
@@ -82,42 +81,7 @@ namespace FujiyBlog.Web
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            var error = Server.GetLastError();
-            var code = (error is HttpException) ? (error as HttpException).GetHttpCode() : 500;
-
-            if (code != 404)
-            {
-                CheckRollingTrace();
-                Trace.WriteLine("-----------------------------------------------");
-                Trace.WriteLine("Date: " + DateTime.UtcNow.ToString("u"));
-                Trace.WriteLine(error.ToString());
-                Trace.WriteLine("-----------------------------------------------");
-                Trace.WriteLine(null);
-            }
-        }
-
-        private static string lastTraceLogFile;
-        private void RegisterErrorTrace()
-        {
-            Trace.Listeners.Clear();
-            lastTraceLogFile = Server.MapPath("~/App_Data/FujiyBlog" + DateTime.UtcNow.ToString("yyyy-MM-dd") + ".log");
-            Trace.Listeners.Add(new TextWriterTraceListener(lastTraceLogFile));
-        }
-
-        private void CheckRollingTrace()
-        {
-            string logPath = Server.MapPath("~/App_Data/FujiyBlog" + DateTime.UtcNow.ToString("yyyy-MM-dd") + ".log");
-
-            if (lastTraceLogFile != logPath)
-            {
-                foreach (TraceListener traceListener in Trace.Listeners.OfType<TraceListener>().ToArray())
-                {
-                    Trace.Listeners.Remove(traceListener);
-                    traceListener.Dispose();
-                }
-                lastTraceLogFile = logPath;
-                Trace.Listeners.Add(new TextWriterTraceListener(logPath));
-            }
+            Logger.LogError(Server.GetLastError());
         }
 
         public override string GetVaryByCustomString(HttpContext context, string arg)
