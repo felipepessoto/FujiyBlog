@@ -38,11 +38,11 @@
     }
     else
     {
-    <meta property="og:title" content="@Settings.SettingRepository.BlogName"/>
+    <meta property="og:title" content="@ViewBag.Title"/>
     <meta property="og:type" content="blog"/>
     <meta property="og:url" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)"/>
     <meta property="og:image" content="@Settings.SettingRepository.OpenGraphImageUrl"/>
-    <meta property="og:description" content="@Settings.SettingRepository.BlogDescription"/>
+    <meta property="og:description" content="@ViewBag.Description"/>
     }
 
 </head>
