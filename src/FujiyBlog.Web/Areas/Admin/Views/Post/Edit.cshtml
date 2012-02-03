@@ -7,6 +7,7 @@
 @{
     Layout = MVC.Admin.Shared.Views._Layout;
     ViewBag.Title = "Edit";
+    string uploadFolder = "Post" + (Model.Post.Id.HasValue ? Model.Post.Id.ToString() : Guid.NewGuid().ToString());
 }
 <script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce_3_4_5.jquery_tinymce_js)"></script>
 <script type="text/javascript" src="@Url.Content(Links.Scripts.jquery_form_js)"></script>
@@ -14,7 +15,7 @@
 <h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
 
 <div id="div-upload-image" style="display: none;">
-    <form id="form-upload-image" action="@Url.Action(MVC.Admin.File.Upload(null, "Post" + Model.Post.Id))" method="post" enctype="multipart/form-data">
+    <form id="form-upload-image" action="@Url.Action(MVC.Admin.File.Upload(null, uploadFolder))" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload a image</legend>
             <label>File to Upload: <input type="file" name="uploadFile" accept="image/*" />(4MB max size)</label>
@@ -24,7 +25,7 @@
 </div>
 
 <div id="div-upload-video" style="display: none;">
-    <form id="form-upload-video" action="@Url.Action(MVC.Admin.File.Upload(null, "Post" + Model.Post.Id))" method="post" enctype="multipart/form-data">
+    <form id="form-upload-video" action="@Url.Action(MVC.Admin.File.Upload(null, uploadFolder))" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload a video/audio</legend>
             <label>File to Upload: <input type="file" name="uploadFile" accept="audio/*,video/*" />(4MB max size)</label>
@@ -34,7 +35,7 @@
 </div>
 
 <div id="div-upload-file" style="display: none;">
-    <form id="form-upload-file" action="@Url.Action(MVC.Admin.File.Upload(null, "Post" + Model.Post.Id))" method="post" enctype="multipart/form-data">
+    <form id="form-upload-file" action="@Url.Action(MVC.Admin.File.Upload(null, uploadFolder))" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload a file</legend>
             <label>File to Upload: <input type="file" name="uploadFile" />(4MB max size)</label>
