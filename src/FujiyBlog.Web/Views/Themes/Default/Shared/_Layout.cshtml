@@ -8,44 +8,57 @@
         }
         return Settings.SettingRepository.DefaultFeedOutput == "RSS" ? Url.Action(MVC.Feed.Rss20()) : Url.Action(MVC.Feed.Atom10());
     }
+    
+    public string CanonicalUrl()
+    {
+        RouteValueDictionary valores = new RouteValueDictionary(ViewContext.RouteData.Values);
+        foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState)
+        {
+            valores[keyValuePair.Key] = keyValuePair.Value.Value.AttemptedValue;
+        }
+
+        return Url.RouteUrl(null, valores, Request.Url.Scheme, null);
+    }
+
 }
 <!DOCTYPE html>
 <html>
-<head>
-    <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/Themes/Default/Site.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/Themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+    <head>
+        <title>@ViewBag.Title</title>
+        <link href="@Url.Content("~/Content/Themes/Default/Site.css")" rel="stylesheet" type="text/css" />
+        <link href="@Url.Content("~/Content/Themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
+        <link rel="canonical" href="@CanonicalUrl()" />
+
+        <meta name="title" content="@ViewBag.Title" />
+        <meta name="keywords" content="@ViewBag.Keywords" />
+        <meta name="description" content="@ViewBag.Description" />
+
+        <link type="application/rss+xml" rel="alternate" href="@FeedsUrl()" />
     
-    <meta name="title" content="@ViewBag.Title" />
-    <meta name="keywords" content="@ViewBag.Keywords" />
-    <meta name="description" content="@ViewBag.Description" />
+        @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAdminIds))
+        {
+        <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds"/>
+        }
+        @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAppId))
+        {
+        <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId"/>
+        }
+        <meta property="og:site_name" content="@Settings.SettingRepository.BlogName"/>
 
-    <link type="application/rss+xml" rel="alternate" href="@FeedsUrl()" />
-    
-    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAdminIds))
-    {
-    <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds"/>
-    }
-    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAppId))
-    {
-    <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId"/>
-    }
-    <meta property="og:site_name" content="@Settings.SettingRepository.BlogName"/>
+        @if (IsSectionDefined("OpenGraphTags"))
+        { 
+            @RenderSection("OpenGraphTags")
+        }
+        else
+        {
+        <meta property="og:title" content="@ViewBag.Title"/>
+        <meta property="og:type" content="blog"/>
+        <meta property="og:url" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)"/>
+        <meta property="og:image" content="@Settings.SettingRepository.OpenGraphImageUrl"/>
+        <meta property="og:description" content="@ViewBag.Description"/>
+        }
 
-    @if (IsSectionDefined("OpenGraphTags"))
-    { 
-    @RenderSection("OpenGraphTags")
-    }
-    else
-    {
-    <meta property="og:title" content="@ViewBag.Title"/>
-    <meta property="og:type" content="blog"/>
-    <meta property="og:url" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)"/>
-    <meta property="og:image" content="@Settings.SettingRepository.OpenGraphImageUrl"/>
-    <meta property="og:description" content="@ViewBag.Description"/>
-    }
-
-</head>
+    </head>
 
 <body>
     <div>
