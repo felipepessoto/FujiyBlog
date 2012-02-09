@@ -1,16 +1,11 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
     public class AdminUserCreate : AdminUserSave
     {
-        public AdminUserCreate()
-        {
-            CreationDate = DateTime.UtcNow;
-        }
-
         [Required, StringLength(50)]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -20,6 +15,11 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public new void FillUser(User user)
+        {
+            user.Username = Username;
+            user.Password = Password;
+            base.FillUser(user);
+        }
     }
 }

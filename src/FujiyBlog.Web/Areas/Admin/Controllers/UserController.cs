@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
@@ -33,7 +32,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Create()
         {
             AdminUserCreate viewModel = new AdminUserCreate();
-            viewModel.SelectedRoleGroups = Enumerable.Empty<int>();
             viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
 
             return View(viewModel);
@@ -49,12 +47,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {
-                User newUser = Mapper.Map<AdminUserCreate, User>(userData);
+                User newUser = new User
+                                   {
+                                       CreationDate = DateTime.UtcNow,
+                                       Enabled = true
+                                   };
+                userData.FillUser(newUser);
 
                 CheckEditRolesPermission(userData, newUser);
 
-                newUser.Enabled = true;
-                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Count() > 0)
+                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Any())
                 {
                     newUser.RoleGroups = db.RoleGroups.Where(x => userData.SelectedRoleGroups.Any(y => x.Id == y)).ToList();
                 }
@@ -77,8 +79,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            AdminUserSave viewModel = Mapper.Map<User, AdminUserSave>(user);
-            viewModel.SelectedRoleGroups = user.RoleGroups.Select(x => x.Id);
+            AdminUserSave viewModel = new AdminUserSave(user);
             viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
 
             return View(viewModel);
@@ -87,11 +88,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         [HttpPost]
         public virtual ActionResult Edit(AdminUserSave userData)
         {
-            if (db.Users.Any(x => x.Username == userData.Username && x.Id != userData.Id))
-            {
-                ModelState.AddModelError("Username", "This Username already exists");
-            }
-
             User user = db.Users.Include(x => x.RoleGroups).Single(x => x.Id == userData.Id);
 
             if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
@@ -104,9 +100,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             if (ModelState.IsValid)
             {    
-                Mapper.Map(userData, user);
+                userData.FillUser(user);
                 user.RoleGroups = null;
-                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Count() > 0)
+                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Any())
                 {
                     user.RoleGroups = db.RoleGroups.Where(x => userData.SelectedRoleGroups.Any(y => x.Id == y)).ToList();
                 }

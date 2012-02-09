@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
+using System.Web.Script.Serialization;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Extensions;
-using System.Web.Script.Serialization;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -71,6 +70,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                       PublicationDate = DateTime.UtcNow,
                                       IsCommentEnabled = true,
                                       IsPublished = true,
+                                      Author = db.Users.Single(x => x.Username == User.Identity.Name),
                                   };
 
             if (id.HasValue && !User.IsInRole(Role.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)))
@@ -78,20 +78,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
-            if (!User.IsInRole(Role.EditOtherUsersPosts))
-            {
-                authors = authors.Where(x => x.Username == User.Identity.Name);
-            }
-            AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == post.Author || (!id.HasValue && x.Username == User.Identity.Name)) });
-
-            viewModel.Post = Mapper.Map<Post, AdminPostSave>(post);
-            viewModel.Post.Id = id;
-            viewModel.AllCategories = db.Categories.ToList();
-            viewModel.AllTagsJson = new JavaScriptSerializer().Serialize(db.Tags.Select(x => x.Name));
-
-            return View(viewModel);
+            return View(CreateAdminPostEdit(post));
         }
 
         [HttpPost]
@@ -109,7 +96,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             editedPost.Author = newAuthor;
             editedPost.LastModificationDate = DateTime.UtcNow;
-            Mapper.Map(postSave, editedPost);
+            postSave.FillPost(editedPost);
 
             if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
             {
@@ -143,18 +130,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return RedirectToAction(MVC.Post.Details(editedPost.Slug));
             }
 
-            AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Post = Mapper.Map<Post, AdminPostSave>(editedPost);
-            viewModel.AllCategories = db.Categories.ToList();
-            viewModel.AllTagsJson = new JavaScriptSerializer().Serialize(db.Tags.Select(x => x.Name));
+            return View(CreateAdminPostEdit(editedPost));
+        }
+
+        private AdminPostEdit CreateAdminPostEdit(Post post)
+        {
             IQueryable<User> authors = db.Users.Where(x => x.Enabled);
             if (!User.IsInRole(Role.EditOtherUsersPosts))
             {
                 authors = authors.Where(x => x.Username == User.Identity.Name);
             }
-            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == editedPost.Author) });
 
-            return View(viewModel);
+            AdminPostEdit viewModel = new AdminPostEdit();
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username });
+
+            viewModel.Post = new AdminPostSave(post);
+            viewModel.AllCategories = db.Categories.ToList();
+            viewModel.AllTagsJson = new JavaScriptSerializer().Serialize(db.Tags.Select(x => x.Name));
+            return viewModel;
         }
 
         private void CheckPostsSaveRoles(AdminPostSave postSave, Post editedPost, User newAuthor)

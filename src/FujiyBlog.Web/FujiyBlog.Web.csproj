@@ -34,10 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=2.0.0.232, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.2.0.0\lib\net40-client\AutoMapper.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework, Version=4.2.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.4.2.0.0\lib\net40\EntityFramework.dll</HintPath>
@@ -187,11 +183,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\AuthorizeRoleAttribute.cs" />
-    <Compile Include="Infrastructure\AutoMapper\AutoMapperConfiguration.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\AdminUserViewModel.cs" />
     <Compile Include="Common\DateTimeUtil.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPostViewModel.cs" />
-    <Compile Include="Infrastructure\AutoMapper\Profiles\AdminPageViewModel.cs" />
     <Compile Include="Infrastructure\CompressFilter.cs" />
     <Compile Include="Infrastructure\Logger.cs" />
     <Compile Include="Infrastructure\ThemeAttribute.cs" />

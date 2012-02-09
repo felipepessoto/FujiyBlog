@@ -2,13 +2,40 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Web.Common;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
     public class AdminPostSave
     {
+        public AdminPostSave()
+        {
+        }
+
+        public AdminPostSave(Post post)
+        {
+            if (post.Id > 0)
+            {
+                Id = post.Id;
+            }
+
+            Tags = string.Join(", ", post.Tags.Select(x => x.Name));
+            Categories = post.Categories;//TODO Maybe should I remove this property and just use SelectedCategories
+
+            Title = post.Title;
+            AuthorId = post.Author.Id;
+            Description = post.Description;
+            Slug = post.Slug;
+            Content = post.Content;
+            ImageUrl = post.ImageUrl;
+            PublicationDate = DateTimeUtil.ConvertUtcToMyTimeZone(post.PublicationDate);
+            IsPublished = post.IsPublished;
+            IsCommentEnabled = post.IsCommentEnabled;
+        }
+
         public int? Id { get; set; }
 
         [DataType(DataType.MultilineText)]
@@ -46,5 +73,18 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public bool IsCommentEnabled { get; set; }
 
         public IEnumerable<Category> Categories { get; set; }
+
+        public void FillPost(Post post)
+        {
+            post.Id = Id.GetValueOrDefault();
+            post.Title = Title;
+            post.Description = Description;
+            post.Slug = Slug;
+            post.Content = Content;
+            post.ImageUrl = ImageUrl;
+            post.PublicationDate = DateTimeUtil.ConvertMyTimeZoneToUtc(PublicationDate);
+            post.IsPublished = IsPublished;
+            post.IsCommentEnabled = IsCommentEnabled;
+        }
     }
 }

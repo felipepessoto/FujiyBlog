@@ -5,7 +5,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
-using FujiyBlog.Web.Infrastructure.AutoMapper;
 
 namespace FujiyBlog.Web
 {
@@ -69,7 +68,6 @@ namespace FujiyBlog.Web
             RegisterRoutes(RouteTable.Routes);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
-            AutoMapperConfiguration.Configure();
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)

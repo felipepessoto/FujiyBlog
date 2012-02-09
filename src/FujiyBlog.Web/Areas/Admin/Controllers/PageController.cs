@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-using AutoMapper;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
@@ -49,13 +48,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
-            Page page = id.HasValue
-                            ? db.Pages.Include(x => x.Author).Single(x => x.Id == id)
+            Page page = id.HasValue ? db.Pages.Include(x => x.Author).Single(x => x.Id == id)
                             : new Page
                                   {
                                       PublicationDate = DateTime.UtcNow,
                                       IsPublished = true,
                                       ShowInList = true,
+                                      Author = db.Users.Single(x => x.Username == User.Identity.Name),
                                   };
 
             if (id.HasValue && !User.IsInRole(Role.EditOtherUsersPages) && !(page.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPages)))
@@ -63,20 +62,24 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 Response.SendToUnauthorized();
             }
 
+            return View(CreateAdminPageSave(page));
+        }
+
+        private AdminPageSave CreateAdminPageSave(Page page)
+        {
             IQueryable<User> authors = db.Users.Where(x => x.Enabled);
             if (!User.IsInRole(Role.EditOtherUsersPages))
             {
                 authors = authors.Where(x => x.Username == User.Identity.Name);
             }
 
-            AdminPageSave viewModel = Mapper.Map<Page, AdminPageSave>(page);
-            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == page.Author || (!id.HasValue && x.Username == User.Identity.Name)) });
-            viewModel.Id = id;
+            AdminPageSave viewModel = new AdminPageSave(page);
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem {Value = x.Id.ToString(), Text = x.Username});
             viewModel.Pages = (from p in db.Pages
                                where p.Id != page.Id
                                select new { p.Id, p.Title }).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Title, Selected = x.Id == page.ParentId });
 
-            return View(viewModel);
+            return viewModel;
         }
 
         [HttpPost]
@@ -96,7 +99,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             editedPage.LastModificationDate = DateTime.UtcNow;
 
-            Mapper.Map(pageSave, editedPage);
+            pageSave.FillPage(editedPage);
 
             if (db.Pages.Any(x => x.Slug == editedPage.Slug && x.Id != editedPage.Id))
             {
@@ -109,20 +112,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
 
-            AdminPageSave viewModel = Mapper.Map<Page, AdminPageSave>(editedPage);
-
-            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
-            if (!User.IsInRole(Role.EditOtherUsersPages))
-            {
-                authors = authors.Where(x => x.Username == User.Identity.Name);
-            }
-            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username, Selected = (x == editedPage.Author) });
-
-            viewModel.Pages = (from p in db.Pages
-                               where p.Id != editedPage.Id
-                               select new { p.Id, p.Title }).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Title, Selected = x.Id == editedPage.ParentId });
-
-            return View(viewModel);
+            return View(CreateAdminPageSave(editedPage));
         }
 
         private void CheckPagesSaveRoles(AdminPageSave pageSave, Page editedPage, User newAuthor)

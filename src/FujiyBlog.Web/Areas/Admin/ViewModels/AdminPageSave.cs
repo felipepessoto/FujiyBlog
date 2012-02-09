@@ -3,11 +3,36 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
+using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Web.Common;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
     public class AdminPageSave
     {
+        public AdminPageSave()
+        {
+        }
+
+        public AdminPageSave(Page page)
+        {
+            if (page.Id > 0)
+            {
+                Id = page.Id;
+            }
+            Title = page.Title;
+            AuthorId = page.Author.Id;
+            Description = page.Description;
+            Slug = page.Slug;
+            Content = page.Content;
+            Keywords = page.Keywords;
+            PublicationDate = DateTimeUtil.ConvertUtcToMyTimeZone(page.PublicationDate);
+            IsPublished = page.IsPublished;
+            IsFrontPage = page.IsFrontPage;
+            ParentId = page.ParentId;
+            ShowInList = page.ShowInList;
+        }
+
         public int? Id { get; set; }
 
         [Required, StringLength(200)]
@@ -48,5 +73,20 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         public IEnumerable<SelectListItem> Pages { get; set; }
         public IEnumerable<SelectListItem> Authors { get; set; }
+
+        public void FillPage(Page page)
+        {
+            page.Id = Id.GetValueOrDefault();
+            page.Title = Title;
+            page.Description = Description;
+            page.Slug = Slug;
+            page.Content = Content;
+            page.Keywords = Keywords;
+            page.PublicationDate = DateTimeUtil.ConvertMyTimeZoneToUtc(PublicationDate);
+            page.IsPublished = IsPublished;
+            page.IsFrontPage = IsFrontPage;
+            page.ParentId = ParentId;
+            page.ShowInList = ShowInList;
+        }
     }
 }
