@@ -8,7 +8,7 @@ using FujiyBlog.Web.Infrastructure;
 
 namespace FujiyBlog.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
@@ -55,8 +55,6 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
-            Logger.RegisterTrace();
-
             foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
             {
                 ViewEngines.Engines.Remove(viewEngine);
