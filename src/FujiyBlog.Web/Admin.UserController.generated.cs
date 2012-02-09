@@ -63,6 +63,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public readonly string Area = "Admin";
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Name = "User";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "User";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -77,6 +79,18 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string RoleGroups = "RoleGroups";
             public readonly string EditRoleGroup = "EditRoleGroup";
             public readonly string DeleteRoleGroup = "DeleteRoleGroup";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants {
+            public const string Index = "Index";
+            public const string Create = "Create";
+            public const string Edit = "Edit";
+            public const string Disable = "Disable";
+            public const string Enable = "Enable";
+            public const string RoleGroups = "RoleGroups";
+            public const string EditRoleGroup = "EditRoleGroup";
+            public const string DeleteRoleGroup = "DeleteRoleGroup";
         }
 
 

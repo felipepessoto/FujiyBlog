@@ -38,6 +38,8 @@ namespace FujiyBlog.Web.Controllers {
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Name = "Account";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "Account";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -50,6 +52,16 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string ChangePasswordSuccess = "ChangePasswordSuccess";
             public readonly string ForgotPassword = "ForgotPassword";
             public readonly string ForgotPasswordSuccess = "ForgotPasswordSuccess";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants {
+            public const string LogOn = "LogOn";
+            public const string LogOff = "LogOff";
+            public const string ChangePassword = "ChangePassword";
+            public const string ChangePasswordSuccess = "ChangePasswordSuccess";
+            public const string ForgotPassword = "ForgotPassword";
+            public const string ForgotPasswordSuccess = "ForgotPasswordSuccess";
         }
 
 

@@ -1611,6 +1611,7 @@ namespace Links {
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                     public static readonly string header_background_jpg = Url("header_background.jpg");
+                    public static readonly string reply_arrow_gif = Url("reply-arrow.gif");
                 }
             
                 public static readonly string Site_css = Url("Site.css");

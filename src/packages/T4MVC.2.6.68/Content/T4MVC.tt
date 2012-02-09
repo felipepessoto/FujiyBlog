@@ -1,6 +1,6 @@
 ﻿<#
 /*
-T4MVC Version 2.6.64
+T4MVC Version 2.6.68
 Find latest version and documentation at http://mvccontrib.codeplex.com/wikipage?title=T4MVC
 Discuss on StackOverflow or on the MVC forum (http://forums.asp.net/1146.aspx)
 
@@ -431,6 +431,8 @@ namespace <#=controller.Namespace #> {
         public readonly string Area = "<#=ProcessAreaOrControllerName(controller.AreaName) #>";
         [<#= GeneratedCode #>]
         public readonly string Name = "<#=ProcessAreaOrControllerName(controller.Name) #>";
+        [<#= GeneratedCode #>]
+        public const string NameConst = "<#=ProcessAreaOrControllerName(controller.Name) #>";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [<#= GeneratedCode #>, DebuggerNonUserCode]
@@ -446,7 +448,19 @@ namespace <#=controller.Namespace #> {
 } #>
         }
 
-<#} #>
+<#
+// Issue: we can't honor UseLowercaseRoutes here because ToLowerInvariant() is not valid in constants!
+if (!UseLowercaseRoutes) { #>
+        [<#= GeneratedCode #>, DebuggerNonUserCode]
+        public class ActionNameConstants {
+<#foreach (var method in controller.ActionMethodsWithUniqueNames) { #>
+            public const string <#=method.ActionName #> = <#=method.ActionNameValueExpression #>;
+<#
+} #>
+        }
+
+<#}
+} #>
 
         static readonly ViewNames s_views = new ViewNames();
         [<#= GeneratedCode #>, DebuggerNonUserCode]
@@ -1101,13 +1115,13 @@ static IEnumerable<CodeFunction2> GetMethods(CodeClass2 codeClass) {
 // Check if the class has any explicit constructor
 static bool HasExplicitConstructor(CodeClass2 codeClass) {
     return codeClass.Members.OfType<CodeFunction2>().Any(
-        f => f.FunctionKind == vsCMFunction.vsCMFunctionConstructor);
+        f => !f.IsShared && f.FunctionKind == vsCMFunction.vsCMFunctionConstructor);
 }
 
 // Check if the class has a default (i.e. no params) constructor
 static bool HasExplicitDefaultConstructor(CodeClass2 codeClass) {
     return codeClass.Members.OfType<CodeFunction2>().Any(
-        f => f.FunctionKind == vsCMFunction.vsCMFunctionConstructor && f.Parameters.Count == 0);
+        f => !f.IsShared && f.FunctionKind == vsCMFunction.vsCMFunctionConstructor && f.Parameters.Count == 0);
 }
 
 // Find a method with a given name
@@ -1118,9 +1132,15 @@ static CodeFunction2 GetMethod(CodeClass2 codeClass, string name) {
 // Find an attribute of a given type on an attribute collection
 static CodeAttribute2 GetAttribute(CodeElements attributes, string attributeType) {
     for (int i = 1; i <= attributes.Count; i++) {
-        var attrib = (CodeAttribute2)attributes.Item(i);
-        if (attrib.FullName == attributeType) {
-            return attrib;
+        try {
+            var attrib = (CodeAttribute2)attributes.Item(i);
+            if (attrib.FullName == attributeType) {
+                return attrib;
+            }
+        }
+        catch {
+            // FullName can throw in some cases, so just ignore those attributes
+            continue;
         }
     }
     return null;

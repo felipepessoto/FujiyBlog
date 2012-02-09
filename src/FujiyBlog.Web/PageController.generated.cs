@@ -48,6 +48,8 @@ namespace FujiyBlog.Web.Controllers {
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Name = "Page";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "Page";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -57,6 +59,13 @@ namespace FujiyBlog.Web.Controllers {
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants {
+            public const string Index = "Index";
+            public const string Details = "Details";
+            public const string DetailsById = "DetailsById";
         }
 
 

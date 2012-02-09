@@ -73,6 +73,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public readonly string Area = "Admin";
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Name = "Comment";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "Comment";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -86,6 +88,17 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string DeleteSelected = "DeleteSelected";
             public readonly string Edit = "Edit";
             public readonly string Delete = "Delete";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants {
+            public const string Index = "Index";
+            public const string Approved = "Approved";
+            public const string ApproveSelected = "ApproveSelected";
+            public const string DisapproveSelected = "DisapproveSelected";
+            public const string DeleteSelected = "DeleteSelected";
+            public const string Edit = "Edit";
+            public const string Delete = "Delete";
         }
 
 

@@ -38,6 +38,8 @@ namespace FujiyBlog.Web.Controllers {
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Name = "Feed";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "Feed";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -46,6 +48,12 @@ namespace FujiyBlog.Web.Controllers {
         public class ActionNamesClass {
             public readonly string Rss20 = "Rss20";
             public readonly string Atom10 = "Atom10";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants {
+            public const string Rss20 = "Rss20";
+            public const string Atom10 = "Atom10";
         }
 
 

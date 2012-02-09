@@ -38,6 +38,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public readonly string Area = "Admin";
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Name = "Setting";
+        [GeneratedCode("T4MVC", "2.0")]
+        public const string NameConst = "Setting";
 
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -52,6 +54,18 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string ImportSuccessful = "ImportSuccessful";
             public readonly string SocialNetworks = "SocialNetworks";
             public readonly string Feed = "Feed";
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionNameConstants {
+            public const string Index = "Index";
+            public const string Email = "Email";
+            public const string Comments = "Comments";
+            public const string Import = "Import";
+            public const string ImportPost = "Import";
+            public const string ImportSuccessful = "ImportSuccessful";
+            public const string SocialNetworks = "SocialNetworks";
+            public const string Feed = "Feed";
         }
 
 
