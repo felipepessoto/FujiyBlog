@@ -19,11 +19,13 @@ Date: {0}
 Exception: {1}
 Url: {2}
 Refferer: {3}
------------------------------------------------", DateTime.UtcNow.ToString("u"), ex, HttpContext.Current.Request.RawUrl, HttpContext.Current.Request.UrlReferrer);
+-----------------------------------------------
+
+", DateTime.UtcNow.ToString("u"), ex, HttpContext.Current.Request.RawUrl, HttpContext.Current.Request.UrlReferrer);
 
                 lock (Sync)
                 {
-                    File.WriteAllText( GetLogPath(), messageLog);
+                    File.AppendAllText(GetLogPath(), messageLog);
                 }
             }
         }
