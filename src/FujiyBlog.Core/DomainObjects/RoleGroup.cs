@@ -31,6 +31,6 @@ namespace FujiyBlog.Core.DomainObjects
 
         public ICollection<User> Users { get; set; }
 
-        private string AssignedRoles { get; set; }
+        public string AssignedRoles { get; set; }
     }
 }
