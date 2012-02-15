@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
@@ -10,7 +11,6 @@ using FujiyBlog.Web.Areas.Admin.Models;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
-using System.Globalization;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -113,6 +113,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 CloseCommentsAfterDays = Settings.SettingRepository.CloseCommentsAfterDays,
                 CommentsPerPage = Settings.SettingRepository.CommentsPerPage,
                 CommentsAvatar = Settings.SettingRepository.CommentsAvatar ?? string.Empty,
+                ReCaptchaEnabled = Settings.SettingRepository.ReCaptchaEnabled,
+                ReCaptchaPrivateKey = Settings.SettingRepository.ReCaptchaPrivateKey,
+                ReCaptchaPublicKey = Settings.SettingRepository.ReCaptchaPublicKey,
             };
 
             return View(viewModel);
@@ -132,6 +135,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.CloseCommentsAfterDays = settings.CloseCommentsAfterDays;
             Settings.SettingRepository.CommentsPerPage = settings.CommentsPerPage;
             Settings.SettingRepository.CommentsAvatar = settings.CommentsAvatar;
+            Settings.SettingRepository.ReCaptchaEnabled = settings.ReCaptchaEnabled;
+            Settings.SettingRepository.ReCaptchaPrivateKey = settings.ReCaptchaPrivateKey;
+            Settings.SettingRepository.ReCaptchaPublicKey = settings.ReCaptchaPublicKey;
 
             return RedirectToAction(MVC.Admin.Setting.Comments()).SetSuccessMessage("Settings saved");
         }

@@ -7,6 +7,7 @@ using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using System.Data.Entity;
+using Microsoft.Web.Helpers;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -22,6 +23,11 @@ namespace FujiyBlog.Web.Controllers
         [AuthorizeRole(Role.CreateComments)]
         public virtual ActionResult DoComment(int id, int? parentCommentId)
         {
+            if (Settings.SettingRepository.ReCaptchaEnabled && !ReCaptcha.Validate(Settings.SettingRepository.ReCaptchaPrivateKey))
+            {
+                return JavaScript("alert('Invalid captcha!');Recaptcha.reload();");
+            }
+
             bool isLogged = Request.IsAuthenticated;
             Post post = db.Posts.Include(x => x.Author).WhereHaveRoles().SingleOrDefault(x => x.Id == id);
 

@@ -227,6 +227,29 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.OpenGraphImageUrl, value); }
         }
 
+        public bool ReCaptchaEnabled
+        {
+            get
+            {
+                bool reCaptchaEnabled;
+                bool.TryParse(LoadSetting(SettingNames.ReCaptchaEnabled), out reCaptchaEnabled);
+                return reCaptchaEnabled && !string.IsNullOrEmpty(ReCaptchaPrivateKey) && !string.IsNullOrEmpty(ReCaptchaPublicKey);
+            }
+            set { SaveSetting(SettingNames.ReCaptchaEnabled, value.ToString()); }
+        }
+
+        public string ReCaptchaPrivateKey
+        {
+            get { return LoadSetting(SettingNames.ReCaptchaPrivateKey); }
+            set { SaveSetting(SettingNames.ReCaptchaPrivateKey, value); }
+        }
+
+        public string ReCaptchaPublicKey
+        {
+            get { return LoadSetting(SettingNames.ReCaptchaPublicKey); }
+            set { SaveSetting(SettingNames.ReCaptchaPublicKey, value); }
+        }
+
         private string LoadSetting(SettingNames setting)
         {
             string value;
@@ -336,6 +359,15 @@ namespace FujiyBlog.Core.EntityFramework
 
             [Description("")]
             OpenGraphImageUrl = 31,
+
+            [Description("ReCaptcha is enabled")]
+            ReCaptchaEnabled = 32,
+
+            [Description("ReCaptcha private key")]
+            ReCaptchaPrivateKey = 33,
+
+            [Description("ReCaptcha public key")]
+            ReCaptchaPublicKey = 34,
         }
     }
 }

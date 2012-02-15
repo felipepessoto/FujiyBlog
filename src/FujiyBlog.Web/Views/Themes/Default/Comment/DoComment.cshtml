@@ -1,4 +1,6 @@
-﻿@model FujiyBlog.Core.DomainObjects.PostComment
+﻿@using FujiyBlog.Web.Models
+@using Microsoft.Web.Helpers
+@model FujiyBlog.Core.DomainObjects.PostComment
 
 @using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = Model.ParentComment == null ? "commentlist" : "replies_" + Model.ParentComment.Id, OnSuccess = Model.ParentComment == null ? string.Empty : "$('#reply-comment-" + @Model.ParentComment.Id + "').html('');" }))
 {
@@ -29,6 +31,12 @@
             @Html.TextAreaFor(x => x.Comment)
             @Html.ValidationMessageFor(x => x.Comment)
         </div>
+        @if (Settings.SettingRepository.ReCaptchaEnabled)
+        {
+        <div id="commentCaptcha">
+            @ReCaptcha.GetHtml(Settings.SettingRepository.ReCaptchaPublicKey)
+        </div>
+        }
         <input type="submit" value="@Resources.Labels.SaveComment" />
     </div>
 </div>

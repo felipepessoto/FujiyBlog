@@ -57,6 +57,27 @@
             @Html.RadioButtonFor(model => model.CommentsAvatar, "retro") retro
             @Html.ValidationMessageFor(model => model.CommentsAvatar)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReCaptchaEnabled)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ReCaptchaEnabled)
+            @Html.ValidationMessageFor(model => model.ReCaptchaEnabled)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReCaptchaPrivateKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ReCaptchaPrivateKey)
+            @Html.ValidationMessageFor(model => model.ReCaptchaPrivateKey)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ReCaptchaPublicKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ReCaptchaPublicKey)
+            @Html.ValidationMessageFor(model => model.ReCaptchaPublicKey)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

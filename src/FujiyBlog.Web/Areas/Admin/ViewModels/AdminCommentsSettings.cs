@@ -21,5 +21,14 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name = "Comments Avatar")]
         public string CommentsAvatar { get; set; }
+
+        [Display(Name = "Enable ReCaptcha")]
+        public bool ReCaptchaEnabled { get; set; }
+
+        [Display(Name = "ReCaptcha private key")]
+        public string ReCaptchaPrivateKey { get; set; }
+
+        [Display(Name = "ReCaptcha public key")]
+        public string ReCaptchaPublicKey { get; set; }
     }
 }
