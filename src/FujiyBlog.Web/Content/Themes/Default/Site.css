@@ -35,7 +35,7 @@ a {
 #header-wrapper 
 {
     background-color: #1582AB;
-
+    background: url('img/header_background.jpg'); /* TODO: Criar */ 
     border-bottom: 10px solid #666;
 }
 
