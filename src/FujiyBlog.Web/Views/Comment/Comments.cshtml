@@ -51,7 +51,7 @@
             
             
             <div class="comment-replies" id="replies_@(comment.Id)">
-                @{Html.RenderPartial(MVC.Themes.Views.Default.Comment.Comments, comment.NestedComments);}
+                @{Html.RenderPartial("../Comment/Comments", comment.NestedComments);}
             </div>
         </div>
     }
