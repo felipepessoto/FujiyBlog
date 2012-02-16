@@ -1,11 +1,12 @@
 ﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Web.Extensions
 @using FujiyBlog.Web.Models
 @using FujiyBlog.Core.Extensions
 
 @model FujiyBlog.Core.Dto.PostSummary
            
 @{
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
 
 @section OpenGraphTags
@@ -31,7 +32,7 @@
         @Html.ActionLink(Model.NextPost.Title + " >>", MVC.Post.Details(Model.NextPost.Slug))
     }
 </div>
-@{Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, Model);}
+@{Html.RenderPartial("Post", Model);}
 <div id="commentlist">
 @if (Model.Post.Comments.Count > 0)
 {

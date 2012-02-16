@@ -1,9 +1,10 @@
 ﻿@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Core.Extensions
+@using FujiyBlog.Web.Extensions
 @model FujiyBlog.Web.ViewModels.SearchResult
 
 @{
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
 
 

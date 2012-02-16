@@ -1,8 +1,9 @@
-﻿@model FujiyBlog.Web.ViewModels.PostArchive
+﻿@using FujiyBlog.Web.Extensions
+@model FujiyBlog.Web.ViewModels.PostArchive
            
 @{
-    Layout = "../Shared/_Layout.cshtml";
     ViewBag.Title = Resources.Labels.Archive;
+    Layout = this.FindLayoutPath("_Layout");
 }
 
 <div id="archive">

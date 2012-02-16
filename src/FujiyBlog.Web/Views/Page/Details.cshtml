@@ -1,6 +1,7 @@
-﻿@model FujiyBlog.Core.DomainObjects.Page
+﻿@using FujiyBlog.Web.Extensions
+@model FujiyBlog.Core.DomainObjects.Page
 @{
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
 <div id="page">
     <h1>

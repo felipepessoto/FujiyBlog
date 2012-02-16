@@ -1,9 +1,11 @@
-﻿@model FujiyBlog.Web.ViewModels.PostIndex
+﻿@using FujiyBlog.Web.Extensions
+@model FujiyBlog.Web.ViewModels.PostIndex
 @{
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
+
 @foreach (var item in Model.RecentPosts)
 {
-    Html.RenderPartial(MVC.Themes.Views.Default.Post.Post, item);
+    Html.RenderPartial("Post", item);
 }
 @Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.PreviousPosts, Resources.Labels.NextPosts)

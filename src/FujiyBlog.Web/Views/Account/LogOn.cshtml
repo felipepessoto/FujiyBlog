@@ -1,8 +1,9 @@
-﻿@model FujiyBlog.Web.Models.LogOnModel
+﻿@using FujiyBlog.Web.Extensions
+@model FujiyBlog.Web.Models.LogOnModel
 
 @{
     ViewBag.Title = "Account Login";
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
 
 <h2>Log On</h2>

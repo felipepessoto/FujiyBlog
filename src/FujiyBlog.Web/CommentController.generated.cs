@@ -93,6 +93,8 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Comments = "~/Views/Comment/Comments.cshtml";
+            public readonly string DoComment = "~/Views/Comment/DoComment.cshtml";
         }
     }
 

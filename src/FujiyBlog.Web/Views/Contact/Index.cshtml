@@ -1,8 +1,9 @@
-﻿@using FujiyBlog.Web.ViewModels
+﻿@using FujiyBlog.Web.Extensions
+@using FujiyBlog.Web.ViewModels
 @model ContactForm
 @{
     ViewBag.Title = Resources.Labels.Contact;
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
 
 @using (Html.BeginForm(MVC.Contact.Index()))

@@ -1,6 +1,7 @@
-﻿@{
+﻿@using FujiyBlog.Web.Extensions
+@{
     ViewBag.Title = "Success";
-    Layout = "../Shared/_Layout.cshtml";
+    Layout = this.FindLayoutPath("_Layout");
 }
 <div id="contact">
     <h2>

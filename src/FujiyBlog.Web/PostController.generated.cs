@@ -109,6 +109,10 @@ namespace FujiyBlog.Web.Controllers {
         public ViewNames Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
+            public readonly string Archive = "~/Views/Post/Archive.cshtml";
+            public readonly string Details = "~/Views/Post/Details.cshtml";
+            public readonly string Index = "~/Views/Post/Index.cshtml";
+            public readonly string Post = "~/Views/Post/Post.cshtml";
         }
     }
 
