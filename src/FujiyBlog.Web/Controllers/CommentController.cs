@@ -78,7 +78,7 @@ namespace FujiyBlog.Web.Controllers
 
             PostComment newComment = new PostComment {Post = comment.Post, ParentComment = comment};
 
-            return View(MVC.Themes.Views.Default.Comment.DoComment, newComment);
+            return View("DoComment", newComment);
         }
 
         [AuthorizeRole(Role.ModerateComments), HttpPost]
