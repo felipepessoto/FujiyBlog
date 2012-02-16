@@ -12,7 +12,7 @@
     public string CanonicalUrl()
     {
         RouteValueDictionary valores = new RouteValueDictionary(ViewContext.RouteData.Values);
-        foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState)
+        foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState.Where(x=>x.Value.Value != null))
         {
             valores[keyValuePair.Key] = keyValuePair.Value.Value.AttemptedValue;
         }
