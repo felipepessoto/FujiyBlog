@@ -25,7 +25,7 @@ namespace FujiyBlog.Web.Controllers
         {
             if (Settings.SettingRepository.ReCaptchaEnabled && !ReCaptcha.Validate(Settings.SettingRepository.ReCaptchaPrivateKey))
             {
-                return JavaScript("alert('Invalid captcha!');Recaptcha.reload();");
+                return Json(new { errorMessage = "Invalid Captcha!" });
             }
 
             bool isLogged = Request.IsAuthenticated;

@@ -2,16 +2,13 @@
 @using Microsoft.Web.Helpers
 @model FujiyBlog.Core.DomainObjects.PostComment
 
-@using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { InsertionMode = InsertionMode.InsertAfter, UpdateTargetId = Model.ParentComment == null ? "commentlist" : "replies_" + Model.ParentComment.Id, OnSuccess = Model.ParentComment == null ? string.Empty : "$('#reply-comment-" + @Model.ParentComment.Id + "').html('');" }))
+@using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { OnSuccess = "fujiyBlog.comments.addCommentSuccess(arguments[0]);" }))
 {
-    if (Model.ParentComment != null)
-    {
-        @Html.Hidden("ParentCommentId", Model.ParentComment.Id)
-    }
-    <div id="comment-form">
+    @Html.Hidden("ParentCommentId", Model.ParentComment != null ? Model.ParentComment.Id.ToString() : string.Empty)
+    
     <div class="commentForm">
-        <p id="addcomment">
-            @Resources.Labels.AddComment</p>
+        <p class="addcomment">
+            @Resources.Labels.AddComment</p><div style="display:none" id="replying-name">(Replying <span></span>) <a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">[X]</a></div>
             @if (!Request.IsAuthenticated)
             { 
         @Html.LabelFor(x => x.AuthorName)
@@ -26,18 +23,17 @@
         @Html.EditorFor(x => x.AuthorWebsite)
         @Html.ValidationMessageFor(x => x.AuthorWebsite)
             }
-        <div id="commentCompose">
+        <div>
             @Html.LabelFor(x => x.Comment)
             @Html.TextAreaFor(x => x.Comment)
             @Html.ValidationMessageFor(x => x.Comment)
         </div>
         @if (Settings.SettingRepository.ReCaptchaEnabled)
         {
-        <div id="commentCaptcha">
-            @ReCaptcha.GetHtml(Settings.SettingRepository.ReCaptchaPublicKey)
-        </div>
+            <div class="commentCaptcha">
+                @ReCaptcha.GetHtml(Settings.SettingRepository.ReCaptchaPublicKey)
+            </div>
         }
         <input type="submit" value="@Resources.Labels.SaveComment" />
     </div>
-</div>
 }

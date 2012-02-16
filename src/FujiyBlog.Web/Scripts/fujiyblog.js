@@ -59,6 +59,35 @@
                 }
             });
         }
+    },
+    comments: {
+        addCommentSuccess: function (response) {
+
+            if (response.errorMessage) {
+                alert(response.errorMessage);
+            }
+            else {
+                var parentCommentId = $('#ParentCommentId').val();
+
+                if (parentCommentId) {
+                    $('#replies_' + parentCommentId.toString()).append(response);
+                } else {
+                    $('#commentlist').append(response);
+                }
+            }
+            if (window.Recaptcha) {
+                window.Recaptcha.reload();
+            }
+        },
+        replyComment: function (parentCommentId, parentCommentAuthor) {
+            $('#ParentCommentId').val(parentCommentId);
+            $('#replying-name').show();
+            $('#replying-name > span').text(parentCommentAuthor);
+        },
+        cancelReplyComment: function () {
+            $('#ParentCommentId').val('');
+            $('#replying-name').hide();
+        }
     }
 };
 
