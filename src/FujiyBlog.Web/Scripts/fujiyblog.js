@@ -83,6 +83,7 @@
             $('#ParentCommentId').val(parentCommentId);
             $('#replying-name').show();
             $('#replying-name > span').text(parentCommentAuthor);
+            document.getElementById('replying-name').scrollIntoView(true);
         },
         cancelReplyComment: function () {
             $('#ParentCommentId').val('');
