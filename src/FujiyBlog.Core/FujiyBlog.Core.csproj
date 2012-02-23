@@ -101,6 +101,8 @@
       <DependentUpon>TextMessages.resx</DependentUpon>
     </Compile>
     <Compile Include="Services\RolesService.cs" />
+    <Compile Include="Tasks\BackgroundTask.cs" />
+    <Compile Include="Tasks\SendEmailTask.cs" />
     <Compile Include="Validation\EmailAddressAttribute.cs" />
     <Compile Include="Validation\UrlAttribute.cs" />
   </ItemGroup>

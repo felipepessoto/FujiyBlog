@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Web.Mvc;
 using FujiyBlog.Core.Services;
+using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.ViewModels;
 using FujiyBlog.Web.Models;
 
@@ -18,9 +19,7 @@ namespace FujiyBlog.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                string body = contactForm.Body;
-
-                body += Server.HtmlEncode(body).Replace(Environment.NewLine, "<br />") + @"
+                string body = Server.HtmlEncode(contactForm.Body).Replace(Environment.NewLine, "<br />") + @"
 <br />
 <br />
 <hr />
@@ -32,7 +31,7 @@ namespace FujiyBlog.Web.Controllers
                 body += "<strong>IP Address:</strong> " + Request.UserHostAddress + "<br />";
                 body += "<strong>Browser:</strong> " + Request.UserAgent;
 
-                EmailService.Send(Settings.SettingRepository.EmailTo, contactForm.Subject, body, true, contactForm.Email, contactForm.Name);
+                new SendEmailTask(Settings.SettingRepository.EmailTo, contactForm.Subject, body, contactForm.Email, contactForm.Name).ExcuteLater();
 
                 return RedirectToAction(MVC.Contact.Success());
             }
