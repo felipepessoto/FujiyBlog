@@ -52,7 +52,7 @@ private string ShowPostContent(string content)
             <div class="social-networks">
                 @if (Settings.SettingRepository.EnableTwitterSharePosts)
                 {
-                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="@(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))" data-text="@(Model.Post.Title)" data-count="none">Tweet</a>
+                    <a href="https://twitter.com/share" class="twitter-share-button" data-url="@(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))" data-text="@(Model.Post.Title)">Tweet</a>
                 }
                 @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
                 {
