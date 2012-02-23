@@ -32,7 +32,7 @@ namespace FujiyBlog.Web.Controllers
                 body += "<strong>IP Address:</strong> " + Request.UserHostAddress + "<br />";
                 body += "<strong>Browser:</strong> " + Request.UserAgent;
 
-                EmailService.Send(contactForm.Email, contactForm.Name, Settings.SettingRepository.EmailTo, contactForm.Subject, body, true);
+                EmailService.Send(Settings.SettingRepository.EmailTo, contactForm.Subject, body, true, contactForm.Email, contactForm.Name);
 
                 return RedirectToAction(MVC.Contact.Success());
             }
