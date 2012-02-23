@@ -4,14 +4,14 @@ using FujiyBlog.Core.EntityFramework;
 
 namespace FujiyBlog.Core.Services
 {
-    public class EmailService
+    public static class EmailService
     {
-        public void Send(string toEmail, string subject, string body, bool isBodyHtml)
+        public static void Send(string toEmail, string subject, string body, bool isBodyHtml)
         {
             Send(null, null, toEmail, subject, body, isBodyHtml);
         }
 
-        public void Send(string fromEmail, string fromName, string toEmail, string subject, string body, bool isBodyHtml)
+        public static void Send(string fromEmail, string fromName, string toEmail, string subject, string body, bool isBodyHtml)
         {
             SettingRepository settingRepository = new SettingRepository(new FujiyBlogDatabase());
 
