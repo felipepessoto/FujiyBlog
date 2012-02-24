@@ -78,6 +78,13 @@
             @Html.EditorFor(model => model.ReCaptchaPublicKey)
             @Html.ValidationMessageFor(model => model.ReCaptchaPublicKey)
         </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NotifyNewComments)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NotifyNewComments)
+            @Html.ValidationMessageFor(model => model.NotifyNewComments)
+        </div>
         <p>
             <input type="submit" value="Save" />
         </p>

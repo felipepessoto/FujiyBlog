@@ -30,5 +30,8 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name = "ReCaptcha public key")]
         public string ReCaptchaPublicKey { get; set; }
+
+        [Display(Name = "Notify new comments")]
+        public bool NotifyNewComments { get; set; }
     }
 }

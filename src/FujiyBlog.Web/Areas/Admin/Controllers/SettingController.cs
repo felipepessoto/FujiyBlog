@@ -116,6 +116,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 ReCaptchaEnabled = Settings.SettingRepository.ReCaptchaEnabled,
                 ReCaptchaPrivateKey = Settings.SettingRepository.ReCaptchaPrivateKey,
                 ReCaptchaPublicKey = Settings.SettingRepository.ReCaptchaPublicKey,
+                NotifyNewComments = Settings.SettingRepository.NotifyNewComments,
             };
 
             return View(viewModel);
@@ -138,6 +139,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.ReCaptchaEnabled = settings.ReCaptchaEnabled;
             Settings.SettingRepository.ReCaptchaPrivateKey = settings.ReCaptchaPrivateKey;
             Settings.SettingRepository.ReCaptchaPublicKey = settings.ReCaptchaPublicKey;
+            Settings.SettingRepository.NotifyNewComments = settings.NotifyNewComments;
 
             return RedirectToAction(MVC.Admin.Setting.Comments()).SetSuccessMessage("Settings saved");
         }
