@@ -231,8 +231,7 @@ namespace FujiyBlog.Core.EntityFramework
         {
             get
             {
-                bool reCaptchaEnabled;
-                bool.TryParse(LoadSetting(SettingNames.ReCaptchaEnabled), out reCaptchaEnabled);
+                bool reCaptchaEnabled = bool.Parse(LoadSetting(SettingNames.ReCaptchaEnabled));
                 return reCaptchaEnabled && !string.IsNullOrEmpty(ReCaptchaPrivateKey) && !string.IsNullOrEmpty(ReCaptchaPublicKey);
             }
             set { SaveSetting(SettingNames.ReCaptchaEnabled, value.ToString()); }
@@ -360,7 +359,7 @@ namespace FujiyBlog.Core.EntityFramework
             [Description("")]
             OpenGraphImageUrl = 31,
 
-            [Description("ReCaptcha is enabled")]
+            [DefaultValue(false), Description("ReCaptcha is enabled")]
             ReCaptchaEnabled = 32,
 
             [Description("ReCaptcha private key")]
