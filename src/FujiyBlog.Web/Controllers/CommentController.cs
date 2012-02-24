@@ -26,7 +26,7 @@ namespace FujiyBlog.Web.Controllers
         [AuthorizeRole(Role.CreateComments)]
         public virtual ActionResult DoComment(int id, int? parentCommentId)
         {
-            if (Settings.SettingRepository.ReCaptchaEnabled && !ReCaptcha.Validate(Settings.SettingRepository.ReCaptchaPrivateKey))
+            if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments) && !ReCaptcha.Validate(Settings.SettingRepository.ReCaptchaPrivateKey))
             {
                 return Json(new { errorMessage = "Invalid Captcha!" });
             }

@@ -1,4 +1,6 @@
-﻿@using FujiyBlog.Web.Models
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+@using FujiyBlog.Web.Models
 @using Microsoft.Web.Helpers
 @model FujiyBlog.Core.DomainObjects.PostComment
 
@@ -28,7 +30,7 @@
             @Html.TextAreaFor(x => x.Comment)
             @Html.ValidationMessageFor(x => x.Comment)
         </div>
-        @if (Settings.SettingRepository.ReCaptchaEnabled)
+        @if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments))
         {
             <div class="commentCaptcha">
                 @ReCaptcha.GetHtml(Settings.SettingRepository.ReCaptchaPublicKey)
