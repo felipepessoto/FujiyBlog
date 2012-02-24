@@ -249,6 +249,12 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.ReCaptchaPublicKey, value); }
         }
 
+        public bool NotifyNewComments
+        {
+            get { return bool.Parse(LoadSetting(SettingNames.NotifyNewComments)); }
+            set { SaveSetting(SettingNames.NotifyNewComments, value.ToString()); }
+        }
+
         private string LoadSetting(SettingNames setting)
         {
             string value;
@@ -367,6 +373,9 @@ namespace FujiyBlog.Core.EntityFramework
 
             [Description("ReCaptcha public key")]
             ReCaptchaPublicKey = 34,
+
+            [DefaultValue(false), Description("Notify new comments")]
+            NotifyNewComments = 35,
         }
     }
 }

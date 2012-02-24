@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <div>
+        <h1>
+            A new comment on @Model.BlogName blog</h1>
+        <strong>Post:</strong> @Html.ActionLink((string)Model.Post.Title, MVC.Post.Details((string)Model.Post.Slug), null, protocol: Request.Url.Scheme)
+        <ul>
+            <li><strong>Author:</strong> @Model.Comment.AuthorName</li>
+            <li><strong>Url:</strong> @Model.Comment.AuthorWebsite</li>
+            <li><strong>Email:</strong> @Model.Comment.AuthorEmail</li>
+            <li><strong>Created At:</strong> @Model.Comment.CreationDate</li>
+        </ul>
+        <strong>Comment:</strong>
+        <pre>@Model.Comment.Comment</pre>
+        <p>
+            @Html.ActionLink("View Comment", MVC.Post.Details((string)Model.Post.Slug), null, Request.Url.Scheme, null, "comment_id" + ((FujiyBlog.Core.DomainObjects.PostComment)Model.Comment).Id)
+        </p>
+    </div>
+</body>
+</html>

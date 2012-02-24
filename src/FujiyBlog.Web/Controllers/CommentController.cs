@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
+using FujiyBlog.Core.Services;
+using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using System.Data.Entity;
@@ -68,6 +71,17 @@ namespace FujiyBlog.Web.Controllers
             db.PostComments.Add(postComment);
             db.SaveChanges();
 
+            if (!isLogged && Settings.SettingRepository.NotifyNewComments)
+            {
+                string subject = string.Format("Comment on \"{0}\" from {1}", post.Title, Settings.SettingRepository.BlogName);
+                dynamic viewModel = new ExpandoObject();
+                viewModel.BlogName = Settings.SettingRepository.BlogName;
+                viewModel.Post = post;
+                viewModel.Comment = postComment;
+                string body = RenderPartialViewToString("NewComment", viewModel);
+                new SendEmailTask(Settings.SettingRepository.EmailTo, subject, body).ExcuteLater();
+            }
+
             return View("Comments", new[] { postComment });
         }
 
@@ -112,6 +126,19 @@ namespace FujiyBlog.Web.Controllers
             db.SaveChangesBypassingValidation();
 
             return Json(true);
+        }
+
+        private string RenderPartialViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (System.IO.StringWriter sw = new System.IO.StringWriter())
+            {
+                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
+                viewResult.View.Render(viewContext, sw);
+
+                return sw.GetStringBuilder().ToString();
+            }
         }
     }
 }
