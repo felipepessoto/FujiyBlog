@@ -69,13 +69,13 @@ namespace FujiyBlog.Web.Controllers
             }
 
             ViewBag.Title = "All posts tagged '" + tag + "'";
-            ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
             if (page.HasValue)
             {
                 ViewBag.Title += " - Page " + page.Value;
-                ViewBag.Description += " - Page " + page.Value;
             }
+
+            ViewBag.Description = ViewBag.Title;
 
             return View("Index", model);
         }
@@ -97,13 +97,13 @@ namespace FujiyBlog.Web.Controllers
             }
 
             ViewBag.Title = category;
-            ViewBag.Description = Settings.SettingRepository.BlogDescription;
 
             if (page.HasValue)
             {
                 ViewBag.Title += " - Page " + page.Value;
-                ViewBag.Description += " - Page " + page.Value;
             }
+
+            ViewBag.Description = ViewBag.Title;
 
             return View("Index", model);
         }
@@ -124,8 +124,10 @@ namespace FujiyBlog.Web.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.Title = "All posts by '" + author + "'";
-            ViewBag.Description = Settings.SettingRepository.BlogDescription;
+            User authorUser = db.Users.Single(x => x.Username == author && x.Enabled == true);
+
+            ViewBag.Title = "All posts by '" + (authorUser.DisplayName ?? authorUser.Username) + "'";
+            ViewBag.Description = authorUser.About;
 
             if (page.HasValue)
             {
@@ -171,13 +173,13 @@ namespace FujiyBlog.Web.Controllers
             }
 
             ViewBag.Title = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + " - " + year;
-            ViewBag.Description = System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(month) + " - " + year;
 
             if (page.HasValue)
             {
                 ViewBag.Title += " - Page " + page.Value;
-                ViewBag.Description += " - Page " + page.Value;
             }
+
+            ViewBag.Description = ViewBag.Title;
 
             return View("Index", model);
         }
