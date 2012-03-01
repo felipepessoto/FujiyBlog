@@ -35,7 +35,7 @@
 
             @if (User.IsInRole(Role.CreateComments))
             {
-                <text>| <a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.replyComment(@comment.Id, '@(comment.Author == null ? comment.AuthorName : comment.Author.DisplayName ?? comment.Author.Username)');">@Resources.Labels.Reply</a> </text>
+                <text>| <a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.replyComment(@comment.Id);">@Resources.Labels.Reply</a> </text>
             }
             
             @if (User.IsInRole(Role.ModerateComments))

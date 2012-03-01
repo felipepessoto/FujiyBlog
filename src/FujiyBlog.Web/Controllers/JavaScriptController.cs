@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Web.Caching;
 using System.Web.Mvc;
 using FujiyBlog.Web.Infrastructure;
 
@@ -7,12 +8,14 @@ namespace FujiyBlog.Web.Controllers
 {
     public partial class JavaScriptController : AbstractController
     {
-        private static string bundleContent;
-
         [CompressFilter]
         [OutputCache(Duration = 60 * 60 * 24 * 7, VaryByHeader = "Accept-Encoding", VaryByParam = "")]
         public virtual ActionResult FujiyBlogBundle()
         {
+            const string cacheKey = "FujiyBlog.Web.Controllers.JavaScriptController.FujiyBlogBundle";
+
+            string bundleContent = HttpContext.Cache[cacheKey] as string;
+
             if (bundleContent == null)
             {
                 string[] files = new[]
@@ -27,7 +30,10 @@ namespace FujiyBlog.Web.Controllers
                                      "~/Scripts/json2.js",
                                  };
 
-                bundleContent = string.Join(Environment.NewLine, files.Select(x => System.IO.File.ReadAllText(Server.MapPath(x))));
+                files = files.Select(Server.MapPath).ToArray();
+                bundleContent = string.Join(Environment.NewLine, files.Select(System.IO.File.ReadAllText));
+
+                HttpContext.Cache.Add(cacheKey, bundleContent, new CacheDependency(files), Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.NotRemovable, null);
             }
 
             ViewBag.Bundle = bundleContent;

@@ -79,16 +79,36 @@
                 window.Recaptcha.reload();
             }
         },
-        replyComment: function (parentCommentId, parentCommentAuthor) {
+        replyComment: function (parentCommentId) {
+            //Reset and remove padding left, to have enought space to write a comment
+            if (!fujiyBlog.comments.originalRepliesPaddingLeft) {
+                fujiyBlog.comments.originalRepliesPaddingLeft = $('.comment-replies:first').css('padding-left');
+            }
+            fujiyBlog.comments.resetRepliesPaddingLeft();
+            
+            var parentsWrappers = $('#replies_' + parentCommentId).parents('.comment-replies');
+            if (parentsWrappers.length > 1) {
+                parentsWrappers.animate({ 'padding-left': '0px' }, 'fast', 'linear');
+            }
+            //Reset and remove padding left, to have enought space to write a comment
+            
             $('#ParentCommentId').val(parentCommentId);
-            $('#replying-name').show();
-            $('#replying-name > span').text(parentCommentAuthor);
-            document.getElementById('replying-name').scrollIntoView(true);
+            $('#cancel-replying').show();
+            $('#add-comment-form').hide().prependTo($('#replies_' + parentCommentId)).slideDown(400, 'linear');
+
         },
         cancelReplyComment: function () {
+
+            fujiyBlog.comments.resetRepliesPaddingLeft();
+
             $('#ParentCommentId').val('');
-            $('#replying-name').hide();
-        }
+            $('#cancel-replying').hide();
+            $('#add-comment-form').insertAfter($('#commentlist'));
+        },
+        resetRepliesPaddingLeft: function () {
+            $('.comment-replies').animate({ 'padding-left': fujiyBlog.comments.originalRepliesPaddingLeft }, 'fast', 'linear');
+        },
+        originalRepliesPaddingLeft: null
     }
 };
 
