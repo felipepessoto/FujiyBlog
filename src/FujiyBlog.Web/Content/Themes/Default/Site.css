@@ -358,6 +358,10 @@ a {
     padding-left: 20px;
 }
 
+#cancel-replying {
+    float: right;
+}
+
 /* Post Header */
 
 #postnavigation {

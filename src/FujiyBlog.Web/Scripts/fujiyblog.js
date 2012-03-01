@@ -87,7 +87,7 @@
             fujiyBlog.comments.resetRepliesPaddingLeft();
             
             var parentsWrappers = $('#replies_' + parentCommentId).parents('.comment-replies');
-            if (parentsWrappers.length > 1) {
+            if (parentsWrappers.length > 0) {
                 parentsWrappers.animate({ 'padding-left': '0px' }, 'fast', 'linear');
             }
             //Reset and remove padding left, to have enought space to write a comment
