@@ -95,6 +95,7 @@ namespace FujiyBlog.Web.Controllers {
         public class ViewNames {
             public readonly string Comments = "~/Views/Comment/Comments.cshtml";
             public readonly string DoComment = "~/Views/Comment/DoComment.cshtml";
+            public readonly string NewComment = "~/Views/Comment/NewComment.cshtml";
         }
     }
 
