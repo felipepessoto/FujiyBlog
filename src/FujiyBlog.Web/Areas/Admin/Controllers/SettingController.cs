@@ -231,5 +231,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             return RedirectToAction(MVC.Admin.Setting.Feed()).SetSuccessMessage("Settings saved");
         }
+
+        public virtual ActionResult Cache()
+        {
+            return View();
+        }
+
+        public virtual ActionResult ClearCache()
+        {
+            db.UpdateLastDbChange();
+            return RedirectToAction(MVC.Admin.Setting.Cache()).SetSuccessMessage("Cache cleared");
+        }
     }
 }

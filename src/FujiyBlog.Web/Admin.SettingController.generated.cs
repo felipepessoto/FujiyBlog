@@ -54,6 +54,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string ImportSuccessful = "ImportSuccessful";
             public readonly string SocialNetworks = "SocialNetworks";
             public readonly string Feed = "Feed";
+            public readonly string Cache = "Cache";
+            public readonly string ClearCache = "ClearCache";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -66,6 +68,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public const string ImportSuccessful = "ImportSuccessful";
             public const string SocialNetworks = "SocialNetworks";
             public const string Feed = "Feed";
+            public const string Cache = "Cache";
+            public const string ClearCache = "ClearCache";
         }
 
 
@@ -75,6 +79,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ViewNames {
             public readonly string _Layout = "~/Areas/Admin/Views/Setting/_Layout.cshtml";
+            public readonly string Cache = "~/Areas/Admin/Views/Setting/Cache.cshtml";
             public readonly string Comments = "~/Areas/Admin/Views/Setting/Comments.cshtml";
             public readonly string Email = "~/Areas/Admin/Views/Setting/Email.cshtml";
             public readonly string Feed = "~/Areas/Admin/Views/Setting/Feed.cshtml";
@@ -156,6 +161,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         public override System.Web.Mvc.ActionResult Feed(FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Feed);
             callInfo.RouteValueDictionary.Add("settings", settings);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Cache() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Cache);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult ClearCache() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ClearCache);
             return callInfo;
         }
 

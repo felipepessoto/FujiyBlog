@@ -64,17 +64,22 @@ namespace FujiyBlog.Core.EntityFramework
 
             if (updateLastDbChange && saveChanges > 0)
             {
-                Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
-                if (setting == null)
-                {
-                    setting = new Setting { Id = 24, Description = "Last Database Change" };
-                    Settings.Add(setting);
-                }
-                setting.Value = DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
-                base.SaveChanges();
+                UpdateLastDbChange();
             }
 
             return saveChanges;
+        }
+
+        public void UpdateLastDbChange()
+        {
+            Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
+            if (setting == null)
+            {
+                setting = new Setting {Id = 24, Description = "Last Database Change"};
+                Settings.Add(setting);
+            }
+            setting.Value = DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
+            base.SaveChanges();
         }
 
         [Obsolete]

@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "Comments Settings";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+<h2>
+    Comments Settings</h2>
+@using (Html.BeginForm())
+{
+
+    <fieldset>
+        <legend>Cache</legend>
+        <div class="editor-field">
+            @Html.ActionLink("Clear Cache", MVC.Admin.Setting.ClearCache())
+        </div>
+    </fieldset>
+}
