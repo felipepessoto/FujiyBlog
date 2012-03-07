@@ -92,7 +92,7 @@ namespace FujiyBlog.Web
                 }
                 if (s.ToLower() == "lastcache")
                 {
-                    result += "lastcache:" + DependencyResolver.Current.GetService<FujiyBlogDatabase>().LastCache;
+                    result += "lastcache:" + DependencyResolver.Current.GetService<FujiyBlogDatabase>().LastDatabaseChange;
                 }
             }
 

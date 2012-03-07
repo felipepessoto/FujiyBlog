@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
+using System.Globalization;
 using System.Linq;
 using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
@@ -55,23 +55,29 @@ namespace FujiyBlog.Core.EntityFramework
 
         public override int SaveChanges()
         {
-            int saveChanges = base.SaveChanges();
+            return SaveChanges();
+        }
 
-            if (saveChanges > 0)
+        public int SaveChanges(bool updateLastDbChange = true, bool bypassValidation = false)
+        {
+            int saveChanges = bypassValidation ? SaveChangesBypassingValidation() : base.SaveChanges();
+
+            if (updateLastDbChange && saveChanges > 0)
             {
                 Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
                 if (setting == null)
                 {
-                    setting = new Setting {Id = 24, Description = "Last Database Change"};
+                    setting = new Setting { Id = 24, Description = "Last Database Change" };
                     Settings.Add(setting);
                 }
-                setting.Value = DateTime.UtcNow.Ticks.ToString();
+                setting.Value = DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
                 base.SaveChanges();
             }
 
             return saveChanges;
         }
 
+        [Obsolete]
         public int SaveChangesBypassingValidation()
         {
             bool previousValue = Configuration.ValidateOnSaveEnabled;

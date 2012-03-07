@@ -44,7 +44,7 @@ namespace FujiyBlog.Web.Controllers
                 if (user != null && user.Password == model.Password)
                 {
                     user.LastLoginDate = DateTime.UtcNow;
-                    db.SaveChanges();
+                    db.SaveChanges(updateLastDbChange: false);
                     FormsAuthentication.SetAuthCookie(model.UserName, model.RememberMe);
                     if (Url.IsLocalUrl(returnUrl))
                     {
@@ -90,7 +90,7 @@ namespace FujiyBlog.Web.Controllers
                 if (user.Password == model.OldPassword)
                 {
                     user.Password = model.NewPassword;
-                    db.SaveChanges();
+                    db.SaveChanges(updateLastDbChange: false);
                     return RedirectToAction(MVC.Account.ChangePasswordSuccess());
                 }
                 else
