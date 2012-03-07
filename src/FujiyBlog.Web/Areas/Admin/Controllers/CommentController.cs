@@ -88,7 +88,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         private AdminCommentIndex GetCommentsViewModel(int? page, bool isApproved)
         {
-            IQueryable<PostComment> comments = db.PostComments.Include(x => x.Author).Where(x => !x.IsDeleted && x.IsApproved == isApproved);
+            IQueryable<PostComment> comments = db.PostComments.Include(x => x.Author).Include(x => x.Post).Where(x => !x.IsDeleted && x.IsApproved == isApproved);
 
             List<PostComment> pageComments = comments.OrderByDescending(x => x.CreationDate).Paging(page.GetValueOrDefault(1), 10).ToList();
 

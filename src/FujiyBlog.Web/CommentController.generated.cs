@@ -38,11 +38,6 @@ namespace FujiyBlog.Web.Controllers {
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult ReplyComment() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.ReplyComment);
-        }
-        [NonAction]
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Approve() {
             return new T4MVC_ActionResult(Area, Name, ActionNames.Approve);
         }
@@ -72,7 +67,6 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNamesClass {
             public readonly string DoComment = "DoComment";
-            public readonly string ReplyComment = "ReplyComment";
             public readonly string Approve = "Approve";
             public readonly string Disapprove = "Disapprove";
             public readonly string Delete = "Delete";
@@ -81,7 +75,6 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants {
             public const string DoComment = "DoComment";
-            public const string ReplyComment = "ReplyComment";
             public const string Approve = "Approve";
             public const string Disapprove = "Disapprove";
             public const string Delete = "Delete";
@@ -107,12 +100,6 @@ namespace FujiyBlog.Web.Controllers {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
             callInfo.RouteValueDictionary.Add("id", id);
             callInfo.RouteValueDictionary.Add("parentCommentId", parentCommentId);
-            return callInfo;
-        }
-
-        public override System.Web.Mvc.ActionResult ReplyComment(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ReplyComment);
-            callInfo.RouteValueDictionary.Add("id", id);
             return callInfo;
         }
 

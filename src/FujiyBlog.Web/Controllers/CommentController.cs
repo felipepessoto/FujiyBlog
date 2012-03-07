@@ -85,16 +85,6 @@ namespace FujiyBlog.Web.Controllers
             return View("Comments", new[] { postComment });
         }
 
-        [AuthorizeRole(Role.CreateComments)]
-        public virtual ActionResult ReplyComment(int id)
-        {
-            PostComment comment = db.PostComments.Include(x => x.Post).Single(x => x.Id == id);
-
-            PostComment newComment = new PostComment {Post = comment.Post, ParentComment = comment};
-
-            return View("DoComment", newComment);
-        }
-
         [AuthorizeRole(Role.ModerateComments), HttpPost]
         public virtual ActionResult Approve(int id)
         {

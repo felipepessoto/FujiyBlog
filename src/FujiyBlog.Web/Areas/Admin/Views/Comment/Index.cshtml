@@ -80,6 +80,7 @@
                 @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
             </td>
             <td>
+                @Html.ActionLink("View", MVC.Post.Details(item.Post.Slug), null, null, null, "comment_id" + item.Id) |
                 @Html.ActionLink("Edit", MVC.Admin.Comment.Edit(item.Id)) |
                 @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
             </td>
