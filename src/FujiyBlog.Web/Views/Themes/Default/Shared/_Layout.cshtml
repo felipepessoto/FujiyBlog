@@ -70,9 +70,9 @@
             <div id="menu">
                 <ul>
 
-                    <li class="current_page_item"><a href="@Url.Content("~/")">Home</a></li>
-                    <li>@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
-                    <li>@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
+                    <li class="@(Url.Action(MVC.Post.Index(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")"><a href="@Url.Content("~/")">Home</a></li>
+                    <li class="@(Url.Action(MVC.Post.Archive(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
+                    <li class="@(Url.Action(MVC.Contact.Index(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
                     <li><a href="@FeedsUrl()">Feed</a></li>
                     <li>@(Request.IsAuthenticated ? Html.ActionLink("Log Off", "LogOff", "Account") : Html.ActionLink("Log On", "LogOn", "Account"))</li>
                 </ul>
