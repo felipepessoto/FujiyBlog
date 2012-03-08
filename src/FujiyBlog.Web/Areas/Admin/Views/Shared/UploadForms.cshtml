@@ -43,6 +43,7 @@
 
 <script type="text/javascript">
     var currentDialog = null;
+    var tempUploadContentIE = null;
 
     function openUploadDiv(divId) {
 
@@ -56,12 +57,17 @@
         currentDialog = uploadDiv.dialog({ height: 200,
             width: 550,
             modal: true,
-            overlay: { opacity: 0.7, background: 'black' }
+            overlay: { opacity: 0.7, background: 'black' },
+            close: function () {
+                if (tempUploadContentIE) {
+                    tinymceContent.tinymce().execCommand('mceInsertContent', false, tempUploadContentIE);
+                }
+                tempUploadContentIE = null;
+            }
         });
     }
 
     $("#form-upload-image,#form-upload-video,#form-upload-file").ajaxForm({
-        iframe: true,
         dataType: "json",
         beforeSubmit: function (arr, $form, options) {
 
@@ -99,7 +105,12 @@
                     }
                 }
 
-                tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
+                try {
+                    tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
+                }
+                catch (ex) {
+                    tempUploadContentIE = insertedContent;
+                }
 
                 if (currentDialog) {
                     currentDialog.dialog('close');

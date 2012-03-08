@@ -68,7 +68,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             {
                 return Json(new {errorMessage = "Can´t upload file. Check permissions"});
             }
-            return Json(new {urls = paths.Select(Url.Content) });
+            return Json(new { urls = paths.Select(Url.Content) }, "text/html");
         }
     }
 }
