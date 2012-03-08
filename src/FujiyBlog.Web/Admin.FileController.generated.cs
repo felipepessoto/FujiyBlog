@@ -75,9 +75,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
     public class T4MVC_FileController: FujiyBlog.Web.Areas.Admin.Controllers.FileController {
         public T4MVC_FileController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Upload(System.Web.HttpPostedFileBase uploadFile, string folderName) {
+        public override System.Web.Mvc.ActionResult Upload(System.Web.HttpPostedFileBase[] uploadedFiles, string folderName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
-            callInfo.RouteValueDictionary.Add("uploadFile", uploadFile);
+            callInfo.RouteValueDictionary.Add("uploadedFiles", uploadedFiles);
             callInfo.RouteValueDictionary.Add("folderName", folderName);
             return callInfo;
         }

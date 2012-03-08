@@ -1,0 +1,169 @@
+﻿@model string
+
+<script type="text/javascript" src="@Url.Content(Links.Scripts.jquery_form_js)"></script>
+
+<div id="div-upload-image" style="display: none;">
+    <form id="form-upload-image" action="@Url.Action(MVC.Admin.File.Upload(null, Model))" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Upload a image</legend>
+            <label>File to Upload: <input type="file" id="uploadedFilesImages" name="uploadedFiles" accept="image/*" multiple />(4MB max size)</label>
+            <input class="ajaxUploadButton" type="submit" value="Submit" />
+            
+            <div style="display: none" class="upload-size-text"></div>
+            <progress style="display: none" max="100"></progress>
+        </fieldset>
+    </form>
+</div>
+
+<div id="div-upload-video" style="display: none;">
+    <form id="form-upload-video" action="@Url.Action(MVC.Admin.File.Upload(null, Model))" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Upload a video/audio</legend>
+            <label>File to Upload: <input type="file" id="uploadedFilesVideo" name="uploadedFiles" accept="audio/*,video/*" multiple />(4MB max size)</label>
+            <input class="ajaxUploadButton" type="submit" value="Submit" />
+            
+            <div style="display: none" class="upload-size-text"></div>
+            <progress style="display: none" max="100"></progress>
+        </fieldset>
+    </form>
+</div>
+
+<div id="div-upload-file" style="display: none;">
+    <form id="form-upload-file" action="@Url.Action(MVC.Admin.File.Upload(null, Model))" method="post" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Upload a file</legend>
+            <label>File to Upload: <input type="file" id="uploadedFilesFiles" name="uploadedFiles" multiple />(4MB max size)</label>
+            <input class="ajaxUploadButton" type="submit" value="Submit" />
+            
+            <div style="display: none" class="upload-size-text"></div>
+            <progress style="display: none" max="100"></progress>
+        </fieldset>
+    </form>
+</div>
+
+<script type="text/javascript">
+    var currentDialog = null;
+
+    function openUploadDiv(divId) {
+
+        var uploadDiv = $('#' + divId);
+        $('input:file', uploadDiv).attr({ value: '' });
+
+        if (currentDialog) {
+            currentDialog.dialog('close');
+        }
+
+        currentDialog = uploadDiv.dialog({ height: 200,
+            width: 550,
+            modal: true,
+            overlay: { opacity: 0.7, background: 'black' }
+        });
+    }
+
+    $("#form-upload-image,#form-upload-video,#form-upload-file").ajaxForm({
+        iframe: true,
+        dataType: "json",
+        beforeSubmit: function (arr, $form, options) {
+
+            var inputId = $form.find('input[type=file]').attr('id');
+
+            if (getFileUploadSize(inputId) > 4 * 1024 * 1024) {
+                alert('Max size is 4MB per upload');
+                return false;
+            }
+
+            $('.ajaxUploadButton').attr('disabled', 'disabled');
+        },
+        uploadProgress: function (event, position, total, percentComplete) {
+            $('progress').show().val(percentComplete);
+            $('.upload-size-text').show().text(Math.round(position / 1024) + 'KB of ' + Math.round(total / 1024) + 'KB');
+        },
+        success: function (response, statusText, xhr, elem) {
+            $('.ajaxUploadButton').removeAttr('disabled');
+            if (response.errorMessage) {
+                alert(response.errorMessage);
+            }
+            else {
+                var insertedContent = '';
+
+                for (var i = 0; i < response.urls.length; i++) {
+
+                    var fileUrl = response.urls[i];
+
+                    if (elem.attr('id') === 'form-upload-image') {
+                        insertedContent += '<img src="' + fileUrl + '" />';
+                    } else if (elem.attr('id') === 'form-upload-video') {
+                        insertedContent += '<video controls="controls" src="' + fileUrl + '"></video>';
+                    } else if (elem.attr('id') === 'form-upload-file') {
+                        insertedContent += '<a href="' + fileUrl + '">' + fileUrl.substr(fileUrl.lastIndexOf('/') + 1) + '</a><br />';
+                    }
+                }
+
+                tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
+
+                if (currentDialog) {
+                    currentDialog.dialog('close');
+                }
+            }
+            $('progress').hide();
+            $('.upload-size-text').hide();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            $('progress').hide();
+            $('.upload-size-text').hide();
+            $('.ajaxUploadButton').removeAttr('disabled');
+            alert('Error uploading file');
+        }
+    });
+
+
+    $(function() {
+        $('#link-upload-image').click(function() {
+            openUploadDiv('div-upload-image');
+        });
+
+        $('#link-upload-video').click(function() {
+            openUploadDiv('div-upload-video');
+        });
+
+        $('#link-upload-file').click(function() {
+            openUploadDiv('div-upload-file');
+        });
+    });
+
+    function getFileUploadSize(inputId) {
+
+        if (typeof window.FileReader === 'function') {
+            return getFileUploadSize_FileReader(inputId);
+        }
+        else {
+            return getFileUploadSize_InternetExplorer(inputId);
+        }
+    }
+
+    function getFileUploadSize_FileReader(inputId) {
+        var input = document.getElementById(inputId);
+
+        if (!input) {
+            return 0;
+        }
+        else if (!input.files) {
+            return 0;
+        }
+        else if (!input.files[0]) {
+            return 0;
+        }
+        else {
+            var totalSize = 0;
+            for (var i = 0; i < input.files.length; i++) {
+                totalSize += input.files[i].size;
+            }
+            return totalSize;
+        }
+    }
+
+    function getFileUploadSize_InternetExplorer() {
+        return 0;
+    }
+
+</script>

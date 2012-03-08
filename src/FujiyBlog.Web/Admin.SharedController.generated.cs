@@ -30,6 +30,12 @@ namespace T4MVC.Admin {
         public class ViewNames {
             public readonly string _Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
             public readonly string NotifyBar = "~/Areas/Admin/Views/Shared/NotifyBar.cshtml";
+            public readonly string UploadForms = "~/Areas/Admin/Views/Shared/UploadForms.cshtml";
+            static readonly _EditorTemplates s_EditorTemplates = new _EditorTemplates();
+            public _EditorTemplates EditorTemplates { get { return s_EditorTemplates; } }
+            public partial class _EditorTemplates{
+                public readonly string TinyMCE = "TinyMCE";
+            }
         }
     }
 

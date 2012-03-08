@@ -10,39 +10,10 @@
     string uploadFolder = "Post" + (Model.Post.Id.HasValue ? Model.Post.Id.ToString() : Guid.NewGuid().ToString());
 }
 <script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce_3_4_5.jquery_tinymce_js)"></script>
-<script type="text/javascript" src="@Url.Content(Links.Scripts.jquery_form_js)"></script>
 
 <h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
 
-<div id="div-upload-image" style="display: none;">
-    <form id="form-upload-image" action="@Url.Action(MVC.Admin.File.Upload(null, uploadFolder))" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload a image</legend>
-            <label>File to Upload: <input type="file" name="uploadFile" accept="image/*" />(4MB max size)</label>
-            <input class="ajaxUploadButton" type="submit" value="Submit" />
-        </fieldset>
-    </form>
-</div>
-
-<div id="div-upload-video" style="display: none;">
-    <form id="form-upload-video" action="@Url.Action(MVC.Admin.File.Upload(null, uploadFolder))" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload a video/audio</legend>
-            <label>File to Upload: <input type="file" name="uploadFile" accept="audio/*,video/*" />(4MB max size)</label>
-            <input class="ajaxUploadButton" type="submit" value="Submit" />
-        </fieldset>
-    </form>
-</div>
-
-<div id="div-upload-file" style="display: none;">
-    <form id="form-upload-file" action="@Url.Action(MVC.Admin.File.Upload(null, uploadFolder))" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload a file</legend>
-            <label>File to Upload: <input type="file" name="uploadFile" />(4MB max size)</label>
-            <input class="ajaxUploadButton" type="submit" value="Submit" />
-        </fieldset>
-    </form>
-</div>
+@Html.Partial("UploadForms", uploadFolder)
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -81,7 +52,7 @@
             
             <div class="editor-wrapper-content">
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.Content)
+                    @Html.EditorFor(model => model.Post.Content, "TinyMCE")
                     @Html.ValidationMessageFor(model => model.Post.Content)
                 </div>
             </div>
@@ -297,28 +268,6 @@
         });
     });
 
-    var tinymceContent = null;
-    $().ready(function () {
-        tinymceContent = $('#Post_Content').tinymce({
-            // Location of TinyMCE script
-            script_url: '@(Url.Content(Links.Scripts.tinymce_3_4_5.tiny_mce_js))',
-
-            // General options
-            theme: "advanced",
-            plugins: "media,inlinepopups,fullscreen,contextmenu,emotions,table,iespell,advlink",
-            relative_urls: false,
-
-            // Theme options
-            theme_advanced_buttons1: "fullscreen,code,|,cut,copy,paste,pastetext,pasteword,|,undo,redo,|,bold,italic,underline,strikethrough,|,blockquote,sub,sup,|,justifyleft,justifycenter,justifyright,|,bullist,numlist,outdent,indent",
-            theme_advanced_buttons2: "link,unlink,removeformat,cleanup,charmap,emotions,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor",
-            theme_advanced_buttons3: '',
-            theme_advanced_toolbar_location: "top",
-            theme_advanced_toolbar_align: "left",
-            theme_advanced_statusbar_location: "bottom",
-            theme_advanced_resizing: true
-        });
-    });
-
     $('#extract-from-title').click(function() {
         var callUrl = '@(Url.Action(MVC.Admin.Page.GenerateSlug()))';
         var postData = JSON.stringify({ text: $('#@Html.FieldIdFor(x=>x.Post.Title)').val() });
@@ -336,71 +285,4 @@
                 }
             });
     });
-
-    var currentDialog = null;
-
-    function openUploadDiv(divId) {
-
-        var uploadDiv = $('#' + divId);
-        $('input:file', uploadDiv).attr({ value: '' });
-
-        if (currentDialog) {
-            currentDialog.dialog('close');
-        }
-
-        currentDialog = uploadDiv.dialog({ height: 200,
-            width: 550,
-            modal: true,
-            overlay: { opacity: 0.7, background: 'black' }
-        });
-    }
-
-    $('#link-upload-image').click(function () {
-        openUploadDiv('div-upload-image');
-    });
-
-    $('#link-upload-video').click(function () {
-        openUploadDiv('div-upload-video');
-    });
-
-    $('#link-upload-file').click(function () {
-        openUploadDiv('div-upload-file');
-    });
-
-    $("#form-upload-image,#form-upload-video,#form-upload-file").ajaxForm({
-        iframe: true,
-        dataType: "json",
-        beforeSubmit: function () {
-            $('.ajaxUploadButton').attr('disabled', 'disabled');
-        },
-        success: function (response, statusText, xhr, elem) {
-            $('.ajaxUploadButton').removeAttr('disabled');
-            if (response.errorMessage) {
-                alert(response.errorMessage);
-            }
-            else {
-                var insertedContent = null;
-                if (elem.attr('id') === 'form-upload-image') {
-                    insertedContent = '<img src="' + response.url + '" />';
-                }
-                else if (elem.attr('id') === 'form-upload-video') {
-                    insertedContent = '<video controls="controls" src="' + response.url + '"></video>';
-                }
-                else if (elem.attr('id') === 'form-upload-file') {
-                    insertedContent = '<a href="' + response.url + '">' + response.url.substr(response.url.lastIndexOf('/') + 1) + '</a>';
-                }
-
-                tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
-
-                if (currentDialog) {
-                    currentDialog.dialog('close');
-                }
-            }
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            $('.ajaxUploadButton').removeAttr('disabled');
-            alert('Error uploading file');
-        }
-    });
-    
 </script>
