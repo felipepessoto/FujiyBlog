@@ -9,9 +9,9 @@
         @Ajax.ActionLink("X", MVC.Widget.Remove(Model.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "(function(){$('#widget"+@Model.Id+"').remove();})()" }, new { @class = "delete" })
         if (ViewEngines.Engines.FindView(ViewContext, Model.Name + "Edit", null).View != null)
         {
-            @Ajax.ActionLink("Edit", MVC.Widget.Edit(Model.Id), new AjaxOptions {OnSuccess = "fujiyBlog.widget.showEditWidget"}, new {@class = "edit"})
+            @Ajax.ActionLink(Resources.Labels.Edit, MVC.Widget.Edit(Model.Id), new AjaxOptions {OnSuccess = "fujiyBlog.widget.showEditWidget"}, new {@class = "edit"})
         }
-        <a class="move" href="javascript:void(0);" title="Move widget">Move</a>
+        <a class="move" href="javascript:void(0);" title="Move widget">@Resources.Labels.Move</a>
     }
     @RenderBody()
 </div>

@@ -18,8 +18,8 @@
     <div id="addedwidgets"></div>
     using (Ajax.BeginForm(MVC.Widget.Add(Model.ZoneName, null), new AjaxOptions { OnSuccess = "fujiyBlog.widget.showAddedWidget('widgetzone_" + Model.ZoneName + "', arguments[0]);" }, new { id = "addwidgetform" + Model.ZoneName }))
     { 
-    @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), "Select")
+    @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), Resources.Labels.Select)
     <a href="javascript:void(0);" onclick="javascript:$('#addwidgetform@(Model.ZoneName)').trigger('submit');">
-        Add</a>
+        @Resources.Labels.Add</a>
     }
 }

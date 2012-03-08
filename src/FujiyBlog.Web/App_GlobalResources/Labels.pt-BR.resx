@@ -126,6 +126,9 @@
   <data name="By" xml:space="preserve">
     <value>Por</value>
   </data>
+  <data name="CancelReply" xml:space="preserve">
+    <value>Cancelar resposta</value>
+  </data>
   <data name="Categories" xml:space="preserve">
     <value>Categorias</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="Comments" xml:space="preserve">
     <value>Comentários</value>
+  </data>
+  <data name="CommentSent" xml:space="preserve">
+    <value>Comentário enviado com sucesso</value>
   </data>
   <data name="Contact" xml:space="preserve">
     <value>Contato</value>
@@ -179,5 +185,29 @@
   </data>
   <data name="Uncategorized" xml:space="preserve">
     <value>Não categorizado</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Mover</value>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>Páginas</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>Posts</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Selecione</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configurações</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Usuários</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
   </data>
 </root>
