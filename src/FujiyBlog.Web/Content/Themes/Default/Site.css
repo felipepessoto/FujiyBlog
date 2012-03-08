@@ -321,7 +321,7 @@ a {
     margin: 5px;
 }
 
-#comment {
+.comment-title {
     font-size: 15px;
     letter-spacing: 1px;
     font-weight: bold;

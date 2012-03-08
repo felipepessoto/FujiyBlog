@@ -36,7 +36,7 @@
 <div id="commentlist">
 @if (Model.Post.Comments.Count > 0)
 {
-    <h1 id="comment">
+    <h1 class="comment-title">
         @Resources.Labels.Comments</h1>
 }
     @{Html.RenderPartial("../Comment/Comments", Model.Post.Comments.Where(x => x.ParentComment == null));}
