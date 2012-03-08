@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add" xml:space="preserve">
+    <value>Adicionar</value>
+  </data>
   <data name="AddComment" xml:space="preserve">
     <value>Adicionar Comentário</value>
   </data>
@@ -153,11 +156,23 @@
   <data name="Edit" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="Message" xml:space="preserve">
+    <value>Mensagem</value>
+  </data>
+  <data name="Move" xml:space="preserve">
+    <value>Mover</value>
+  </data>
   <data name="NextPage" xml:space="preserve">
     <value>Próxima Página</value>
   </data>
   <data name="NextPosts" xml:space="preserve">
     <value>Próximos posts</value>
+  </data>
+  <data name="Pages" xml:space="preserve">
+    <value>Páginas</value>
+  </data>
+  <data name="Posts" xml:space="preserve">
+    <value>Posts</value>
   </data>
   <data name="PreviousPage" xml:space="preserve">
     <value>Página Anterior</value>
@@ -174,11 +189,17 @@
   <data name="SaveComment" xml:space="preserve">
     <value>Salvar Comentário</value>
   </data>
+  <data name="Select" xml:space="preserve">
+    <value>Selecione</value>
+  </data>
   <data name="Send" xml:space="preserve">
     <value>Enviar</value>
   </data>
   <data name="SendYourMessage" xml:space="preserve">
     <value>Envie sua mensagem</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Configurações</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Título</value>
@@ -186,28 +207,19 @@
   <data name="Uncategorized" xml:space="preserve">
     <value>Não categorizado</value>
   </data>
-  <data name="Add" xml:space="preserve">
-    <value>Adicionar</value>
-  </data>
-  <data name="Move" xml:space="preserve">
-    <value>Mover</value>
-  </data>
-  <data name="Pages" xml:space="preserve">
-    <value>Páginas</value>
-  </data>
-  <data name="Posts" xml:space="preserve">
-    <value>Posts</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Selecione</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Configurações</value>
-  </data>
   <data name="Users" xml:space="preserve">
     <value>Usuários</value>
   </data>
-  <data name="Message" xml:space="preserve">
-    <value>Message</value>
+  <data name="ContactSuccess" xml:space="preserve">
+    <value>Sua mensagem foi enviada</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Nome</value>
+  </data>
+  <data name="Subject" xml:space="preserve">
+    <value>Assunto</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value>Successo</value>
   </data>
 </root>
