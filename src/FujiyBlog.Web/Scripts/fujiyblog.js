@@ -74,10 +74,16 @@
                 } else {
                     $('#commentlist').append(response);
                 }
+
+                $('#add-comment-form textarea').val('');
+                $('#comment-sucess').show().delay(3000).fadeOut('slow');
             }
             if (window.Recaptcha) {
                 window.Recaptcha.reload();
             }
+        },
+        addCommentFailure: function () {
+            alert('An error occured');
         },
         replyComment: function (parentCommentId) {
             //Reset and remove padding left, to have enought space to write a comment
@@ -85,13 +91,13 @@
                 fujiyBlog.comments.originalRepliesPaddingLeft = $('.comment-replies:first').css('padding-left');
             }
             fujiyBlog.comments.resetRepliesPaddingLeft();
-            
+
             var parentsWrappers = $('#replies_' + parentCommentId).parents('.comment-replies');
             if (parentsWrappers.length > 0) {
                 parentsWrappers.animate({ 'padding-left': '0px' }, 'fast', 'linear');
             }
             //Reset and remove padding left, to have enought space to write a comment
-            
+
             $('#ParentCommentId').val(parentCommentId);
             $('#cancel-replying').show();
             $('#add-comment-form').hide().prependTo($('#replies_' + parentCommentId)).slideDown(400, 'linear');

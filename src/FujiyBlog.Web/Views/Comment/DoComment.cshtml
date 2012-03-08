@@ -4,12 +4,12 @@
 @using Microsoft.Web.Helpers
 @model FujiyBlog.Core.DomainObjects.PostComment
 
-@using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { OnSuccess = "fujiyBlog.comments.addCommentSuccess(arguments[0]);" }, new { id="add-comment-form"}))
+@using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { OnSuccess = "fujiyBlog.comments.addCommentSuccess(arguments[0]);", OnFailure = "fujiyBlog.comments.addCommentFailure" }, new { id = "add-comment-form" }))
 {
     <div class="commentForm">
         @Html.Hidden("ParentCommentId", Model.ParentComment != null ? Model.ParentComment.Id.ToString() : string.Empty)
         <p class="addcomment">
-            @Resources.Labels.AddComment</p><div style="display:none" id="cancel-replying"><a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">Cancel reply</a></div>
+            @Resources.Labels.AddComment</p><div style="display:none" id="cancel-replying"><a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">@Resources.Labels.CancelReply</a></div>
         @if (!Request.IsAuthenticated)
         { 
             @Html.LabelFor(x => x.AuthorName)
@@ -35,6 +35,6 @@
                 @ReCaptcha.GetHtml(Settings.SettingRepository.ReCaptchaPublicKey)
             </div>
         }
-        <input type="submit" value="@Resources.Labels.SaveComment" />
+        <input type="submit" value="@Resources.Labels.SaveComment" /><div id="comment-sucess" style="display: none;"><strong>@Resources.Labels.CommentSent</strong></div>
     </div>
 }
