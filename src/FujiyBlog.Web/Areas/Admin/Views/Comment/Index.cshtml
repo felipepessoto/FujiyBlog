@@ -1,11 +1,11 @@
 ﻿@using FujiyBlog.Web.Common
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentIndex
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Resources.Labels.Comments;
     Layout = MVC.Admin.Comment.Views._Layout;
 }
 <h2>
-    Index</h2>
+    @Resources.Labels.Comments</h2>
 @Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
 <table>
     <tr>

@@ -6,10 +6,10 @@
 
 @{
     Layout = MVC.Admin.Page.Views._Layout;
-    ViewBag.Title = "Pages";
+    ViewBag.Title = Resources.Labels.Pages;
 }
 
-<h2>Pages</h2>
+<h2>@Resources.Labels.Pages</h2>
 
 @if (User.IsInRole(Role.CreateNewPages))
 {

@@ -5,10 +5,10 @@
 @model IEnumerable<FujiyBlog.Core.DomainObjects.User>
 @{
     Layout = MVC.Admin.User.Views._Layout;
-    ViewBag.Title = "Users";
+    ViewBag.Title = Resources.Labels.Users;
 }
 
-<h2>Users</h2>
+<h2>@Resources.Labels.Users</h2>
 
 @if (User.IsInRole(Role.CreateNewUsers))
 {
