@@ -40,7 +40,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    CustomCode = Settings.SettingRepository.CustomCode,
                                                };
 
-            foreach (FileInfo file in new DirectoryInfo(Server.MapPath("~/App_GlobalResources/")).GetFiles("Labels.*.resx"))
+            foreach (FileInfo file in new DirectoryInfo(Server.MapPath("~/Resources/")).GetFiles("Labels.*.resx"))
             {
                 var culture = CultureInfo.CreateSpecificCulture(file.Name.Substring(7, file.Name.Length - 12));
                 viewModel.Languages.Add(new SelectListItem {Text = culture.DisplayName, Value = culture.Name});
