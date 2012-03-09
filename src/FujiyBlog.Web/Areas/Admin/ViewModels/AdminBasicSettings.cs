@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
@@ -34,6 +35,25 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         public IEnumerable<SelectListItem> TimeZones { get; set; }
 
-        public List<SelectListItem> Languages { get; set; }
+        private static List<SelectListItem> languagesCache;
+        public List<SelectListItem> Languages
+        {
+            get
+            {
+                if (languagesCache == null)
+                {
+                    List<SelectListItem> languages = new List<SelectListItem> { new SelectListItem { Text = "Auto", Value = "Auto" }, new SelectListItem { Text = "English", Value = "en" } };
+                    foreach (CultureInfo culture in CultureInfo.GetCultures(CultureTypes.AllCultures))
+                    {
+                        if (Resources.Labels.ResourceManager.GetResourceSet(culture, false, false) != null)
+                        {
+                            languages.Add(new SelectListItem { Text = culture.DisplayName, Value = culture.Name });
+                        }
+                    }
+                    languagesCache = languages;
+                }
+                return languagesCache;
+            }
+        }
     }
 }

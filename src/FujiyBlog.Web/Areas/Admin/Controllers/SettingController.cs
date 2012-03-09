@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -36,15 +37,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                                    TimeZoneId = Settings.SettingRepository.TimeZone.Id,
                                                    TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
                                                    Language = Settings.SettingRepository.Culture,
-                                                   Languages = new List<SelectListItem> { new SelectListItem { Text = "Auto", Value = "Auto" }, new SelectListItem { Text = "English", Value = "en" } },
                                                    CustomCode = Settings.SettingRepository.CustomCode,
                                                };
-
-            foreach (FileInfo file in new DirectoryInfo(Server.MapPath("~/Resources/")).GetFiles("Labels.*.resx"))
-            {
-                var culture = CultureInfo.CreateSpecificCulture(file.Name.Substring(7, file.Name.Length - 12));
-                viewModel.Languages.Add(new SelectListItem {Text = culture.DisplayName, Value = culture.Name});
-            }
 
             return View(viewModel);
         }
