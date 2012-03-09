@@ -15,7 +15,7 @@ namespace FujiyBlog.Core.DomainObjects
 
         public int Id { get; set; }
 
-        [DisplayName("Name")]
+        [Display(Name = "Name", ResourceType = typeof(Resources.Names))]
         [StringLength(50)]
         public string AuthorName { get; set; }
 
@@ -29,6 +29,7 @@ namespace FujiyBlog.Core.DomainObjects
         [DataType(DataType.Url)]
         public string AuthorWebsite { get; set; }
 
+        [Display(Name = "Comment", ResourceType = typeof(Resources.Names))]
         [Required]
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
@@ -40,6 +41,7 @@ namespace FujiyBlog.Core.DomainObjects
         [DataType(DataType.ImageUrl)]
         public string Avatar { get; set; }
 
+        [Display(Name = "CreationDate", ResourceType = typeof(Resources.Names))]
         public DateTime CreationDate { get; set; }
 
         [Display(Name="Approved")]

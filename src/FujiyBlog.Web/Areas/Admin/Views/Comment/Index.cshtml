@@ -13,25 +13,25 @@
             <input type="checkbox" id="check-all-items" />
         </th>
         <th>
-            AuthorName
+            @Html.LabelFor(x => x.Comments.FirstOrDefault().AuthorName)
         </th>
         <th>
-            AuthorEmail
+            @Html.LabelFor(x => x.Comments.FirstOrDefault().AuthorEmail)
         </th>
         <th>
-            AuthorWebsite
+            @Html.LabelFor(x=>x.Comments.FirstOrDefault().AuthorWebsite)
         </th>
         <th>
-            Comment
+            @Html.LabelFor(x=>x.Comments.FirstOrDefault().Comment)
         </th>
         <th>
-            IpAddress
+            @Html.LabelFor(x => x.Comments.FirstOrDefault().IpAddress)
         </th>
+        @*<th>
+            @Html.LabelFor(x => x.Comments.FirstOrDefault().Avatar)
+        </th>*@
         <th>
-            Avatar
-        </th>
-        <th>
-            CreationDate
+            @Html.LabelFor(x => x.Comments.FirstOrDefault().CreationDate)
         </th>
         <th>
         </th>
@@ -73,9 +73,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.IpAddress)
             </td>
-            <td>
+@*            <td>
                 @Html.DisplayFor(modelItem => item.Avatar)
-            </td>
+            </td>*@
             <td>
                 @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
             </td>
@@ -96,7 +96,7 @@ else
     <a href="javascript:void(0);" id="disapprove-comments">Disapprove Selected</a>
 }
 <a href="javascript:void(0);" id="delete-comments">Delete Selected</a>
-@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
+@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
 <script type="text/javascript">
 
     $('#check-all-items').click(function () {

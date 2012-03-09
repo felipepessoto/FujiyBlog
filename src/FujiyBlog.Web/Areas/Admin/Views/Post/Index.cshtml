@@ -22,7 +22,7 @@
 @Html.ActionLink("All", MVC.Admin.Post.Index()) | @Html.ActionLink("Drafts", MVC.Admin.Post.Index(null, false))| @Html.ActionLink("Published", MVC.Admin.Post.Index(null, true))
 </div>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
+@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
 
 <table>
     <tr>
@@ -103,4 +103,4 @@
     
 </script>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, "Next Page", "Previous Page")
+@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
