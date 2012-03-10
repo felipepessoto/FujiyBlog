@@ -7,4 +7,10 @@ bin/
 *.suo
 _ReSharper.*
 *.user
-src/FujiyBlog.Web/Upload/
+src/packages/
+src/FujiyBlog.Web/Upload/*
+*.docstates
+Bin/
+src/FujiyBlog.Web/App_Data/*
+src/FujiyBlog.Web/FujiyBlog.Web.Publish.xml
+syntax: regexp
