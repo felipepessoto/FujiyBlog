@@ -9,7 +9,7 @@ namespace FujiyBlog.Core.EntityFramework.Configuration
         {
             Property(b => b.Name).IsUnicode(false);
             Property(b => b.WidgetZone).IsUnicode(false);
-            Property(b => b.Settings).IsUnicode(false);
+            Property(b => b.Settings).IsUnicode(false).IsMaxLength();
         }
     }
 }
