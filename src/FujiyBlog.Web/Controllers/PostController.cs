@@ -63,7 +63,7 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(tag) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            if (page > model.TotalPages)
+            if (page > model.TotalPages || !model.RecentPosts.Any())
             {
                 return HttpNotFound();
             }
@@ -91,7 +91,7 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(category: category) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            if (page > model.TotalPages)
+            if (page > model.TotalPages || !model.RecentPosts.Any())
             {
                 return HttpNotFound();
             }
@@ -119,12 +119,12 @@ namespace FujiyBlog.Web.Controllers
                 TotalPages = (int)Math.Ceiling(postRepository.GetTotal(authorUserName: author) / (double)Settings.SettingRepository.PostsPerPage),
             };
 
-            if (page > model.TotalPages)
+            User authorUser = db.Users.SingleOrDefault(x => x.Username == author && x.Enabled == true);
+
+            if (page > model.TotalPages || authorUser == null)
             {
                 return HttpNotFound();
             }
-
-            User authorUser = db.Users.Single(x => x.Username == author && x.Enabled == true);
 
             ViewBag.Title = "All posts by '" + (authorUser.DisplayName ?? authorUser.Username) + "'";
             ViewBag.Description = authorUser.About;
