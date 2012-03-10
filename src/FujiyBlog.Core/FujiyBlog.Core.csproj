@@ -94,6 +94,11 @@
     <Compile Include="Extensions\PrincipalExtensions.cs" />
     <Compile Include="Extensions\QueryableExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Migrations\201203102243477_v0.3.cs" />
+    <Compile Include="Migrations\201203102243477_v0.3.Designer.cs">
+      <DependentUpon>201203102243477_v0.3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Resources\Names.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
