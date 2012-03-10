@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
+using MvcMiniProfiler;
 
 namespace FujiyBlog.Web
 {
@@ -12,6 +13,10 @@ namespace FujiyBlog.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
+            {
+                filters.Add(new ProfilingAttribute());
+            }
             filters.Add(new HandleErrorAttribute());
             filters.Add(new SetCultureAttribute());
             filters.Add(new ThemeAttribute());
@@ -68,8 +73,20 @@ namespace FujiyBlog.Web
             DependencyResolver.SetResolver(new UnityDependencyResolver());
         }
 
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            if (Request.IsLocal && TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
+            {
+                MiniProfiler.Start();
+            }
+        }
+
         protected void Application_EndRequest(object sender, EventArgs e)
         {
+            if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
+            {
+                MiniProfiler.Stop();
+            }
             using (DependencyResolver.Current as IDisposable)
             {
             }

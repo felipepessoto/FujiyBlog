@@ -115,6 +115,9 @@
     {
         @Html.Raw(Settings.SettingRepository.CustomCode)
     }
-    
+    @if (FujiyBlog.Web.Infrastructure.TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
+    {
+        @MvcMiniProfiler.MiniProfiler.RenderIncludes();
+    }
 </body>
 </html>
