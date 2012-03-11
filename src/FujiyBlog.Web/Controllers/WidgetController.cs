@@ -41,7 +41,7 @@ namespace FujiyBlog.Web.Controllers
         {
             WidgetIndex viewModel = new WidgetIndex
                                         {
-                                            WidgetSettings = CacheHelper.FromCacheOrExecute(() => widgetSettingRepository.GetWidgetSettings(zoneName), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated),
+                                            WidgetSettings = CacheHelper.FromCacheOrExecute(() => widgetSettingRepository.GetWidgetSettings(zoneName)),
                                             AvailableWidgets = widgets,
                                             ZoneName = zoneName
                                         };

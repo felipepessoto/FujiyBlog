@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
+using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 
@@ -16,6 +17,11 @@ namespace FujiyBlog.Web.Infrastructure
         }
 
         public override string[] GetRolesForUser(string username)
+        {
+            return CacheHelper.FromCacheOrExecute(() => InternalGetRolesForUser(username));
+        }
+
+        private static string[] InternalGetRolesForUser(string username)
         {
             FujiyBlogDatabase db = DependencyResolver.Current.GetService<FujiyBlogDatabase>();
 
