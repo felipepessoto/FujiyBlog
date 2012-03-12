@@ -16,34 +16,6 @@ namespace FujiyBlog.Core.EntityFramework
         {
         }
 
-        private Post GetPost(string slug, int? id)
-        {
-            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().Include(x => x.Author);
-
-            Post post;
-
-            if (id.HasValue)
-            {
-                int idInt = id.GetValueOrDefault();
-                post = posts.SingleOrDefault(x => x.Id == idInt);
-            }
-            else
-            {
-                post = posts.SingleOrDefault(x => x.Slug == slug);
-            }
-
-            if (post == null)
-            {
-                return null;
-            }
-
-            Database.Entry(post).Collection(x=>x.Tags).Load();
-            Database.Entry(post).Collection(x => x.Categories).Load();
-            Database.Entry(post).Collection(x => x.Comments).Query().WhereHaveRoles().Include(x => x.Author).Load();
-
-            return post;
-        }
-
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
         {
             IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
@@ -167,49 +139,6 @@ namespace FujiyBlog.Core.EntityFramework
             }
 
             return posts.Count();
-        }
-
-        public Post GetPost(string slug)
-        {
-            return GetPost(slug, null);
-        }
-
-        public Post GetPost(int id)
-        {
-            return GetPost(null, id);
-        }
-
-        public Post GetPreviousPost(Post post, bool isPublic = true)
-        {
-            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Where(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
-
-            return posts.FirstOrDefault();
-        }
-
-        public Post GetNextPost(Post post, bool isPublic = true)
-        {
-            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().OrderBy(x => x.PublicationDate).Where(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
-
-            return posts.FirstOrDefault();
-        }
-
-        public IEnumerable<Category> GetCategories()
-        {
-            return Database.Categories.OrderBy(x => x.Name).ToList();
-        }
-
-        public IEnumerable<TagWithCount> GetTagsCloud(int minimumPosts)
-        {
-            var tags = from tag in Database.Tags
-                       where tag.Posts.Count() >= minimumPosts
-                       orderby tag.Name
-                       select new TagWithCount
-                                  {
-                                      Tag = tag,
-                                      PostsCount = tag.Posts.Count()
-                                  };
-
-            return tags.ToList();
         }
 
         public IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending)

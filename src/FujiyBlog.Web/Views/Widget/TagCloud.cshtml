@@ -1,7 +1,7 @@
-﻿@using System.Runtime.Caching
-@using FujiyBlog.Core.Caching
+﻿@using FujiyBlog.Core.Caching
 @using FujiyBlog.Core.Dto
 @using FujiyBlog.Core.EntityFramework
+@using FujiyBlog.Core.Extensions
 
 @model FujiyBlog.Core.DomainObjects.WidgetSetting
 @{
@@ -17,7 +17,7 @@
         settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
     }
 
-    IEnumerable<TagWithCount> tagCloud = CacheHelper.FromCacheOrExecute(() => DependencyResolver.Current.GetService<PostRepository>().GetTagsCloud((int)settings["MinimumPosts"]), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
+    IEnumerable<TagWithCount> tagCloud = CacheHelper.FromCacheOrExecute(() => DependencyResolver.Current.GetService<FujiyBlogDatabase>().Tags.GetTagsCloud((int)settings["MinimumPosts"]), "Widget.TagCloud.Tags.GetTagsCloud" + settings["MinimumPosts"]);
     int minTag = tagCloud.Select(x=>x.PostsCount).DefaultIfEmpty().Min();
     int maxTag = tagCloud.Select(x => x.PostsCount).DefaultIfEmpty().Max();
     int distribution = (maxTag - minTag) / 3;

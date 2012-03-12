@@ -8,6 +8,7 @@ using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
+using FujiyBlog.Core.Extensions;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -186,12 +187,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Details(string postSlug)
         {
-            if(postSlug.EndsWith(".aspx", StringComparison.InvariantCultureIgnoreCase))
-            {
-                return RedirectToActionPermanent("Details", new {postSlug = postSlug.Substring(0, postSlug.Length - 5)});
-            }
-
-            Post post = CacheHelper.FromCacheOrExecute(() => postRepository.GetPost(postSlug), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
+            Post post = CacheHelper.FromCacheOrExecute(() => db.GetCompletePost(postSlug), condition: !User.Identity.IsAuthenticated);
 
             if (post == null)
             {
@@ -202,8 +198,8 @@ namespace FujiyBlog.Web.Controllers
             ViewBag.Keywords = string.Join(",", post.Tags.Select(x => x.Name).Concat(post.Categories.Select(x => x.Name)));
             ViewBag.Description = post.Description;
 
-            Post previousPost = postRepository.GetPreviousPost(post, !Request.IsAuthenticated);
-            Post nextPost = postRepository.GetNextPost(post, !Request.IsAuthenticated);
+            Post previousPost = db.Posts.GetPreviousPost(post);
+            Post nextPost = db.Posts.GetNextPost(post);
 
             PostSummary postDetails = new PostSummary
                                           {

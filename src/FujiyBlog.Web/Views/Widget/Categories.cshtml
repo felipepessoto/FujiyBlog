@@ -18,7 +18,7 @@
     }
 
     PostRepository postRepository = DependencyResolver.Current.GetService<PostRepository>();
-    IEnumerable<Category> categories = CacheHelper.FromCacheOrExecute(() => postRepository.GetCategories(), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
+    IEnumerable<Category> categories = CacheHelper.FromCacheOrExecute(() => DependencyResolver.Current.GetService<FujiyBlogDatabase>().Categories.OrderBy(x => x.Name).ToList(), "Widget.Categories.OrderBy.Name");
 
 }
 <h4>@Html.Raw(settings["Title"])</h4>
@@ -26,7 +26,7 @@
     <ul id="categorylist">
     @foreach (var category in categories)
     {
-        int postsCount = CacheHelper.FromCacheOrExecute(() => postRepository.GetTotal(null, category.Name, null, null, null), cacheItemPolicy: new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated);
+        int postsCount = CacheHelper.FromCacheOrExecute(() => postRepository.GetTotal(null, category.Name, null, null, null), "Widget.Categories.PostRepository.GetTotal." + category.Name + " as " + User.Identity.Name);
         
         <li>@Html.ActionLink(category.Name + "(" + postsCount + ")", MVC.Post.Category(category.Name, null))</li>    
     }    

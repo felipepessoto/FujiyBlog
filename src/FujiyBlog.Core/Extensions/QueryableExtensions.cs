@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Dto;
+using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Services;
 
 namespace FujiyBlog.Core.Extensions
@@ -89,6 +93,46 @@ namespace FujiyBlog.Core.Extensions
             }
 
             return query.Where(x => false);
+        }
+
+        public static Post GetPreviousPost(this IQueryable<Post> query, Post post)
+        {
+            return query.WhereHaveRoles().OrderByDescending(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
+        }
+
+        public static Post GetNextPost(this IQueryable<Post> query, Post post)
+        {
+            return query.WhereHaveRoles().OrderBy(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
+        }
+
+        public static IEnumerable<TagWithCount> GetTagsCloud(this IQueryable<Tag> query, int minimumPosts)
+        {
+            var tags = from tag in query
+                       where tag.Posts.Count() >= minimumPosts
+                       orderby tag.Name
+                       select new TagWithCount
+                       {
+                           Tag = tag,
+                           PostsCount = tag.Posts.Count()
+                       };
+
+            return tags.ToList();
+        }
+
+        public static Post GetCompletePost(this FujiyBlogDatabase database, string slug)
+        {
+            Post post = database.Posts.WhereHaveRoles().Include(x => x.Author).SingleOrDefault(x => x.Slug == slug);
+
+            if (post == null)
+            {
+                return null;
+            }
+
+            database.Entry(post).Collection(x => x.Tags).Load();
+            database.Entry(post).Collection(x => x.Categories).Load();
+            database.Entry(post).Collection(x => x.Comments).Query().WhereHaveRoles().Include(x => x.Author).Load();
+
+            return post;
         }
     }
 }
