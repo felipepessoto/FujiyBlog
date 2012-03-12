@@ -187,7 +187,7 @@ namespace FujiyBlog.Web.Controllers
 
         public virtual ActionResult Details(string postSlug)
         {
-            Post post = CacheHelper.FromCacheOrExecute(() => db.GetCompletePost(postSlug), condition: !User.Identity.IsAuthenticated);
+            Post post = CacheHelper.FromCacheOrExecute(() => db.GetCompletePost(postSlug), "FujiyBlog.Core.Extensions.QueryableExtensions.GetCompletePost(" + postSlug + ") as " + User.Identity.Name);
 
             if (post == null)
             {
@@ -198,8 +198,8 @@ namespace FujiyBlog.Web.Controllers
             ViewBag.Keywords = string.Join(",", post.Tags.Select(x => x.Name).Concat(post.Categories.Select(x => x.Name)));
             ViewBag.Description = post.Description;
 
-            Post previousPost = db.Posts.GetPreviousPost(post);
-            Post nextPost = db.Posts.GetNextPost(post);
+            Post previousPost = CacheHelper.FromCacheOrExecute(() => db.Posts.GetPreviousPost(post), "FujiyBlog.Core.Extensions.QueryableExtensions.GetPreviousPost(" + post.Id + ") as " + User.Identity.Name);
+            Post nextPost = CacheHelper.FromCacheOrExecute(() => db.Posts.GetNextPost(post), "FujiyBlog.Core.Extensions.QueryableExtensions.GetNextPost(" + post.Id + ") as " + User.Identity.Name);
 
             PostSummary postDetails = new PostSummary
                                           {
