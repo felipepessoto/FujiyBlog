@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -12,14 +13,10 @@ namespace FujiyBlog.Web.Infrastructure
     {
         public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            if (string.Compare(values["controller"] as string, MVC.Post.Name, true) == 0 && string.Compare(values["action"] as string, MVC.Post.ActionNames.Index, true) == 0)
+            if (string.Equals(values["controller"] as string, MVC.Post.Name, StringComparison.OrdinalIgnoreCase) && string.Equals(values["action"] as string, MVC.Post.ActionNames.Index, StringComparison.OrdinalIgnoreCase))
             {
-                string cacheKey = "FujiyBlog.Web.Infrastructure.HomeConstraint.Match";
-                if (HttpContext.Current.User.Identity.IsAuthenticated)
-                {
-                    cacheKey += " as " + HttpContext.Current.User.Identity.Name;
-                }
-                bool match = CacheHelper.FromCacheOrExecute(() => DependencyResolver.Current.GetService<FujiyBlogDatabase>().Pages.WhereHaveRoles().Where(x => x.IsFrontPage).Select(x => (string)null).FirstOrDefault() == null, cacheKey);
+                string cacheKey = "FujiyBlog.Web.Infrastructure.HomeConstraint.Match" + " as " + HttpContext.Current.User.Identity.Name;
+                bool match = CacheHelper.FromCacheOrExecute(() => !DependencyResolver.Current.GetService<FujiyBlogDatabase>().Pages.WhereHaveRoles().Any(x => x.IsFrontPage), cacheKey);
                 return match;
             }
 
