@@ -14,7 +14,7 @@ using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
 {
-    [AuthenticatedCache(CacheProfile = "ByUserAndLastCache", AuthenticatedLocation = OutputCacheLocation.None)]
+    [NonAuthenticatedOnlyCache(CacheProfile = "ByUserAndLastCache")]
     public partial class PostController : AbstractController
     {
         private readonly PostRepository postRepository;
