@@ -2,17 +2,19 @@
 using System.Linq;
 using System.Runtime.Caching;
 using System.Web.Mvc;
+using System.Web.UI;
 using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Core.Extensions;
+using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
-using FujiyBlog.Core.Extensions;
 
 namespace FujiyBlog.Web.Controllers
 {
-    [OutputCache(CacheProfile = "ByUserAndLastCache")]
+    [AuthenticatedCache(CacheProfile = "ByUserAndLastCache", AuthenticatedLocation = OutputCacheLocation.Server)]
     public partial class PostController : AbstractController
     {
         private readonly PostRepository postRepository;

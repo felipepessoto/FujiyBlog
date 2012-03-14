@@ -166,6 +166,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AuthenticatedCacheAttribute.cs" />
     <Compile Include="Infrastructure\AuthorizeRoleAttribute.cs" />
     <Compile Include="Common\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\CompressFilter.cs" />

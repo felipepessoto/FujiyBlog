@@ -81,6 +81,12 @@ namespace FujiyBlog.Web
             }
         }
 
+        //protected void Application_PostAuthorizeRequest(object sender, EventArgs e)
+        //{
+        //    if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted && MiniProfiler.Current != null && !User.Identity.IsAuthenticated)
+        //        MiniProfiler.Stop(discardResults: true);
+        //}
+
         protected void Application_EndRequest(object sender, EventArgs e)
         {
             if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
