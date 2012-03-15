@@ -20,24 +20,19 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<Page> Pages { get; set; }
         public DbSet<RoleGroup> RoleGroups { get; set; }
 
-        private static string lastDatabaseChange;
+        private string lastDatabaseChange;
         public string LastDatabaseChange
         {
-            get { return lastDatabaseChange; }
+            get
+            {
+                return lastDatabaseChange ??
+                       (lastDatabaseChange = new FujiyBlogDatabase().Settings.Where(x => x.Id == 24).Select(x => x.Value).SingleOrDefault() ?? "0");
+            }
         }
 
         public FujiyBlogDatabase()
         {
             Database.SetInitializer(new FujiyBlogDatabaseInitializer());
-
-            Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
-            string lastDatabaseChangeAtDb = setting != null ? setting.Value : "0";
-
-            if (lastDatabaseChangeAtDb != lastDatabaseChange)
-            {
-                lastDatabaseChange = lastDatabaseChangeAtDb;
-                CacheHelper.ClearCache();
-            }
         }
 
         protected override void OnModelCreating(DbModelBuilder builder)
