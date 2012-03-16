@@ -115,9 +115,10 @@ namespace FujiyBlog.Web.Controllers {
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Delete(int id) {
+        public override System.Web.Mvc.ActionResult Delete(int id, bool deleteReplies) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
             callInfo.RouteValueDictionary.Add("id", id);
+            callInfo.RouteValueDictionary.Add("deleteReplies", deleteReplies);
             return callInfo;
         }
 

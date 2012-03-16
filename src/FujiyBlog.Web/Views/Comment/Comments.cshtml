@@ -46,7 +46,12 @@
                 @(Ajax.ActionLink("Disapprove", MVC.Comment.Disapprove(comment.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "$('#link-disapprove-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-approve-comment-" + comment.Id + "').fadeIn('normal');});" }, new { id = "link-disapprove-comment-" + comment.Id, style = !comment.IsApproved ? "display: none;" : string.Empty }))
                 
                 <text>|</text>
-                @(Ajax.ActionLink("Delete", MVC.Comment.Delete(comment.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" }))
+                @(Ajax.ActionLink("Delete", MVC.Comment.Delete(comment.Id, false), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "$('#replies_" + comment.Id + " > *').insertAfter('#comment_id" + comment.Id + "');$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" }))
+                if (comment.NestedComments.Any())
+                {
+                    <text>|</text>
+                    @(Ajax.ActionLink("Delete this and replies", MVC.Comment.Delete(comment.Id, true), new AjaxOptions {HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});"}))
+                }
             }
             
             

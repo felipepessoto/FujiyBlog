@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
@@ -98,14 +99,34 @@ namespace FujiyBlog.Web.Controllers
         }
 
         [AuthorizeRole(Role.ModerateComments), HttpPost]
-        public virtual ActionResult Delete(int id)
+        public virtual ActionResult Delete(int id, bool deleteReplies)
         {
-            PostComment comment = db.PostComments.Single(x => x.Id == id);
-            comment.IsDeleted = true;
-            comment.ModeratedBy = db.Users.Single(x => x.Username == User.Identity.Name);
-            db.SaveChangesBypassingValidation();
+            PostComment deletedComment = db.PostComments.Single(x => x.Id == id);
+            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+
+            List<PostComment> commentsToDelete = new List<PostComment>();
+            commentsToDelete.Add(deletedComment);
+
+            if (deleteReplies)
+            {
+                commentsToDelete.AddRange(ReturnAllChildren(deletedComment));
+            }
+
+            foreach (PostComment comment in commentsToDelete.Where(x => !x.IsDeleted))
+            {
+                comment.IsDeleted = true;
+                comment.ModeratedBy = moderatedBy;
+            }
+
+            db.SaveChanges(bypassValidation: true);
 
             return Json(true);
+        }
+
+        private IEnumerable<PostComment> ReturnAllChildren(PostComment comment)
+        {
+            IEnumerable<PostComment> replies = db.PostComments.Where(x => x.ParentComment.Id == comment.Id).ToList();
+            return replies.Concat(replies.SelectMany(ReturnAllChildren));
         }
 
         private ActionResult ChangeCommentStatus(int id, bool approved)
