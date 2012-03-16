@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Globalization;
 using System.Linq;
 using FujiyBlog.Core.Caching;
@@ -37,6 +38,8 @@ namespace FujiyBlog.Core.EntityFramework
 
         protected override void OnModelCreating(DbModelBuilder builder)
         {
+            builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();   
+
             builder.Configurations.Add(new PostCommentConfiguration());
             builder.Configurations.Add(new PostConfiguration());
             builder.Configurations.Add(new UserConfiguration());
