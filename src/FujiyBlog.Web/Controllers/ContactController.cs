@@ -31,7 +31,8 @@ namespace FujiyBlog.Web.Controllers
                 body += "<strong>IP Address:</strong> " + Request.UserHostAddress + "<br />";
                 body += "<strong>Browser:</strong> " + Request.UserAgent;
 
-                new SendEmailTask(Settings.SettingRepository.EmailTo, contactForm.Subject, body, contactForm.Email, contactForm.Name).ExcuteLater();
+                EmailService.Send(Settings.SettingRepository.EmailTo, contactForm.Subject, body, true, contactForm.Email, contactForm.Name);
+                //new SendEmailTask(Settings.SettingRepository.EmailTo, contactForm.Subject, body, contactForm.Email, contactForm.Name).ExcuteLater();
 
                 return RedirectToAction(MVC.Contact.Success());
             }

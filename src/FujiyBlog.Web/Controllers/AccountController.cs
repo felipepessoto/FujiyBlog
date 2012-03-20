@@ -126,7 +126,8 @@ namespace FujiyBlog.Web.Controllers
 
             string retrievePasswordBody = string.Format(@"{0}, If you didn´t request your password back at ""{1}"", please ignore this email.<br /><br />Your password: {2}", user.FullName ?? user.DisplayName, Settings.SettingRepository.BlogName, user.Password);
 
-            new SendEmailTask(user.Email, "Password Retrieve", retrievePasswordBody).ExcuteLater();
+            EmailService.Send(user.Email, "Password Retrieve", retrievePasswordBody, true, null, null);
+            //new SendEmailTask(user.Email, "Password Retrieve", retrievePasswordBody).ExcuteLater();
 
             return RedirectToAction(MVC.Account.ForgotPasswordSuccess());
         }

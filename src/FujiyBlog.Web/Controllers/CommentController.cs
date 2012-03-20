@@ -80,7 +80,9 @@ namespace FujiyBlog.Web.Controllers
                 viewModel.Post = post;
                 viewModel.Comment = postComment;
                 string body = RenderPartialViewToString("NewComment", viewModel);
-                new SendEmailTask(Settings.SettingRepository.EmailTo, subject, body).ExcuteLater();
+
+                EmailService.Send(Settings.SettingRepository.EmailTo, subject, body, true, null, null);
+                //new SendEmailTask(Settings.SettingRepository.EmailTo, subject, body).ExcuteLater();
             }
 
             return View("Comments", new[] { postComment });
