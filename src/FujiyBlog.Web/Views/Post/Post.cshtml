@@ -68,7 +68,7 @@ private string ShowPostContent(string content)
                 @if (Request.IsAuthenticated)
                 { 
                     @Html.ActionLink(Resources.Labels.Edit, MVC.Admin.Post.Edit(Model.Post.Id)) <text>|</text>
-                    @Html.ActionLink(Resources.Labels.Delete, MVC.Admin.Post.Delete(Model.Post.Id)) <text>|</text>
+                    @Ajax.ActionLink(Resources.Labels.Delete, MVC.Admin.Post.Delete((Model.Post.Id)), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "window.location.href='"+ Url.Content("~/") +"';" }) <text>|</text>
                 }
                 @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Post.Id), new { rel = "bookmark", title = Model.Post.Title })
                 | <a href="@Url.Action(MVC.Post.Details(Model.Post.Slug))#commentlist" >@Resources.Labels.Comments (@Model.CommentsTotal)</a>        
