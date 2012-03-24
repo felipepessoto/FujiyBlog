@@ -6,6 +6,7 @@ using System.Web.Routing;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using MvcMiniProfiler;
+using NLog;
 
 namespace FujiyBlog.Web
 {
@@ -60,6 +61,8 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
+            LogManager.GetCurrentClassLogger().Info("Started FujiyBlog");
+
             foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
             {
                 ViewEngines.Engines.Remove(viewEngine);
@@ -100,7 +103,7 @@ namespace FujiyBlog.Web
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            Logger.LogError(Server.GetLastError());
+            LogManager.GetCurrentClassLogger().Error(Server.GetLastError());
         }
 
         public override string GetVaryByCustomString(HttpContext context, string arg)

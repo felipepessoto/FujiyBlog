@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Threading.Tasks;
+using NLog;
 
 namespace FujiyBlog.Core.Tasks
 {
     public abstract class BackgroundTask
     {
-        //TODO Logger
-        //private readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         protected virtual void OnError(Exception ex)
         {
-            //logger.ErrorException("Could not execute task " + GetType().Name, ex);
+            logger.ErrorException("Could not execute task " + GetType().Name, ex);
         }
 
         public void ExcuteLater()
