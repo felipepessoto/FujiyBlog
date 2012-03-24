@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Web.Mvc;
-using FujiyBlog.Core.Services;
 using FujiyBlog.Core.Tasks;
-using FujiyBlog.Web.ViewModels;
 using FujiyBlog.Web.Models;
+using FujiyBlog.Web.ViewModels;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -31,8 +30,7 @@ namespace FujiyBlog.Web.Controllers
                 body += "<strong>IP Address:</strong> " + Request.UserHostAddress + "<br />";
                 body += "<strong>Browser:</strong> " + Request.UserAgent;
 
-                EmailService.Send(Settings.SettingRepository.EmailTo, contactForm.Subject, body, true, contactForm.Email, contactForm.Name);
-                //new SendEmailTask(Settings.SettingRepository.EmailTo, contactForm.Subject, body, contactForm.Email, contactForm.Name).ExcuteLater();
+                new SendEmailTask(Settings.SettingRepository.EmailTo, contactForm.Subject, body, contactForm.Email, contactForm.Name).ExcuteLater();
 
                 return RedirectToAction(MVC.Contact.Success());
             }

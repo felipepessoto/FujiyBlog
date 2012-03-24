@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Core.Services;
 using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.Models;
-using System.Linq;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -126,8 +125,7 @@ namespace FujiyBlog.Web.Controllers
 
             string retrievePasswordBody = string.Format(@"{0}, If you didn´t request your password back at ""{1}"", please ignore this email.<br /><br />Your password: {2}", user.FullName ?? user.DisplayName, Settings.SettingRepository.BlogName, user.Password);
 
-            EmailService.Send(user.Email, "Password Retrieve", retrievePasswordBody, true, null, null);
-            //new SendEmailTask(user.Email, "Password Retrieve", retrievePasswordBody).ExcuteLater();
+            new SendEmailTask(user.Email, "Password Retrieve", retrievePasswordBody).ExcuteLater();
 
             return RedirectToAction(MVC.Account.ForgotPasswordSuccess());
         }

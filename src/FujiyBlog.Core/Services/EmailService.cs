@@ -6,11 +6,6 @@ namespace FujiyBlog.Core.Services
 {
     public static class EmailService
     {
-        //public static void Send(string toEmail, string subject, string body, bool isBodyHtml)
-        //{
-        //    Send(toEmail, subject, body, isBodyHtml, null, null);
-        //}
-
         public static void Send(string toEmail, string subject, string body, bool isBodyHtml, string fromEmail, string fromName)
         {
             SettingRepository settingRepository = new SettingRepository(new FujiyBlogDatabase());

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Dynamic;
 using System.Linq;
 using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
-using FujiyBlog.Core.Services;
 using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
-using System.Data.Entity;
 using Microsoft.Web.Helpers;
 
 namespace FujiyBlog.Web.Controllers
@@ -81,8 +80,7 @@ namespace FujiyBlog.Web.Controllers
                 viewModel.Comment = postComment;
                 string body = RenderPartialViewToString("NewComment", viewModel);
 
-                EmailService.Send(Settings.SettingRepository.EmailTo, subject, body, true, null, null);
-                //new SendEmailTask(Settings.SettingRepository.EmailTo, subject, body).ExcuteLater();
+                new SendEmailTask(Settings.SettingRepository.EmailTo, subject, body).ExcuteLater();
             }
 
             return View("Comments", new[] { postComment });

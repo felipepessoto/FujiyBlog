@@ -13,7 +13,11 @@ namespace FujiyBlog.Web.Infrastructure
         {
             get
             {
-                IUnityContainer container = HttpContext.Current.Items["Container"] as IUnityContainer;
+                IUnityContainer container = null;
+                if (HttpContext.Current != null)
+                {
+                    container = HttpContext.Current.Items["Container"] as IUnityContainer;
+                }
                 if (container == null)
                 {
                     container = new UnityContainer();
@@ -23,7 +27,8 @@ namespace FujiyBlog.Web.Infrastructure
                     container.RegisterType<FeedRepository, FeedRepository>(new ContainerControlledLifetimeManager());
                     container.RegisterType<WidgetSettingRepository, WidgetSettingRepository>(new ContainerControlledLifetimeManager());
 
-                    HttpContext.Current.Items["Container"] = container;
+                    if (HttpContext.Current != null)
+                        HttpContext.Current.Items["Container"] = container;
                 }
                 return container;
             }
