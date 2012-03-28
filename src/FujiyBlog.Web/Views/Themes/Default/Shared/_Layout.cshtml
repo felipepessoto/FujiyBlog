@@ -74,7 +74,7 @@
                     <li class="@(Url.Action(MVC.Post.Archive(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
                     <li class="@(Url.Action(MVC.Contact.Index(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
                     <li><a href="@FeedsUrl()">Feed</a></li>
-                    <li>@(Request.IsAuthenticated ? Html.ActionLink("Log Off", "LogOff", "Account") : Html.ActionLink("Log On", "LogOn", "Account"))</li>
+                    <li>@(Request.IsAuthenticated ? Html.ActionLink("Log Off", "LogOff", "Account") : Html.ActionLink("Log On", "LogOn", "Account", new RouteValueDictionary{{"returnUrl", Request.RawUrl}}, null))</li>
                 </ul>
             </div>
         </div>
