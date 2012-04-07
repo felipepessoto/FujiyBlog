@@ -16,14 +16,15 @@
             <div id="comment-user-data" style="@(SocialController.GetLoggedUser() != null ? "display: none;" : string.Empty)">
                 
                 <div style="display: none;" id="openid_choice">
-                    <p>Please click your account provider:</p>
+                    <p>Please select your account provider and <a href="javascript:void(0);" id="open-openid-login">click here to login with your OpenID</a>:</p>
                     <div id="openid_btns"></div>
                 </div> 
                 <div id="openid_input_area">
                 </div>
                 <input id="openid_identifier" name="openid_identifier" type="hidden" />
+                
+                <div><p><strong>Or enter your details below</strong></p></div>
 
-                <a href="javascript:void(0);" id="open-openid-login">OpenId</a>
                 @Html.LabelFor(x => x.AuthorName)
                 @Html.TextBoxFor(x => x.AuthorName, new {data_val = "true", data_val_required = "The Name field is required."})
                 @Html.ValidationMessageFor(x => x.AuthorName)
@@ -38,7 +39,7 @@
             </div>
             
             <div id="logout-social-id" style="@(SocialController.GetLoggedUser() == null ? "display: none;" : string.Empty)">
-                @Ajax.ActionLink("Logout Social Id", MVC.Social.Logout(), new AjaxOptions { OnSuccess = "fujiyBlog.socialId.callbackLogout" })
+                @Ajax.ActionLink("Logout", MVC.Social.Logout(), new AjaxOptions { OnSuccess = "fujiyBlog.socialId.callbackLogout" })
             </div>
         }
         <div>

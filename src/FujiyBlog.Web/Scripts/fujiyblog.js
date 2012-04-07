@@ -149,8 +149,13 @@ $(function () {
     }
 
     $('#open-openid-login').click(function () {
-        openid.submit();
-        fujiyBlog.socialId.openLoginPopup($('#openid_identifier').val());
+        
+        var identifier = $('#openid_identifier').val();
+        
+        if (identifier.length > 0) {
+            openid.submit();
+            fujiyBlog.socialId.openLoginPopup();
+        }
     });
 
     $(document).ready(function () {
