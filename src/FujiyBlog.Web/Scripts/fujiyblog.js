@@ -115,6 +115,21 @@
             $('.comment-replies').animate({ 'padding-left': fujiyBlog.comments.originalRepliesPaddingLeft }, 'fast', 'linear');
         },
         originalRepliesPaddingLeft: null
+    },
+    socialId: {
+        openLoginPopup: function (openIdIdentifier) {
+            window.open(fujiyBlogUrls.Social_LoginOpenId + '?openIdIdentifier=' + openIdIdentifier, 'openid', 'height=300, width=600');
+        },
+        callbackLogin: function (success, message) {
+            if (success) {
+                $('#comment-user-data').hide();
+                $('#logout-social-id').show();
+            }
+        },
+        callbackLogout: function () {
+            $('#comment-user-data').show();
+            $('#logout-social-id').hide();
+        }
     }
 };
 
@@ -132,4 +147,14 @@ $(function () {
     if (window.shouldStartDragAndDrop) {
         $(function () { fujiyBlog.widget.startDragAndDrop(); });
     }
+
+    $('#open-openid-login').click(function () {
+        openid.submit();
+        fujiyBlog.socialId.openLoginPopup($('#openid_identifier').val());
+    });
+
+    $(document).ready(function () {
+        openid.img_path = fujiyBlogUrls.OpenIdSelectorImages;
+        openid.init('openid_identifier');
+    });
 });

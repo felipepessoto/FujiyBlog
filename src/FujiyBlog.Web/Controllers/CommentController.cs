@@ -60,7 +60,18 @@ namespace FujiyBlog.Web.Controllers
             }
             else
             {
-                UpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" });
+                SocialUserData socialUserData = SocialController.GetLoggedUser();
+                if (socialUserData != null)
+                {
+                    postComment.AuthorName = socialUserData.Name;
+                    postComment.AuthorEmail = socialUserData.Email;
+                    postComment.AuthorWebsite = socialUserData.WebSite;
+                    UpdateModel(postComment, new[] { "Comment" });
+                }
+                else
+                {
+                    UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
+                }
             }
 
             if (parentCommentId.HasValue)

@@ -16,6 +16,7 @@ namespace FujiyBlog.Web.Controllers
                                      "~/Scripts/jquery.validate.unobtrusive.min.js",
                                      "~/Scripts/jquery.unobtrusive-ajax.min.js",
                                      "~/Scripts/jquery-ui-timepicker-addon.js",
+                                     "~/Scripts/openid-jquery.js",
                                      "~/Scripts/fujiyblog.js",
                                      "~/Scripts/json2.js",
                                  };

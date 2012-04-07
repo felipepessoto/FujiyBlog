@@ -33,6 +33,7 @@ public static class MVC {
     public static FujiyBlog.Web.Controllers.PageController Page = new FujiyBlog.Web.Controllers.T4MVC_PageController();
     public static FujiyBlog.Web.Controllers.PostController Post = new FujiyBlog.Web.Controllers.T4MVC_PostController();
     public static FujiyBlog.Web.Controllers.SearchController Search = new FujiyBlog.Web.Controllers.T4MVC_SearchController();
+    public static FujiyBlog.Web.Controllers.SocialController Social = new FujiyBlog.Web.Controllers.T4MVC_SocialController();
     public static FujiyBlog.Web.Controllers.WidgetController Widget = new FujiyBlog.Web.Controllers.T4MVC_WidgetController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
     public static T4MVC.ThemesController Themes = new T4MVC.ThemesController();
@@ -357,6 +358,8 @@ namespace Links {
                       
         public static readonly string jquery_validate_unobtrusive_min_js = Url("jquery.validate.unobtrusive.min.js");
         public static readonly string json2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/json2.min.js") ? Url("json2.min.js") : Url("json2.js");
+                      
+        public static readonly string openid_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/openid-jquery.min.js") ? Url("openid-jquery.min.js") : Url("openid-jquery.js");
                       
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class tinymce_3_4_5 {
@@ -1506,6 +1509,23 @@ namespace Links {
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
             public static readonly string Site_css = Url("Site.css");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class openid {
+            private const string URLPATH = "~/Content/openid";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class images {
+                private const string URLPATH = "~/Content/openid/images";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string openid_inputicon_gif = Url("openid-inputicon.gif");
+                public static readonly string openid_providers_en_png = Url("openid-providers-en.png");
+            }
+        
+            public static readonly string openid_css = Url("openid.css");
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]

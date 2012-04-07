@@ -36,6 +36,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetOpenAuth">
+      <HintPath>..\..\DotNetOpenAuth.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -162,6 +165,7 @@
     <Compile Include="Controllers\JavaScriptController.cs" />
     <Compile Include="Controllers\PostController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SocialController.cs" />
     <Compile Include="Controllers\WidgetController.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Extensions\ModelStateDictionaryExtensions.cs" />
@@ -210,6 +214,9 @@
     <Compile Include="SharedController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
+    <Compile Include="SocialController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="T4MVC.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -219,6 +226,7 @@
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ContactForm.cs" />
+    <Compile Include="Models\SocialUserData.cs" />
     <Compile Include="ViewModels\SearchResult.cs" />
     <Compile Include="ViewModels\PostArchive.cs" />
     <Compile Include="ViewModels\PostIndex.cs" />
@@ -229,6 +237,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Admin\Site.css" />
+    <Content Include="Content\openid\images\openid-inputicon.gif" />
+    <Content Include="Content\openid\images\openid-providers-en.png" />
     <Content Include="Content\Themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\Themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\Themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -285,6 +295,7 @@
     <Content Include="Content\Themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\openid\openid.css" />
     <Content Include="Content\Themes\Default\img\header_background.jpg" />
     <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
     <Content Include="Content\Themes\Default\Site.css" />
@@ -305,6 +316,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
+    <Content Include="Scripts\openid-jquery.js" />
     <Content Include="Scripts\tinymce.3.4.5\jquery.tinymce.js" />
     <Content Include="Scripts\tinymce.3.4.5\langs\en.js" />
     <Content Include="Scripts\tinymce.3.4.5\license.txt" />
