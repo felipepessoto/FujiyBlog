@@ -240,16 +240,6 @@ var providers_small = {
         label: 'Enter your Livejournal username.',
         url: 'http://{username}.livejournal.com/'
     },
-    /* flickr: {
-    name: 'Flickr',        
-    label: 'Enter your Flickr username.',
-    url: 'http://flickr.com/{username}/'
-    }, */
-    /* technorati: {
-    name: 'Technorati',
-    label: 'Enter your Technorati username.',
-    url: 'http://technorati.com/people/technorati/{username}/'
-    }, */
     wordpress: {
         name: 'Wordpress',
         label: 'Enter your Wordpress.com username.',
@@ -265,16 +255,6 @@ var providers_small = {
         label: 'Your Verisign username',
         url: 'http://{username}.pip.verisignlabs.com/'
     },
-    /* vidoop: {
-    name: 'Vidoop',
-    label: 'Your Vidoop username',
-    url: 'http://{username}.myvidoop.com/'
-    }, */
-    /* launchpad: {
-    name: 'Launchpad',
-    label: 'Your Launchpad username',
-    url: 'https://launchpad.net/~{username}'
-    }, */
     claimid: {
         name: 'ClaimID',
         label: 'Your ClaimID username',
@@ -293,7 +273,7 @@ var providers_small = {
 };
 
 openid.locale = 'en';
-openid.sprite = 'en'; // reused in german& japan localization
+openid.sprite = 'en';
 openid.demo_text = 'In client demo mode. Normally would have submitted OpenID:';
 openid.signin_text = 'Sign-In';
 openid.image_title = 'log in with {provider}';
