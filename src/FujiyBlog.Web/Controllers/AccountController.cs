@@ -68,6 +68,11 @@ namespace FujiyBlog.Web.Controllers
         {
             FormsAuthentication.SignOut();
 
+            if (Request.UrlReferrer != null && Url.IsLocalUrl(Request.UrlReferrer.ToString()))
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
+
             return RedirectToAction(MVC.Post.Index());
         }
 
