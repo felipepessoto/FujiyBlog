@@ -13,7 +13,7 @@
             @Resources.Labels.AddComment</p><div style="display:none" id="cancel-replying"><a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">@Resources.Labels.CancelReply</a></div>
         @if (!Request.IsAuthenticated)
         {
-            <div id="comment-user-data" style="@(SocialController.GetLoggedUser() != null ? "display: none;" : string.Empty)">
+            <div id="comment-user-data">
                 
                 <div style="display: none;" id="openid_choice">
                     <p>Please select your account provider and <a href="javascript:void(0);" id="open-openid-login">click here to login with your OpenID</a>:</p>
@@ -38,7 +38,7 @@
                 @Html.ValidationMessageFor(x => x.AuthorWebsite)
             </div>
             
-            <div id="logout-social-id" style="@(SocialController.GetLoggedUser() == null ? "display: none;" : string.Empty)">
+            <div id="logout-social-id" style="display: none;">
                 @Ajax.ActionLink("Logout", MVC.Social.Logout(), new AjaxOptions { OnSuccess = "fujiyBlog.socialId.callbackLogout" })
             </div>
         }

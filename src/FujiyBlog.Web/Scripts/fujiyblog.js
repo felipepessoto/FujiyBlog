@@ -118,7 +118,7 @@
     },
     socialId: {
         openLoginPopup: function (openIdIdentifier) {
-            window.open(fujiyBlogUrls.Social_LoginOpenId + '?openIdIdentifier=' + openIdIdentifier, 'openid', 'height=300, width=600');
+            window.open(fujiyBlogUrls.Social_LoginOpenId + '?openIdIdentifier=' + openIdIdentifier, 'openid', 'height=400, width=600');
         },
         callbackLogin: function (success, message) {
             if (success) {
@@ -149,17 +149,21 @@ $(function () {
     }
 
     $('#open-openid-login').click(function () {
-        
-        var identifier = $('#openid_identifier').val();
-        
-        if (identifier.length > 0) {
-            openid.submit();
-            fujiyBlog.socialId.openLoginPopup();
+
+        var identifier = openid.provider_url;
+        if (identifier) {
+            identifier = identifier.replace('{username}', $('#openid_username').val());
+            fujiyBlog.socialId.openLoginPopup(identifier);
         }
     });
 
     $(document).ready(function () {
         openid.img_path = fujiyBlogUrls.OpenIdSelectorImages;
         openid.init('openid_identifier');
+
+        if (document.cookie.search(/(^|;)openid=/) >= 0) {
+            $('#comment-user-data').hide();
+            $('#logout-social-id').show();
+        }
     });
 });
