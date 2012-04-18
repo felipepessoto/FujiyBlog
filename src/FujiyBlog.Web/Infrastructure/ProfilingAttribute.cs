@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
-using MvcMiniProfiler;
+using StackExchange.Profiling;
 
 namespace FujiyBlog.Web.Infrastructure
 {
@@ -22,7 +22,7 @@ namespace FujiyBlog.Web.Infrastructure
                     HttpContext.Current.Items[StackKey] = stack;
                 }
 
-                var prof = MiniProfiler.Current.Step("Controller: " + filterContext.Controller.ToString() + "." + filterContext.ActionDescriptor.ActionName);
+                var prof = MiniProfiler.Current.Step("Controller: " + filterContext.Controller + "." + filterContext.ActionDescriptor.ActionName);
                 stack.Push(prof);
 
             }

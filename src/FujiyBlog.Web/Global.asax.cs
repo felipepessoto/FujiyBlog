@@ -5,8 +5,8 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
-using MvcMiniProfiler;
 using NLog;
+using StackExchange.Profiling;
 
 namespace FujiyBlog.Web
 {
@@ -78,24 +78,18 @@ namespace FujiyBlog.Web
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            if (Request.IsLocal && TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
-            {
-                MiniProfiler.Start();
-            }
+            MiniProfiler.Start();
         }
 
-        //protected void Application_PostAuthorizeRequest(object sender, EventArgs e)
-        //{
-        //    if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted && MiniProfiler.Current != null && !User.Identity.IsAuthenticated)
-        //        MiniProfiler.Stop(discardResults: true);
-        //}
+        protected void Application_PostAuthorizeRequest(object sender, EventArgs e)
+        {
+            if (MiniProfiler.Current != null && !User.Identity.IsAuthenticated)
+                MiniProfiler.Stop(discardResults: true);
+        }
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
-            if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
-            {
-                MiniProfiler.Stop();
-            }
+            MiniProfiler.Stop();
             using (DependencyResolver.Current as IDisposable)
             {
             }
