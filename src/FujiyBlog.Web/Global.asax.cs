@@ -74,17 +74,14 @@ namespace FujiyBlog.Web
             RegisterRoutes(RouteTable.Routes);
 
             DependencyResolver.SetResolver(new UnityDependencyResolver());
+
+            MiniProfiler.Settings.Results_Authorize = httpRequest => httpRequest.IsAuthenticated;
+            MiniProfiler.Settings.Results_List_Authorize = httpRequest => httpRequest.IsAuthenticated;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
             MiniProfiler.Start();
-        }
-
-        protected void Application_PostAuthorizeRequest(object sender, EventArgs e)
-        {
-            if (MiniProfiler.Current != null && !User.Identity.IsAuthenticated)
-                MiniProfiler.Stop(discardResults: true);
         }
 
         protected void Application_EndRequest(object sender, EventArgs e)

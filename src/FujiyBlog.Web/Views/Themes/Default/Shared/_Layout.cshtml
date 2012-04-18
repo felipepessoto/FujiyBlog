@@ -116,6 +116,10 @@
     {
         @Html.Raw(Settings.SettingRepository.CustomCode)
     }
-    @StackExchange.Profiling.MiniProfiler.RenderIncludes();
+    
+    @if (StackExchange.Profiling.MiniProfiler.Settings.Results_Authorize(HttpContext.Current.Request))
+    {
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes(useExistingjQuery:true)
+    }
 </body>
 </html>
