@@ -14,10 +14,7 @@ namespace FujiyBlog.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
-            {
-                filters.Add(new ProfilingAttribute());
-            }
+            filters.Add(new ProfilingAttribute());
             filters.Add(new HandleErrorAttribute());
             filters.Add(new SetCultureAttribute());
             filters.Add(new ThemeAttribute());
