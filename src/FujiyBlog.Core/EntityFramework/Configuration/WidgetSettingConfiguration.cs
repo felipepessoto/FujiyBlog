@@ -7,9 +7,7 @@ namespace FujiyBlog.Core.EntityFramework.Configuration
     {
         public WidgetSettingConfiguration()
         {
-            Property(b => b.Name).IsUnicode(false);
-            Property(b => b.WidgetZone).IsUnicode(false);
-            Property(b => b.Settings).IsUnicode(false).IsMaxLength();
+            Property(b => b.Settings).IsMaxLength();
         }
     }
 }

@@ -7,8 +7,7 @@ namespace FujiyBlog.Core.EntityFramework.Configuration
     {
         public RoleGroupConfiguration()
         {
-            Property(b => b.Name).IsUnicode(false);
-            Property(x=> x.AssignedRoles).IsUnicode(false).IsMaxLength();
+            Property(x=> x.AssignedRoles).IsMaxLength();
             Ignore(x => x.Roles);
         }
     }

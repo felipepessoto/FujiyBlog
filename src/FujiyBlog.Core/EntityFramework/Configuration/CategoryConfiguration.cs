@@ -7,7 +7,6 @@ namespace FujiyBlog.Core.EntityFramework.Configuration
     {
         public CategoryConfiguration()
         {
-            Property(b => b.Name).IsUnicode(false);
         }
     }
 }
