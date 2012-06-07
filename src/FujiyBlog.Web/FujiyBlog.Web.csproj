@@ -306,6 +306,7 @@
     <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
     <Content Include="Content\Themes\Default\Site.css" />
     <Content Include="Errors\401.htm" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\fujiyblog.js" />
     <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
