@@ -101,6 +101,10 @@
     <Compile Include="Migrations\201203160118417_v03.Designer.cs">
       <DependentUpon>201203160118417_v03.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201205090101256_UnicodeSupport.cs" />
+    <Compile Include="Migrations\201205090101256_UnicodeSupport.Designer.cs">
+      <DependentUpon>201205090101256_UnicodeSupport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Resources\Names.Designer.cs">
       <AutoGen>True</AutoGen>
