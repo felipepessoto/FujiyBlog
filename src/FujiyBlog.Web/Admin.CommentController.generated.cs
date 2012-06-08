@@ -31,6 +31,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ViewResult Index() {
@@ -102,6 +108,55 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index {
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_Approved s_params_Approved = new ActionParamsClass_Approved();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Approved ApprovedParams { get { return s_params_Approved; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Approved {
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_ApproveSelected s_params_ApproveSelected = new ActionParamsClass_ApproveSelected();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ApproveSelected ApproveSelectedParams { get { return s_params_ApproveSelected; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ApproveSelected {
+            public readonly string selectedComments = "selectedComments";
+        }
+        static readonly ActionParamsClass_DisapproveSelected s_params_DisapproveSelected = new ActionParamsClass_DisapproveSelected();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DisapproveSelected DisapproveSelectedParams { get { return s_params_DisapproveSelected; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DisapproveSelected {
+            public readonly string selectedComments = "selectedComments";
+        }
+        static readonly ActionParamsClass_DeleteSelected s_params_DeleteSelected = new ActionParamsClass_DeleteSelected();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DeleteSelected DeleteSelectedParams { get { return s_params_DeleteSelected; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DeleteSelected {
+            public readonly string selectedComments = "selectedComments";
+        }
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Edit {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete {
+            public readonly string id = "id";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }

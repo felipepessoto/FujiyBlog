@@ -31,6 +31,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ViewResult Index() {
@@ -113,6 +119,65 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index {
+            public readonly string page = "page";
+            public readonly string published = "published";
+        }
+        static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Edit {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_UpdateCategory s_params_UpdateCategory = new ActionParamsClass_UpdateCategory();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateCategory UpdateCategoryParams { get { return s_params_UpdateCategory; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateCategory {
+            public readonly string id = "id";
+            public readonly string name = "name";
+        }
+        static readonly ActionParamsClass_AddCategory s_params_AddCategory = new ActionParamsClass_AddCategory();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_AddCategory AddCategoryParams { get { return s_params_AddCategory; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_AddCategory {
+            public readonly string newCategory = "NewCategory";
+        }
+        static readonly ActionParamsClass_DeleteCategory s_params_DeleteCategory = new ActionParamsClass_DeleteCategory();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DeleteCategory DeleteCategoryParams { get { return s_params_DeleteCategory; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DeleteCategory {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_UpdateTag s_params_UpdateTag = new ActionParamsClass_UpdateTag();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_UpdateTag UpdateTagParams { get { return s_params_UpdateTag; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_UpdateTag {
+            public readonly string id = "id";
+            public readonly string name = "name";
+        }
+        static readonly ActionParamsClass_DeleteTag s_params_DeleteTag = new ActionParamsClass_DeleteTag();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DeleteTag DeleteTagParams { get { return s_params_DeleteTag; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DeleteTag {
+            public readonly string id = "id";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }

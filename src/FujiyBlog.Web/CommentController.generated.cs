@@ -31,6 +31,12 @@ namespace FujiyBlog.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult DoComment() {
@@ -81,6 +87,36 @@ namespace FujiyBlog.Web.Controllers {
         }
 
 
+        static readonly ActionParamsClass_DoComment s_params_DoComment = new ActionParamsClass_DoComment();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DoComment DoCommentParams { get { return s_params_DoComment; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DoComment {
+            public readonly string id = "id";
+            public readonly string parentCommentId = "parentCommentId";
+        }
+        static readonly ActionParamsClass_Approve s_params_Approve = new ActionParamsClass_Approve();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Approve ApproveParams { get { return s_params_Approve; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Approve {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_Disapprove s_params_Disapprove = new ActionParamsClass_Disapprove();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Disapprove DisapproveParams { get { return s_params_Disapprove; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Disapprove {
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_Delete s_params_Delete = new ActionParamsClass_Delete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Delete DeleteParams { get { return s_params_Delete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Delete {
+            public readonly string id = "id";
+            public readonly string deleteReplies = "deleteReplies";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }

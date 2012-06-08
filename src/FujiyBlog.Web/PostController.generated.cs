@@ -31,6 +31,12 @@ namespace FujiyBlog.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Index() {
@@ -104,6 +110,60 @@ namespace FujiyBlog.Web.Controllers {
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index {
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_Tag s_params_Tag = new ActionParamsClass_Tag();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Tag TagParams { get { return s_params_Tag; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Tag {
+            public readonly string tag = "tag";
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_Category s_params_Category = new ActionParamsClass_Category();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Category CategoryParams { get { return s_params_Category; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Category {
+            public readonly string category = "category";
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_Author s_params_Author = new ActionParamsClass_Author();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Author AuthorParams { get { return s_params_Author; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Author {
+            public readonly string author = "author";
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_ArchiveDate s_params_ArchiveDate = new ActionParamsClass_ArchiveDate();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ArchiveDate ArchiveDateParams { get { return s_params_ArchiveDate; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ArchiveDate {
+            public readonly string year = "year";
+            public readonly string month = "month";
+            public readonly string page = "page";
+        }
+        static readonly ActionParamsClass_Details s_params_Details = new ActionParamsClass_Details();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Details {
+            public readonly string postSlug = "postSlug";
+        }
+        static readonly ActionParamsClass_DetailsById s_params_DetailsById = new ActionParamsClass_DetailsById();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_DetailsById DetailsByIdParams { get { return s_params_DetailsById; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_DetailsById {
+            public readonly string id = "id";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }

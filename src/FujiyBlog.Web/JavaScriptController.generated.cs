@@ -34,6 +34,12 @@ namespace FujiyBlog.Web.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public JavaScriptController Actions { get { return MVC.JavaScript; } }

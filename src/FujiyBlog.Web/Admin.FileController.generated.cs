@@ -34,6 +34,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+            var callInfo = result.GetT4MVCResult();
+            return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public System.Web.Mvc.ActionResult Upload() {
@@ -63,6 +69,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
 
+        static readonly ActionParamsClass_Upload s_params_Upload = new ActionParamsClass_Upload();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Upload UploadParams { get { return s_params_Upload; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Upload {
+            public readonly string uploadedFiles = "uploadedFiles";
+            public readonly string folderName = "folderName";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }

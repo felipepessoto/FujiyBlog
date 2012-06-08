@@ -90,6 +90,16 @@ readonly string[] ExcludedStaticFileExtensions = new string[] {
     ".cs"  
 };  
 
+//When creating links with T4MVC, it can force them to HTTPS if the action method you are linking to requires Http.  
+const string AttributeIndicatingHttps = "System.Web.Mvc.RequireHttpsAttribute";
+const bool GenerateSecureLinksInDebugMode = false;
+
+// Set this to false to omit the generation of parameters for action methods.
+static bool GenerateParamsForActionMethods = true;
+// The suffix added to action method names for the property containing the parameters, for example ImportParams
+// for the Import action method.
+const string ParamsPropertySuffix = "Params";
+
 //---------------------------------------------------------------------------
 //	Explicit HtmlHelpers
 //---------------------------------------------------------------------------
@@ -110,7 +120,7 @@ static bool SplitIntoMultipleFiles = true;
 
 void RenderAdditionalCode() {
 #>
-static class T4MVCHelpers {
+public static class T4MVCHelpers {
     // You can change the ProcessVirtualPath method to modify the path that gets returned to the client.
     // e.g. you can prepend a domain, or append a query string:
     //      return "http://localhost" + path + "?foo=bar";
