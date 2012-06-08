@@ -58,6 +58,8 @@ namespace FujiyBlog.Web
 
         protected void Application_Start()
         {
+            //AutoDbMigration();
+
             LogManager.GetCurrentClassLogger().Info("Started FujiyBlog");
 
             foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
@@ -74,6 +76,26 @@ namespace FujiyBlog.Web
 
             MiniProfiler.Settings.Results_Authorize = httpRequest => httpRequest.IsAuthenticated;
             MiniProfiler.Settings.Results_List_Authorize = httpRequest => httpRequest.IsAuthenticated;
+        }
+
+        private static void AutoDbMigration()
+        {
+            System.Data.Entity.Migrations.DbMigrationsConfiguration configuration = new System.Data.Entity.Migrations.DbMigrationsConfiguration();
+            configuration.ContextType = typeof (FujiyBlogDatabase);
+            configuration.MigrationsAssembly = configuration.ContextType.Assembly;
+            configuration.MigrationsNamespace = "FujiyBlog.Core.Migrations";
+
+            var migrator = new System.Data.Entity.Migrations.DbMigrator(configuration);
+
+            if (false)
+            {
+                var scriptor = new System.Data.Entity.Migrations.Infrastructure.MigratorScriptingDecorator(migrator);
+                string script = scriptor.ScriptUpdate(sourceMigration: null, targetMigration: null);
+            }
+            else
+            {
+                migrator.Update();
+            }
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e)
