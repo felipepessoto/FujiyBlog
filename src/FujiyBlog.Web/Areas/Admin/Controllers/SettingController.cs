@@ -252,8 +252,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
             DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
             FileInfo fileInfo = logDirectory.GetFiles(file).Single();
-            string content = fileInfo.OpenText().ReadToEnd();
-            return Content("<pre>" + Server.HtmlEncode(content) + "</pre>");
+
+            using (StreamReader reader = fileInfo.OpenText())
+            {
+                string content = reader.ReadToEnd();
+                return Content("<pre>" + Server.HtmlEncode(content) + "</pre>");
+            }
         }
 
         public virtual ActionResult LogDelete(string file)
