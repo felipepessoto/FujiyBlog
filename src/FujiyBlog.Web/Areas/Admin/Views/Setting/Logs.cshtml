@@ -1,0 +1,44 @@
+﻿@using FujiyBlog.Web.Common
+@model DirectoryInfo
+
+@{
+    ViewBag.Title = "Logs";
+    Layout = MVC.Admin.Setting.Views._Layout;
+}
+
+<h2>
+    Logs</h2>
+
+<table>
+    <tr>
+        <th>
+            Date
+        </th>
+        <th>
+            Name
+        </th>
+        <th>
+            Size
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (FileInfo file in Model.EnumerateFiles())
+    {
+        <tr id="item-row-@file.Name">
+            <td>
+                @Html.DisplayFor(modelItem => file.CreationTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => file.Name)
+            </td>
+            <td>
+                @((file.Length/1024m).ToString("0.##")) KB
+            </td>
+            <td>
+                @Html.ActionLink("View", MVC.Admin.Setting.LogView(file.Name)) | 
+                @Html.ActionLink("Delete", MVC.Admin.Setting.LogDelete(file.Name), new{onclick = "return confirm('Sure?');"})
+            </td>
+        </tr>
+    }
+</table>

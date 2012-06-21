@@ -37,6 +37,16 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult LogView() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.LogView);
+        }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public System.Web.Mvc.ActionResult LogDelete() {
+            return new T4MVC_ActionResult(Area, Name, ActionNames.LogDelete);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public SettingController Actions { get { return MVC.Admin.Setting; } }
@@ -62,6 +72,9 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Feed = "Feed";
             public readonly string Cache = "Cache";
             public readonly string ClearCache = "ClearCache";
+            public readonly string Logs = "Logs";
+            public readonly string LogView = "LogView";
+            public readonly string LogDelete = "LogDelete";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -76,9 +89,26 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public const string Feed = "Feed";
             public const string Cache = "Cache";
             public const string ClearCache = "ClearCache";
+            public const string Logs = "Logs";
+            public const string LogView = "LogView";
+            public const string LogDelete = "LogDelete";
         }
 
 
+        static readonly ActionParamsClass_LogView s_params_LogView = new ActionParamsClass_LogView();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_LogView LogViewParams { get { return s_params_LogView; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_LogView {
+            public readonly string file = "file";
+        }
+        static readonly ActionParamsClass_LogDelete s_params_LogDelete = new ActionParamsClass_LogDelete();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_LogDelete LogDeleteParams { get { return s_params_LogDelete; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_LogDelete {
+            public readonly string file = "file";
+        }
         static readonly ViewNames s_views = new ViewNames();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ViewNames Views { get { return s_views; } }
@@ -92,6 +122,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
             public readonly string Import = "~/Areas/Admin/Views/Setting/Import.cshtml";
             public readonly string ImportSuccessful = "~/Areas/Admin/Views/Setting/ImportSuccessful.cshtml";
             public readonly string Index = "~/Areas/Admin/Views/Setting/Index.cshtml";
+            public readonly string Logs = "~/Areas/Admin/Views/Setting/Logs.cshtml";
             public readonly string SocialNetworks = "~/Areas/Admin/Views/Setting/SocialNetworks.cshtml";
         }
     }
@@ -177,6 +208,23 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult ClearCache() {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ClearCache);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult Logs() {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Logs);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult LogView(string file) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogView);
+            callInfo.RouteValueDictionary.Add("file", file);
+            return callInfo;
+        }
+
+        public override System.Web.Mvc.ActionResult LogDelete(string file) {
+            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogDelete);
+            callInfo.RouteValueDictionary.Add("file", file);
             return callInfo;
         }
 

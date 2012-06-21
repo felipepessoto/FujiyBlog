@@ -12,6 +12,9 @@ using FujiyBlog.Web.Areas.Admin.Models;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
+using NLog;
+using NLog.Config;
+using NLog.Targets;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -235,6 +238,32 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             db.UpdateLastDbChange();
             return RedirectToAction(MVC.Admin.Setting.Cache()).SetSuccessMessage("Cache cleared");
+        }
+
+        public virtual ActionResult Logs()
+        {
+            var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
+            DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
+            return View(logDirectory);
+        }
+
+        public virtual ActionResult LogView(string file)
+        {
+            var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
+            DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
+            FileInfo fileInfo = logDirectory.GetFiles(file).Single();
+            string content = fileInfo.OpenText().ReadToEnd();
+            return Content("<pre>" + Server.HtmlEncode(content) + "</pre>");
+        }
+
+        public virtual ActionResult LogDelete(string file)
+        {
+            var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
+            DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
+            FileInfo fileInfo = logDirectory.GetFiles(file).Single();
+            fileInfo.Delete();
+
+            return RedirectToAction(MVC.Admin.Setting.Logs()).SetSuccessMessage("Log file " + file + " deleted");
         }
     }
 }
