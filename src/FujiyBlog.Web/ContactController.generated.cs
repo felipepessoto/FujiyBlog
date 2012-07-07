@@ -101,7 +101,7 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult IndexPost(FujiyBlog.Web.ViewModels.ContactForm contactForm) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.IndexPost);
-            callInfo.RouteValueDictionary.Add("contactForm", contactForm);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "contactForm", contactForm);
             return callInfo;
         }
 

@@ -1,6 +1,6 @@
 ﻿<#
 /*
-T4MVC Version 2.8.1
+T4MVC Version 2.10.0
 Find latest version and documentation at http://mvccontrib.codeplex.com/wikipage?title=T4MVC
 Discuss on StackOverflow or on the MVC forum (http://forums.asp.net/1146.aspx)
 
@@ -117,7 +117,7 @@ namespace System.Web.Mvc {
         }
 
         public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result, FormMethod formMethod, object htmlAttributes) {
-            return BeginForm(htmlHelper, result, formMethod, new RouteValueDictionary(htmlAttributes));
+            return BeginForm(htmlHelper, result, formMethod, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         public static MvcForm BeginForm(this HtmlHelper htmlHelper, ActionResult result, FormMethod formMethod, IDictionary<string, object> htmlAttributes) {
@@ -153,7 +153,7 @@ namespace System.Web.Mvc {
         }
 
         public static MvcHtmlString ActionLink(this AjaxHelper ajaxHelper, string linkText, ActionResult result, AjaxOptions ajaxOptions, object htmlAttributes) {
-            return ajaxHelper.RouteLink(linkText, result.GetRouteValueDictionary(), ajaxOptions, new RouteValueDictionary(htmlAttributes));
+            return ajaxHelper.RouteLink(linkText, result.GetRouteValueDictionary(), ajaxOptions, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         public static MvcHtmlString ActionLink(this AjaxHelper ajaxHelper, string linkText, ActionResult result, AjaxOptions ajaxOptions, IDictionary<string, object> htmlAttributes) {
@@ -165,7 +165,7 @@ namespace System.Web.Mvc {
         }
 
         public static MvcForm BeginForm(this AjaxHelper ajaxHelper, ActionResult result, AjaxOptions ajaxOptions, object htmlAttributes) {
-            return BeginForm(ajaxHelper, result, ajaxOptions, new RouteValueDictionary(htmlAttributes));
+            return BeginForm(ajaxHelper, result, ajaxOptions, HtmlHelper.AnonymousObjectToHtmlAttributes(htmlAttributes));
         }
 
         public static MvcForm BeginForm(this AjaxHelper ajaxHelper, ActionResult result, AjaxOptions ajaxOptions, IDictionary<string, object> htmlAttributes) {
@@ -278,7 +278,7 @@ namespace System.Web.Mvc {
 
             // Add all the extra values
             foreach (var pair in routeValues) {
-                currentRouteValues.Add(pair.Key, pair.Value);
+                ModelUnbinderHelpers.AddRouteValues(currentRouteValues, pair.Key, pair.Value);
             }
 
             return result;
@@ -292,7 +292,7 @@ namespace System.Web.Mvc {
 
         public static ActionResult AddRouteValue(this ActionResult result, string name, object value) {
             RouteValueDictionary routeValues = result.GetRouteValueDictionary();
-            routeValues.Add(name, value);
+            ModelUnbinderHelpers.AddRouteValues(routeValues, name, value);
             return result;
         }
         
@@ -504,7 +504,7 @@ foreach (var method in controller.ActionMethodsWithUniqueNames) if (method.Param
             var callInfo = new T4MVC_<#=method.ReturnType #>(Area, Name, ActionNames.<#=method.ActionName #><# if (method.ActionUrlHttps) {#>, "https"<#}#>);
 <#if (method.Parameters.Count > 0) { #>
 <#foreach (var p in method.Parameters) { #>
-            callInfo.RouteValueDictionary.Add(<#=p.RouteNameExpression #>, <#=p.Name #>);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, <#=p.RouteNameExpression #>, <#=p.Name #>);
 <#} #>
 <#}#>
             return callInfo;
@@ -555,6 +555,111 @@ namespace System.Web.Mvc {
 <#manager.StartFooter(); #>
 #endregion T4MVC
 #pragma warning restore 1591
+<#if (GenerateMvcT4Extensions) { 
+manager.StartNewFile("T4MVC.ModelUnbinder.cs"); #>
+
+namespace System.Web.Mvc {
+    #region ModelUnbinders
+    [<#= GeneratedCode #>]
+    public interface IModelUnbinder {
+        void UnbindModel(RouteValueDictionary routeValueDictionary, string routeName, object routeValue);
+    }
+    [<#= GeneratedCode #>]
+    public interface IModelUnbinder<in T> where T : class {
+        void UnbindModel(RouteValueDictionary routeValueDictionary, string routeName, T routeValue);
+    }
+    [<#= GeneratedCode #>]
+        public class ModelUnbinders {
+        private class GenericModelUnbinderWrapper<T> : IModelUnbinder where T : class {
+            private readonly IModelUnbinder<T> _unbinder;
+
+            public GenericModelUnbinderWrapper(IModelUnbinder<T> unbinder) {
+                _unbinder = unbinder;
+            }
+
+            public void UnbindModel(RouteValueDictionary routeValueDictionary, string routeName, object routeValue) {
+                var typedObject = routeValue as T;
+                _unbinder.UnbindModel(routeValueDictionary, routeName, typedObject);
+            }
+        }
+        
+        private readonly Dictionary<Type, IModelUnbinder> _unbinders = new Dictionary<Type, IModelUnbinder>();
+        public virtual void Add(Type type, IModelUnbinder unbinder) {
+            _unbinders[type] = unbinder;
+        }
+        public virtual void Add<T>(IModelUnbinder<T> unbinder) where T : class {
+            Add(typeof(T), new GenericModelUnbinderWrapper<T>(unbinder));
+        }
+        public virtual IModelUnbinder FindUnbinderFor(Type type) {
+            IModelUnbinder resultUnbinder = null;
+            Type baseType = null;
+            foreach (var unbinder in _unbinders) {
+                if (unbinder.Key.IsAssignableFrom(type)) {
+                    if ((baseType == null) || baseType.IsAssignableFrom(unbinder.Key)) {
+                        resultUnbinder = unbinder.Value;
+                        baseType = unbinder.Key;
+                    }
+                }
+            }
+            return resultUnbinder;
+        }
+        
+        public virtual void Clear() {
+            _unbinders.Clear();
+        }
+    }
+    [<#= GeneratedCode #>]
+    public class DefaultModelUnbinder : IModelUnbinder {
+        public void UnbindModel(RouteValueDictionary routeValueDictionary, string routeName, object routeValue) {
+            routeValueDictionary.Add(routeName, routeValue);
+        }
+    }
+    [<#= GeneratedCode #>]
+    public class PropertiesUnbinder : IModelUnbinder {
+        public virtual void UnbindModel(RouteValueDictionary routeValueDictionary, string routeName, object routeValue) {
+            var dict = new RouteValueDictionary(routeValue);
+            foreach (var entry in dict) {
+                var name = entry.Key;
+
+                if (!(entry.Value is string) && (entry.Value is System.Collections.IEnumerable)) {
+                    var enumerableValue = (System.Collections.IEnumerable)entry.Value;
+                    var i = 0;
+                    foreach (var enumerableElement in enumerableValue) {
+                        ModelUnbinderHelpers.AddRouteValues(routeValueDictionary, string.Format("{0}.{1}[{2}]", routeName, name, i), enumerableElement);
+                        i++;
+                    }
+                }
+                else {
+                    ModelUnbinderHelpers.AddRouteValues(routeValueDictionary, routeName + "." + name, entry.Value);
+                }
+            }
+        }
+    }
+    public class ModelUnbinderHelpers {
+        public static void AddRouteValues(RouteValueDictionary routeValueDictionary, string routeName, object routeValue) {
+            if (routeValue == null)
+                return;
+
+            var unbinder = ModelUnbinders.FindUnbinderFor(routeValue.GetType()) ?? DefaultModelUnbinder;
+            unbinder.UnbindModel(routeValueDictionary, routeName, routeValue);
+        }
+        
+        private static readonly ModelUnbinders _modelUnbinders = new ModelUnbinders();
+        public static ModelUnbinders ModelUnbinders {
+            get { return _modelUnbinders; }
+        }
+
+        public static IModelUnbinder DefaultModelUnbinder { get; set; }
+        static ModelUnbinderHelpers() {
+            DefaultModelUnbinder = new DefaultModelUnbinder();
+        }
+    }
+}
+    #endregion
+<#  manager.EndBlock(); #>
+<#  }   #>
+
+
 <#manager.EndBlock(); #>
 <#manager.Process(SplitIntoMultipleFiles); #>
 
@@ -1045,6 +1150,13 @@ if (!ExcludedStaticFileExtensions.Any(extension => projectItem.Name.EndsWith(ext
         <#+} else {#>
     public static readonly string <#=Sanitize(projectItem.Name)#> = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/<#=projectItem.Name.Replace(".js", ".min.js")#>") ? Url("<#=projectItem.Name.Replace(".js", ".min.js")#>") : Url("<#=projectItem.Name#>");
         <#+}  #>          
+<#+}
+    else if (projectItem.Name.EndsWith(".css") && !projectItem.Name.EndsWith(".min.css")) { 
+        if (AddTimestampToStaticLink(projectItem)) { #>
+    public static readonly string <#=Sanitize(projectItem.Name)#> = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/<#=projectItem.Name.Replace(".css", ".min.css")#>") ? Url("<#=projectItem.Name.Replace(".css", ".min.css")#>")+"?"+T4Extensions.TimestampString(URLPATH + "/<#=projectItem.Name#>") : Url("<#=projectItem.Name#>")+"?"+T4Extensions.TimestampString(URLPATH + "/<#=projectItem.Name#>");
+        <#+} else {#>
+    public static readonly string <#=Sanitize(projectItem.Name)#> = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/<#=projectItem.Name.Replace(".css", ".min.css")#>") ? Url("<#=projectItem.Name.Replace(".css", ".min.css")#>") : Url("<#=projectItem.Name#>");
+        <#+}  #> 
 <#+}
     else if (AddTimestampToStaticLink(projectItem)) { #>
     public static readonly string <#=Sanitize(projectItem.Name)#> = Url("<#=projectItem.Name#>")+"?"+T4Extensions.TimestampString(URLPATH + "/<#=projectItem.Name#>");

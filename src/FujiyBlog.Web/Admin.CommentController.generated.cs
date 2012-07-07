@@ -174,49 +174,49 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ViewResult Index(int? page) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
         public override System.Web.Mvc.ViewResult Approved(int? page) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Approved);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult ApproveSelected(System.Collections.Generic.IEnumerable<int> selectedComments) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ApproveSelected);
-            callInfo.RouteValueDictionary.Add("selectedComments", selectedComments);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "selectedComments", selectedComments);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DisapproveSelected(System.Collections.Generic.IEnumerable<int> selectedComments) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DisapproveSelected);
-            callInfo.RouteValueDictionary.Add("selectedComments", selectedComments);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "selectedComments", selectedComments);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DeleteSelected(System.Collections.Generic.IEnumerable<int> selectedComments) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteSelected);
-            callInfo.RouteValueDictionary.Add("selectedComments", selectedComments);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "selectedComments", selectedComments);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentSave input) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("input", input);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "input", input);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Delete(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

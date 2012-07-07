@@ -89,8 +89,8 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Index(int? page, string terms) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("page", page);
-            callInfo.RouteValueDictionary.Add("terms", terms);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "terms", terms);
             return callInfo;
         }
 

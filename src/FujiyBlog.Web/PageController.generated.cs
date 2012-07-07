@@ -109,13 +109,13 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Details(string pageSlug) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);
-            callInfo.RouteValueDictionary.Add("pageSlug", pageSlug);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSlug", pageSlug);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DetailsById(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

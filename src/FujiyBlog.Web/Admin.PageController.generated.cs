@@ -133,32 +133,32 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ViewResult Index(int? page, bool? published) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("page", page);
-            callInfo.RouteValueDictionary.Add("published", published);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "published", published);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(int? id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageSave pageSave) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("pageSave", pageSave);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSave", pageSave);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Delete(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult GenerateSlug(string text) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.GenerateSlug);
-            callInfo.RouteValueDictionary.Add("text", text);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "text", text);
             return callInfo;
         }
 

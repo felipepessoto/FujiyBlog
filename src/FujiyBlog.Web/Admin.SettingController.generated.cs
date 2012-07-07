@@ -138,7 +138,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Index(FujiyBlog.Web.Areas.Admin.ViewModels.AdminBasicSettings settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("settings", settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
             return callInfo;
         }
 
@@ -149,7 +149,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Email(FujiyBlog.Web.Areas.Admin.ViewModels.AdminEmailSettings settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Email);
-            callInfo.RouteValueDictionary.Add("settings", settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
             return callInfo;
         }
 
@@ -160,7 +160,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Comments(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Comments);
-            callInfo.RouteValueDictionary.Add("settings", settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
             return callInfo;
         }
 
@@ -186,7 +186,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult SocialNetworks(FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SocialNetworks);
-            callInfo.RouteValueDictionary.Add("settings", settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
             return callInfo;
         }
 
@@ -197,7 +197,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Feed(FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Feed);
-            callInfo.RouteValueDictionary.Add("settings", settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
             return callInfo;
         }
 
@@ -218,13 +218,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult LogView(string file) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogView);
-            callInfo.RouteValueDictionary.Add("file", file);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult LogDelete(string file) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogDelete);
-            callInfo.RouteValueDictionary.Add("file", file);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
             return callInfo;
         }
 

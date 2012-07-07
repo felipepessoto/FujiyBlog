@@ -134,27 +134,27 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult DoComment(int id, int? parentCommentId) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DoComment);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("parentCommentId", parentCommentId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "parentCommentId", parentCommentId);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Approve(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Approve);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Disapprove(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Disapprove);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Delete(int id, bool deleteReplies) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("deleteReplies", deleteReplies);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "deleteReplies", deleteReplies);
             return callInfo;
         }
 

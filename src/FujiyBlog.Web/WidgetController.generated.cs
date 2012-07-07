@@ -157,39 +157,39 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Index(string zoneName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("zoneName", zoneName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "zoneName", zoneName);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Add(string zoneName, string widgetName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Add);
-            callInfo.RouteValueDictionary.Add("zoneName", zoneName);
-            callInfo.RouteValueDictionary.Add("widgetName", widgetName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "zoneName", zoneName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetName", widgetName);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Remove(int settingsId) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Remove);
-            callInfo.RouteValueDictionary.Add("settingsId", settingsId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settingsId", settingsId);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(int widgetSettingId) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("widgetSettingId", widgetSettingId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetSettingId", widgetSettingId);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(int widgetSettingId, string settings) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("widgetSettingId", widgetSettingId);
-            callInfo.RouteValueDictionary.Add("settings", settings);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetSettingId", widgetSettingId);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Sort(string widgetsOrder) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Sort);
-            callInfo.RouteValueDictionary.Add("widgetsOrder", widgetsOrder);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetsOrder", widgetsOrder);
             return callInfo;
         }
 

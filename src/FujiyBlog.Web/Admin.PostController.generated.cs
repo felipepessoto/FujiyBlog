@@ -197,26 +197,26 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ViewResult Index(int? page, bool? published) {
             var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("page", page);
-            callInfo.RouteValueDictionary.Add("published", published);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "published", published);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(int? id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostSave postSave) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("Post", postSave);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Post", postSave);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Delete(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Delete);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
@@ -227,20 +227,20 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult UpdateCategory(int id, string name) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateCategory);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("name", name);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult AddCategory(FujiyBlog.Core.DomainObjects.Category newCategory) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.AddCategory);
-            callInfo.RouteValueDictionary.Add("NewCategory", newCategory);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "NewCategory", newCategory);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DeleteCategory(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteCategory);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
@@ -251,14 +251,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult UpdateTag(int id, string name) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.UpdateTag);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("name", name);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DeleteTag(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteTag);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

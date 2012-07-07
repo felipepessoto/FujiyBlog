@@ -95,8 +95,8 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult LogOn(FujiyBlog.Web.Models.LogOnModel model, string returnUrl) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogOn);
-            callInfo.RouteValueDictionary.Add("model", model);
-            callInfo.RouteValueDictionary.Add("returnUrl", returnUrl);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
             return callInfo;
         }
 
@@ -112,7 +112,7 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult ChangePassword(FujiyBlog.Web.Models.ChangePasswordModel model) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ChangePassword);
-            callInfo.RouteValueDictionary.Add("model", model);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             return callInfo;
         }
 
@@ -128,7 +128,7 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult ForgotPassword(string email) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPassword);
-            callInfo.RouteValueDictionary.Add("email", email);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "email", email);
             return callInfo;
         }
 

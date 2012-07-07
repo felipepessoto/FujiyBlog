@@ -165,31 +165,31 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Create(FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserCreate userData) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
-            callInfo.RouteValueDictionary.Add("userData", userData);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userData", userData);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserSave userData) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
-            callInfo.RouteValueDictionary.Add("userData", userData);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userData", userData);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Disable(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Disable);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Enable(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Enable);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
@@ -200,21 +200,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult EditRoleGroup(int? id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult EditRoleGroup(int? id, string name, System.Collections.Generic.IEnumerable<string> roles) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
-            callInfo.RouteValueDictionary.Add("id", id);
-            callInfo.RouteValueDictionary.Add("name", name);
-            callInfo.RouteValueDictionary.Add("roles", roles);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "roles", roles);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DeleteRoleGroup(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

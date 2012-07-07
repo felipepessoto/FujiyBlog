@@ -92,7 +92,7 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult LoginOpenId(string openIdIdentifier) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LoginOpenId);
-            callInfo.RouteValueDictionary.Add("openIdIdentifier", openIdIdentifier);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "openIdIdentifier", openIdIdentifier);
             return callInfo;
         }
 

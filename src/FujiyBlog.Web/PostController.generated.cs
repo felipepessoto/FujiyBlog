@@ -182,28 +182,28 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult Index(int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Tag(string tag, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Tag);
-            callInfo.RouteValueDictionary.Add("tag", tag);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "tag", tag);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Category(string category, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Category);
-            callInfo.RouteValueDictionary.Add("category", category);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "category", category);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Author(string author, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Author);
-            callInfo.RouteValueDictionary.Add("author", author);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "author", author);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
@@ -214,21 +214,21 @@ namespace FujiyBlog.Web.Controllers {
 
         public override System.Web.Mvc.ActionResult ArchiveDate(int year, int month, int? page) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ArchiveDate);
-            callInfo.RouteValueDictionary.Add("year", year);
-            callInfo.RouteValueDictionary.Add("month", month);
-            callInfo.RouteValueDictionary.Add("page", page);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "year", year);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "month", month);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "page", page);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult Details(string postSlug) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);
-            callInfo.RouteValueDictionary.Add("postSlug", postSlug);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "postSlug", postSlug);
             return callInfo;
         }
 
         public override System.Web.Mvc.ActionResult DetailsById(int id) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
-            callInfo.RouteValueDictionary.Add("id", id);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             return callInfo;
         }
 

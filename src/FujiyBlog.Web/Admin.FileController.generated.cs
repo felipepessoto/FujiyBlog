@@ -91,8 +91,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
 
         public override System.Web.Mvc.ActionResult Upload(System.Web.HttpPostedFileBase[] uploadedFiles, string folderName) {
             var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
-            callInfo.RouteValueDictionary.Add("uploadedFiles", uploadedFiles);
-            callInfo.RouteValueDictionary.Add("folderName", folderName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "uploadedFiles", uploadedFiles);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "folderName", folderName);
             return callInfo;
         }
 
