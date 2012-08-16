@@ -340,14 +340,14 @@ namespace Links {
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string fujiyblog_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fujiyblog.min.js") ? Url("fujiyblog.min.js") : Url("fujiyblog.js");
                       
-        public static readonly string jquery_1_6_4_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.6.4-vsdoc.min.js") ? Url("jquery-1.6.4-vsdoc.min.js") : Url("jquery-1.6.4-vsdoc.js");
+        public static readonly string jquery_1_8_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.0.min.js") ? Url("jquery-1.8.0.min.js") : Url("jquery-1.8.0.js");
                       
-        public static readonly string jquery_1_6_4_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.6.4.min.js") ? Url("jquery-1.6.4.min.js") : Url("jquery-1.6.4.js");
+        public static readonly string jquery_1_8_0_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.0.intellisense.min.js") ? Url("jquery-1.8.0.intellisense.min.js") : Url("jquery-1.8.0.intellisense.js");
                       
-        public static readonly string jquery_1_6_4_min_js = Url("jquery-1.6.4.min.js");
-        public static readonly string jquery_ui_1_8_16_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.16.min.js") ? Url("jquery-ui-1.8.16.min.js") : Url("jquery-ui-1.8.16.js");
+        public static readonly string jquery_1_8_0_min_js = Url("jquery-1.8.0.min.js");
+        public static readonly string jquery_ui_1_8_22_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.22.min.js") ? Url("jquery-ui-1.8.22.min.js") : Url("jquery-ui-1.8.22.js");
                       
-        public static readonly string jquery_ui_1_8_16_min_js = Url("jquery-ui-1.8.16.min.js");
+        public static readonly string jquery_ui_1_8_22_min_js = Url("jquery-ui-1.8.22.min.js");
         public static readonly string jquery_ui_timepicker_addon_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-timepicker-addon.min.js") ? Url("jquery-ui-timepicker-addon.min.js") : Url("jquery-ui-timepicker-addon.js");
                       
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
@@ -1651,9 +1651,7 @@ namespace Links {
                 
                     public static readonly string jquery_ui_min_css = Url("jquery-ui.min.css");
                     public static readonly string jquery_ui_accordion_min_css = Url("jquery.ui.accordion.min.css");
-                    public static readonly string jquery_ui_all_min_css = Url("jquery.ui.all.min.css");
                     public static readonly string jquery_ui_autocomplete_min_css = Url("jquery.ui.autocomplete.min.css");
-                    public static readonly string jquery_ui_base_min_css = Url("jquery.ui.base.min.css");
                     public static readonly string jquery_ui_button_min_css = Url("jquery.ui.button.min.css");
                     public static readonly string jquery_ui_core_min_css = Url("jquery.ui.core.min.css");
                     public static readonly string jquery_ui_datepicker_min_css = Url("jquery.ui.datepicker.min.css");

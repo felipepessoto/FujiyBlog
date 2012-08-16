@@ -49,12 +49,13 @@
     <Reference Include="DotNetOpenAuth">
       <HintPath>..\..\DotNetOpenAuth.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=4.3.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.4.3.1\lib\net40\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HtmlAgilityPack.1.4.4\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -62,11 +63,11 @@
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity.Configuration, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <HintPath>..\packages\Unity.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\packages\microsoft-web-helpers.1.15\lib\Microsoft.Web.Helpers.dll</HintPath>
@@ -81,11 +82,11 @@
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.SqlServerCe, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8854.2\lib\net40\System.Data.SqlServerCe.dll</HintPath>
+      <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
     </Reference>
     <Reference Include="System.Data.SqlServerCe.Entity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <Private>True</Private>
-      <HintPath>..\packages\EntityFramework.SqlServerCompact.4.3.3\lib\net40\System.Data.SqlServerCe.Entity.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.SqlServerCompact.4.3.4\lib\net40\System.Data.SqlServerCe.Entity.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceModel" />
@@ -254,6 +255,7 @@
     <Content Include="Content\Admin\Site.css" />
     <Content Include="Content\openid\images\openid-inputicon.gif" />
     <Content Include="Content\openid\images\openid-providers-en.png" />
+    <Content Include="Content\openid\openid.css" />
     <Content Include="Content\Themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\Themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\Themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -297,9 +299,7 @@
     <Content Include="Content\Themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
     <Content Include="Content\Themes\base\minified\jquery-ui.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.accordion.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.all.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.base.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.button.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.core.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.datepicker.min.css" />
@@ -310,7 +310,6 @@
     <Content Include="Content\Themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\Themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\openid\openid.css" />
     <Content Include="Content\Themes\Default\img\header_background.jpg" />
     <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
     <Content Include="Content\Themes\Default\Site.css" />
@@ -318,17 +317,25 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\fujiyblog.js" />
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
-    <Content Include="Scripts\jquery-ui-1.8.16.js" />
-    <Content Include="Scripts\jquery-ui-1.8.16.min.js" />
+    <None Include="Scripts\jquery-1.8.0.intellisense.js">
+      <DependentUpon>jquery-1.8.0.js</DependentUpon>
+    </None>
+    <Content Include="Scripts\jquery-1.8.0.js" />
+    <Content Include="Scripts\jquery-1.8.0.min.js">
+      <DependentUpon>jquery-1.8.0.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\jquery-ui-1.8.22.js" />
+    <Content Include="Scripts\jquery-ui-1.8.22.min.js">
+      <DependentUpon>jquery-ui-1.8.22.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\jquery.form.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
-    <Content Include="Scripts\jquery.validate-vsdoc.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.min.js">
+      <DependentUpon>jquery.validate.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
@@ -598,6 +605,11 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="T4MVC.tt.settings.t4" />
+    <Content Include="T4MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4MVC.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -700,15 +712,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Admin\Views\Setting\Logs.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="T4MVC.tt.settings.t4" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

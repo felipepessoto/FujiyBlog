@@ -10,8 +10,8 @@ namespace FujiyBlog.Web.Controllers
     {
         static readonly string[] Files = new[]
                                  {
-                                     "~/Scripts/jquery-1.6.4.min.js",
-                                     "~/Scripts/jquery-ui-1.8.16.min.js",
+                                     "~/Scripts/jquery-1.8.0.min.js",
+                                     "~/Scripts/jquery-ui-1.8.22.min.js",
                                      "~/Scripts/jquery.validate.min.js",
                                      "~/Scripts/jquery.validate.unobtrusive.min.js",
                                      "~/Scripts/jquery.unobtrusive-ajax.min.js",
