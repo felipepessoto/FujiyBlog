@@ -352,6 +352,8 @@ namespace Links {
                       
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
                       
+        public static readonly string jquery_unobtrusive_ajax_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.unobtrusive-ajax.min.js") ? Url("jquery.unobtrusive-ajax.min.js") : Url("jquery.unobtrusive-ajax.js");
+                      
         public static readonly string jquery_unobtrusive_ajax_min_js = Url("jquery.unobtrusive-ajax.min.js");
         public static readonly string jquery_validate_vsdoc_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.validate-vsdoc.min.js") ? Url("jquery.validate-vsdoc.min.js") : Url("jquery.validate-vsdoc.js");
                       
