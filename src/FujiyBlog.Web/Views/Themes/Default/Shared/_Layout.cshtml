@@ -25,9 +25,7 @@
 <html>
     <head>
         <title>@ViewBag.Title</title>
-        <link href="@Url.Content("~/Content/Themes/Default/Site.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/Themes/base/minified/jquery-ui.min.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/openid/openid.css")" rel="stylesheet" type="text/css" />
+        @Styles.Render("~/Content/css")
         <link rel="canonical" href="@CanonicalUrl()" />
 
         <meta name="viewport" content="width=device-width, initial-scale=1"> 
@@ -98,9 +96,10 @@
     <div id="footer">
         <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.3</p>
     </div>
-
+    
     <script src="@Url.Action(MVC.JavaScript.FujiyBlogBundle())" type="text/javascript"></script>
-
+    @Scripts.Render("~/bundles/FujiyBlogBundle")
+    @RenderSection("scripts", required: false)
     
     @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
     {

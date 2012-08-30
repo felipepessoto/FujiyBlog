@@ -7,6 +7,20 @@ namespace FujiyBlog.Web
         // For more information on Bundling, visit http://go.microsoft.com/fwlink/?LinkId=254725
         public static void RegisterBundles(BundleCollection bundles)
         {
+            bundles.Add(new ScriptBundle("~/bundles/FujiyBlogBundle").Include(
+                "~/Scripts/jquery-{version}.js",
+                "~/Scripts/jquery-ui-{version}.js",
+                "~/Scripts/jquery.unobtrusive*",
+                "~/Scripts/jquery.validate*",
+
+                "~/Scripts/jquery-ui-timepicker-addon.js",
+                "~/Scripts/openid-jquery.js",
+                "~/Scripts/fujiyblog.js",
+                "~/Scripts/json2.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/Themes/Default/Site.css", "~/Content/Themes/base/jquery-ui.css", "~/Content/openid/openid.css"));
+
+            /*
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -21,7 +35,7 @@ namespace FujiyBlog.Web
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
-
+            
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/themes/base/css").Include(
@@ -37,6 +51,7 @@ namespace FujiyBlog.Web
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
+             */ 
         }
     }
 }
