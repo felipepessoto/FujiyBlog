@@ -245,9 +245,17 @@ namespace System.Web.Mvc {
             return result;
         }
 
-        public static ActionResult AddRouteValues(this ActionResult result, System.Collections.Specialized.NameValueCollection nameValueCollection) {
+        public static ActionResult AddRouteValues(this ActionResult result, System.Collections.Specialized.NameValueCollection nameValueCollection)
+        {
             // Copy all the values from the NameValueCollection into the route dictionary
-            nameValueCollection.CopyTo(result.GetRouteValueDictionary());
+            if (nameValueCollection.AllKeys.Any(m => m == null))  //if it has a null, the CopyTo extension will crash!
+            {
+                var filtered = new System.Collections.Specialized.NameValueCollection(nameValueCollection);
+                filtered.Remove(null);
+                filtered.CopyTo(result.GetRouteValueDictionary());
+            }
+            else
+                nameValueCollection.CopyTo(result.GetRouteValueDictionary());
             return result;
         }
 
@@ -340,14 +348,14 @@ namespace Links {
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string fujiyblog_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fujiyblog.min.js") ? Url("fujiyblog.min.js") : Url("fujiyblog.js");
                       
-        public static readonly string jquery_1_8_0_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.0.min.js") ? Url("jquery-1.8.0.min.js") : Url("jquery-1.8.0.js");
+        public static readonly string jquery_1_8_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.intellisense.min.js") ? Url("jquery-1.8.2.intellisense.min.js") : Url("jquery-1.8.2.intellisense.js");
                       
-        public static readonly string jquery_1_8_0_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.0.intellisense.min.js") ? Url("jquery-1.8.0.intellisense.min.js") : Url("jquery-1.8.0.intellisense.js");
+        public static readonly string jquery_1_8_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.min.js") ? Url("jquery-1.8.2.min.js") : Url("jquery-1.8.2.js");
                       
-        public static readonly string jquery_1_8_0_min_js = Url("jquery-1.8.0.min.js");
-        public static readonly string jquery_ui_1_8_22_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.22.min.js") ? Url("jquery-ui-1.8.22.min.js") : Url("jquery-ui-1.8.22.js");
+        public static readonly string jquery_1_8_2_min_js = Url("jquery-1.8.2.min.js");
+        public static readonly string jquery_ui_1_8_24_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.8.24.min.js") ? Url("jquery-ui-1.8.24.min.js") : Url("jquery-ui-1.8.24.js");
                       
-        public static readonly string jquery_ui_1_8_22_min_js = Url("jquery-ui-1.8.22.min.js");
+        public static readonly string jquery_ui_1_8_24_min_js = Url("jquery-ui-1.8.24.min.js");
         public static readonly string jquery_ui_timepicker_addon_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-timepicker-addon.min.js") ? Url("jquery-ui-timepicker-addon.min.js") : Url("jquery-ui-timepicker-addon.js");
                       
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
@@ -1720,7 +1728,5 @@ public static class T4MVCHelpers {
 
 #endregion T4MVC
 #pragma warning restore 1591
-
-
 
 
