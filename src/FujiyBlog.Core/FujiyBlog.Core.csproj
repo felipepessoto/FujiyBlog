@@ -93,9 +93,7 @@
     <Compile Include="Caching\InvalidCachedFuncException.cs" />
     <Compile Include="DomainObjects\Category.cs" />
     <Compile Include="DomainObjects\Page.cs" />
-    <Compile Include="DomainObjects\PostRevision.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="DomainObjects\PostRevision.cs" />
     <Compile Include="DomainObjects\RoleGroup.cs" />
     <Compile Include="DomainObjects\Post.cs" />
     <Compile Include="DomainObjects\PostComment.cs" />
@@ -134,10 +132,6 @@
     <Compile Include="Migrations\201205090101256_UnicodeSupport.cs" />
     <Compile Include="Migrations\201205090101256_UnicodeSupport.Designer.cs">
       <DependentUpon>201205090101256_UnicodeSupport.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201208170219234_PostRevision.cs" />
-    <Compile Include="Migrations\201208170219234_PostRevision.Designer.cs">
-      <DependentUpon>201208170219234_PostRevision.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Resources\Names.Designer.cs">
