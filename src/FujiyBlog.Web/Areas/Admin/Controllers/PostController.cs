@@ -127,7 +127,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.SaveChanges();
-                CreatePostRevision(editedPost);
+                //CreatePostRevision(editedPost);
                 return RedirectToAction(MVC.Post.Details(editedPost.Slug));
             }
 
