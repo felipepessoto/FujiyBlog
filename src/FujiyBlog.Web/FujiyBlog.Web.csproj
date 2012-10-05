@@ -306,6 +306,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\holder.txt" />
     <Content Include="Content\Admin\Site.css" />
     <Content Include="Content\openid\images\openid-inputicon.gif" />
     <Content Include="Content\openid\images\openid-providers-en.png" />
@@ -641,6 +642,7 @@
     <Content Include="Scripts\tinymce.3.4.5\utils\form_utils.js" />
     <Content Include="Scripts\tinymce.3.4.5\utils\mctabs.js" />
     <Content Include="Scripts\tinymce.3.4.5\utils\validate.js" />
+    <Content Include="Upload\holder.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -658,10 +660,7 @@
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Upload\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
