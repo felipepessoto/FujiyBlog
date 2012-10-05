@@ -127,7 +127,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 db.SaveChanges();
-                //CreatePostRevision(editedPost);
+                CreatePostRevision(editedPost);
                 return RedirectToAction(MVC.Post.Details(editedPost.Slug));
             }
 
@@ -136,30 +136,30 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         private void CreatePostRevision(Post editedPost)
         {
-            string tagsIds = string.Join(",", editedPost.Tags.Select(x => x.Id).OrderBy(x=>x).ToList());
-            string categoriesIds = string.Join(",", editedPost.Categories.Select(x => x.Id).OrderBy(x=>x).ToList());
+            //string tagsIds = string.Join(",", editedPost.Tags.Select(x => x.Id).OrderBy(x=>x).ToList());
+            //string categoriesIds = string.Join(",", editedPost.Categories.Select(x => x.Id).OrderBy(x=>x).ToList());
 
-            PostRevision lastRevision = db.PostRevisions.Include(x=>x.Author).OrderByDescending(x=> x.RevisionNumber).FirstOrDefault(x => x.Post.Id == editedPost.Id);
+            //PostRevision lastRevision = db.PostRevisions.Include(x=>x.Author).OrderByDescending(x=> x.RevisionNumber).FirstOrDefault(x => x.Post.Id == editedPost.Id);
 
-            if(lastRevision == null || editedPost.Title != lastRevision.Title || editedPost.Description != lastRevision.Description || editedPost.Slug != lastRevision.Slug || editedPost.Content != lastRevision.Content || editedPost.ImageUrl != lastRevision.ImageUrl || editedPost.PublicationDate != lastRevision.PublicationDate || editedPost.IsPublished != lastRevision.IsPublished || editedPost.IsCommentEnabled != lastRevision.IsCommentEnabled || editedPost.Author.Id != lastRevision.Author.Id || tagsIds != lastRevision.TagsIds || categoriesIds != lastRevision.CategoriesIds)
-            {
-                PostRevision revision = db.PostRevisions.Add(new PostRevision());
-                revision.RevisionNumber = (lastRevision != null ? lastRevision.RevisionNumber : 0) + 1;
-                revision.Post = editedPost;
-                revision.Title = editedPost.Title;
-                revision.Description = editedPost.Description;
-                revision.Slug = editedPost.Slug;
-                revision.Content = editedPost.Content;
-                revision.ImageUrl = editedPost.ImageUrl;
-                revision.CreationDate = DateTime.UtcNow;
-                revision.PublicationDate = editedPost.PublicationDate;
-                revision.IsPublished = editedPost.IsPublished;
-                revision.IsCommentEnabled = editedPost.IsCommentEnabled;
-                revision.Author = editedPost.Author;
-                revision.TagsIds = tagsIds;
-                revision.CategoriesIds = categoriesIds;
-            }
-            db.SaveChanges();
+            //if(lastRevision == null || editedPost.Title != lastRevision.Title || editedPost.Description != lastRevision.Description || editedPost.Slug != lastRevision.Slug || editedPost.Content != lastRevision.Content || editedPost.ImageUrl != lastRevision.ImageUrl || editedPost.PublicationDate != lastRevision.PublicationDate || editedPost.IsPublished != lastRevision.IsPublished || editedPost.IsCommentEnabled != lastRevision.IsCommentEnabled || editedPost.Author.Id != lastRevision.Author.Id || tagsIds != lastRevision.TagsIds || categoriesIds != lastRevision.CategoriesIds)
+            //{
+            //    PostRevision revision = db.PostRevisions.Add(new PostRevision());
+            //    revision.RevisionNumber = (lastRevision != null ? lastRevision.RevisionNumber : 0) + 1;
+            //    revision.Post = editedPost;
+            //    revision.Title = editedPost.Title;
+            //    revision.Description = editedPost.Description;
+            //    revision.Slug = editedPost.Slug;
+            //    revision.Content = editedPost.Content;
+            //    revision.ImageUrl = editedPost.ImageUrl;
+            //    revision.CreationDate = DateTime.UtcNow;
+            //    revision.PublicationDate = editedPost.PublicationDate;
+            //    revision.IsPublished = editedPost.IsPublished;
+            //    revision.IsCommentEnabled = editedPost.IsCommentEnabled;
+            //    revision.Author = editedPost.Author;
+            //    revision.TagsIds = tagsIds;
+            //    revision.CategoriesIds = categoriesIds;
+            //}
+            //db.SaveChanges();
         }
 
         private AdminPostEdit CreateAdminPostEdit(Post post)
