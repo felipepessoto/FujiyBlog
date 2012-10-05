@@ -18,7 +18,9 @@ namespace FujiyBlog.Web
                 "~/Scripts/fujiyblog.js",
                 "~/Scripts/json2.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/Themes/Default/Site.css", "~/Content/Themes/base/jquery-ui.css", "~/Content/openid/openid.css"));
+            bundles.Add(new StyleBundle("~/Content/Themes/Default/css").Include("~/Content/Themes/Default/Site.css"));
+            bundles.Add(new StyleBundle("~/Content/Themes/base/css").Include("~/Content/Themes/base/jquery-ui.css"));
+            bundles.Add(new StyleBundle("~/Content/openid/css").Include("~/Content/openid/openid.css"));
 
             /*
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
@@ -51,7 +53,7 @@ namespace FujiyBlog.Web
                         "~/Content/themes/base/jquery.ui.datepicker.css",
                         "~/Content/themes/base/jquery.ui.progressbar.css",
                         "~/Content/themes/base/jquery.ui.theme.css"));
-             */ 
+             */
         }
     }
 }
