@@ -23,7 +23,10 @@ namespace FujiyBlog.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-
+            if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
+            {
+                MiniProfilerEF.Initialize();
+            }
             //AutoDbMigration();
 
             LogManager.GetCurrentClassLogger().Info("Started FujiyBlog");
