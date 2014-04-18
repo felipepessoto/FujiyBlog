@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,8 +21,10 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace FujiyBlog.Web.Areas.Admin.Controllers {
-    public partial class FileController {
+namespace FujiyBlog.Web.Areas.Admin.Controllers
+{
+    public partial class FileController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public FileController() { }
 
@@ -29,21 +32,36 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         protected FileController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Upload() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
+        public virtual System.Web.Mvc.ActionResult Upload()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Upload);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -59,12 +77,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string Upload = "Upload";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string Upload = "Upload";
         }
 
@@ -73,26 +93,40 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Upload UploadParams { get { return s_params_Upload; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Upload {
+        public class ActionParamsClass_Upload
+        {
             public readonly string uploadedFiles = "uploadedFiles";
             public readonly string folderName = "folderName";
         }
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+            }
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_FileController: FujiyBlog.Web.Areas.Admin.Controllers.FileController {
+    public partial class T4MVC_FileController : FujiyBlog.Web.Areas.Admin.Controllers.FileController
+    {
         public T4MVC_FileController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Upload(System.Web.HttpPostedFileBase[] uploadedFiles, string folderName) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Upload);
+        [NonAction]
+        partial void UploadOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, System.Web.HttpPostedFileBase[] uploadedFiles, string folderName);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Upload(System.Web.HttpPostedFileBase[] uploadedFiles, string folderName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Upload);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "uploadedFiles", uploadedFiles);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "folderName", folderName);
+            UploadOverride(callInfo, uploadedFiles, folderName);
             return callInfo;
         }
 

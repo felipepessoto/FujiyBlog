@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,21 +21,37 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace FujiyBlog.Web.Controllers {
-    public partial class AccountController {
+namespace FujiyBlog.Web.Controllers
+{
+    public partial class AccountController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected AccountController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
         }
 
 
@@ -51,7 +68,8 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string LogOn = "LogOn";
             public readonly string LogOff = "LogOff";
             public readonly string ChangePassword = "ChangePassword";
@@ -61,7 +79,8 @@ namespace FujiyBlog.Web.Controllers {
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string LogOn = "LogOn";
             public const string LogOff = "LogOff";
             public const string ChangePassword = "ChangePassword";
@@ -71,11 +90,47 @@ namespace FujiyBlog.Web.Controllers {
         }
 
 
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ActionParamsClass_LogOn s_params_LogOn = new ActionParamsClass_LogOn();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ActionParamsClass_LogOn LogOnParams { get { return s_params_LogOn; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ActionParamsClass_LogOn
+        {
+            public readonly string model = "model";
+            public readonly string returnUrl = "returnUrl";
+        }
+        static readonly ActionParamsClass_ChangePassword s_params_ChangePassword = new ActionParamsClass_ChangePassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ChangePassword ChangePasswordParams { get { return s_params_ChangePassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ChangePassword
+        {
+            public readonly string model = "model";
+        }
+        static readonly ActionParamsClass_ForgotPassword s_params_ForgotPassword = new ActionParamsClass_ForgotPassword();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_ForgotPassword ForgotPasswordParams { get { return s_params_ForgotPassword; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_ForgotPassword
+        {
+            public readonly string email = "email";
+        }
+        static readonly ViewsClass s_views = new ViewsClass();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ViewsClass Views { get { return s_views; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string ChangePassword = "ChangePassword";
+                public readonly string ChangePasswordSuccess = "ChangePasswordSuccess";
+                public readonly string ForgotPassword = "ForgotPassword";
+                public readonly string ForgotPasswordSuccess = "ForgotPasswordSuccess";
+                public readonly string LogOn = "LogOn";
+            }
             public readonly string ChangePassword = "~/Views/Account/ChangePassword.cshtml";
             public readonly string ChangePasswordSuccess = "~/Views/Account/ChangePasswordSuccess.cshtml";
             public readonly string ForgotPassword = "~/Views/Account/ForgotPassword.cshtml";
@@ -85,55 +140,110 @@ namespace FujiyBlog.Web.Controllers {
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_AccountController: FujiyBlog.Web.Controllers.AccountController {
+    public partial class T4MVC_AccountController : FujiyBlog.Web.Controllers.AccountController
+    {
         public T4MVC_AccountController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult LogOn() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogOn);
+        [NonAction]
+        partial void LogOnOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogOn()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOn);
+            LogOnOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult LogOn(FujiyBlog.Web.Models.LogOnModel model, string returnUrl) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogOn);
+        [NonAction]
+        partial void LogOnOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Models.LogOnModel model, string returnUrl);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogOn(FujiyBlog.Web.Models.LogOnModel model, string returnUrl)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOn);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "returnUrl", returnUrl);
+            LogOnOverride(callInfo, model, returnUrl);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult LogOff() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogOff);
+        [NonAction]
+        partial void LogOffOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogOff()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogOff);
+            LogOffOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ChangePassword() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ChangePassword);
+        [NonAction]
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePassword()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
+            ChangePasswordOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ChangePassword(FujiyBlog.Web.Models.ChangePasswordModel model) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ChangePassword);
+        [NonAction]
+        partial void ChangePasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Models.ChangePasswordModel model);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePassword(FujiyBlog.Web.Models.ChangePasswordModel model)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "model", model);
+            ChangePasswordOverride(callInfo, model);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ChangePasswordSuccess() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ChangePasswordSuccess);
+        [NonAction]
+        partial void ChangePasswordSuccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ChangePasswordSuccess()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ChangePasswordSuccess);
+            ChangePasswordSuccessOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ForgotPassword() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPassword);
+        [NonAction]
+        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ForgotPassword()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ForgotPassword);
+            ForgotPasswordOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ForgotPassword(string email) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPassword);
+        [NonAction]
+        partial void ForgotPasswordOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string email);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ForgotPassword(string email)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ForgotPassword);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "email", email);
+            ForgotPasswordOverride(callInfo, email);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ForgotPasswordSuccess() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ForgotPasswordSuccess);
+        [NonAction]
+        partial void ForgotPasswordSuccessOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ForgotPasswordSuccess()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ForgotPasswordSuccess);
+            ForgotPasswordSuccessOverride(callInfo);
             return callInfo;
         }
 

@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,47 +21,68 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace FujiyBlog.Web.Controllers {
-    public partial class WidgetController {
+namespace FujiyBlog.Web.Controllers
+{
+    public partial class WidgetController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected WidgetController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Index() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        public virtual System.Web.Mvc.ActionResult Index()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Add() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Add);
+        public virtual System.Web.Mvc.ActionResult Add()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Add);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Remove() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Remove);
+        public virtual System.Web.Mvc.ActionResult Remove()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Remove);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Edit() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        public virtual System.Web.Mvc.ActionResult Edit()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Sort() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Sort);
+        public virtual System.Web.Mvc.ActionResult Sort()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Sort);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -76,7 +98,8 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string Index = "Index";
             public readonly string Add = "Add";
             public readonly string Remove = "Remove";
@@ -85,7 +108,8 @@ namespace FujiyBlog.Web.Controllers {
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string Index = "Index";
             public const string Add = "Add";
             public const string Remove = "Remove";
@@ -98,14 +122,16 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Index {
+        public class ActionParamsClass_Index
+        {
             public readonly string zoneName = "zoneName";
         }
         static readonly ActionParamsClass_Add s_params_Add = new ActionParamsClass_Add();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Add AddParams { get { return s_params_Add; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Add {
+        public class ActionParamsClass_Add
+        {
             public readonly string zoneName = "zoneName";
             public readonly string widgetName = "widgetName";
         }
@@ -113,28 +139,51 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Remove RemoveParams { get { return s_params_Remove; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Remove {
+        public class ActionParamsClass_Remove
+        {
             public readonly string settingsId = "settingsId";
         }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Edit {
+        public class ActionParamsClass_Edit
+        {
             public readonly string widgetSettingId = "widgetSettingId";
+            public readonly string settings = "settings";
         }
         static readonly ActionParamsClass_Sort s_params_Sort = new ActionParamsClass_Sort();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Sort SortParams { get { return s_params_Sort; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Sort {
+        public class ActionParamsClass_Sort
+        {
             public readonly string widgetsOrder = "widgetsOrder";
         }
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string Administration = "Administration";
+                public readonly string Archive = "Archive";
+                public readonly string ArchiveEdit = "ArchiveEdit";
+                public readonly string Categories = "Categories";
+                public readonly string CategoriesEdit = "CategoriesEdit";
+                public readonly string Html = "Html";
+                public readonly string HtmlEdit = "HtmlEdit";
+                public readonly string Index = "Index";
+                public readonly string SearchBox = "SearchBox";
+                public readonly string SearchBoxEdit = "SearchBoxEdit";
+                public readonly string TagCloud = "TagCloud";
+                public readonly string TagCloudEdit = "TagCloudEdit";
+                public readonly string Widget = "Widget";
+            }
             public readonly string Administration = "~/Views/Widget/Administration.cshtml";
             public readonly string Archive = "~/Views/Widget/Archive.cshtml";
             public readonly string ArchiveEdit = "~/Views/Widget/ArchiveEdit.cshtml";
@@ -152,44 +201,81 @@ namespace FujiyBlog.Web.Controllers {
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_WidgetController: FujiyBlog.Web.Controllers.WidgetController {
+    public partial class T4MVC_WidgetController : FujiyBlog.Web.Controllers.WidgetController
+    {
         public T4MVC_WidgetController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index(string zoneName) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string zoneName);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index(string zoneName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "zoneName", zoneName);
+            IndexOverride(callInfo, zoneName);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Add(string zoneName, string widgetName) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Add);
+        [NonAction]
+        partial void AddOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string zoneName, string widgetName);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Add(string zoneName, string widgetName)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Add);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "zoneName", zoneName);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetName", widgetName);
+            AddOverride(callInfo, zoneName, widgetName);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Remove(int settingsId) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Remove);
+        [NonAction]
+        partial void RemoveOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int settingsId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Remove(int settingsId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Remove);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settingsId", settingsId);
+            RemoveOverride(callInfo, settingsId);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(int widgetSettingId) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int widgetSettingId);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(int widgetSettingId)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetSettingId", widgetSettingId);
+            EditOverride(callInfo, widgetSettingId);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(int widgetSettingId, string settings) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int widgetSettingId, string settings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(int widgetSettingId, string settings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetSettingId", widgetSettingId);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
+            EditOverride(callInfo, widgetSettingId, settings);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Sort(string widgetsOrder) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Sort);
+        [NonAction]
+        partial void SortOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string widgetsOrder);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Sort(string widgetsOrder)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Sort);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "widgetsOrder", widgetsOrder);
+            SortOverride(callInfo, widgetsOrder);
             return callInfo;
         }
 

@@ -22,7 +22,7 @@ private string ShowPostContent(string content)
         if (moreIndex >= 0)
         {
             content = content.Substring(0, content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase));
-            return CloseOpenedTags(content) + " " + Html.ActionLink(Resources.Labels.ReadMore, MVC.Post.Details(Model.Post.Slug), null, fragment: "continue");
+            return CloseOpenedTags(content) + " " + Html.ActionLink(Resources.Labels.ReadMore, MVC.Post.Details(Model.Post.Slug), null, null, null, "continue");
         }
     }
     return CloseOpenedTags(content);
@@ -87,9 +87,6 @@ private string ShowPostContent(string content)
                     </div>
                 }
             </div>
-                
-
-
         </div>
     </div>
 </div>

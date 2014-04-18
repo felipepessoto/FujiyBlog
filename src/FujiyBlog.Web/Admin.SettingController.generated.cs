@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,32 +21,50 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace FujiyBlog.Web.Areas.Admin.Controllers {
-    public partial class SettingController {
+namespace FujiyBlog.Web.Areas.Admin.Controllers
+{
+    public partial class SettingController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected SettingController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult LogView() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.LogView);
+        public virtual System.Web.Mvc.ActionResult LogView()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogView);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult LogDelete() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.LogDelete);
+        public virtual System.Web.Mvc.ActionResult LogDelete()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogDelete);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -61,7 +80,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string Index = "Index";
             public readonly string Email = "Email";
             public readonly string Comments = "Comments";
@@ -78,7 +98,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string Index = "Index";
             public const string Email = "Email";
             public const string Comments = "Comments";
@@ -95,25 +116,83 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
 
+        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Index
+        {
+            public readonly string settings = "settings";
+        }
+        static readonly ActionParamsClass_Email s_params_Email = new ActionParamsClass_Email();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Email EmailParams { get { return s_params_Email; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Email
+        {
+            public readonly string settings = "settings";
+        }
+        static readonly ActionParamsClass_Comments s_params_Comments = new ActionParamsClass_Comments();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Comments CommentsParams { get { return s_params_Comments; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Comments
+        {
+            public readonly string settings = "settings";
+        }
+        static readonly ActionParamsClass_SocialNetworks s_params_SocialNetworks = new ActionParamsClass_SocialNetworks();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_SocialNetworks SocialNetworksParams { get { return s_params_SocialNetworks; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_SocialNetworks
+        {
+            public readonly string settings = "settings";
+        }
+        static readonly ActionParamsClass_Feed s_params_Feed = new ActionParamsClass_Feed();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Feed FeedParams { get { return s_params_Feed; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Feed
+        {
+            public readonly string settings = "settings";
+        }
         static readonly ActionParamsClass_LogView s_params_LogView = new ActionParamsClass_LogView();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_LogView LogViewParams { get { return s_params_LogView; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_LogView {
+        public class ActionParamsClass_LogView
+        {
             public readonly string file = "file";
         }
         static readonly ActionParamsClass_LogDelete s_params_LogDelete = new ActionParamsClass_LogDelete();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_LogDelete LogDeleteParams { get { return s_params_LogDelete; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_LogDelete {
+        public class ActionParamsClass_LogDelete
+        {
             public readonly string file = "file";
         }
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string _Layout = "_Layout";
+                public readonly string Cache = "Cache";
+                public readonly string Comments = "Comments";
+                public readonly string Email = "Email";
+                public readonly string Feed = "Feed";
+                public readonly string Import = "Import";
+                public readonly string ImportSuccessful = "ImportSuccessful";
+                public readonly string Index = "Index";
+                public readonly string Logs = "Logs";
+                public readonly string SocialNetworks = "SocialNetworks";
+            }
             public readonly string _Layout = "~/Areas/Admin/Views/Setting/_Layout.cshtml";
             public readonly string Cache = "~/Areas/Admin/Views/Setting/Cache.cshtml";
             public readonly string Comments = "~/Areas/Admin/Views/Setting/Comments.cshtml";
@@ -128,103 +207,212 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_SettingController: FujiyBlog.Web.Areas.Admin.Controllers.SettingController {
+    public partial class T4MVC_SettingController : FujiyBlog.Web.Areas.Admin.Controllers.SettingController
+    {
         public T4MVC_SettingController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Index(FujiyBlog.Web.Areas.Admin.ViewModels.AdminBasicSettings settings) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminBasicSettings settings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index(FujiyBlog.Web.Areas.Admin.ViewModels.AdminBasicSettings settings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
+            IndexOverride(callInfo, settings);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Email() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Email);
+        [NonAction]
+        partial void EmailOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Email()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Email);
+            EmailOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Email(FujiyBlog.Web.Areas.Admin.ViewModels.AdminEmailSettings settings) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Email);
+        [NonAction]
+        partial void EmailOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminEmailSettings settings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Email(FujiyBlog.Web.Areas.Admin.ViewModels.AdminEmailSettings settings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Email);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
+            EmailOverride(callInfo, settings);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Comments() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Comments);
+        [NonAction]
+        partial void CommentsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Comments()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Comments);
+            CommentsOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Comments(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings settings) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Comments);
+        [NonAction]
+        partial void CommentsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings settings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Comments(FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentsSettings settings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Comments);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
+            CommentsOverride(callInfo, settings);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Import() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Import);
+        [NonAction]
+        partial void ImportOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Import()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Import);
+            ImportOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ImportPost() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportPost);
+        [NonAction]
+        partial void ImportPostOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ImportPost()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ImportPost);
+            ImportPostOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ImportSuccessful() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ImportSuccessful);
+        [NonAction]
+        partial void ImportSuccessfulOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ImportSuccessful()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ImportSuccessful);
+            ImportSuccessfulOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult SocialNetworks() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SocialNetworks);
+        [NonAction]
+        partial void SocialNetworksOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult SocialNetworks()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SocialNetworks);
+            SocialNetworksOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult SocialNetworks(FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks settings) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.SocialNetworks);
+        [NonAction]
+        partial void SocialNetworksOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks settings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult SocialNetworks(FujiyBlog.Web.Areas.Admin.ViewModels.AdminSettingsSocialNetworks settings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.SocialNetworks);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
+            SocialNetworksOverride(callInfo, settings);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Feed() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Feed);
+        [NonAction]
+        partial void FeedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Feed()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Feed);
+            FeedOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Feed(FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings settings) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Feed);
+        [NonAction]
+        partial void FeedOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings settings);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Feed(FujiyBlog.Web.Areas.Admin.ViewModels.AdminFeedSettings settings)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Feed);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "settings", settings);
+            FeedOverride(callInfo, settings);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Cache() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Cache);
+        [NonAction]
+        partial void CacheOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Cache()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Cache);
+            CacheOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult ClearCache() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.ClearCache);
+        [NonAction]
+        partial void ClearCacheOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult ClearCache()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.ClearCache);
+            ClearCacheOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Logs() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Logs);
+        [NonAction]
+        partial void LogsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Logs()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Logs);
+            LogsOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult LogView(string file) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogView);
+        [NonAction]
+        partial void LogViewOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string file);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogView(string file)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogView);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
+            LogViewOverride(callInfo, file);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult LogDelete(string file) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.LogDelete);
+        [NonAction]
+        partial void LogDeleteOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string file);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult LogDelete(string file)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.LogDelete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "file", file);
+            LogDeleteOverride(callInfo, file);
             return callInfo;
         }
 
