@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,20 +21,33 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace T4MVC.Admin {
-    public class SharedController {
+namespace T4MVC.Admin
+{
+    public class SharedController
+    {
 
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string _Layout = "_Layout";
+                public readonly string NotifyBar = "NotifyBar";
+                public readonly string UploadForms = "UploadForms";
+            }
             public readonly string _Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
             public readonly string NotifyBar = "~/Areas/Admin/Views/Shared/NotifyBar.cshtml";
             public readonly string UploadForms = "~/Areas/Admin/Views/Shared/UploadForms.cshtml";
-            static readonly _EditorTemplates s_EditorTemplates = new _EditorTemplates();
-            public _EditorTemplates EditorTemplates { get { return s_EditorTemplates; } }
-            public partial class _EditorTemplates{
+            static readonly _EditorTemplatesClass s_EditorTemplates = new _EditorTemplatesClass();
+            public _EditorTemplatesClass EditorTemplates { get { return s_EditorTemplates; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _EditorTemplatesClass
+            {
                 public readonly string TinyMCE = "TinyMCE";
             }
         }

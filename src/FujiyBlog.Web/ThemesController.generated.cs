@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,20 +21,43 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace T4MVC {
-    public class ThemesController {
+namespace T4MVC
+{
+    public class ThemesController
+    {
 
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
-            static readonly _Default s_Default = new _Default();
-            public _Default Default { get { return s_Default; } }
-            public partial class _Default{
-                static readonly _Shared s_Shared = new _Shared();
-                public _Shared Shared { get { return s_Shared; } }
-                public partial class _Shared{
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+            }
+            static readonly _DefaultClass s_Default = new _DefaultClass();
+            public _DefaultClass Default { get { return s_Default; } }
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public partial class _DefaultClass
+            {
+                static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+                public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+                public class _ViewNamesClass
+                {
+                }
+                static readonly _SharedClass s_Shared = new _SharedClass();
+                public _SharedClass Shared { get { return s_Shared; } }
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public partial class _SharedClass
+                {
+                    static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+                    public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+                    public class _ViewNamesClass
+                    {
+                        public readonly string _Layout = "_Layout";
+                    }
                     public readonly string _Layout = "~/Views/Themes/Default/Shared/_Layout.cshtml";
                 }
             }

@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,32 +21,50 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace FujiyBlog.Web.Controllers {
-    public partial class PageController {
+namespace FujiyBlog.Web.Controllers
+{
+    public partial class PageController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected PageController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Details() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Details);
+        public virtual System.Web.Mvc.ActionResult Details()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DetailsById() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
+        public virtual System.Web.Mvc.ActionResult DetailsById()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DetailsById);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -61,14 +80,16 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string Index = "Index";
             public readonly string Details = "Details";
             public readonly string DetailsById = "DetailsById";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string Index = "Index";
             public const string Details = "Details";
             public const string DetailsById = "DetailsById";
@@ -79,43 +100,71 @@ namespace FujiyBlog.Web.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Details DetailsParams { get { return s_params_Details; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Details {
+        public class ActionParamsClass_Details
+        {
             public readonly string pageSlug = "pageSlug";
         }
         static readonly ActionParamsClass_DetailsById s_params_DetailsById = new ActionParamsClass_DetailsById();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_DetailsById DetailsByIdParams { get { return s_params_DetailsById; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DetailsById {
+        public class ActionParamsClass_DetailsById
+        {
             public readonly string id = "id";
         }
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string Details = "Details";
+            }
             public readonly string Details = "~/Views/Page/Details.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_PageController: FujiyBlog.Web.Controllers.PageController {
+    public partial class T4MVC_PageController : FujiyBlog.Web.Controllers.PageController
+    {
         public T4MVC_PageController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ActionResult Index() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Index);
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Index()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Details(string pageSlug) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Details);
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string pageSlug);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Details(string pageSlug)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "pageSlug", pageSlug);
+            DetailsOverride(callInfo, pageSlug);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult DetailsById(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DetailsById);
+        [NonAction]
+        partial void DetailsByIdOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult DetailsById(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DetailsById);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DetailsByIdOverride(callInfo, id);
             return callInfo;
         }
 

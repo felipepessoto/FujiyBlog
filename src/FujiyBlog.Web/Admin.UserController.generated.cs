@@ -13,6 +13,7 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
@@ -20,47 +21,68 @@ using System.Web.Mvc.Ajax;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
 using T4MVC;
-namespace FujiyBlog.Web.Areas.Admin.Controllers {
-    public partial class UserController {
+namespace FujiyBlog.Web.Areas.Admin.Controllers
+{
+    public partial class UserController
+    {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected UserController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToAction(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoute(callInfo.RouteValueDictionary);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result) {
+        protected RedirectToRouteResult RedirectToAction(Task<ActionResult> taskResult)
+        {
+            return RedirectToAction(taskResult.Result);
+        }
+
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(ActionResult result)
+        {
             var callInfo = result.GetT4MVCResult();
             return RedirectToRoutePermanent(callInfo.RouteValueDictionary);
         }
 
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        protected RedirectToRouteResult RedirectToActionPermanent(Task<ActionResult> taskResult)
+        {
+            return RedirectToActionPermanent(taskResult.Result);
+        }
+
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Edit() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        public virtual System.Web.Mvc.ActionResult Edit()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Disable() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Disable);
+        public virtual System.Web.Mvc.ActionResult Disable()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Disable);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult Enable() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.Enable);
+        public virtual System.Web.Mvc.ActionResult Enable()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Enable);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult EditRoleGroup() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
+        public virtual System.Web.Mvc.ActionResult EditRoleGroup()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditRoleGroup);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public System.Web.Mvc.ActionResult DeleteRoleGroup() {
-            return new T4MVC_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
+        public virtual System.Web.Mvc.ActionResult DeleteRoleGroup()
+        {
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -76,7 +98,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNamesClass {
+        public class ActionNamesClass
+        {
             public readonly string Index = "Index";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
@@ -88,7 +111,8 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionNameConstants {
+        public class ActionNameConstants
+        {
             public const string Index = "Index";
             public const string Create = "Create";
             public const string Edit = "Edit";
@@ -100,46 +124,74 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
         }
 
 
+        static readonly ActionParamsClass_Create s_params_Create = new ActionParamsClass_Create();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_Create CreateParams { get { return s_params_Create; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_Create
+        {
+            public readonly string userData = "userData";
+        }
         static readonly ActionParamsClass_Edit s_params_Edit = new ActionParamsClass_Edit();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Edit EditParams { get { return s_params_Edit; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Edit {
+        public class ActionParamsClass_Edit
+        {
             public readonly string id = "id";
+            public readonly string userData = "userData";
         }
         static readonly ActionParamsClass_Disable s_params_Disable = new ActionParamsClass_Disable();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Disable DisableParams { get { return s_params_Disable; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Disable {
+        public class ActionParamsClass_Disable
+        {
             public readonly string id = "id";
         }
         static readonly ActionParamsClass_Enable s_params_Enable = new ActionParamsClass_Enable();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_Enable EnableParams { get { return s_params_Enable; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Enable {
+        public class ActionParamsClass_Enable
+        {
             public readonly string id = "id";
         }
         static readonly ActionParamsClass_EditRoleGroup s_params_EditRoleGroup = new ActionParamsClass_EditRoleGroup();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_EditRoleGroup EditRoleGroupParams { get { return s_params_EditRoleGroup; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_EditRoleGroup {
+        public class ActionParamsClass_EditRoleGroup
+        {
             public readonly string id = "id";
+            public readonly string name = "name";
+            public readonly string roles = "roles";
         }
         static readonly ActionParamsClass_DeleteRoleGroup s_params_DeleteRoleGroup = new ActionParamsClass_DeleteRoleGroup();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionParamsClass_DeleteRoleGroup DeleteRoleGroupParams { get { return s_params_DeleteRoleGroup; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_DeleteRoleGroup {
+        public class ActionParamsClass_DeleteRoleGroup
+        {
             public readonly string id = "id";
         }
-        static readonly ViewNames s_views = new ViewNames();
+        static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ViewNames Views { get { return s_views; } }
+        public ViewsClass Views { get { return s_views; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ViewNames {
+        public class ViewsClass
+        {
+            static readonly _ViewNamesClass s_ViewNames = new _ViewNamesClass();
+            public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
+            public class _ViewNamesClass
+            {
+                public readonly string _Layout = "_Layout";
+                public readonly string Create = "Create";
+                public readonly string Edit = "Edit";
+                public readonly string EditRoleGroup = "EditRoleGroup";
+                public readonly string Index = "Index";
+                public readonly string RoleGroups = "RoleGroups";
+            }
             public readonly string _Layout = "~/Areas/Admin/Views/User/_Layout.cshtml";
             public readonly string Create = "~/Areas/Admin/Views/User/Create.cshtml";
             public readonly string Edit = "~/Areas/Admin/Views/User/Edit.cshtml";
@@ -150,71 +202,138 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers {
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public class T4MVC_UserController: FujiyBlog.Web.Areas.Admin.Controllers.UserController {
+    public partial class T4MVC_UserController : FujiyBlog.Web.Areas.Admin.Controllers.UserController
+    {
         public T4MVC_UserController() : base(Dummy.Instance) { }
 
-        public override System.Web.Mvc.ViewResult Index() {
-            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.Index);
+        [NonAction]
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult Index()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.Index);
+            IndexOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Create() {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
+        [NonAction]
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Create()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
+            CreateOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Create(FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserCreate userData) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Create);
+        [NonAction]
+        partial void CreateOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserCreate userData);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Create(FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserCreate userData)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Create);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userData", userData);
+            CreateOverride(callInfo, userData);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EditOverride(callInfo, id);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserSave userData) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Edit);
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserSave userData);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(FujiyBlog.Web.Areas.Admin.ViewModels.AdminUserSave userData)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "userData", userData);
+            EditOverride(callInfo, userData);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Disable(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Disable);
+        [NonAction]
+        partial void DisableOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Disable(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Disable);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DisableOverride(callInfo, id);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult Enable(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.Enable);
+        [NonAction]
+        partial void EnableOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Enable(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Enable);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EnableOverride(callInfo, id);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ViewResult RoleGroups() {
-            var callInfo = new T4MVC_ViewResult(Area, Name, ActionNames.RoleGroups);
+        [NonAction]
+        partial void RoleGroupsOverride(T4MVC_System_Web_Mvc_ViewResult callInfo);
+
+        [NonAction]
+        public override System.Web.Mvc.ViewResult RoleGroups()
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ViewResult(Area, Name, ActionNames.RoleGroups);
+            RoleGroupsOverride(callInfo);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult EditRoleGroup(int? id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
+        [NonAction]
+        partial void EditRoleGroupOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditRoleGroup(int? id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditRoleGroup);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EditRoleGroupOverride(callInfo, id);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult EditRoleGroup(int? id, string name, System.Collections.Generic.IEnumerable<string> roles) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.EditRoleGroup);
+        [NonAction]
+        partial void EditRoleGroupOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int? id, string name, System.Collections.Generic.IEnumerable<string> roles);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult EditRoleGroup(int? id, string name, System.Collections.Generic.IEnumerable<string> roles)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.EditRoleGroup);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "roles", roles);
+            EditRoleGroupOverride(callInfo, id, name, roles);
             return callInfo;
         }
 
-        public override System.Web.Mvc.ActionResult DeleteRoleGroup(int id) {
-            var callInfo = new T4MVC_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
+        [NonAction]
+        partial void DeleteRoleGroupOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult DeleteRoleGroup(int id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DeleteRoleGroup);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            DeleteRoleGroupOverride(callInfo, id);
             return callInfo;
         }
 

@@ -9,6 +9,7 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using NLog;
 using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
 
 namespace FujiyBlog.Web
 {
@@ -25,7 +26,7 @@ namespace FujiyBlog.Web
 
             if (TrustLevelDetector.CurrentTrustLevel == AspNetHostingPermissionLevel.Unrestricted)
             {
-                MiniProfilerEF.Initialize();
+                MiniProfilerEF6.Initialize();
             }
             //AutoDbMigration();
 
