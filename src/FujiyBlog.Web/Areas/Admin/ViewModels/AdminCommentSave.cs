@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
-using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {

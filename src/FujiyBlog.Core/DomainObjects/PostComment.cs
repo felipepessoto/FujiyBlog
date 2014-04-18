@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Core.DomainObjects
 {

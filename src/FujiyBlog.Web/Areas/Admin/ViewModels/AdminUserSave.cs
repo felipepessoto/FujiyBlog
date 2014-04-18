@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.Validation;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
