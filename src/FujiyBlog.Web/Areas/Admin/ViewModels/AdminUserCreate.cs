@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
