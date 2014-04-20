@@ -227,6 +227,12 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.OpenGraphImageUrl, value); }
         }
 
+        public string TwitterBlogAccount
+        {
+            get { return LoadSetting(SettingNames.TwitterBlogAccount); }
+            set { SaveSetting(SettingNames.TwitterBlogAccount, value); }
+        }
+
         public bool ReCaptchaEnabled
         {
             get
@@ -376,6 +382,9 @@ namespace FujiyBlog.Core.EntityFramework
 
             [DefaultValue(false), Description("Notify new comments")]
             NotifyNewComments = 35,
+
+            [Description("Blog's Twitter account")]
+            TwitterBlogAccount = 36,
         }
     }
 }

@@ -8,11 +8,11 @@
         }
         return Settings.SettingRepository.DefaultFeedOutput == "RSS" ? Url.Action(MVC.Feed.Rss20()) : Url.Action(MVC.Feed.Atom10());
     }
-    
+
     public string CanonicalUrl()
     {
         RouteValueDictionary valores = new RouteValueDictionary(ViewContext.RouteData.Values);
-        foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState.Where(x=>x.Value.Value != null))
+        foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState.Where(x => x.Value.Value != null))
         {
             valores[keyValuePair.Key] = keyValuePair.Value.Value.AttemptedValue;
         }
@@ -23,44 +23,59 @@
 }
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>@ViewBag.Title</title>
-        @Styles.Render("~/Content/Themes/Default/css")
-        @Styles.Render("~/Content/Themes/base/css")
-        @Styles.Render("~/Content/openid/css")
-        <link rel="canonical" href="@CanonicalUrl()" />
+<head>
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/Themes/Default/css")
+    @Styles.Render("~/Content/Themes/base/css")
+    @Styles.Render("~/Content/openid/css")
+    <link rel="canonical" href="@CanonicalUrl()" />
 
-        <meta name="viewport" content="width=device-width, initial-scale=1"> 
-        <meta name="title" content="@ViewBag.Title" />
-        <meta name="keywords" content="@ViewBag.Keywords" />
-        <meta name="description" content="@ViewBag.Description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="@ViewBag.Title" />
+    <meta name="keywords" content="@ViewBag.Keywords" />
+    <meta name="description" content="@ViewBag.Description" />
 
-        <link type="application/rss+xml" rel="alternate" href="@FeedsUrl()" />
-    
-        @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAdminIds))
-        {
-        <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds"/>
-        }
-        @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAppId))
-        {
-        <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId"/>
-        }
-        <meta property="og:site_name" content="@Settings.SettingRepository.BlogName"/>
+    <link type="application/rss+xml" rel="alternate" href="@FeedsUrl()" />
 
-        @if (IsSectionDefined("OpenGraphTags"))
-        { 
-            @RenderSection("OpenGraphTags")
-        }
-        else
-        {
-        <meta property="og:title" content="@ViewBag.Title"/>
-        <meta property="og:type" content="blog"/>
-        <meta property="og:url" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)"/>
-        <meta property="og:image" content="@Settings.SettingRepository.OpenGraphImageUrl"/>
-        <meta property="og:description" content="@ViewBag.Description"/>
-        }
+    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAdminIds))
+    {
+        <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds" />
+    }
+    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAppId))
+    {
+        <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId" />
+    }
+    <meta property="og:site_name" content="@Settings.SettingRepository.BlogName" />
 
-    </head>
+    @if (IsSectionDefined("OpenGraphTags"))
+    {
+        @RenderSection("OpenGraphTags")
+    }
+    else
+    {
+        <meta property="og:title" content="@ViewBag.Title" />
+        <meta property="og:type" content="blog" />
+        <meta property="og:url" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)" />
+        <meta property="og:image" content="@Settings.SettingRepository.OpenGraphImageUrl" />
+        <meta property="og:description" content="@ViewBag.Description" />
+    }
+
+    @if (IsSectionDefined("TwitterCardsTags"))
+    {
+        @RenderSection("TwitterCardsTags")
+    }
+    else
+    {
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@Settings.SettingRepository.TwitterBlogAccount">
+        <meta name="twitter:title" content="@ViewBag.Title">
+        <meta name="twitter:description" content="@ViewBag.Description">
+        <meta name="twitter:creator" content="">
+        <meta name="twitter:image:src" content="@Settings.SettingRepository.OpenGraphImageUrl">
+        <meta name="twitter:domain" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)">
+    }
+
+</head>
 
 <body>
     <div>
@@ -85,9 +100,9 @@
                 @RenderBody()
                 <div style="clear: both;">&nbsp;</div>
             </div>
-        
+
             <div id="sidebar">
-                <ul id="sidebar-wrapper">  
+                <ul id="sidebar-wrapper">
                     @Html.Action(MVC.Widget.Index("Zone1"))
                 </ul>
             </div>
@@ -98,30 +113,30 @@
     <div id="footer">
         <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.5</p>
     </div>
-    
+
     <script src="@Url.Action(MVC.JavaScript.FujiyBlogBundle())" type="text/javascript"></script>
     @Scripts.Render("~/bundles/FujiyBlogBundle")
     @RenderSection("scripts", required: false)
-    
+
     @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
     {
         <script type="text/javascript">
-            (function () {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();
+            (function () { var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true; po.src = 'https://apis.google.com/js/plusone.js'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s); })();
         </script>
     }
     @if (Settings.SettingRepository.EnableTwitterSharePosts)
     {
-        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } } (document, "script", "twitter-wjs");</script>
+        <script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "//platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>
     }
-    
+
     @if (!string.IsNullOrEmpty(Settings.SettingRepository.CustomCode))
     {
         @Html.Raw(Settings.SettingRepository.CustomCode)
     }
-    
+
     @if (StackExchange.Profiling.MiniProfiler.Settings.Results_Authorize(HttpContext.Current.Request))
     {
-        @StackExchange.Profiling.MiniProfiler.RenderIncludes(useExistingjQuery:true)
+        @StackExchange.Profiling.MiniProfiler.RenderIncludes(useExistingjQuery: true)
     }
 </body>
 </html>
