@@ -370,6 +370,12 @@ a {
     padding: 3px;
 }
 
+/* Widget */
+.config-widget-links {
+    margin-top: 1em;
+    margin-bottom: -1.33em;
+}
+
 /* Archive */
 
 #archive ul {
