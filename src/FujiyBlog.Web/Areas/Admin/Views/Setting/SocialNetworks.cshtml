@@ -4,32 +4,18 @@
     Layout = MVC.Admin.Setting.Views._Layout;
 }
 <h2>
-    Social Network Settings</h2>
+    Social Network Settings
+</h2>
 @using (Html.BeginForm())
 {
-
     <fieldset>
-        <legend>Social Network</legend>
+        <legend>Facebook</legend>
         <div class="editor-label">
             @Html.LabelFor(model => model.EnableFacebookLikePosts)
         </div>
         <div class="editor-field">
             @Html.EditorFor(model => model.EnableFacebookLikePosts)
             @Html.ValidationMessageFor(model => model.EnableFacebookLikePosts)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EnableGooglePlusOnePosts)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EnableGooglePlusOnePosts)
-            @Html.ValidationMessageFor(model => model.EnableGooglePlusOnePosts)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EnableTwitterSharePosts)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EnableTwitterSharePosts)
-            @Html.ValidationMessageFor(model => model.EnableTwitterSharePosts)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.FacebookAdminIds)
@@ -52,8 +38,36 @@
             @Html.EditorFor(model => model.OpenGraphImageUrl)
             @Html.ValidationMessageFor(model => model.OpenGraphImageUrl)
         </div>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
     </fieldset>
+    <fieldset>
+        <legend>Twitter</legend>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableTwitterSharePosts)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableTwitterSharePosts)
+            @Html.ValidationMessageFor(model => model.EnableTwitterSharePosts)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.TwitterBlogAccount)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.TwitterBlogAccount)
+            @Html.ValidationMessageFor(model => model.TwitterBlogAccount)
+        </div>
+    </fieldset>
+    <fieldset>
+        <legend>Google+</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.EnableGooglePlusOnePosts)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.EnableGooglePlusOnePosts)
+            @Html.ValidationMessageFor(model => model.EnableGooglePlusOnePosts)
+        </div>
+    </fieldset>
+    <p>
+        <input type="submit" value="Save" />
+    </p>
 }

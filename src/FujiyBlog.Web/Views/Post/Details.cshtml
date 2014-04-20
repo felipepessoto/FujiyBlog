@@ -4,19 +4,29 @@
 @using FujiyBlog.Core.Extensions
 
 @model FujiyBlog.Core.Dto.PostSummary
-           
+
 @{
     Layout = this.FindLayoutPath("_Layout");
+}@section OpenGraphTags
+{
+    <meta property="og:title" content="@Model.Post.Title" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="@Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme)" />
+    <meta property="og:image" content="@(Model.Post.ImageUrl ?? Settings.SettingRepository.OpenGraphImageUrl)" />
+    <meta property="og:description" content="@Model.Post.Description" />
 }
 
-@section OpenGraphTags
+@section TwitterCardsTags
 {
-    <meta property="og:title" content="@Model.Post.Title"/>
-    <meta property="og:type" content="article"/>
-    <meta property="og:url" content="@Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme)"/>
-    <meta property="og:image" content="@(Model.Post.ImageUrl ?? Settings.SettingRepository.OpenGraphImageUrl)"/>
-    <meta property="og:description" content="@Model.Post.Description"/>
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@Settings.SettingRepository.TwitterBlogAccount">
+    <meta name="twitter:title" content="@Model.Post.Title">
+    <meta name="twitter:description" content="@Model.Post.Description">
+    <meta name="twitter:creator" content="">
+    <meta name="twitter:image:src" content="@(Model.Post.ImageUrl ?? Settings.SettingRepository.OpenGraphImageUrl)">
+    <meta name="twitter:domain" content="@Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme)">
 }
+
 
 <div id="postnavigation">
     @if (Model.PreviousPost != null)
@@ -24,7 +34,7 @@
         @Html.ActionLink("<< " + Model.PreviousPost.Title, MVC.Post.Details(Model.PreviousPost.Slug))
         if (Model.NextPost != null)
         {
-             <text>|</text>
+            <text>|</text>
         }
     }
     @if (Model.NextPost != null)
@@ -34,14 +44,15 @@
 </div>
 @{Html.RenderPartial("Post", Model);}
 <div id="commentlist">
-@if (Model.Post.Comments.Count > 0)
-{
-    <h1 class="comment-title">
-        @Resources.Labels.Comments</h1>
-}
+    @if (Model.Post.Comments.Count > 0)
+    {
+        <h1 class="comment-title">
+            @Resources.Labels.Comments
+        </h1>
+    }
     @{Html.RenderPartial("../Comment/Comments", Model.Post.Comments.Where(x => x.ParentComment == null));}
 </div>
 @if (User.IsInRole(Role.CreateComments) && Model.Post.IsCommentEnabled && Settings.SettingRepository.EnableComments && (!Settings.SettingRepository.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
 {
-    Html.RenderPartial("../Comment/DoComment", new PostComment {Post = Model.Post});
+    Html.RenderPartial("../Comment/DoComment", new PostComment { Post = Model.Post });
 }

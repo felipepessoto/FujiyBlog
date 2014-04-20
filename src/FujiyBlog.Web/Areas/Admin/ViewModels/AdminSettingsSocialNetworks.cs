@@ -21,5 +21,8 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name = "Default Open Graph Image(used on facebook share)")]
         public string OpenGraphImageUrl { get; set; }
+
+        [Display(Name = "Blog's Twitter account")]
+        public string TwitterBlogAccount { get; set; }
     }
 }
