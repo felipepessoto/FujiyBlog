@@ -1,7 +1,13 @@
 ﻿@using System.Collections.Specialized
+@using FujiyBlog.Web.Models
 
 @helper Like(string url){
 
-    <iframe src="//www.facebook.com/plugins/like.php?href=@HttpUtility.UrlEncode(url)&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+    <iframe src="//www.facebook.com/plugins/like.php?href=@Uri.EscapeDataString(url)&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
     @*<div class="fb-like" data-href="@url" data-send="false" data-layout="button_count" data-width="50" data-show-faces="false"></div>*@
+}
+
+@helper Share(string url)
+{
+    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://facebook.com/sharer.php?u=@Uri.EscapeDataString(url)&app_id=@Settings.SettingRepository.FacebookAppId', '', 644, 368);"><img src="~/Content/Images/facebook_share.png" /></a>
 }

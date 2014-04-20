@@ -369,6 +369,9 @@
   <ItemGroup>
     <Content Include="App_Data\holder.txt" />
     <Content Include="Content\Admin\Site.css" />
+    <Content Include="Content\Images\facebook_share.png" />
+    <Content Include="Content\Images\googleplus.png" />
+    <Content Include="Content\Images\tweet.png" />
     <Content Include="Content\openid\images\openid-inputicon.gif" />
     <Content Include="Content\openid\images\openid-providers-en.png" />
     <Content Include="Content\openid\openid.css" />
