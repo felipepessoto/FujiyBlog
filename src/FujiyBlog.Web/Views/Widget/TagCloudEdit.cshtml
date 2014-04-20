@@ -1,16 +1,10 @@
-﻿@model FujiyBlog.Core.DomainObjects.WidgetSetting
+﻿@using Newtonsoft.Json.Linq
+@model FujiyBlog.Core.DomainObjects.WidgetSetting
 @{
-    IDictionary<string, object> settings;
-    if (Model.Settings == null)
-    {
-        settings = new Dictionary<string, object>() { { "Title", "Tag Cloud" }, { "MinimumPosts", 1 } };
-    }
-    else
-    {
-        settings = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<IDictionary<string, object>>(Model.Settings);
-    }
+    JObject settings = JObject.Parse(Model.Settings ?? "{}");
 }
-Title: @Html.TextBox("Title" + Model.Id, settings["Title"])<br/><br/>
-Minimum posts in each tag: @Html.TextBox("MinimumPosts" + Model.Id, settings["MinimumPosts"].ToString())<br/><br/>
+Title: @Html.TextBox("Title" + Model.Id, settings.Value<string>("Title") ?? "Tag Cloud")<br /><br />
+Minimum posts in each tag: @Html.TextBox("MinimumPosts" + Model.Id, settings.Value<int?>("MinimumPosts").GetValueOrDefault(1).ToString())<br /><br />
 <a href="javascript:void(0);" onclick="javascript:fujiyBlog.widget.saveWidgetSettings(@Model.Id, JSON.stringify({ Title: $('#Title@(Model.Id)').val(), MinimumPosts: parseInt($('#MinimumPosts@(Model.Id)').val()) }));">
-    Save</a>
+    Save
+</a>
