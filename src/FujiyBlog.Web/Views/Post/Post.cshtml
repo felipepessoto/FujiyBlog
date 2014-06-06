@@ -56,7 +56,7 @@
             <div class="social-networks">
                 @if (Settings.SettingRepository.EnableTwitterSharePosts)
                 {
-                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))&text=@Uri.EscapeDataString(Model.Post.Title)&via=@Uri.EscapeDataString(Settings.SettingRepository.TwitterBlogAccount)', '', 550, 420)"><img src="~/Content/Images/tweet.png" /></a>
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))&text=@Uri.EscapeDataString(Model.Post.Title)&via=@Uri.EscapeDataString(Settings.SettingRepository.TwitterBlogAccount ?? "")', '', 550, 420)"><img src="~/Content/Images/tweet.png" /></a>
                 }
                 @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
                 {
