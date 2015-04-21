@@ -64,9 +64,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.SqlServerCompact.6.1.3\lib\net45\EntityFramework.SqlServerCompact.dll</HintPath>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net40\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -117,13 +117,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Practices.Unity, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Practices.Unity.Configuration">
-      <HintPath>..\packages\Unity.3.0.1304.1\lib\Net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
+      <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -133,13 +136,13 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler">
-      <HintPath>..\packages\MiniProfiler.3.0.10-beta7\lib\net40\MiniProfiler.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MiniProfiler, Version=3.1.1.140, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MiniProfiler.3.1.1.140\lib\net40\MiniProfiler.dll</HintPath>
     </Reference>
-    <Reference Include="MiniProfiler.EntityFramework6">
-      <HintPath>..\packages\MiniProfiler.EF6.3.0.10-beta4\lib\net40\MiniProfiler.EntityFramework6.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="MiniProfiler.EntityFramework6, Version=3.0.11.0, Culture=neutral, PublicKeyToken=b44f9351044011a3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\MiniProfiler.EF6.3.0.11\lib\net40\MiniProfiler.EntityFramework6.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -220,9 +223,9 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="T4MVCExtensions">
-      <HintPath>..\packages\T4MVCExtensions.3.9.0\lib\net40\T4MVCExtensions.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\T4MVCExtensions.3.14.2\lib\net40\T4MVCExtensions.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -387,7 +390,15 @@
     <Content Include="Content\openid\images\openid-inputicon.gif" />
     <Content Include="Content\openid\images\openid-providers-en.png" />
     <Content Include="Content\openid\openid.css" />
-    <Content Include="Content\Themes\base\images\animated-overlay.gif" />
+    <Content Include="Content\Themes\base\accordion.css" />
+    <Content Include="Content\Themes\base\all.css" />
+    <Content Include="Content\Themes\base\autocomplete.css" />
+    <Content Include="Content\Themes\base\base.css" />
+    <Content Include="Content\Themes\base\button.css" />
+    <Content Include="Content\Themes\base\core.css" />
+    <Content Include="Content\Themes\base\datepicker.css" />
+    <Content Include="Content\Themes\base\dialog.css" />
+    <Content Include="Content\Themes\base\draggable.css" />
     <Content Include="Content\Themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\Themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\Themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -401,54 +412,17 @@
     <Content Include="Content\Themes\base\images\ui-icons_454545_256x240.png" />
     <Content Include="Content\Themes\base\images\ui-icons_888888_256x240.png" />
     <Content Include="Content\Themes\base\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\Themes\base\jquery-ui.css" />
-    <Content Include="Content\Themes\base\jquery.ui.accordion.css" />
-    <Content Include="Content\Themes\base\jquery.ui.all.css" />
-    <Content Include="Content\Themes\base\jquery.ui.autocomplete.css" />
-    <Content Include="Content\Themes\base\jquery.ui.base.css" />
-    <Content Include="Content\Themes\base\jquery.ui.button.css" />
-    <Content Include="Content\Themes\base\jquery.ui.core.css" />
-    <Content Include="Content\Themes\base\jquery.ui.datepicker.css" />
-    <Content Include="Content\Themes\base\jquery.ui.dialog.css" />
-    <Content Include="Content\Themes\base\jquery.ui.menu.css" />
-    <Content Include="Content\Themes\base\jquery.ui.progressbar.css" />
-    <Content Include="Content\Themes\base\jquery.ui.resizable.css" />
-    <Content Include="Content\Themes\base\jquery.ui.selectable.css" />
-    <Content Include="Content\Themes\base\jquery.ui.slider.css" />
-    <Content Include="Content\Themes\base\jquery.ui.spinner.css" />
-    <Content Include="Content\Themes\base\jquery.ui.tabs.css" />
-    <Content Include="Content\Themes\base\jquery.ui.theme.css" />
-    <Content Include="Content\Themes\base\jquery.ui.tooltip.css" />
-    <Content Include="Content\Themes\base\minified\images\animated-overlay.gif" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_flat_0_aaaaaa_40x100.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_flat_75_ffffff_40x100.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_glass_55_fbf9ee_1x400.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_glass_65_ffffff_1x400.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_glass_75_dadada_1x400.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_glass_75_e6e6e6_1x400.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_glass_95_fef1ec_1x400.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-bg_highlight-soft_75_cccccc_1x100.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-icons_222222_256x240.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-icons_2e83ff_256x240.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-icons_454545_256x240.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-icons_888888_256x240.png" />
-    <Content Include="Content\Themes\base\minified\images\ui-icons_cd0a0a_256x240.png" />
-    <Content Include="Content\Themes\base\minified\jquery-ui.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.accordion.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.autocomplete.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.button.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.core.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.datepicker.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.dialog.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.menu.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.progressbar.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.resizable.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.selectable.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.slider.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.spinner.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.tabs.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.theme.min.css" />
-    <Content Include="Content\Themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Content\Themes\base\menu.css" />
+    <Content Include="Content\Themes\base\progressbar.css" />
+    <Content Include="Content\Themes\base\resizable.css" />
+    <Content Include="Content\Themes\base\selectable.css" />
+    <Content Include="Content\Themes\base\selectmenu.css" />
+    <Content Include="Content\Themes\base\slider.css" />
+    <Content Include="Content\Themes\base\sortable.css" />
+    <Content Include="Content\Themes\base\spinner.css" />
+    <Content Include="Content\Themes\base\tabs.css" />
+    <Content Include="Content\Themes\base\theme.css" />
+    <Content Include="Content\Themes\base\tooltip.css" />
     <Content Include="Content\Themes\Default\img\header_background.jpg" />
     <Content Include="Content\Themes\Default\img\reply-arrow.gif" />
     <Content Include="Content\Themes\Default\Site.css" />
@@ -456,16 +430,17 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\fujiyblog.js" />
-    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.8.2.js" />
-    <Content Include="Scripts\jquery-1.8.2.min.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.js" />
-    <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
+    <None Include="Scripts\jquery-1.11.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.11.2.js" />
+    <Content Include="Scripts\jquery-1.11.2.min.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.js" />
+    <Content Include="Scripts\jquery-ui-1.11.4.min.js" />
     <Content Include="Scripts\jquery-ui-timepicker-addon.js" />
     <Content Include="Scripts\jquery.form.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.11.2.min.map" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -731,6 +706,11 @@
     <Content Include="Scripts\tinymce\utils\form_utils.js" />
     <Content Include="Scripts\tinymce\utils\mctabs.js" />
     <Content Include="Scripts\tinymce\utils\validate.js" />
+    <None Include="T4MVC.tt.hooks.t4" />
+    <None Include="T4MVC.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>T4MVC.cs</LastGenOutput>
+    </None>
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Upload\holder.txt" />
     <Content Include="Web.config">
@@ -744,13 +724,7 @@
     </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
-    <None Include="T4MVC.tt.hooks.t4" />
-    <Content Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
@@ -869,7 +843,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>10183</DevelopmentServerPort>
           <DevelopmentServerVPath>/blog</DevelopmentServerVPath>

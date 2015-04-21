@@ -19,7 +19,7 @@ namespace FujiyBlog.Web
                 "~/Scripts/json2.js"));
 
             bundles.Add(new StyleBundle("~/Content/Themes/Default/css").Include("~/Content/Themes/Default/Site.css"));
-            bundles.Add(new StyleBundle("~/Content/Themes/base/css").Include("~/Content/Themes/base/jquery-ui.css"));
+            bundles.Add(new StyleBundle("~/Content/Themes/base/css").Include("~/Content/Themes/base/all.css"));
             bundles.Add(new StyleBundle("~/Content/openid/css").Include("~/Content/openid/openid.css"));
 
             /*

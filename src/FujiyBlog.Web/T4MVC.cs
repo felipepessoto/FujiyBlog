@@ -3,8 +3,9 @@
 // Don't change it directly as your change would get overwritten.  Instead, make changes
 // to the .tt file (i.e. the T4 template) and save it to regenerate this file.
 
-// Make sure the compiler doesn't complain about missing Xml comments
-#pragma warning disable 1591
+// Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
+// 0108: suppress "Foo hides inherited member Foo. Use the new keyword if hiding was intended." when a controller and its abstract parent are both processed
+#pragma warning disable 1591, 3008, 3009, 0108
 #region T4MVC
 
 using System;
@@ -106,11 +107,12 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
         public static readonly string fujiyblog_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fujiyblog.min.js") ? Url("fujiyblog.min.js") : Url("fujiyblog.js");
-        public static readonly string jquery_1_8_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.intellisense.min.js") ? Url("jquery-1.8.2.intellisense.min.js") : Url("jquery-1.8.2.intellisense.js");
-        public static readonly string jquery_1_8_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.8.2.min.js") ? Url("jquery-1.8.2.min.js") : Url("jquery-1.8.2.js");
-        public static readonly string jquery_1_8_2_min_js = Url("jquery-1.8.2.min.js");
-        public static readonly string jquery_ui_1_10_4_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.10.4.min.js") ? Url("jquery-ui-1.10.4.min.js") : Url("jquery-ui-1.10.4.js");
-        public static readonly string jquery_ui_1_10_4_min_js = Url("jquery-ui-1.10.4.min.js");
+        public static readonly string jquery_1_11_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.11.2.intellisense.min.js") ? Url("jquery-1.11.2.intellisense.min.js") : Url("jquery-1.11.2.intellisense.js");
+        public static readonly string jquery_1_11_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-1.11.2.min.js") ? Url("jquery-1.11.2.min.js") : Url("jquery-1.11.2.js");
+        public static readonly string jquery_1_11_2_min_js = Url("jquery-1.11.2.min.js");
+        public static readonly string jquery_1_11_2_min_map = Url("jquery-1.11.2.min.map");
+        public static readonly string jquery_ui_1_11_4_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-1.11.4.min.js") ? Url("jquery-ui-1.11.4.min.js") : Url("jquery-ui-1.11.4.js");
+        public static readonly string jquery_ui_1_11_4_min_js = Url("jquery-ui-1.11.4.min.js");
         public static readonly string jquery_ui_timepicker_addon_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui-timepicker-addon.min.js") ? Url("jquery-ui-timepicker-addon.min.js") : Url("jquery-ui-timepicker-addon.js");
         public static readonly string jquery_form_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.form.min.js") ? Url("jquery.form.min.js") : Url("jquery.form.js");
         public static readonly string jquery_unobtrusive_ajax_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.unobtrusive-ajax.min.js") ? Url("jquery.unobtrusive-ajax.min.js") : Url("jquery.unobtrusive-ajax.js");
@@ -1185,6 +1187,16 @@ namespace Links
         }
     
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public static class Images {
+            private const string URLPATH = "~/Content/Images";
+            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+            public static readonly string facebook_share_png = Url("facebook_share.png");
+            public static readonly string googleplus_png = Url("googleplus.png");
+            public static readonly string tweet_png = Url("tweet.png");
+        }
+    
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public static class openid {
             private const string URLPATH = "~/Content/openid";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
@@ -1212,12 +1224,29 @@ namespace Links
                 private const string URLPATH = "~/Content/Themes/base";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                public static readonly string accordion_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/accordion.min.css") ? Url("accordion.min.css") : Url("accordion.css");
+                     
+                public static readonly string all_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/all.min.css") ? Url("all.min.css") : Url("all.css");
+                     
+                public static readonly string autocomplete_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/autocomplete.min.css") ? Url("autocomplete.min.css") : Url("autocomplete.css");
+                     
+                public static readonly string base_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/base.min.css") ? Url("base.min.css") : Url("base.css");
+                     
+                public static readonly string button_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/button.min.css") ? Url("button.min.css") : Url("button.css");
+                     
+                public static readonly string core_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/core.min.css") ? Url("core.min.css") : Url("core.css");
+                     
+                public static readonly string datepicker_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/datepicker.min.css") ? Url("datepicker.min.css") : Url("datepicker.css");
+                     
+                public static readonly string dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dialog.min.css") ? Url("dialog.min.css") : Url("dialog.css");
+                     
+                public static readonly string draggable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/draggable.min.css") ? Url("draggable.min.css") : Url("draggable.css");
+                     
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
                 public static class images {
                     private const string URLPATH = "~/Content/Themes/base/images";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string animated_overlay_gif = Url("animated-overlay.gif");
                     public static readonly string ui_bg_flat_0_aaaaaa_40x100_png = Url("ui-bg_flat_0_aaaaaa_40x100.png");
                     public static readonly string ui_bg_flat_75_ffffff_40x100_png = Url("ui-bg_flat_75_ffffff_40x100.png");
                     public static readonly string ui_bg_glass_55_fbf9ee_1x400_png = Url("ui-bg_glass_55_fbf9ee_1x400.png");
@@ -1233,86 +1262,28 @@ namespace Links
                     public static readonly string ui_icons_cd0a0a_256x240_png = Url("ui-icons_cd0a0a_256x240.png");
                 }
             
-                public static readonly string jquery_ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery-ui.min.css") ? Url("jquery-ui.min.css") : Url("jquery-ui.css");
+                public static readonly string menu_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/menu.min.css") ? Url("menu.min.css") : Url("menu.css");
                      
-                public static readonly string jquery_ui_accordion_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.accordion.min.css") ? Url("jquery.ui.accordion.min.css") : Url("jquery.ui.accordion.css");
+                public static readonly string progressbar_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/progressbar.min.css") ? Url("progressbar.min.css") : Url("progressbar.css");
                      
-                public static readonly string jquery_ui_all_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.all.min.css") ? Url("jquery.ui.all.min.css") : Url("jquery.ui.all.css");
+                public static readonly string resizable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/resizable.min.css") ? Url("resizable.min.css") : Url("resizable.css");
                      
-                public static readonly string jquery_ui_autocomplete_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.autocomplete.min.css") ? Url("jquery.ui.autocomplete.min.css") : Url("jquery.ui.autocomplete.css");
+                public static readonly string selectable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/selectable.min.css") ? Url("selectable.min.css") : Url("selectable.css");
                      
-                public static readonly string jquery_ui_base_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.base.min.css") ? Url("jquery.ui.base.min.css") : Url("jquery.ui.base.css");
+                public static readonly string selectmenu_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/selectmenu.min.css") ? Url("selectmenu.min.css") : Url("selectmenu.css");
                      
-                public static readonly string jquery_ui_button_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.button.min.css") ? Url("jquery.ui.button.min.css") : Url("jquery.ui.button.css");
+                public static readonly string slider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/slider.min.css") ? Url("slider.min.css") : Url("slider.css");
                      
-                public static readonly string jquery_ui_core_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.core.min.css") ? Url("jquery.ui.core.min.css") : Url("jquery.ui.core.css");
+                public static readonly string sortable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/sortable.min.css") ? Url("sortable.min.css") : Url("sortable.css");
                      
-                public static readonly string jquery_ui_datepicker_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.datepicker.min.css") ? Url("jquery.ui.datepicker.min.css") : Url("jquery.ui.datepicker.css");
+                public static readonly string spinner_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/spinner.min.css") ? Url("spinner.min.css") : Url("spinner.css");
                      
-                public static readonly string jquery_ui_dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.dialog.min.css") ? Url("jquery.ui.dialog.min.css") : Url("jquery.ui.dialog.css");
+                public static readonly string tabs_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tabs.min.css") ? Url("tabs.min.css") : Url("tabs.css");
                      
-                public static readonly string jquery_ui_menu_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.menu.min.css") ? Url("jquery.ui.menu.min.css") : Url("jquery.ui.menu.css");
+                public static readonly string theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/theme.min.css") ? Url("theme.min.css") : Url("theme.css");
                      
-                public static readonly string jquery_ui_progressbar_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.progressbar.min.css") ? Url("jquery.ui.progressbar.min.css") : Url("jquery.ui.progressbar.css");
+                public static readonly string tooltip_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tooltip.min.css") ? Url("tooltip.min.css") : Url("tooltip.css");
                      
-                public static readonly string jquery_ui_resizable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.resizable.min.css") ? Url("jquery.ui.resizable.min.css") : Url("jquery.ui.resizable.css");
-                     
-                public static readonly string jquery_ui_selectable_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.selectable.min.css") ? Url("jquery.ui.selectable.min.css") : Url("jquery.ui.selectable.css");
-                     
-                public static readonly string jquery_ui_slider_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.slider.min.css") ? Url("jquery.ui.slider.min.css") : Url("jquery.ui.slider.css");
-                     
-                public static readonly string jquery_ui_spinner_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.spinner.min.css") ? Url("jquery.ui.spinner.min.css") : Url("jquery.ui.spinner.css");
-                     
-                public static readonly string jquery_ui_tabs_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.tabs.min.css") ? Url("jquery.ui.tabs.min.css") : Url("jquery.ui.tabs.css");
-                     
-                public static readonly string jquery_ui_theme_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.theme.min.css") ? Url("jquery.ui.theme.min.css") : Url("jquery.ui.theme.css");
-                     
-                public static readonly string jquery_ui_tooltip_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.ui.tooltip.min.css") ? Url("jquery.ui.tooltip.min.css") : Url("jquery.ui.tooltip.css");
-                     
-                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class minified {
-                    private const string URLPATH = "~/Content/Themes/base/minified";
-                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class images {
-                        private const string URLPATH = "~/Content/Themes/base/minified/images";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string animated_overlay_gif = Url("animated-overlay.gif");
-                        public static readonly string ui_bg_flat_0_aaaaaa_40x100_png = Url("ui-bg_flat_0_aaaaaa_40x100.png");
-                        public static readonly string ui_bg_flat_75_ffffff_40x100_png = Url("ui-bg_flat_75_ffffff_40x100.png");
-                        public static readonly string ui_bg_glass_55_fbf9ee_1x400_png = Url("ui-bg_glass_55_fbf9ee_1x400.png");
-                        public static readonly string ui_bg_glass_65_ffffff_1x400_png = Url("ui-bg_glass_65_ffffff_1x400.png");
-                        public static readonly string ui_bg_glass_75_dadada_1x400_png = Url("ui-bg_glass_75_dadada_1x400.png");
-                        public static readonly string ui_bg_glass_75_e6e6e6_1x400_png = Url("ui-bg_glass_75_e6e6e6_1x400.png");
-                        public static readonly string ui_bg_glass_95_fef1ec_1x400_png = Url("ui-bg_glass_95_fef1ec_1x400.png");
-                        public static readonly string ui_bg_highlight_soft_75_cccccc_1x100_png = Url("ui-bg_highlight-soft_75_cccccc_1x100.png");
-                        public static readonly string ui_icons_222222_256x240_png = Url("ui-icons_222222_256x240.png");
-                        public static readonly string ui_icons_2e83ff_256x240_png = Url("ui-icons_2e83ff_256x240.png");
-                        public static readonly string ui_icons_454545_256x240_png = Url("ui-icons_454545_256x240.png");
-                        public static readonly string ui_icons_888888_256x240_png = Url("ui-icons_888888_256x240.png");
-                        public static readonly string ui_icons_cd0a0a_256x240_png = Url("ui-icons_cd0a0a_256x240.png");
-                    }
-                
-                    public static readonly string jquery_ui_min_css = Url("jquery-ui.min.css");
-                    public static readonly string jquery_ui_accordion_min_css = Url("jquery.ui.accordion.min.css");
-                    public static readonly string jquery_ui_autocomplete_min_css = Url("jquery.ui.autocomplete.min.css");
-                    public static readonly string jquery_ui_button_min_css = Url("jquery.ui.button.min.css");
-                    public static readonly string jquery_ui_core_min_css = Url("jquery.ui.core.min.css");
-                    public static readonly string jquery_ui_datepicker_min_css = Url("jquery.ui.datepicker.min.css");
-                    public static readonly string jquery_ui_dialog_min_css = Url("jquery.ui.dialog.min.css");
-                    public static readonly string jquery_ui_menu_min_css = Url("jquery.ui.menu.min.css");
-                    public static readonly string jquery_ui_progressbar_min_css = Url("jquery.ui.progressbar.min.css");
-                    public static readonly string jquery_ui_resizable_min_css = Url("jquery.ui.resizable.min.css");
-                    public static readonly string jquery_ui_selectable_min_css = Url("jquery.ui.selectable.min.css");
-                    public static readonly string jquery_ui_slider_min_css = Url("jquery.ui.slider.min.css");
-                    public static readonly string jquery_ui_spinner_min_css = Url("jquery.ui.spinner.min.css");
-                    public static readonly string jquery_ui_tabs_min_css = Url("jquery.ui.tabs.min.css");
-                    public static readonly string jquery_ui_theme_min_css = Url("jquery.ui.theme.min.css");
-                    public static readonly string jquery_ui_tooltip_min_css = Url("jquery.ui.tooltip.min.css");
-                }
-            
             }
         
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -1337,13 +1308,936 @@ namespace Links
     
     }
 
+    
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
     public static partial class Bundles
     {
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static partial class Scripts {}
-        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public static partial class Styles {}
+        public static partial class Scripts 
+        {
+            public static partial class tinymce 
+            {
+                public static partial class langs 
+                {
+                    public static class Assets
+                    {
+                        public const string en_js = "~/Scripts/tinymce/langs/en.js"; 
+                    }
+                }
+                public static partial class plugins 
+                {
+                    public static partial class advhr 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string advhr_css = "~/Scripts/tinymce/plugins/advhr/css/advhr.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string rule_js = "~/Scripts/tinymce/plugins/advhr/js/rule.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/advhr/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advhr/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advhr/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class advimage 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string advimage_css = "~/Scripts/tinymce/plugins/advimage/css/advimage.css";
+                            }
+                        }
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string image_js = "~/Scripts/tinymce/plugins/advimage/js/image.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/advimage/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advimage/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advimage/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class advlink 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string advlink_css = "~/Scripts/tinymce/plugins/advlink/css/advlink.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string advlink_js = "~/Scripts/tinymce/plugins/advlink/js/advlink.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/advlink/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advlink/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advlink/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class advlist 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advlist/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advlist/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class autolink 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/autolink/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/autolink/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class autoresize 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/autoresize/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/autoresize/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class autosave 
+                    {
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_js = "~/Scripts/tinymce/plugins/autosave/langs/en.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/autosave/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/autosave/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class bbcode 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/bbcode/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/bbcode/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class contextmenu 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/contextmenu/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/contextmenu/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class directionality 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/directionality/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/directionality/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class emotions 
+                    {
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string emotions_js = "~/Scripts/tinymce/plugins/emotions/js/emotions.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/emotions/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/emotions/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/emotions/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class example 
+                    {
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string dialog_js = "~/Scripts/tinymce/plugins/example/js/dialog.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_js = "~/Scripts/tinymce/plugins/example/langs/en.js"; 
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/example/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/example/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/example/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class example_dependency 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/example_dependency/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/example_dependency/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class fullpage 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string fullpage_css = "~/Scripts/tinymce/plugins/fullpage/css/fullpage.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string fullpage_js = "~/Scripts/tinymce/plugins/fullpage/js/fullpage.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/fullpage/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/fullpage/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/fullpage/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class fullscreen 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/fullscreen/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/fullscreen/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class iespell 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/iespell/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/iespell/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class inlinepopups 
+                    {
+                        public static partial class skins 
+                        {
+                            public static partial class clearlooks2 
+                            {
+                                public static partial class img 
+                                {
+                                    public static class Assets
+                                    {
+                                    }
+                                }
+                                public static class Assets
+                                {
+                                    public const string window_css = "~/Scripts/tinymce/plugins/inlinepopups/skins/clearlooks2/window.css";
+                                }
+                            }
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/inlinepopups/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/inlinepopups/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class insertdatetime 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/insertdatetime/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/insertdatetime/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class layer 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/layer/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/layer/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class legacyoutput 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/legacyoutput/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/legacyoutput/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class lists 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/lists/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/lists/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class media 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string media_css = "~/Scripts/tinymce/plugins/media/css/media.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string embed_js = "~/Scripts/tinymce/plugins/media/js/embed.js"; 
+                                public const string media_js = "~/Scripts/tinymce/plugins/media/js/media.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/media/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/media/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/media/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class nonbreaking 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/nonbreaking/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/nonbreaking/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class noneditable 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/noneditable/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/noneditable/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class pagebreak 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/pagebreak/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/pagebreak/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class paste 
+                    {
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string pastetext_js = "~/Scripts/tinymce/plugins/paste/js/pastetext.js"; 
+                                public const string pasteword_js = "~/Scripts/tinymce/plugins/paste/js/pasteword.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/paste/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/paste/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/paste/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class preview 
+                    {
+                        public static partial class jscripts 
+                        {
+                            public static class Assets
+                            {
+                                public const string embed_js = "~/Scripts/tinymce/plugins/preview/jscripts/embed.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/preview/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/preview/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class print 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/print/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/print/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class save 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/save/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/save/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class searchreplace 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string searchreplace_css = "~/Scripts/tinymce/plugins/searchreplace/css/searchreplace.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string searchreplace_js = "~/Scripts/tinymce/plugins/searchreplace/js/searchreplace.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/searchreplace/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/searchreplace/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/searchreplace/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class spellchecker 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string content_css = "~/Scripts/tinymce/plugins/spellchecker/css/content.css";
+                            }
+                        }
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/spellchecker/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/spellchecker/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class style 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string props_css = "~/Scripts/tinymce/plugins/style/css/props.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string props_js = "~/Scripts/tinymce/plugins/style/js/props.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/style/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/style/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/style/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class tabfocus 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/tabfocus/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/tabfocus/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class table 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string cell_css = "~/Scripts/tinymce/plugins/table/css/cell.css";
+                                public const string row_css = "~/Scripts/tinymce/plugins/table/css/row.css";
+                                public const string table_css = "~/Scripts/tinymce/plugins/table/css/table.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string cell_js = "~/Scripts/tinymce/plugins/table/js/cell.js"; 
+                                public const string merge_cells_js = "~/Scripts/tinymce/plugins/table/js/merge_cells.js"; 
+                                public const string row_js = "~/Scripts/tinymce/plugins/table/js/row.js"; 
+                                public const string table_js = "~/Scripts/tinymce/plugins/table/js/table.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/table/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/table/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/table/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class template 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string template_css = "~/Scripts/tinymce/plugins/template/css/template.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string template_js = "~/Scripts/tinymce/plugins/template/js/template.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/template/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/template/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/template/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class visualblocks 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string visualblocks_css = "~/Scripts/tinymce/plugins/visualblocks/css/visualblocks.css";
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/visualblocks/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/visualblocks/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class visualchars 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/visualchars/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/visualchars/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class wordcount 
+                    {
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/wordcount/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/wordcount/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static partial class xhtmlxtras 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string attributes_css = "~/Scripts/tinymce/plugins/xhtmlxtras/css/attributes.css";
+                                public const string popup_css = "~/Scripts/tinymce/plugins/xhtmlxtras/css/popup.css";
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string abbr_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/abbr.js"; 
+                                public const string acronym_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/acronym.js"; 
+                                public const string attributes_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/attributes.js"; 
+                                public const string cite_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/cite.js"; 
+                                public const string del_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/del.js"; 
+                                public const string element_common_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/element_common.js"; 
+                                public const string ins_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/ins.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/xhtmlxtras/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/xhtmlxtras/editor_plugin.js"; 
+                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/xhtmlxtras/editor_plugin_src.js"; 
+                        }
+                    }
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class themes 
+                {
+                    public static partial class advanced 
+                    {
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static partial class js 
+                        {
+                            public static class Assets
+                            {
+                                public const string about_js = "~/Scripts/tinymce/themes/advanced/js/about.js"; 
+                                public const string anchor_js = "~/Scripts/tinymce/themes/advanced/js/anchor.js"; 
+                                public const string charmap_js = "~/Scripts/tinymce/themes/advanced/js/charmap.js"; 
+                                public const string color_picker_js = "~/Scripts/tinymce/themes/advanced/js/color_picker.js"; 
+                                public const string image_js = "~/Scripts/tinymce/themes/advanced/js/image.js"; 
+                                public const string link_js = "~/Scripts/tinymce/themes/advanced/js/link.js"; 
+                                public const string source_editor_js = "~/Scripts/tinymce/themes/advanced/js/source_editor.js"; 
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_js = "~/Scripts/tinymce/themes/advanced/langs/en.js"; 
+                                public const string en_dlg_js = "~/Scripts/tinymce/themes/advanced/langs/en_dlg.js"; 
+                            }
+                        }
+                        public static partial class skins 
+                        {
+                            public static partial class @default 
+                            {
+                                public static partial class img 
+                                {
+                                    public static class Assets
+                                    {
+                                    }
+                                }
+                                public static class Assets
+                                {
+                                    public const string content_css = "~/Scripts/tinymce/themes/advanced/skins/default/content.css";
+                                    public const string dialog_css = "~/Scripts/tinymce/themes/advanced/skins/default/dialog.css";
+                                    public const string ui_css = "~/Scripts/tinymce/themes/advanced/skins/default/ui.css";
+                                }
+                            }
+                            public static partial class highcontrast 
+                            {
+                                public static class Assets
+                                {
+                                    public const string content_css = "~/Scripts/tinymce/themes/advanced/skins/highcontrast/content.css";
+                                    public const string dialog_css = "~/Scripts/tinymce/themes/advanced/skins/highcontrast/dialog.css";
+                                    public const string ui_css = "~/Scripts/tinymce/themes/advanced/skins/highcontrast/ui.css";
+                                }
+                            }
+                            public static partial class o2k7 
+                            {
+                                public static partial class img 
+                                {
+                                    public static class Assets
+                                    {
+                                    }
+                                }
+                                public static class Assets
+                                {
+                                    public const string content_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/content.css";
+                                    public const string dialog_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/dialog.css";
+                                    public const string ui_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/ui.css";
+                                    public const string ui_black_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/ui_black.css";
+                                    public const string ui_silver_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/ui_silver.css";
+                                }
+                            }
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_template_js = "~/Scripts/tinymce/themes/advanced/editor_template.js"; 
+                            public const string editor_template_src_js = "~/Scripts/tinymce/themes/advanced/editor_template_src.js"; 
+                        }
+                    }
+                    public static partial class simple 
+                    {
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static partial class langs 
+                        {
+                            public static class Assets
+                            {
+                                public const string en_js = "~/Scripts/tinymce/themes/simple/langs/en.js"; 
+                            }
+                        }
+                        public static partial class skins 
+                        {
+                            public static partial class @default 
+                            {
+                                public static class Assets
+                                {
+                                    public const string content_css = "~/Scripts/tinymce/themes/simple/skins/default/content.css";
+                                    public const string ui_css = "~/Scripts/tinymce/themes/simple/skins/default/ui.css";
+                                }
+                            }
+                            public static partial class o2k7 
+                            {
+                                public static partial class img 
+                                {
+                                    public static class Assets
+                                    {
+                                    }
+                                }
+                                public static class Assets
+                                {
+                                    public const string content_css = "~/Scripts/tinymce/themes/simple/skins/o2k7/content.css";
+                                    public const string ui_css = "~/Scripts/tinymce/themes/simple/skins/o2k7/ui.css";
+                                }
+                            }
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string editor_template_js = "~/Scripts/tinymce/themes/simple/editor_template.js"; 
+                            public const string editor_template_src_js = "~/Scripts/tinymce/themes/simple/editor_template_src.js"; 
+                        }
+                    }
+                    public static class Assets
+                    {
+                    }
+                }
+                public static partial class utils 
+                {
+                    public static class Assets
+                    {
+                        public const string editable_selects_js = "~/Scripts/tinymce/utils/editable_selects.js"; 
+                        public const string form_utils_js = "~/Scripts/tinymce/utils/form_utils.js"; 
+                        public const string mctabs_js = "~/Scripts/tinymce/utils/mctabs.js"; 
+                        public const string validate_js = "~/Scripts/tinymce/utils/validate.js"; 
+                    }
+                }
+                public static class Assets
+                {
+                    public const string jquery_tinymce_js = "~/Scripts/tinymce/jquery.tinymce.js"; 
+                    public const string tiny_mce_js = "~/Scripts/tinymce/tiny_mce.js"; 
+                    public const string tiny_mce_jquery_js = "~/Scripts/tinymce/tiny_mce_jquery.js"; 
+                    public const string tiny_mce_popup_js = "~/Scripts/tinymce/tiny_mce_popup.js"; 
+                    public const string tiny_mce_src_js = "~/Scripts/tinymce/tiny_mce_src.js"; 
+                }
+            }
+            public static class Assets
+            {
+                public const string fujiyblog_js = "~/Scripts/fujiyblog.js"; 
+                public const string jquery_1_11_2_intellisense_js = "~/Scripts/jquery-1.11.2.intellisense.js"; 
+                public const string jquery_1_11_2_js = "~/Scripts/jquery-1.11.2.js"; 
+                public const string jquery_1_11_2_min_js = "~/Scripts/jquery-1.11.2.min.js"; 
+                public const string jquery_ui_1_11_4_js = "~/Scripts/jquery-ui-1.11.4.js"; 
+                public const string jquery_ui_1_11_4_min_js = "~/Scripts/jquery-ui-1.11.4.min.js"; 
+                public const string jquery_ui_timepicker_addon_js = "~/Scripts/jquery-ui-timepicker-addon.js"; 
+                public const string jquery_form_js = "~/Scripts/jquery.form.js"; 
+                public const string jquery_unobtrusive_ajax_js = "~/Scripts/jquery.unobtrusive-ajax.js"; 
+                public const string jquery_unobtrusive_ajax_min_js = "~/Scripts/jquery.unobtrusive-ajax.min.js"; 
+                public const string jquery_validate_js = "~/Scripts/jquery.validate.js"; 
+                public const string jquery_validate_min_js = "~/Scripts/jquery.validate.min.js"; 
+                public const string jquery_validate_unobtrusive_js = "~/Scripts/jquery.validate.unobtrusive.js"; 
+                public const string jquery_validate_unobtrusive_min_js = "~/Scripts/jquery.validate.unobtrusive.min.js"; 
+                public const string json2_js = "~/Scripts/json2.js"; 
+                public const string openid_jquery_js = "~/Scripts/openid-jquery.js"; 
+            }
+        }
+        public static partial class Content 
+        {
+            public static partial class Admin 
+            {
+                public static class Assets
+                {
+                    public const string Site_css = "~/Content/Admin/Site.css";
+                }
+            }
+            public static partial class Images 
+            {
+                public static class Assets
+                {
+                }
+            }
+            public static partial class openid 
+            {
+                public static partial class images 
+                {
+                    public static class Assets
+                    {
+                    }
+                }
+                public static class Assets
+                {
+                    public const string openid_css = "~/Content/openid/openid.css";
+                }
+            }
+            public static partial class Themes 
+            {
+                public static partial class @base 
+                {
+                    public static partial class images 
+                    {
+                        public static class Assets
+                        {
+                        }
+                    }
+                    public static class Assets
+                    {
+                        public const string accordion_css = "~/Content/Themes/base/accordion.css";
+                        public const string all_css = "~/Content/Themes/base/all.css";
+                        public const string autocomplete_css = "~/Content/Themes/base/autocomplete.css";
+                        public const string base_css = "~/Content/Themes/base/base.css";
+                        public const string button_css = "~/Content/Themes/base/button.css";
+                        public const string core_css = "~/Content/Themes/base/core.css";
+                        public const string datepicker_css = "~/Content/Themes/base/datepicker.css";
+                        public const string dialog_css = "~/Content/Themes/base/dialog.css";
+                        public const string draggable_css = "~/Content/Themes/base/draggable.css";
+                        public const string menu_css = "~/Content/Themes/base/menu.css";
+                        public const string progressbar_css = "~/Content/Themes/base/progressbar.css";
+                        public const string resizable_css = "~/Content/Themes/base/resizable.css";
+                        public const string selectable_css = "~/Content/Themes/base/selectable.css";
+                        public const string selectmenu_css = "~/Content/Themes/base/selectmenu.css";
+                        public const string slider_css = "~/Content/Themes/base/slider.css";
+                        public const string sortable_css = "~/Content/Themes/base/sortable.css";
+                        public const string spinner_css = "~/Content/Themes/base/spinner.css";
+                        public const string tabs_css = "~/Content/Themes/base/tabs.css";
+                        public const string theme_css = "~/Content/Themes/base/theme.css";
+                        public const string tooltip_css = "~/Content/Themes/base/tooltip.css";
+                    }
+                }
+                public static partial class Default 
+                {
+                    public static partial class img 
+                    {
+                        public static class Assets
+                        {
+                        }
+                    }
+                    public static class Assets
+                    {
+                        public const string Site_css = "~/Content/Themes/Default/Site.css";
+                    }
+                }
+                public static class Assets
+                {
+                }
+            }
+            public static class Assets
+            {
+            }
+        }
     }
 }
 
@@ -1377,6 +2271,6 @@ internal static class T4MVCHelpers {
 
 
 #endregion T4MVC
-#pragma warning restore 1591
+#pragma warning restore 1591, 3008, 3009, 0108
 
 
