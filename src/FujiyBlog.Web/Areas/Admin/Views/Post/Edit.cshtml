@@ -9,7 +9,7 @@
     ViewBag.Title = "Edit";
     string uploadFolder = "Post" + (Model.Post.Id.HasValue ? Model.Post.Id.ToString() : Guid.NewGuid().ToString());
 }
-<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce.jquery_tinymce_js)"></script>
+<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce.jquery_tinymce_min_js)"></script>
 
 <h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
 

@@ -129,13 +129,13 @@ namespace Links
             private const string URLPATH = "~/Scripts/tinymce";
             public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
             public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-            public static readonly string jquery_tinymce_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/jquery.tinymce.min.js") ? Url("jquery.tinymce.min.js") : Url("jquery.tinymce.js");
+            public static readonly string jquery_tinymce_min_js = Url("jquery.tinymce.min.js");
             [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
             public static class langs {
                 private const string URLPATH = "~/Scripts/tinymce/langs";
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en.min.js") ? Url("en.min.js") : Url("en.js");
+                public static readonly string readme_md = Url("readme.md");
             }
         
             public static readonly string license_txt = Url("license.txt");
@@ -145,125 +145,21 @@ namespace Links
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class advhr {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/advhr";
-                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advhr/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string advhr_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/advhr.min.css") ? Url("advhr.min.css") : Url("advhr.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advhr/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string rule_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/rule.min.js") ? Url("rule.min.js") : Url("rule.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advhr/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string rule_htm = Url("rule.htm");
-                }
-            
-                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class advimage {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/advimage";
-                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advimage/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string advimage_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/advimage.min.css") ? Url("advimage.min.css") : Url("advimage.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    public static readonly string image_htm = Url("image.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class img {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advimage/img";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string sample_gif = Url("sample.gif");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advimage/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string image_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/image.min.js") ? Url("image.min.js") : Url("image.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advimage/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                }
-            
-                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class advlink {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/advlink";
-                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advlink/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string advlink_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/advlink.min.css") ? Url("advlink.min.css") : Url("advlink.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advlink/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string advlink_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/advlink.min.js") ? Url("advlink.min.js") : Url("advlink.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/advlink/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string link_htm = Url("link.htm");
-                }
-            
-                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
                 public static class advlist {
                     private const string URLPATH = "~/Scripts/tinymce/plugins/advlist";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class anchor {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/anchor";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -271,8 +167,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/autolink";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -280,8 +176,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/autoresize";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -289,16 +185,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/autosave";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/autosave/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en.min.js") ? Url("en.min.js") : Url("en.js");
-                    }
-                
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -306,8 +194,79 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/bbcode";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class charmap {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/charmap";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class code {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/code";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class colorpicker {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/colorpicker";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class compat3x {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/compat3x";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class css {
+                        private const string URLPATH = "~/Scripts/tinymce/plugins/compat3x/css";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dialog.min.css") ? Url("dialog.min.css") : Url("dialog.css");
+                             
+                    }
+                
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class img {
+                        private const string URLPATH = "~/Scripts/tinymce/plugins/compat3x/img";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string buttons_png = Url("buttons.png");
+                        public static readonly string icons_gif = Url("icons.gif");
+                        public static readonly string items_gif = Url("items.gif");
+                        public static readonly string menu_arrow_gif = Url("menu_arrow.gif");
+                        public static readonly string menu_check_gif = Url("menu_check.gif");
+                        public static readonly string progress_gif = Url("progress.gif");
+                        public static readonly string tabs_gif = Url("tabs.gif");
+                    }
+                
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                    public static readonly string tiny_mce_popup_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tiny_mce_popup.min.js") ? Url("tiny_mce_popup.min.js") : Url("tiny_mce_popup.js");
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class utils {
+                        private const string URLPATH = "~/Scripts/tinymce/plugins/compat3x/utils";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string editable_selects_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editable_selects.min.js") ? Url("editable_selects.min.js") : Url("editable_selects.js");
+                        public static readonly string form_utils_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/form_utils.min.js") ? Url("form_utils.min.js") : Url("form_utils.js");
+                        public static readonly string mctabs_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/mctabs.min.js") ? Url("mctabs.min.js") : Url("mctabs.js");
+                        public static readonly string validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/validate.min.js") ? Url("validate.min.js") : Url("validate.js");
+                    }
+                
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -315,8 +274,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/contextmenu";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -324,21 +283,18 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/directionality";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class emotions {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/emotions";
+                public static class emoticons {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/emoticons";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    public static readonly string emotions_htm = Url("emotions.htm");
                     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
                     public static class img {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/emotions/img";
+                        private const string URLPATH = "~/Scripts/tinymce/plugins/emoticons/img";
                         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                         public static readonly string smiley_cool_gif = Url("smiley-cool.gif");
@@ -359,22 +315,8 @@ namespace Links
                         public static readonly string smiley_yell_gif = Url("smiley-yell.gif");
                     }
                 
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/emotions/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string emotions_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/emotions.min.js") ? Url("emotions.min.js") : Url("emotions.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/emotions/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -382,34 +324,9 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/example";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string dialog_htm = Url("dialog.htm");
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class img {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/example/img";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string example_gif = Url("example.gif");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/example/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string dialog_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dialog.min.js") ? Url("dialog.min.js") : Url("dialog.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/example/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en.min.js") ? Url("en.min.js") : Url("en.js");
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
+                    public static readonly string dialog_html = Url("dialog.html");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -417,8 +334,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/example_dependency";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -426,34 +343,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/fullpage";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/fullpage/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string fullpage_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fullpage.min.css") ? Url("fullpage.min.css") : Url("fullpage.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    public static readonly string fullpage_htm = Url("fullpage.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/fullpage/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string fullpage_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/fullpage.min.js") ? Url("fullpage.min.js") : Url("fullpage.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/fullpage/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -461,58 +352,35 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/fullscreen";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    public static readonly string fullscreen_htm = Url("fullscreen.htm");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class iespell {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/iespell";
+                public static class hr {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/hr";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class inlinepopups {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/inlinepopups";
+                public static class image {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/image";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class skins {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/inlinepopups/skins";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                        public static class clearlooks2 {
-                            private const string URLPATH = "~/Scripts/tinymce/plugins/inlinepopups/skins/clearlooks2";
-                            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                            public static class img {
-                                private const string URLPATH = "~/Scripts/tinymce/plugins/inlinepopups/skins/clearlooks2/img";
-                                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                                public static readonly string alert_gif = Url("alert.gif");
-                                public static readonly string button_gif = Url("button.gif");
-                                public static readonly string buttons_gif = Url("buttons.gif");
-                                public static readonly string confirm_gif = Url("confirm.gif");
-                                public static readonly string corners_gif = Url("corners.gif");
-                                public static readonly string horizontal_gif = Url("horizontal.gif");
-                                public static readonly string vertical_gif = Url("vertical.gif");
-                            }
-                        
-                            public static readonly string window_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/window.min.css") ? Url("window.min.css") : Url("window.css");
-                                 
-                        }
-                    
-                    }
-                
-                    public static readonly string template_htm = Url("template.htm");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class importcss {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/importcss";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -520,8 +388,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/insertdatetime";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -529,8 +397,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/layer";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -538,8 +406,17 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/legacyoutput";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class link {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/link";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -547,8 +424,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/lists";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -556,36 +433,9 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/media";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/media/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string media_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/media.min.css") ? Url("media.min.css") : Url("media.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/media/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string embed_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/embed.min.js") ? Url("embed.min.js") : Url("embed.js");
-                        public static readonly string media_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/media.min.js") ? Url("media.min.js") : Url("media.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/media/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string media_htm = Url("media.htm");
                     public static readonly string moxieplayer_swf = Url("moxieplayer.swf");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -593,8 +443,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/nonbreaking";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -602,8 +452,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/noneditable";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -611,8 +461,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/pagebreak";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -620,27 +470,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/paste";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/paste/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string pastetext_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/pastetext.min.js") ? Url("pastetext.min.js") : Url("pastetext.js");
-                        public static readonly string pasteword_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/pasteword.min.js") ? Url("pasteword.min.js") : Url("pasteword.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/paste/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string pastetext_htm = Url("pastetext.htm");
-                    public static readonly string pasteword_htm = Url("pasteword.htm");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -648,18 +479,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/preview";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    public static readonly string example_html = Url("example.html");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class jscripts {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/preview/jscripts";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string embed_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/embed.min.js") ? Url("embed.min.js") : Url("embed.js");
-                    }
-                
-                    public static readonly string preview_html = Url("preview.html");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -667,8 +488,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/print";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -676,8 +497,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/save";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -685,34 +506,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/searchreplace";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/searchreplace/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string searchreplace_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/searchreplace.min.css") ? Url("searchreplace.min.css") : Url("searchreplace.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/searchreplace/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string searchreplace_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/searchreplace.min.js") ? Url("searchreplace.min.js") : Url("searchreplace.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/searchreplace/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string searchreplace_htm = Url("searchreplace.htm");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -720,61 +515,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/spellchecker";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/spellchecker/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/content.min.css") ? Url("content.min.css") : Url("content.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class img {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/spellchecker/img";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string wline_gif = Url("wline.gif");
-                    }
-                
-                }
-            
-                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class style {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/style";
-                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/style/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string props_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/props.min.css") ? Url("props.min.css") : Url("props.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/style/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string props_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/props.min.js") ? Url("props.min.js") : Url("props.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/style/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string props_htm = Url("props.htm");
-                    public static readonly string readme_txt = Url("readme.txt");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -782,8 +524,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/tabfocus";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -791,44 +533,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/table";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string cell_htm = Url("cell.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/table/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string cell_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cell.min.css") ? Url("cell.min.css") : Url("cell.css");
-                             
-                        public static readonly string row_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/row.min.css") ? Url("row.min.css") : Url("row.css");
-                             
-                        public static readonly string table_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/table.min.css") ? Url("table.min.css") : Url("table.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/table/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string cell_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cell.min.js") ? Url("cell.min.js") : Url("cell.js");
-                        public static readonly string merge_cells_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/merge_cells.min.js") ? Url("merge_cells.min.js") : Url("merge_cells.js");
-                        public static readonly string row_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/row.min.js") ? Url("row.min.js") : Url("row.js");
-                        public static readonly string table_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/table.min.js") ? Url("table.min.js") : Url("table.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/table/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string merge_cells_htm = Url("merge_cells.htm");
-                    public static readonly string row_htm = Url("row.htm");
-                    public static readonly string table_htm = Url("table.htm");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -836,35 +542,26 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/template";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string blank_htm = Url("blank.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/template/css";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string template_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/template.min.css") ? Url("template.min.css") : Url("template.css");
-                             
-                    }
-                
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/template/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string template_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/template.min.js") ? Url("template.min.js") : Url("template.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/template/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string template_htm = Url("template.htm");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class textcolor {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/textcolor";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
+                }
+            
+                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                public static class textpattern {
+                    private const string URLPATH = "~/Scripts/tinymce/plugins/textpattern";
+                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -881,8 +578,34 @@ namespace Links
                              
                     }
                 
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+                    public static class img {
+                        private const string URLPATH = "~/Scripts/tinymce/plugins/visualblocks/img";
+                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
+                        public static readonly string address_gif = Url("address.gif");
+                        public static readonly string article_gif = Url("article.gif");
+                        public static readonly string aside_gif = Url("aside.gif");
+                        public static readonly string blockquote_gif = Url("blockquote.gif");
+                        public static readonly string div_gif = Url("div.gif");
+                        public static readonly string dl_gif = Url("dl.gif");
+                        public static readonly string figure_gif = Url("figure.gif");
+                        public static readonly string h1_gif = Url("h1.gif");
+                        public static readonly string h2_gif = Url("h2.gif");
+                        public static readonly string h3_gif = Url("h3.gif");
+                        public static readonly string h4_gif = Url("h4.gif");
+                        public static readonly string h5_gif = Url("h5.gif");
+                        public static readonly string h6_gif = Url("h6.gif");
+                        public static readonly string hgroup_gif = Url("hgroup.gif");
+                        public static readonly string ol_gif = Url("ol.gif");
+                        public static readonly string p_gif = Url("p.gif");
+                        public static readonly string pre_gif = Url("pre.gif");
+                        public static readonly string section_gif = Url("section.gif");
+                        public static readonly string ul_gif = Url("ul.gif");
+                    }
+                
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -890,8 +613,8 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/visualchars";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -899,56 +622,55 @@ namespace Links
                     private const string URLPATH = "~/Scripts/tinymce/plugins/wordcount";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
+                    public static readonly string plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/plugin.min.js") ? Url("plugin.min.js") : Url("plugin.js");
+                    public static readonly string plugin_min_js = Url("plugin.min.js");
                 }
             
+            }
+        
+            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+            public static class skins {
+                private const string URLPATH = "~/Scripts/tinymce/skins";
+                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
+                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class xhtmlxtras {
-                    private const string URLPATH = "~/Scripts/tinymce/plugins/xhtmlxtras";
+                public static class lightgray {
+                    private const string URLPATH = "~/Scripts/tinymce/skins/lightgray";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string abbr_htm = Url("abbr.htm");
-                    public static readonly string acronym_htm = Url("acronym.htm");
-                    public static readonly string attributes_htm = Url("attributes.htm");
-                    public static readonly string cite_htm = Url("cite.htm");
+                    public static readonly string content_inline_min_css = Url("content.inline.min.css");
+                    public static readonly string content_min_css = Url("content.min.css");
                     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class css {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/xhtmlxtras/css";
+                    public static class fonts {
+                        private const string URLPATH = "~/Scripts/tinymce/skins/lightgray/fonts";
                         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string attributes_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/attributes.min.css") ? Url("attributes.min.css") : Url("attributes.css");
-                             
-                        public static readonly string popup_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/popup.min.css") ? Url("popup.min.css") : Url("popup.css");
-                             
-                    }
-                
-                    public static readonly string del_htm = Url("del.htm");
-                    public static readonly string editor_plugin_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin.min.js") ? Url("editor_plugin.min.js") : Url("editor_plugin.js");
-                    public static readonly string editor_plugin_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_plugin_src.min.js") ? Url("editor_plugin_src.min.js") : Url("editor_plugin_src.js");
-                    public static readonly string ins_htm = Url("ins.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/xhtmlxtras/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string abbr_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/abbr.min.js") ? Url("abbr.min.js") : Url("abbr.js");
-                        public static readonly string acronym_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/acronym.min.js") ? Url("acronym.min.js") : Url("acronym.js");
-                        public static readonly string attributes_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/attributes.min.js") ? Url("attributes.min.js") : Url("attributes.js");
-                        public static readonly string cite_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/cite.min.js") ? Url("cite.min.js") : Url("cite.js");
-                        public static readonly string del_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/del.min.js") ? Url("del.min.js") : Url("del.js");
-                        public static readonly string element_common_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/element_common.min.js") ? Url("element_common.min.js") : Url("element_common.js");
-                        public static readonly string ins_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ins.min.js") ? Url("ins.min.js") : Url("ins.js");
+                        public static readonly string readme_md = Url("readme.md");
+                        public static readonly string tinymce_small_eot = Url("tinymce-small.eot");
+                        public static readonly string tinymce_small_json = Url("tinymce-small.json");
+                        public static readonly string tinymce_small_svg = Url("tinymce-small.svg");
+                        public static readonly string tinymce_small_ttf = Url("tinymce-small.ttf");
+                        public static readonly string tinymce_small_woff = Url("tinymce-small.woff");
+                        public static readonly string tinymce_eot = Url("tinymce.eot");
+                        public static readonly string tinymce_json = Url("tinymce.json");
+                        public static readonly string tinymce_svg = Url("tinymce.svg");
+                        public static readonly string tinymce_ttf = Url("tinymce.ttf");
+                        public static readonly string tinymce_woff = Url("tinymce.woff");
                     }
                 
                     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/plugins/xhtmlxtras/langs";
+                    public static class img {
+                        private const string URLPATH = "~/Scripts/tinymce/skins/lightgray/img";
                         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
+                        public static readonly string anchor_gif = Url("anchor.gif");
+                        public static readonly string loader_gif = Url("loader.gif");
+                        public static readonly string object_gif = Url("object.gif");
+                        public static readonly string trans_gif = Url("trans.gif");
                     }
                 
+                    public static readonly string skin_ie7_min_css = Url("skin.ie7.min.css");
+                    public static readonly string skin_min_css = Url("skin.min.css");
                 }
             
             }
@@ -959,215 +681,18 @@ namespace Links
                 public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                 public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
                 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class advanced {
-                    private const string URLPATH = "~/Scripts/tinymce/themes/advanced";
+                public static class modern {
+                    private const string URLPATH = "~/Scripts/tinymce/themes/modern";
                     public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
                     public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string about_htm = Url("about.htm");
-                    public static readonly string anchor_htm = Url("anchor.htm");
-                    public static readonly string charmap_htm = Url("charmap.htm");
-                    public static readonly string color_picker_htm = Url("color_picker.htm");
-                    public static readonly string editor_template_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_template.min.js") ? Url("editor_template.min.js") : Url("editor_template.js");
-                    public static readonly string editor_template_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_template_src.min.js") ? Url("editor_template_src.min.js") : Url("editor_template_src.js");
-                    public static readonly string image_htm = Url("image.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class img {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/advanced/img";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string colorpicker_jpg = Url("colorpicker.jpg");
-                        public static readonly string flash_gif = Url("flash.gif");
-                        public static readonly string icons_gif = Url("icons.gif");
-                        public static readonly string iframe_gif = Url("iframe.gif");
-                        public static readonly string pagebreak_gif = Url("pagebreak.gif");
-                        public static readonly string quicktime_gif = Url("quicktime.gif");
-                        public static readonly string realmedia_gif = Url("realmedia.gif");
-                        public static readonly string shockwave_gif = Url("shockwave.gif");
-                        public static readonly string trans_gif = Url("trans.gif");
-                        public static readonly string video_gif = Url("video.gif");
-                        public static readonly string windowsmedia_gif = Url("windowsmedia.gif");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class js {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/advanced/js";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string about_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/about.min.js") ? Url("about.min.js") : Url("about.js");
-                        public static readonly string anchor_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/anchor.min.js") ? Url("anchor.min.js") : Url("anchor.js");
-                        public static readonly string charmap_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/charmap.min.js") ? Url("charmap.min.js") : Url("charmap.js");
-                        public static readonly string color_picker_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/color_picker.min.js") ? Url("color_picker.min.js") : Url("color_picker.js");
-                        public static readonly string image_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/image.min.js") ? Url("image.min.js") : Url("image.js");
-                        public static readonly string link_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/link.min.js") ? Url("link.min.js") : Url("link.js");
-                        public static readonly string source_editor_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/source_editor.min.js") ? Url("source_editor.min.js") : Url("source_editor.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/advanced/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en.min.js") ? Url("en.min.js") : Url("en.js");
-                        public static readonly string en_dlg_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en_dlg.min.js") ? Url("en_dlg.min.js") : Url("en_dlg.js");
-                    }
-                
-                    public static readonly string link_htm = Url("link.htm");
-                    public static readonly string shortcuts_htm = Url("shortcuts.htm");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class skins {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/advanced/skins";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                        public static class @default {
-                            private const string URLPATH = "~/Scripts/tinymce/themes/advanced/skins/default";
-                            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                            public static readonly string content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/content.min.css") ? Url("content.min.css") : Url("content.css");
-                                 
-                            public static readonly string dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dialog.min.css") ? Url("dialog.min.css") : Url("dialog.css");
-                                 
-                            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                            public static class img {
-                                private const string URLPATH = "~/Scripts/tinymce/themes/advanced/skins/default/img";
-                                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                                public static readonly string buttons_png = Url("buttons.png");
-                                public static readonly string items_gif = Url("items.gif");
-                                public static readonly string menu_arrow_gif = Url("menu_arrow.gif");
-                                public static readonly string menu_check_gif = Url("menu_check.gif");
-                                public static readonly string progress_gif = Url("progress.gif");
-                                public static readonly string tabs_gif = Url("tabs.gif");
-                            }
-                        
-                            public static readonly string ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui.min.css") ? Url("ui.min.css") : Url("ui.css");
-                                 
-                        }
-                    
-                        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                        public static class highcontrast {
-                            private const string URLPATH = "~/Scripts/tinymce/themes/advanced/skins/highcontrast";
-                            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                            public static readonly string content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/content.min.css") ? Url("content.min.css") : Url("content.css");
-                                 
-                            public static readonly string dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dialog.min.css") ? Url("dialog.min.css") : Url("dialog.css");
-                                 
-                            public static readonly string ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui.min.css") ? Url("ui.min.css") : Url("ui.css");
-                                 
-                        }
-                    
-                        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                        public static class o2k7 {
-                            private const string URLPATH = "~/Scripts/tinymce/themes/advanced/skins/o2k7";
-                            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                            public static readonly string content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/content.min.css") ? Url("content.min.css") : Url("content.css");
-                                 
-                            public static readonly string dialog_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/dialog.min.css") ? Url("dialog.min.css") : Url("dialog.css");
-                                 
-                            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                            public static class img {
-                                private const string URLPATH = "~/Scripts/tinymce/themes/advanced/skins/o2k7/img";
-                                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                                public static readonly string button_bg_png = Url("button_bg.png");
-                                public static readonly string button_bg_black_png = Url("button_bg_black.png");
-                                public static readonly string button_bg_silver_png = Url("button_bg_silver.png");
-                            }
-                        
-                            public static readonly string ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui.min.css") ? Url("ui.min.css") : Url("ui.css");
-                                 
-                            public static readonly string ui_black_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui_black.min.css") ? Url("ui_black.min.css") : Url("ui_black.css");
-                                 
-                            public static readonly string ui_silver_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui_silver.min.css") ? Url("ui_silver.min.css") : Url("ui_silver.css");
-                                 
-                        }
-                    
-                    }
-                
-                    public static readonly string source_editor_htm = Url("source_editor.htm");
-                }
-            
-                [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                public static class simple {
-                    private const string URLPATH = "~/Scripts/tinymce/themes/simple";
-                    public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                    public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                    public static readonly string editor_template_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_template.min.js") ? Url("editor_template.min.js") : Url("editor_template.js");
-                    public static readonly string editor_template_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editor_template_src.min.js") ? Url("editor_template_src.min.js") : Url("editor_template_src.js");
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class img {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/simple/img";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string icons_gif = Url("icons.gif");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class langs {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/simple/langs";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        public static readonly string en_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/en.min.js") ? Url("en.min.js") : Url("en.js");
-                    }
-                
-                    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                    public static class skins {
-                        private const string URLPATH = "~/Scripts/tinymce/themes/simple/skins";
-                        public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                        public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                        public static class @default {
-                            private const string URLPATH = "~/Scripts/tinymce/themes/simple/skins/default";
-                            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                            public static readonly string content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/content.min.css") ? Url("content.min.css") : Url("content.css");
-                                 
-                            public static readonly string ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui.min.css") ? Url("ui.min.css") : Url("ui.css");
-                                 
-                        }
-                    
-                        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                        public static class o2k7 {
-                            private const string URLPATH = "~/Scripts/tinymce/themes/simple/skins/o2k7";
-                            public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                            public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                            public static readonly string content_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/content.min.css") ? Url("content.min.css") : Url("content.css");
-                                 
-                            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-                            public static class img {
-                                private const string URLPATH = "~/Scripts/tinymce/themes/simple/skins/o2k7/img";
-                                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                                public static readonly string button_bg_png = Url("button_bg.png");
-                            }
-                        
-                            public static readonly string ui_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/ui.min.css") ? Url("ui.min.css") : Url("ui.css");
-                                 
-                        }
-                    
-                    }
-                
+                    public static readonly string theme_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/theme.min.js") ? Url("theme.min.js") : Url("theme.js");
+                    public static readonly string theme_min_js = Url("theme.min.js");
                 }
             
             }
         
-            public static readonly string tiny_mce_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tiny_mce.min.js") ? Url("tiny_mce.min.js") : Url("tiny_mce.js");
-            public static readonly string tiny_mce_jquery_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tiny_mce_jquery.min.js") ? Url("tiny_mce_jquery.min.js") : Url("tiny_mce_jquery.js");
-            public static readonly string tiny_mce_popup_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tiny_mce_popup.min.js") ? Url("tiny_mce_popup.min.js") : Url("tiny_mce_popup.js");
-            public static readonly string tiny_mce_src_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tiny_mce_src.min.js") ? Url("tiny_mce_src.min.js") : Url("tiny_mce_src.js");
-            [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-            public static class utils {
-                private const string URLPATH = "~/Scripts/tinymce/utils";
-                public static string Url() { return T4MVCHelpers.ProcessVirtualPath(URLPATH); }
-                public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(URLPATH + "/" + fileName); }
-                public static readonly string editable_selects_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/editable_selects.min.js") ? Url("editable_selects.min.js") : Url("editable_selects.js");
-                public static readonly string form_utils_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/form_utils.min.js") ? Url("form_utils.min.js") : Url("form_utils.js");
-                public static readonly string mctabs_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/mctabs.min.js") ? Url("mctabs.min.js") : Url("mctabs.js");
-                public static readonly string validate_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/validate.min.js") ? Url("validate.min.js") : Url("validate.js");
-            }
-        
+            public static readonly string tinymce_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(URLPATH + "/tinymce.min.js") ? Url("tinymce.min.js") : Url("tinymce.js");
+            public static readonly string tinymce_min_js = Url("tinymce.min.js");
         }
     
     }
@@ -1320,168 +845,131 @@ namespace Links
                 {
                     public static class Assets
                     {
-                        public const string en_js = "~/Scripts/tinymce/langs/en.js"; 
                     }
                 }
                 public static partial class plugins 
                 {
-                    public static partial class advhr 
-                    {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string advhr_css = "~/Scripts/tinymce/plugins/advhr/css/advhr.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string rule_js = "~/Scripts/tinymce/plugins/advhr/js/rule.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/advhr/langs/en_dlg.js"; 
-                            }
-                        }
-                        public static class Assets
-                        {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advhr/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advhr/editor_plugin_src.js"; 
-                        }
-                    }
-                    public static partial class advimage 
-                    {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string advimage_css = "~/Scripts/tinymce/plugins/advimage/css/advimage.css";
-                            }
-                        }
-                        public static partial class img 
-                        {
-                            public static class Assets
-                            {
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string image_js = "~/Scripts/tinymce/plugins/advimage/js/image.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/advimage/langs/en_dlg.js"; 
-                            }
-                        }
-                        public static class Assets
-                        {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advimage/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advimage/editor_plugin_src.js"; 
-                        }
-                    }
-                    public static partial class advlink 
-                    {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string advlink_css = "~/Scripts/tinymce/plugins/advlink/css/advlink.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string advlink_js = "~/Scripts/tinymce/plugins/advlink/js/advlink.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/advlink/langs/en_dlg.js"; 
-                            }
-                        }
-                        public static class Assets
-                        {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advlink/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advlink/editor_plugin_src.js"; 
-                        }
-                    }
                     public static partial class advlist 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/advlist/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/advlist/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/advlist/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/advlist/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class anchor 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/anchor/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/anchor/plugin.min.js"; 
                         }
                     }
                     public static partial class autolink 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/autolink/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/autolink/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/autolink/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/autolink/plugin.min.js"; 
                         }
                     }
                     public static partial class autoresize 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/autoresize/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/autoresize/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/autoresize/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/autoresize/plugin.min.js"; 
                         }
                     }
                     public static partial class autosave 
                     {
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_js = "~/Scripts/tinymce/plugins/autosave/langs/en.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/autosave/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/autosave/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/autosave/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/autosave/plugin.min.js"; 
                         }
                     }
                     public static partial class bbcode 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/bbcode/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/bbcode/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/bbcode/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/bbcode/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class charmap 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/charmap/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/charmap/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class code 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/code/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/code/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class colorpicker 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/colorpicker/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/colorpicker/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class compat3x 
+                    {
+                        public static partial class css 
+                        {
+                            public static class Assets
+                            {
+                                public const string dialog_css = "~/Scripts/tinymce/plugins/compat3x/css/dialog.css";
+                            }
+                        }
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
+                        public static partial class utils 
+                        {
+                            public static class Assets
+                            {
+                                public const string editable_selects_js = "~/Scripts/tinymce/plugins/compat3x/utils/editable_selects.js"; 
+                                public const string form_utils_js = "~/Scripts/tinymce/plugins/compat3x/utils/form_utils.js"; 
+                                public const string mctabs_js = "~/Scripts/tinymce/plugins/compat3x/utils/mctabs.js"; 
+                                public const string validate_js = "~/Scripts/tinymce/plugins/compat3x/utils/validate.js"; 
+                            }
+                        }
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/compat3x/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/compat3x/plugin.min.js"; 
+                            public const string tiny_mce_popup_js = "~/Scripts/tinymce/plugins/compat3x/tiny_mce_popup.js"; 
                         }
                     }
                     public static partial class contextmenu 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/contextmenu/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/contextmenu/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/contextmenu/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/contextmenu/plugin.min.js"; 
                         }
                     }
                     public static partial class directionality 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/directionality/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/directionality/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/directionality/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/directionality/plugin.min.js"; 
                         }
                     }
-                    public static partial class emotions 
+                    public static partial class emoticons 
                     {
                         public static partial class img 
                         {
@@ -1489,423 +977,226 @@ namespace Links
                             {
                             }
                         }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string emotions_js = "~/Scripts/tinymce/plugins/emotions/js/emotions.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/emotions/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/emotions/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/emotions/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/emoticons/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/emoticons/plugin.min.js"; 
                         }
                     }
                     public static partial class example 
                     {
-                        public static partial class img 
-                        {
-                            public static class Assets
-                            {
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string dialog_js = "~/Scripts/tinymce/plugins/example/js/dialog.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_js = "~/Scripts/tinymce/plugins/example/langs/en.js"; 
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/example/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/example/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/example/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/example/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/example/plugin.min.js"; 
                         }
                     }
                     public static partial class example_dependency 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/example_dependency/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/example_dependency/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/example_dependency/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/example_dependency/plugin.min.js"; 
                         }
                     }
                     public static partial class fullpage 
                     {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string fullpage_css = "~/Scripts/tinymce/plugins/fullpage/css/fullpage.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string fullpage_js = "~/Scripts/tinymce/plugins/fullpage/js/fullpage.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/fullpage/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/fullpage/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/fullpage/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/fullpage/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/fullpage/plugin.min.js"; 
                         }
                     }
                     public static partial class fullscreen 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/fullscreen/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/fullscreen/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/fullscreen/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/fullscreen/plugin.min.js"; 
                         }
                     }
-                    public static partial class iespell 
+                    public static partial class hr 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/iespell/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/iespell/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/hr/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/hr/plugin.min.js"; 
                         }
                     }
-                    public static partial class inlinepopups 
+                    public static partial class image 
                     {
-                        public static partial class skins 
-                        {
-                            public static partial class clearlooks2 
-                            {
-                                public static partial class img 
-                                {
-                                    public static class Assets
-                                    {
-                                    }
-                                }
-                                public static class Assets
-                                {
-                                    public const string window_css = "~/Scripts/tinymce/plugins/inlinepopups/skins/clearlooks2/window.css";
-                                }
-                            }
-                            public static class Assets
-                            {
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/inlinepopups/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/inlinepopups/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/image/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/image/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class importcss 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/importcss/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/importcss/plugin.min.js"; 
                         }
                     }
                     public static partial class insertdatetime 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/insertdatetime/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/insertdatetime/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/insertdatetime/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/insertdatetime/plugin.min.js"; 
                         }
                     }
                     public static partial class layer 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/layer/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/layer/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/layer/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/layer/plugin.min.js"; 
                         }
                     }
                     public static partial class legacyoutput 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/legacyoutput/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/legacyoutput/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/legacyoutput/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/legacyoutput/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class link 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/link/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/link/plugin.min.js"; 
                         }
                     }
                     public static partial class lists 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/lists/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/lists/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/lists/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/lists/plugin.min.js"; 
                         }
                     }
                     public static partial class media 
                     {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string media_css = "~/Scripts/tinymce/plugins/media/css/media.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string embed_js = "~/Scripts/tinymce/plugins/media/js/embed.js"; 
-                                public const string media_js = "~/Scripts/tinymce/plugins/media/js/media.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/media/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/media/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/media/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/media/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/media/plugin.min.js"; 
                         }
                     }
                     public static partial class nonbreaking 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/nonbreaking/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/nonbreaking/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/nonbreaking/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/nonbreaking/plugin.min.js"; 
                         }
                     }
                     public static partial class noneditable 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/noneditable/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/noneditable/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/noneditable/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/noneditable/plugin.min.js"; 
                         }
                     }
                     public static partial class pagebreak 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/pagebreak/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/pagebreak/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/pagebreak/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/pagebreak/plugin.min.js"; 
                         }
                     }
                     public static partial class paste 
                     {
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string pastetext_js = "~/Scripts/tinymce/plugins/paste/js/pastetext.js"; 
-                                public const string pasteword_js = "~/Scripts/tinymce/plugins/paste/js/pasteword.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/paste/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/paste/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/paste/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/paste/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/paste/plugin.min.js"; 
                         }
                     }
                     public static partial class preview 
                     {
-                        public static partial class jscripts 
-                        {
-                            public static class Assets
-                            {
-                                public const string embed_js = "~/Scripts/tinymce/plugins/preview/jscripts/embed.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/preview/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/preview/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/preview/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/preview/plugin.min.js"; 
                         }
                     }
                     public static partial class print 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/print/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/print/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/print/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/print/plugin.min.js"; 
                         }
                     }
                     public static partial class save 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/save/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/save/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/save/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/save/plugin.min.js"; 
                         }
                     }
                     public static partial class searchreplace 
                     {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string searchreplace_css = "~/Scripts/tinymce/plugins/searchreplace/css/searchreplace.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string searchreplace_js = "~/Scripts/tinymce/plugins/searchreplace/js/searchreplace.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/searchreplace/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/searchreplace/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/searchreplace/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/searchreplace/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/searchreplace/plugin.min.js"; 
                         }
                     }
                     public static partial class spellchecker 
                     {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string content_css = "~/Scripts/tinymce/plugins/spellchecker/css/content.css";
-                            }
-                        }
-                        public static partial class img 
-                        {
-                            public static class Assets
-                            {
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/spellchecker/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/spellchecker/editor_plugin_src.js"; 
-                        }
-                    }
-                    public static partial class style 
-                    {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string props_css = "~/Scripts/tinymce/plugins/style/css/props.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string props_js = "~/Scripts/tinymce/plugins/style/js/props.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/style/langs/en_dlg.js"; 
-                            }
-                        }
-                        public static class Assets
-                        {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/style/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/style/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/spellchecker/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/spellchecker/plugin.min.js"; 
                         }
                     }
                     public static partial class tabfocus 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/tabfocus/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/tabfocus/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/tabfocus/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/tabfocus/plugin.min.js"; 
                         }
                     }
                     public static partial class table 
                     {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string cell_css = "~/Scripts/tinymce/plugins/table/css/cell.css";
-                                public const string row_css = "~/Scripts/tinymce/plugins/table/css/row.css";
-                                public const string table_css = "~/Scripts/tinymce/plugins/table/css/table.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string cell_js = "~/Scripts/tinymce/plugins/table/js/cell.js"; 
-                                public const string merge_cells_js = "~/Scripts/tinymce/plugins/table/js/merge_cells.js"; 
-                                public const string row_js = "~/Scripts/tinymce/plugins/table/js/row.js"; 
-                                public const string table_js = "~/Scripts/tinymce/plugins/table/js/table.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/table/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/table/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/table/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/table/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/table/plugin.min.js"; 
                         }
                     }
                     public static partial class template 
                     {
-                        public static partial class css 
-                        {
-                            public static class Assets
-                            {
-                                public const string template_css = "~/Scripts/tinymce/plugins/template/css/template.css";
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string template_js = "~/Scripts/tinymce/plugins/template/js/template.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/template/langs/en_dlg.js"; 
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/template/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/template/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/template/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/template/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class textcolor 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/textcolor/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/textcolor/plugin.min.js"; 
+                        }
+                    }
+                    public static partial class textpattern 
+                    {
+                        public static class Assets
+                        {
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/textpattern/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/textpattern/plugin.min.js"; 
                         }
                     }
                     public static partial class visualblocks 
@@ -1917,62 +1208,60 @@ namespace Links
                                 public const string visualblocks_css = "~/Scripts/tinymce/plugins/visualblocks/css/visualblocks.css";
                             }
                         }
+                        public static partial class img 
+                        {
+                            public static class Assets
+                            {
+                            }
+                        }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/visualblocks/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/visualblocks/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/visualblocks/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/visualblocks/plugin.min.js"; 
                         }
                     }
                     public static partial class visualchars 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/visualchars/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/visualchars/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/visualchars/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/visualchars/plugin.min.js"; 
                         }
                     }
                     public static partial class wordcount 
                     {
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/wordcount/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/wordcount/editor_plugin_src.js"; 
+                            public const string plugin_js = "~/Scripts/tinymce/plugins/wordcount/plugin.js"; 
+                            public const string plugin_min_js = "~/Scripts/tinymce/plugins/wordcount/plugin.min.js"; 
                         }
                     }
-                    public static partial class xhtmlxtras 
+                    public static class Assets
                     {
-                        public static partial class css 
+                    }
+                }
+                public static partial class skins 
+                {
+                    public static partial class lightgray 
+                    {
+                        public static partial class fonts 
                         {
                             public static class Assets
                             {
-                                public const string attributes_css = "~/Scripts/tinymce/plugins/xhtmlxtras/css/attributes.css";
-                                public const string popup_css = "~/Scripts/tinymce/plugins/xhtmlxtras/css/popup.css";
                             }
                         }
-                        public static partial class js 
+                        public static partial class img 
                         {
                             public static class Assets
                             {
-                                public const string abbr_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/abbr.js"; 
-                                public const string acronym_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/acronym.js"; 
-                                public const string attributes_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/attributes.js"; 
-                                public const string cite_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/cite.js"; 
-                                public const string del_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/del.js"; 
-                                public const string element_common_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/element_common.js"; 
-                                public const string ins_js = "~/Scripts/tinymce/plugins/xhtmlxtras/js/ins.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_dlg_js = "~/Scripts/tinymce/plugins/xhtmlxtras/langs/en_dlg.js"; 
                             }
                         }
                         public static class Assets
                         {
-                            public const string editor_plugin_js = "~/Scripts/tinymce/plugins/xhtmlxtras/editor_plugin.js"; 
-                            public const string editor_plugin_src_js = "~/Scripts/tinymce/plugins/xhtmlxtras/editor_plugin_src.js"; 
+                            public const string content_inline_min_css = "~/Scripts/tinymce/skins/lightgray/content.inline.min.css";
+                            public const string content_min_css = "~/Scripts/tinymce/skins/lightgray/content.min.css";
+                            public const string skin_ie7_min_css = "~/Scripts/tinymce/skins/lightgray/skin.ie7.min.css";
+                            public const string skin_min_css = "~/Scripts/tinymce/skins/lightgray/skin.min.css";
                         }
                     }
                     public static class Assets
@@ -1981,158 +1270,23 @@ namespace Links
                 }
                 public static partial class themes 
                 {
-                    public static partial class advanced 
+                    public static partial class modern 
                     {
-                        public static partial class img 
-                        {
-                            public static class Assets
-                            {
-                            }
-                        }
-                        public static partial class js 
-                        {
-                            public static class Assets
-                            {
-                                public const string about_js = "~/Scripts/tinymce/themes/advanced/js/about.js"; 
-                                public const string anchor_js = "~/Scripts/tinymce/themes/advanced/js/anchor.js"; 
-                                public const string charmap_js = "~/Scripts/tinymce/themes/advanced/js/charmap.js"; 
-                                public const string color_picker_js = "~/Scripts/tinymce/themes/advanced/js/color_picker.js"; 
-                                public const string image_js = "~/Scripts/tinymce/themes/advanced/js/image.js"; 
-                                public const string link_js = "~/Scripts/tinymce/themes/advanced/js/link.js"; 
-                                public const string source_editor_js = "~/Scripts/tinymce/themes/advanced/js/source_editor.js"; 
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_js = "~/Scripts/tinymce/themes/advanced/langs/en.js"; 
-                                public const string en_dlg_js = "~/Scripts/tinymce/themes/advanced/langs/en_dlg.js"; 
-                            }
-                        }
-                        public static partial class skins 
-                        {
-                            public static partial class @default 
-                            {
-                                public static partial class img 
-                                {
-                                    public static class Assets
-                                    {
-                                    }
-                                }
-                                public static class Assets
-                                {
-                                    public const string content_css = "~/Scripts/tinymce/themes/advanced/skins/default/content.css";
-                                    public const string dialog_css = "~/Scripts/tinymce/themes/advanced/skins/default/dialog.css";
-                                    public const string ui_css = "~/Scripts/tinymce/themes/advanced/skins/default/ui.css";
-                                }
-                            }
-                            public static partial class highcontrast 
-                            {
-                                public static class Assets
-                                {
-                                    public const string content_css = "~/Scripts/tinymce/themes/advanced/skins/highcontrast/content.css";
-                                    public const string dialog_css = "~/Scripts/tinymce/themes/advanced/skins/highcontrast/dialog.css";
-                                    public const string ui_css = "~/Scripts/tinymce/themes/advanced/skins/highcontrast/ui.css";
-                                }
-                            }
-                            public static partial class o2k7 
-                            {
-                                public static partial class img 
-                                {
-                                    public static class Assets
-                                    {
-                                    }
-                                }
-                                public static class Assets
-                                {
-                                    public const string content_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/content.css";
-                                    public const string dialog_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/dialog.css";
-                                    public const string ui_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/ui.css";
-                                    public const string ui_black_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/ui_black.css";
-                                    public const string ui_silver_css = "~/Scripts/tinymce/themes/advanced/skins/o2k7/ui_silver.css";
-                                }
-                            }
-                            public static class Assets
-                            {
-                            }
-                        }
                         public static class Assets
                         {
-                            public const string editor_template_js = "~/Scripts/tinymce/themes/advanced/editor_template.js"; 
-                            public const string editor_template_src_js = "~/Scripts/tinymce/themes/advanced/editor_template_src.js"; 
-                        }
-                    }
-                    public static partial class simple 
-                    {
-                        public static partial class img 
-                        {
-                            public static class Assets
-                            {
-                            }
-                        }
-                        public static partial class langs 
-                        {
-                            public static class Assets
-                            {
-                                public const string en_js = "~/Scripts/tinymce/themes/simple/langs/en.js"; 
-                            }
-                        }
-                        public static partial class skins 
-                        {
-                            public static partial class @default 
-                            {
-                                public static class Assets
-                                {
-                                    public const string content_css = "~/Scripts/tinymce/themes/simple/skins/default/content.css";
-                                    public const string ui_css = "~/Scripts/tinymce/themes/simple/skins/default/ui.css";
-                                }
-                            }
-                            public static partial class o2k7 
-                            {
-                                public static partial class img 
-                                {
-                                    public static class Assets
-                                    {
-                                    }
-                                }
-                                public static class Assets
-                                {
-                                    public const string content_css = "~/Scripts/tinymce/themes/simple/skins/o2k7/content.css";
-                                    public const string ui_css = "~/Scripts/tinymce/themes/simple/skins/o2k7/ui.css";
-                                }
-                            }
-                            public static class Assets
-                            {
-                            }
-                        }
-                        public static class Assets
-                        {
-                            public const string editor_template_js = "~/Scripts/tinymce/themes/simple/editor_template.js"; 
-                            public const string editor_template_src_js = "~/Scripts/tinymce/themes/simple/editor_template_src.js"; 
+                            public const string theme_js = "~/Scripts/tinymce/themes/modern/theme.js"; 
+                            public const string theme_min_js = "~/Scripts/tinymce/themes/modern/theme.min.js"; 
                         }
                     }
                     public static class Assets
                     {
-                    }
-                }
-                public static partial class utils 
-                {
-                    public static class Assets
-                    {
-                        public const string editable_selects_js = "~/Scripts/tinymce/utils/editable_selects.js"; 
-                        public const string form_utils_js = "~/Scripts/tinymce/utils/form_utils.js"; 
-                        public const string mctabs_js = "~/Scripts/tinymce/utils/mctabs.js"; 
-                        public const string validate_js = "~/Scripts/tinymce/utils/validate.js"; 
                     }
                 }
                 public static class Assets
                 {
-                    public const string jquery_tinymce_js = "~/Scripts/tinymce/jquery.tinymce.js"; 
-                    public const string tiny_mce_js = "~/Scripts/tinymce/tiny_mce.js"; 
-                    public const string tiny_mce_jquery_js = "~/Scripts/tinymce/tiny_mce_jquery.js"; 
-                    public const string tiny_mce_popup_js = "~/Scripts/tinymce/tiny_mce_popup.js"; 
-                    public const string tiny_mce_src_js = "~/Scripts/tinymce/tiny_mce_src.js"; 
+                    public const string jquery_tinymce_min_js = "~/Scripts/tinymce/jquery.tinymce.min.js"; 
+                    public const string tinymce_js = "~/Scripts/tinymce/tinymce.js"; 
+                    public const string tinymce_min_js = "~/Scripts/tinymce/tinymce.min.js"; 
                 }
             }
             public static class Assets
