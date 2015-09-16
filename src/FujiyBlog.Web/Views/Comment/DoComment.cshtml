@@ -1,8 +1,6 @@
 ﻿@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Core.Extensions
-@using FujiyBlog.Web.Controllers
 @using FujiyBlog.Web.Models
-@using Microsoft.Web.Helpers
 @model PostComment
 
 @using (Ajax.BeginForm(MVC.Comment.ActionNames.DoComment, MVC.Comment.Name, new { id = Model.Post.Id }, new AjaxOptions { OnSuccess = "fujiyBlog.comments.addCommentSuccess(arguments[0]);", OnFailure = "fujiyBlog.comments.addCommentFailure" }, new { id = "add-comment-form" }))
