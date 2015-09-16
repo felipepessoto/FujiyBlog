@@ -48,9 +48,8 @@
         </div>
         @if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments))
         {
-            <div class="commentCaptcha">
-                @ReCaptcha.GetHtml(Settings.SettingRepository.ReCaptchaPublicKey)
-            </div>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
+            <div class="g-recaptcha" data-sitekey="@Settings.SettingRepository.ReCaptchaPublicKey"></div>
         }
         <input type="submit" value="@Resources.Labels.SaveComment" /><div id="comment-sucess" style="display: none;"><strong>@Resources.Labels.CommentSent</strong></div>
     </div>

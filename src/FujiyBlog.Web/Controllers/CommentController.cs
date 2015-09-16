@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Dynamic;
-using System.Linq;
-using System.Web.Mvc;
-using FujiyBlog.Core.DomainObjects;
+﻿using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
-using Microsoft.Web.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Dynamic;
+using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -24,9 +25,9 @@ namespace FujiyBlog.Web.Controllers
         }
 
         [AuthorizeRole(Role.CreateComments)]
-        public virtual ActionResult DoComment(int id, int? parentCommentId)
+        public async virtual Task<ActionResult> DoComment(int id, int? parentCommentId)
         {
-            if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments) && !ReCaptcha.Validate(Settings.SettingRepository.ReCaptchaPrivateKey))
+            if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments) && (await ValidateRecaptcha(Request.Form["g-recaptcha-response"]) == false))
             {
                 return Json(new { errorMessage = "Invalid Captcha!" });
             }
@@ -70,7 +71,7 @@ namespace FujiyBlog.Web.Controllers
                 }
                 else
                 {
-                    UpdateModel(postComment, new[] {"AuthorName", "AuthorEmail", "AuthorWebsite", "Comment"});
+                    UpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" });
                 }
             }
 
@@ -96,6 +97,27 @@ namespace FujiyBlog.Web.Controllers
 
             return View("Comments", new[] { postComment });
         }
+
+        private async Task<bool> ValidateRecaptcha(string gRecaptchaResponse)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                using (var content = new FormUrlEncodedContent(new[]
+               {
+                new KeyValuePair<string, string>("secret", Settings.SettingRepository.ReCaptchaPrivateKey),
+                new KeyValuePair<string, string>("response", gRecaptchaResponse),
+                new KeyValuePair<string, string>("remoteip", Request.ServerVariables["REMOTE_ADDR"]),
+            }))
+                {
+
+                    using (var result = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content))
+                    {
+                        return result.IsSuccessStatusCode;
+                    }
+                }
+            }
+        }
+
 
         [AuthorizeRole(Role.ModerateComments), HttpPost]
         public virtual ActionResult Approve(int id)

@@ -23,6 +23,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -224,8 +225,8 @@
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="T4MVCExtensions, Version=3.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\T4MVCExtensions.3.14.2\lib\net40\T4MVCExtensions.dll</HintPath>
+      <HintPath>..\packages\T4MVCExtensions.3.16.0\lib\net40\T4MVCExtensions.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WebGrease">
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -600,11 +601,11 @@
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\tinymce.eot" />
     <Content Include="Scripts\tinymce\skins\lightgray\fonts\readme.md" />
     <Content Include="Scripts\tinymce\langs\readme.md" />
-    <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>T4MVC.cs</LastGenOutput>
     </None>
+    <None Include="T4MVC.tt.hooks.t4" />
     <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Scripts\tinymce\skins\lightgray\img\anchor.gif" />
     <Content Include="Scripts\tinymce\skins\lightgray\img\loader.gif" />
@@ -630,7 +631,9 @@
     <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FujiyBlog.Core\FujiyBlog.Core.csproj">

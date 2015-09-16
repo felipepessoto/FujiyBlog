@@ -5,7 +5,8 @@
 
 // Make sure the compiler doesn't complain about missing Xml comments and CLS compliance
 // 0108: suppress "Foo hides inherited member Foo. Use the new keyword if hiding was intended." when a controller and its abstract parent are both processed
-#pragma warning disable 1591, 3008, 3009, 0108
+// 0114: suppress "Foo.BarController.Baz()' hides inherited member 'Qux.BarController.Baz()'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword." when an action (with an argument) overrides an action in a parent controller
+#pragma warning disable 1591, 3008, 3009, 0108, 0114
 #region T4MVC
 
 using System;
@@ -57,9 +58,10 @@ namespace FujiyBlog.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult DoComment()
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DoComment()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DoComment);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DoComment);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -174,13 +176,13 @@ namespace FujiyBlog.Web.Controllers
         partial void DoCommentOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, int id, int? parentCommentId);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult DoComment(int id, int? parentCommentId)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DoComment(int id, int? parentCommentId)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DoComment);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "parentCommentId", parentCommentId);
             DoCommentOverride(callInfo, id, parentCommentId);
-            return callInfo;
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
         [NonAction]
@@ -224,4 +226,4 @@ namespace FujiyBlog.Web.Controllers
 }
 
 #endregion T4MVC
-#pragma warning restore 1591, 3008, 3009, 0108
+#pragma warning restore 1591, 3008, 3009, 0108, 0114
