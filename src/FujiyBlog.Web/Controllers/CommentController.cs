@@ -4,6 +4,7 @@ using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -112,12 +113,13 @@ namespace FujiyBlog.Web.Controllers
 
                     using (var result = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content))
                     {
-                        return result.IsSuccessStatusCode;
+                        var resultContent = await result.Content.ReadAsStringAsync();
+                        var resultJson = JObject.Parse(resultContent);
+                        return (bool)resultJson["success"];
                     }
                 }
             }
         }
-
 
         [AuthorizeRole(Role.ModerateComments), HttpPost]
         public virtual ActionResult Approve(int id)
