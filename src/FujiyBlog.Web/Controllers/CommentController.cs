@@ -12,6 +12,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Controllers
@@ -28,7 +29,7 @@ namespace FujiyBlog.Web.Controllers
         [AuthorizeRole(Role.CreateComments)]
         public async virtual Task<ActionResult> DoComment(int id, int? parentCommentId)
         {
-            if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments) && (await ValidateRecaptcha(Request.Form["g-recaptcha-response"]) == false))
+            if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments) && (await ValidateRecaptcha(Request, Request.Form["g-recaptcha-response"]) == false))
             {
                 return Json(new { errorMessage = "Invalid Captcha!" });
             }
@@ -99,7 +100,8 @@ namespace FujiyBlog.Web.Controllers
             return View("Comments", new[] { postComment });
         }
 
-        private async Task<bool> ValidateRecaptcha(string gRecaptchaResponse)
+        //TODO Should Refactor to proper class
+        internal static async Task<bool> ValidateRecaptcha(HttpRequestBase request, string gRecaptchaResponse)
         {
             using (HttpClient client = new HttpClient())
             {
@@ -107,7 +109,7 @@ namespace FujiyBlog.Web.Controllers
                {
                 new KeyValuePair<string, string>("secret", Settings.SettingRepository.ReCaptchaPrivateKey),
                 new KeyValuePair<string, string>("response", gRecaptchaResponse),
-                new KeyValuePair<string, string>("remoteip", Request.ServerVariables["REMOTE_ADDR"]),
+                new KeyValuePair<string, string>("remoteip", request.ServerVariables["REMOTE_ADDR"]),
             }))
                 {
 

@@ -1,5 +1,8 @@
 ﻿@using FujiyBlog.Web.Extensions
 @using FujiyBlog.Web.ViewModels
+@using FujiyBlog.Web.Models
+@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
 @model ContactForm
 @{
     ViewBag.Title = Resources.Labels.Contact;
@@ -17,18 +20,24 @@
             @Html.LabelFor(x => x.Name)
             @Html.EditorFor(x => x.Name)
             @Html.ValidationMessageFor(x => x.Name)
-      
+
             @Html.LabelFor(x => x.Email)
             @Html.EditorFor(x => x.Email)
             @Html.ValidationMessageFor(x => x.Email)
-      
+
             @Html.LabelFor(x => x.Subject)
             @Html.EditorFor(x => x.Subject)
             @Html.ValidationMessageFor(x => x.Subject)
-      
+
             @Html.LabelFor(x => x.Body)
             @Html.EditorFor(x => x.Body)
-            @Html.ValidationMessageFor(x => x.Body) 
+            @Html.ValidationMessageFor(x => x.Body)
+
+            @if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments))
+            {
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+                <div class="g-recaptcha" data-sitekey="@Settings.SettingRepository.ReCaptchaPublicKey"></div>
+            }
 
             <input type="submit" value="@Resources.Labels.Send" />
         </div>

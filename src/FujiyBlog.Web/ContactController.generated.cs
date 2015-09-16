@@ -61,9 +61,10 @@ namespace FujiyBlog.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult IndexPost()
+        public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> IndexPost()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.IndexPost);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.IndexPost);
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -141,12 +142,12 @@ namespace FujiyBlog.Web.Controllers
         partial void IndexPostOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, FujiyBlog.Web.ViewModels.ContactForm contactForm);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult IndexPost(FujiyBlog.Web.ViewModels.ContactForm contactForm)
+        public override System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> IndexPost(FujiyBlog.Web.ViewModels.ContactForm contactForm)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.IndexPost);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "contactForm", contactForm);
             IndexPostOverride(callInfo, contactForm);
-            return callInfo;
+            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
         }
 
         [NonAction]

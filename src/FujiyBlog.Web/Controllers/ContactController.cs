@@ -1,8 +1,11 @@
-﻿using System;
-using System.Web.Mvc;
+﻿using FujiyBlog.Core.DomainObjects;
+using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Tasks;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.ViewModels;
+using System;
+using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Controllers
 {
@@ -12,11 +15,11 @@ namespace FujiyBlog.Web.Controllers
         {
             return View(new ContactForm());
         }
-        
+
         [HttpPost, ActionName("Index")]
-        public virtual ActionResult IndexPost(ContactForm contactForm)
+        public async virtual Task<ActionResult> IndexPost(ContactForm contactForm)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && (Settings.SettingRepository.ReCaptchaEnabled == false || User.IsInRole(Role.ModerateComments) || await CommentController.ValidateRecaptcha(Request, Request.Form["g-recaptcha-response"])))
             {
                 string body = Server.HtmlEncode(contactForm.Body).Replace(Environment.NewLine, "<br />") + @"
 <br />
