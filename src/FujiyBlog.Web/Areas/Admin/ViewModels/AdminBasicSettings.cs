@@ -28,6 +28,9 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Display(Name = "Language")]
         public string Language { get; set; }
 
+        [Display(Name = "Application Insights Instrumentation Key")]
+        public string ApplicationInsightsInstrumentationKey { get; set; }
+
         [Display(Name = "Custom Code"), AllowHtml, DataType(DataType.MultilineText)]
         public string CustomCode { get; set; }
 
