@@ -347,6 +347,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\AiHandleErrorAttribute.cs" />
     <Compile Include="Infrastructure\NonAuthenticatedOnlyCacheAttribute.cs" />
     <Compile Include="Infrastructure\AuthorizeRoleAttribute.cs" />
     <Compile Include="Common\DateTimeUtil.cs" />
