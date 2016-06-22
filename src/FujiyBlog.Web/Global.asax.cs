@@ -1,6 +1,7 @@
 ﻿using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
+using Microsoft.ApplicationInsights.Extensibility;
 using NLog;
 using StackExchange.Profiling;
 using StackExchange.Profiling.EntityFramework6;
@@ -41,11 +42,11 @@ namespace FujiyBlog.Web
             MiniProfiler.Settings.Results_Authorize = httpRequest => httpRequest.IsAuthenticated;
             MiniProfiler.Settings.Results_List_Authorize = httpRequest => httpRequest.IsAuthenticated;
 
-            Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey);
+            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey);
 
-            if (Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.DisableTelemetry == false)
+            if (TelemetryConfiguration.Active.DisableTelemetry == false)
             {
-                Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration.Active.InstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey;
+                TelemetryConfiguration.Active.InstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey;
             }
         }
 

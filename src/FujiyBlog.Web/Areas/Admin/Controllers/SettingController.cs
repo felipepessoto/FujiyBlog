@@ -15,6 +15,7 @@ using FujiyBlog.Web.Models;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
@@ -63,6 +64,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             Settings.SettingRepository.Culture = settings.Language;
             Settings.SettingRepository.ApplicationInsightsInstrumentationKey = settings.ApplicationInsightsInstrumentationKey;
             Settings.SettingRepository.CustomCode = settings.CustomCode;
+
+            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey);
+
+            if (TelemetryConfiguration.Active.DisableTelemetry == false)
+            {
+                TelemetryConfiguration.Active.InstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey;
+            }
 
             return RedirectToAction(MVC.Admin.Setting.Index()).SetSuccessMessage("Settings saved");
         }
