@@ -61,7 +61,7 @@ namespace FujiyBlog.Web.Controllers
         public virtual System.Threading.Tasks.Task<System.Web.Mvc.ActionResult> DoComment()
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.DoComment);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -90,7 +90,7 @@ namespace FujiyBlog.Web.Controllers
         public readonly string Name = "Comment";
         [GeneratedCode("T4MVC", "2.0")]
         public const string NameConst = "Comment";
-
+        [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public ActionNamesClass ActionNames { get { return s_actions; } }
@@ -182,7 +182,7 @@ namespace FujiyBlog.Web.Controllers
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "parentCommentId", parentCommentId);
             DoCommentOverride(callInfo, id, parentCommentId);
-            return System.Threading.Tasks.Task.FromResult(callInfo as ActionResult);
+            return System.Threading.Tasks.Task.FromResult(callInfo as System.Web.Mvc.ActionResult);
         }
 
         [NonAction]
