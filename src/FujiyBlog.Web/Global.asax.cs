@@ -1,15 +1,17 @@
-﻿using System;
+﻿using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Web.Infrastructure;
+using FujiyBlog.Web.Models;
+using Microsoft.ApplicationInsights.Extensibility;
+using NLog;
+using StackExchange.Profiling;
+using StackExchange.Profiling.EntityFramework6;
+using System;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Web.Infrastructure;
-using NLog;
-using StackExchange.Profiling;
-using StackExchange.Profiling.EntityFramework6;
 
 namespace FujiyBlog.Web
 {
@@ -25,12 +27,12 @@ namespace FujiyBlog.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             MiniProfilerEF6.Initialize();
-            
+
             //AutoDbMigration();
 
             LogManager.GetCurrentClassLogger().Info("Started FujiyBlog");
 
-            foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x=> !(x is RazorViewEngine)).ToList())
+            foreach (IViewEngine viewEngine in ViewEngines.Engines.Where(x => !(x is RazorViewEngine)).ToList())
             {
                 ViewEngines.Engines.Remove(viewEngine);
             }
@@ -39,12 +41,19 @@ namespace FujiyBlog.Web
 
             MiniProfiler.Settings.Results_Authorize = httpRequest => httpRequest.IsAuthenticated;
             MiniProfiler.Settings.Results_List_Authorize = httpRequest => httpRequest.IsAuthenticated;
+
+            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey);
+
+            if (TelemetryConfiguration.Active.DisableTelemetry == false)
+            {
+                TelemetryConfiguration.Active.InstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey;
+            }
         }
 
         private static void AutoDbMigration()
         {
             System.Data.Entity.Migrations.DbMigrationsConfiguration configuration = new System.Data.Entity.Migrations.DbMigrationsConfiguration();
-            configuration.ContextType = typeof (FujiyBlogDatabase);
+            configuration.ContextType = typeof(FujiyBlogDatabase);
             configuration.MigrationsAssembly = configuration.ContextType.Assembly;
             configuration.MigrationsNamespace = "FujiyBlog.Core.Migrations";
 

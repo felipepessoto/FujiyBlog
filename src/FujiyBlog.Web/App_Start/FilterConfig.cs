@@ -9,7 +9,7 @@ namespace FujiyBlog.Web
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new ProfilingAttribute());
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new AiHandleErrorAttribute());
             filters.Add(new SetCultureAttribute());
             filters.Add(new ThemeAttribute());
         }

@@ -261,6 +261,12 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.NotifyNewComments, value.ToString()); }
         }
 
+        public string ApplicationInsightsInstrumentationKey
+        {
+            get { return LoadSetting(SettingNames.ApplicationInsightsInstrumentationKey); }
+            set { SaveSetting(SettingNames.ApplicationInsightsInstrumentationKey, value); }
+        }
+
         private string LoadSetting(SettingNames setting)
         {
             string value;
@@ -385,6 +391,9 @@ namespace FujiyBlog.Core.EntityFramework
 
             [Description("Blog's Twitter account")]
             TwitterBlogAccount = 36,
+
+            [Description("Application Insights Instrumentation Key")]
+            ApplicationInsightsInstrumentationKey = 37,
         }
     }
 }

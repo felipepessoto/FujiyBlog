@@ -56,6 +56,14 @@
         </div>
 
         <div class="editor-label">
+            @Html.LabelFor(model => model.ApplicationInsightsInstrumentationKey)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ApplicationInsightsInstrumentationKey)
+            @Html.ValidationMessageFor(model => model.ApplicationInsightsInstrumentationKey)
+        </div>
+
+        <div class="editor-label">
             @Html.LabelFor(model => model.CustomCode)
         </div>
         <div class="editor-field">
