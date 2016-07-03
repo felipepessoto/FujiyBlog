@@ -1,33 +1,51 @@
-﻿using System.Net;
-using System.Net.Mail;
-using FujiyBlog.Core.EntityFramework;
+﻿using FujiyBlog.Core.EntityFramework;
+using MailKit.Net.Smtp;
+using MimeKit;
+using System.Net;
+using System.Threading.Tasks;
 
 namespace FujiyBlog.Core.Services
 {
-    public static class EmailService
+    public class EmailService
     {
-        public static void Send(string toEmail, string subject, string body, bool isBodyHtml, string fromEmail, string fromName)
+        private readonly SettingRepository settingRepository;
+
+        public EmailService(SettingRepository settingRepository)
         {
-            SettingRepository settingRepository = new SettingRepository(new FujiyBlogDatabase());
+            this.settingRepository = settingRepository;
+        }
 
-            using (MailMessage mailMessage = new MailMessage(new MailAddress(settingRepository.EmailTo, fromName), new MailAddress(toEmail)))
+        public async Task Send(string toEmail, string subject, string body, bool isBodyHtml, string fromEmail, string fromName)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress(fromName, settingRepository.EmailTo));
+            message.To.Add(new MailboxAddress(toEmail, toEmail));
+
+            if (!string.IsNullOrEmpty(fromEmail))
             {
-                mailMessage.Subject = settingRepository.EmailSubjectPrefix + " - " + subject;
-                mailMessage.Body = body;
-                mailMessage.IsBodyHtml = isBodyHtml;
+                message.ReplyTo.Add(new MailboxAddress(fromName, fromEmail));
+            }
 
-                if (!string.IsNullOrEmpty(fromEmail))
-                {
-                    mailMessage.ReplyToList.Add(new MailAddress(fromEmail, fromName));
-                }
+            message.Subject = settingRepository.EmailSubjectPrefix + " - " + subject;
 
-                using (SmtpClient client = new SmtpClient(settingRepository.SmtpAddress, settingRepository.SmtpPort))
-                {
-                    client.EnableSsl = settingRepository.SmtpSsl;
-                    client.Credentials = new NetworkCredential(settingRepository.SmtpUserName, settingRepository.SmtpPassword);
-                    client.Send(mailMessage);
-                }
+            message.Body = new TextPart(isBodyHtml ? "html" : "plain")
+            {
+                Text = body
+            };
+
+            using (var client = new SmtpClient())
+            {
+                await client.ConnectAsync(settingRepository.SmtpAddress, settingRepository.SmtpPort, settingRepository.SmtpSsl);
+
+                // Note: since we don't have an OAuth2 token, disable
+                // the XOAUTH2 authentication mechanism.
+                client.AuthenticationMechanisms.Remove("XOAUTH2");
+
+                await client.AuthenticateAsync(new NetworkCredential(settingRepository.SmtpUserName, settingRepository.SmtpPassword));
+                await client.SendAsync(message);
+                await client.DisconnectAsync(true);
             }
         }
+
     }
 }

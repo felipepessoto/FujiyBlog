@@ -1,4 +1,6 @@
-﻿@using FujiyBlog.Web.Models
+﻿@inject FujiyBlog.Core.DateTimeUtil DateTimeUtil
+@inject FujiyBlog.Core.EntityFramework.SettingRepository settings
+@using FujiyBlog.Web.Models
 @using HtmlAgilityPack
 @model FujiyBlog.Core.Dto.PostSummary
 
@@ -22,7 +24,7 @@
             if (moreIndex >= 0)
             {
                 content = content.Substring(0, content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase));
-                return CloseOpenedTags(content) + " " + Html.ActionLink(Resources.Labels.ReadMore, MVC.Post.Details(Model.Post.Slug), null, null, null, "continue");
+                return CloseOpenedTags(content) + " " + Html.ActionLink(FujiyBlog.Web.Resources.Labels.ReadMore, "Details", "Post", null, null, "continue", new { postSlug = Model.Post.Slug }, null);
             }
         }
         return CloseOpenedTags(content);
@@ -32,7 +34,7 @@
     {
         HtmlDocument doc = new HtmlDocument();
         doc.LoadHtml(html);
-        StringWriter stringWriter = new StringWriter();
+        var stringWriter = new System.IO.StringWriter();
         doc.Save(stringWriter);
         return stringWriter.ToString();
     }
@@ -41,12 +43,12 @@
 
 <div class="post" id="post@(Model.Post.Id)">
     <h2 class="title">
-        @Html.ActionLink(Model.Post.Title, MVC.Post.Details(Model.Post.Slug))
+        @Html.ActionLink(Model.Post.Title, "Details", "Post", new { postSlug = Model.Post.Slug })
     </h2>
 
     <p class="meta">
-        <span class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate).ToString(System.Globalization.CultureInfo.CreateSpecificCulture(UICulture))</span><span class="posted">
-            @Resources.Labels.By @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.Username, MVC.Post.Author(Model.Post.Author.Username, null))
+        <span class="date">@DateTimeUtil.ConvertUtcToMyTimeZone(Model.Post.PublicationDate).ToString()</span><span class="posted">
+            @FujiyBlog.Web.Resources.Labels.By @Html.ActionLink(Model.Post.Author.DisplayName ?? Model.Post.Author.UserName, "Author", "Post", new { author = Model.Post.Author.UserName })
         </span>
     </p>
 
@@ -54,41 +56,54 @@
         @Html.Raw(ShowPostContent(Model.Post.Content))
         <div class="post-footer">
             <div class="social-networks">
-                @if (Settings.SettingRepository.EnableTwitterSharePosts)
+                @if (settings.EnableTwitterSharePosts)
                 {
-                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))&text=@Uri.EscapeDataString(Model.Post.Title)&via=@Uri.EscapeDataString(Settings.SettingRepository.TwitterBlogAccount ?? "")', '', 550, 420)"><img src="~/Content/Images/tweet.png" /></a>
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Url.Action("Details", "Post", new { postSlug = Model.Post.Slug }, Context.Request.Scheme))&text=@Uri.EscapeDataString(Model.Post.Title)&via=@Uri.EscapeDataString(settings.TwitterBlogAccount ?? "")', '', 550, 420)"><img src="~/Content/Images/tweet.png" /></a>
                 }
-                @if (Settings.SettingRepository.EnableGooglePlusOnePosts)
+                @if (settings.EnableGooglePlusOnePosts)
                 {
-                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('https://plus.google.com/share?url=@Uri.EscapeDataString(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))', '', 510, 420)"><img src="~/Content/Images/googleplus.png" /></a>
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('https://plus.google.com/share?url=@Uri.EscapeDataString(Url.Action("Details", "Post", new { postSlug = Model.Post.Slug }, Context.Request.Scheme))', '', 510, 420)"><img src="~/Content/Images/googleplus.png" /></a>
                 }
-                @if (Settings.SettingRepository.EnableFacebookLikePosts)
+                @if (settings.EnableFacebookLikePosts)
                 {
-                    @Facebook.Share(Url.Action(MVC.Post.Details(Model.Post.Slug), Request.Url.Scheme))
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://facebook.com/sharer.php?u=@Uri.EscapeDataString(Url.Action("Details", "Post", new {postSlug= Model.Post.Slug }, Context.Request.Scheme))&app_id=@settings.FacebookAppId', '', 644, 368);"><img src="~/Content/Images/facebook_share.png" /></a>
                 }
             </div>
 
             <div class="post-links">
-                @if (Request.IsAuthenticated)
-                {
-                    @Html.ActionLink(Resources.Labels.Edit, MVC.Admin.Post.Edit(Model.Post.Id)) <text>|</text>
-                    @Ajax.ActionLink(Resources.Labels.Delete, MVC.Admin.Post.Delete((Model.Post.Id)), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "window.location.href='" + Url.Content("~/") + "';" }) <text>|</text>
-                }
-                @Html.ActionLink("Permalink", MVC.Post.DetailsById(Model.Post.Id), new { rel = "bookmark", title = Model.Post.Title })
-                | <a href="@Url.Action(MVC.Post.Details(Model.Post.Slug))#commentlist">@Resources.Labels.Comments (@Model.CommentsTotal)</a>
-            </div>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a asp-area="Admin" asp-controller="Post" asp-action="Edit" asp-route-id="@Model.Post.Id">@FujiyBlog.Web.Resources.Labels.Edit</a>
+                         <text>|</text>
+                        <a asp-area="Admin" asp-controller="Post" asp-action="Delete" asp-route-id="@Model.Post.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"window.location.href='{Url.Content("~/")}';")">@FujiyBlog.Web.Resources.Labels.Delete</a>
+                <text>|</text>
+                    }
+                <a asp-controller="Post" asp-action="DetailsById" asp-route-id="@Model.Post.Id" rel="bookmark" title="@Model.Post.Title">Permalink</a>
+
+                    | 
+                
+                <a asp-controller="Post" asp-action="Details" asp-route-postSlug="@Model.Post.Slug" asp-fragment="commentlist" rel="bookmark" title="@Model.Post.Title">@FujiyBlog.Web.Resources.Labels.Comments (@Model.CommentsTotal)</a>
+                </div>
 
             <div class="bottom">
-                @if (@Model.Post.Tags.Any())
+                @if (@Model.Post.PostTags.Any())
                 {
                     <div>
-                        Tags: @Html.Raw(Model.Post.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))
+                        Tags:
+                        @foreach (var tag in Model.Post.PostTags.Select(x => x.Tag))
+                        {
+                            <a asp-controller="Post" asp-action="Tag" asp-route-tag="@tag.Name">@tag.Name</a>
+                        }
                     </div>
                 }
-                @if (@Model.Post.Categories.Any())
+                @if (@Model.Post.PostCategories.Any())
                 {
                     <div>
-                        @Resources.Labels.Categories: @Html.Raw(Model.Post.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))
+                        @FujiyBlog.Web.Resources.Labels.Categories:
+                        @foreach (var category in Model.Post.PostCategories.Select(x => x.Category))
+                        {
+                            <a asp-controller="Post" asp-action="Category" asp-route-category="@category.Name">@category.Name</a>
+                        }
                     </div>
                 }
             </div>

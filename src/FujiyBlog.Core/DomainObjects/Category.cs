@@ -7,7 +7,7 @@ namespace FujiyBlog.Core.DomainObjects
     {
         public Category()
         {
-            Posts = new List<Post>();
+            PostCategories = new List<PostCategory>();
         }
 
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace FujiyBlog.Core.DomainObjects
         [Required, StringLength(50)]
         public string Name { get; set; }
 
-        public ICollection<Post> Posts { get; set; }
+        public ICollection<PostCategory> PostCategories { get; set; }
     }
 }

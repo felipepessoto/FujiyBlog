@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
-using System.Web.Mvc;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class PageController : AbstractController
+    public class PageController : Controller
     {
         private readonly FujiyBlogDatabase db;
 
@@ -16,25 +16,25 @@ namespace FujiyBlog.Web.Controllers
             this.db = db;
         }
 
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
-            Page initialPage = db.Pages.WhereHaveRoles().Single(x => x.IsFrontPage);
+            Page initialPage = db.Pages.WhereHaveRoles(HttpContext).Single(x => x.IsFrontPage);
             return ShowPage(initialPage);
         }
 
-        public virtual ActionResult Details(string pageSlug)
+        public ActionResult Details(string pageSlug)
         {
             return Details(pageSlug, null);
         }
 
-        public virtual ActionResult DetailsById(int id)
+        public ActionResult DetailsById(int id)
         {
             return Details(null, id);
         }
 
         private ActionResult Details(string slug, int? id)
         {
-            IQueryable<Page> pageQuery = db.Pages.WhereHaveRoles();
+            IQueryable<Page> pageQuery = db.Pages.WhereHaveRoles(HttpContext);
 
             Page page;
 
@@ -49,7 +49,7 @@ namespace FujiyBlog.Web.Controllers
 
             if (page == null)
             {
-                return HttpNotFound();
+                return NotFound();
             }
 
             return ShowPage(page);

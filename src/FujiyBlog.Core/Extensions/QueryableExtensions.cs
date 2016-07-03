@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Services;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using System.Linq.Expressions;
+using Microsoft.AspNetCore.Http;
 
 namespace FujiyBlog.Core.Extensions
 {
@@ -14,6 +19,42 @@ namespace FujiyBlog.Core.Extensions
         private static DateTime UtcNow
         {
             get { return DateTime.UtcNow; }
+        }
+
+        public static TEntity Find<TEntity>(this DbSet<TEntity> set, FujiyBlogDatabase context, params object[] keyValues)
+    where TEntity : class
+        {
+            var entityType = context.Model.FindEntityType(typeof(TEntity));
+            var key = entityType.FindPrimaryKey();
+
+            var entries = context.ChangeTracker.Entries<TEntity>();
+
+            var i = 0;
+            foreach (var property in key.Properties)
+            {
+                var keyValue = keyValues[i];
+                entries = entries.Where(e => e.Property(property.Name).CurrentValue == keyValue);
+                i++;
+            }
+
+            var entry = entries.FirstOrDefault();
+            if (entry != null)
+            {
+                // Return the local object if it exists.
+                return entry.Entity;
+            }
+
+            // set.Where(x => x.Id == keyValues[0]);
+            var parameter = Expression.Parameter(typeof(TEntity), "x");
+            var query = set.Where((Expression<Func<TEntity, bool>>)
+                Expression.Lambda(
+                    Expression.Equal(
+                        Expression.Property(parameter, "Id"),
+                        Expression.Constant(keyValues[0])),
+                    parameter));
+
+            // Look in the database
+            return query.FirstOrDefault();
         }
 
         public static IQueryable<T> Paging<T>(this IQueryable<T> query, int currentPage, int pageSize)
@@ -26,10 +67,10 @@ namespace FujiyBlog.Core.Extensions
             return query.Take(pageSize);
         }
 
-        public static IQueryable<Post> WhereHaveRoles(this IQueryable<Post> query)
+        public static IQueryable<Post> WhereHaveRoles(this IQueryable<Post> query, HttpContext httpContext)
         { 
-            bool publicPost = RolesService.UserHasRole(Role.ViewPublicPosts);
-            bool unpublishedPost = RolesService.UserHasRole(Role.ViewUnpublishedPosts);
+            bool publicPost = httpContext.UserHasClaimPermission(PermissionClaims.ViewPublicPosts);
+            bool unpublishedPost = httpContext.UserHasClaimPermission(PermissionClaims.ViewUnpublishedPosts);
 
             if (publicPost && unpublishedPost)
             {
@@ -49,10 +90,10 @@ namespace FujiyBlog.Core.Extensions
             return query.Where(x => false);
         }
 
-        public static IQueryable<PostComment> WhereHaveRoles(this IQueryable<PostComment> query)
+        public static IQueryable<PostComment> WhereHaveRoles(this IQueryable<PostComment> query, HttpContext httpContext)
         {
-            bool publicComments = RolesService.UserHasRole(Role.ViewPublicComments);
-            bool unmoderatedComments = RolesService.UserHasRole(Role.ViewUnmoderatedComments);
+            bool publicComments = httpContext.UserHasClaimPermission(PermissionClaims.ViewPublicComments);
+            bool unmoderatedComments = httpContext.UserHasClaimPermission(PermissionClaims.ViewUnmoderatedComments);
 
             if (publicComments && unmoderatedComments)
             {
@@ -72,10 +113,10 @@ namespace FujiyBlog.Core.Extensions
             return query.Where(x => false);
         }
 
-        public static IQueryable<Page> WhereHaveRoles(this IQueryable<Page> query)
+        public static IQueryable<Page> WhereHaveRoles(this IQueryable<Page> query, HttpContext httpContext)
         {
-            bool publicPages = RolesService.UserHasRole(Role.ViewPublicPages);
-            bool unpublishedPages = RolesService.UserHasRole(Role.ViewUnpublishedPages);
+            bool publicPages = httpContext.UserHasClaimPermission(PermissionClaims.ViewPublicPages);
+            bool unpublishedPages = httpContext.UserHasClaimPermission(PermissionClaims.ViewUnpublishedPages);
 
             if (publicPages && unpublishedPages)
             {
@@ -95,42 +136,42 @@ namespace FujiyBlog.Core.Extensions
             return query.Where(x => false);
         }
 
-        public static Post GetPreviousPost(this IQueryable<Post> query, Post post)
+        public static Post GetPreviousPost(this IQueryable<Post> query, Post post, HttpContext httpContext)
         {
-            return query.WhereHaveRoles().OrderByDescending(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
+            return query.WhereHaveRoles(httpContext).OrderByDescending(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate <= post.PublicationDate && x.Id != post.Id);
         }
 
-        public static Post GetNextPost(this IQueryable<Post> query, Post post)
+        public static Post GetNextPost(this IQueryable<Post> query, Post post, HttpContext httpContext)
         {
-            return query.WhereHaveRoles().OrderBy(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
+            return query.WhereHaveRoles(httpContext).OrderBy(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
         }
 
         public static IEnumerable<TagWithCount> GetTagsCloud(this IQueryable<Tag> query, int minimumPosts)
         {
             var tags = from tag in query
-                       where tag.Posts.Count() >= minimumPosts
+                       where tag.PostTags.Count() >= minimumPosts
                        orderby tag.Name
                        select new TagWithCount
                        {
                            Tag = tag,
-                           PostsCount = tag.Posts.Count()
+                           PostsCount = tag.PostTags.Count()
                        };
 
             return tags.ToList();
         }
 
-        public static Post GetCompletePost(this FujiyBlogDatabase database, string slug)
+        public static Post GetCompletePost(this FujiyBlogDatabase database, string slug, HttpContext httpContext)
         {
-            Post post = database.Posts.WhereHaveRoles().Include(x => x.Author).SingleOrDefault(x => x.Slug == slug);
+            Post post = database.Posts.WhereHaveRoles(httpContext).Include(x => x.Author).SingleOrDefault(x => x.Slug == slug);
 
             if (post == null)
             {
                 return null;
             }
 
-            database.Entry(post).Collection(x => x.Tags).Load();
-            database.Entry(post).Collection(x => x.Categories).Load();
-            database.Entry(post).Collection(x => x.Comments).Query().WhereHaveRoles().Include(x => x.Author).Load();
+            database.Tags.Include(x=>x.PostTags).Where(x => x.PostTags.Any(y => y.PostId == post.Id)).Load();
+            database.Categories.Include(x=>x.PostCategories).Where(x => x.PostCategories.Any(y => y.PostId == post.Id)).Load();
+            database.PostComments.Include(x=>x.Author).WhereHaveRoles(httpContext).Load();
 
             return post;
         }

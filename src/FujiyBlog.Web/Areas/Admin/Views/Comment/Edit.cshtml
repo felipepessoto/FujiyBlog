@@ -1,7 +1,7 @@
 ﻿@model FujiyBlog.Core.DomainObjects.PostComment
 @{
     ViewBag.Title = "Edit";
-    Layout = MVC.Admin.Comment.Views._Layout;
+    Layout = "_Layout";
 }
 <h2>
     Edit</h2>
@@ -40,10 +40,10 @@
         else
         { 
             <div class="editor-label">
-                @Html.LabelFor(model => model.Author.Username)
+                @Html.LabelFor(model => model.Author.UserName)
             </div>
             <div class="editor-field">
-                @Html.TextBoxFor(model => model.Author.Username, new { @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.Author.UserName, new { @readonly = "readonly" })
             </div>
 
             <div class="editor-label">

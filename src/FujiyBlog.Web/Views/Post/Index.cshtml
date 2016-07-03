@@ -1,11 +1,11 @@
-﻿@using FujiyBlog.Web.Extensions
-@model FujiyBlog.Web.ViewModels.PostIndex
+﻿@model FujiyBlog.Web.ViewModels.PostIndex
 @{
-    Layout = this.FindLayoutPath("_Layout");
+    Layout = "_Layout";
 }
 
 @foreach (var item in Model.RecentPosts)
 {
     Html.RenderPartial("Post", item);
 }
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.PreviousPosts, Resources.Labels.NextPosts)
+
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })

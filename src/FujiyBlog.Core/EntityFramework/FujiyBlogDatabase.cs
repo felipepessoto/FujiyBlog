@@ -1,69 +1,74 @@
-﻿using System;
-using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
+﻿using FujiyBlog.Core.DomainObjects;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Globalization;
 using System.Linq;
-using FujiyBlog.Core.Caching;
-using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.EntityFramework.Configuration;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class FujiyBlogDatabase : DbContext
+    public class FujiyBlogDatabase : IdentityDbContext<ApplicationUser>
     {
+        public FujiyBlogDatabase(DbContextOptions<FujiyBlogDatabase> options)
+            : base(options)
+        {
+        }
+
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<Post> Posts { get; set; }
         //public DbSet<PostRevision> PostRevisions { get; set; }
-        public DbSet<User> Users { get; set; }
         public DbSet<Setting> Settings { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<WidgetSetting> WidgetSettings { get; set; }
         public DbSet<Page> Pages { get; set; }
-        public DbSet<RoleGroup> RoleGroups { get; set; }
 
         private string lastDatabaseChange;
         public string LastDatabaseChange
         {
             get
             {
-                return lastDatabaseChange ??
-                       (lastDatabaseChange = new FujiyBlogDatabase().Settings.Where(x => x.Id == 24).Select(x => x.Value).SingleOrDefault() ?? "0");
+                return lastDatabaseChange
+                    ?? (lastDatabaseChange = this.Settings.Where(x => x.Id == 24).Select(x => x.Value).SingleOrDefault() ?? "0");
             }
         }
 
-        public FujiyBlogDatabase()
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Database.SetInitializer(new FujiyBlogDatabaseInitializer());
+            //modelBuilder.Entity<Post>().HasIndex(x => x.Slug);
+            modelBuilder.Entity<Post>().HasAlternateKey(x => x.Slug);
+
+            modelBuilder.Entity<ApplicationUser>()
+                .HasMany(b => b.AuthoredPostComments)
+                .WithOne(b => b.Author);
+
+
+            modelBuilder.Entity<ApplicationUser>()
+            .HasMany(b => b.ModeratedPostComments)
+            .WithOne(b => b.ModeratedBy);
+
+            modelBuilder.Entity<PostTag>()
+                .HasKey(t => new { t.PostId, t.TagId });
+
+            modelBuilder.Entity<PostCategory>()
+                .HasKey(t => new { t.PostId, t.CategoryId });
+
+            base.OnModelCreating(modelBuilder);
         }
 
-        protected override void OnModelCreating(DbModelBuilder builder)
-        {
-            builder.Conventions.Remove<OneToManyCascadeDeleteConvention>();   
-
-            builder.Configurations.Add(new PostCommentConfiguration());
-            builder.Configurations.Add(new PostConfiguration());
-            builder.Configurations.Add(new UserConfiguration());
-            builder.Configurations.Add(new SettingConfiguration());
-            builder.Configurations.Add(new TagConfiguration());
-            builder.Configurations.Add(new CategoryConfiguration());
-            builder.Configurations.Add(new WidgetSettingConfiguration());
-            builder.Configurations.Add(new PageConfiguration());
-            builder.Configurations.Add(new RoleGroupConfiguration());
-        }
 
         public override int SaveChanges()
         {
-            return SaveChanges();
-        }
+            ChangeTracker.DetectChanges();
 
-        public int SaveChanges(bool updateLastDbChange = true, bool bypassValidation = false)
-        {
-            int saveChanges = bypassValidation ? SaveChangesBypassingValidation() : base.SaveChanges();
+            var hasChanges = ChangeTracker.Entries().Any();
+            int saveChanges = 0;
 
-            if (updateLastDbChange && saveChanges > 0)
+            if (hasChanges)
             {
                 UpdateLastDbChange();
+                saveChanges = base.SaveChanges();
             }
 
             return saveChanges;
@@ -74,27 +79,10 @@ namespace FujiyBlog.Core.EntityFramework
             Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
             if (setting == null)
             {
-                setting = new Setting {Id = 24, Description = "Last Database Change"};
+                setting = new Setting { Id = 24, Description = "Last Database Change" };
                 Settings.Add(setting);
             }
-            setting.Value = DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
-            base.SaveChanges();
-        }
-
-        [Obsolete]
-        public int SaveChangesBypassingValidation()
-        {
-            bool previousValue = Configuration.ValidateOnSaveEnabled;
-
-            try
-            {
-                Configuration.ValidateOnSaveEnabled = false;
-                return SaveChanges();
-            }
-            finally
-            {
-                Configuration.ValidateOnSaveEnabled = previousValue;
-            }
+            lastDatabaseChange = setting.Value = DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

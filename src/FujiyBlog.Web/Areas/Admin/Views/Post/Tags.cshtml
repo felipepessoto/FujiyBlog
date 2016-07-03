@@ -1,10 +1,11 @@
 ﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminTagsList
 @{
     ViewBag.Title = "Tags";
-    Layout = MVC.Admin.Post.Views._Layout;
+    Layout = "_Layout";
 }
 <h2>
-    Tags</h2>
+    Tags
+</h2>
 
 <table>
     <tr>
@@ -22,11 +23,11 @@
         <tr data-item-id="@item.Key.Id" id="item-row-@item.Key.Id">
             <td>
                 <a href="javascript:void(0);" class="btn-edit-item">Edit</a>
-                @Ajax.ActionLink("Delete", MVC.Admin.Post.DeleteTag(item.Key.Id), new AjaxOptions() { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Key.Id + ");" }, new { @class = "btn-delete-item" })
+                <a asp-area="Admin" asp-controller="Post" asp-action="DeleteTag" asp-route-id="@item.Key.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"RemoveItemRow({item.Key.Id});" )" class="btn-delete-item">@FujiyBlog.Web.Resources.Labels.Delete</a>
 
                 <a href="javascript:void(0);" class="btn-update-item" style="display:none">Update</a>
                 <a href="javascript:void(0);" class="btn-cancel-item" style="display:none">Cancel</a>
-                
+
             </td>
             <td>
                 @Html.TextBoxFor(modelItem => item.Key.Name, new { id = "txt-item-name" + item.Key.Id, style = "display:none", @class = "txt-item-name" })
@@ -78,7 +79,7 @@
             return;
         }
 
-        var callUrl = '@Url.Action(MVC.Admin.Post.UpdateTag())';
+        var callUrl = '@Url.Action("UpdateTag", "Post", new {area= "Admin" })';
         var callData = { id: itemId, name: itemName };
         $.ajax({
             type: "POST",

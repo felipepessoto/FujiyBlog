@@ -5,11 +5,11 @@
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostEdit
 
 @{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Edit";
     string uploadFolder = "Post" + (Model.Post.Id.HasValue ? Model.Post.Id.ToString() : Guid.NewGuid().ToString());
 }
-<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce.jquery_tinymce_min_js)"></script>
+<script type="text/javascript" src="~/lib/tinymce/jquery.tinymce.min.js"></script>
 
 <h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
 
@@ -181,7 +181,7 @@
             return split(term).pop();
         }
 
-        $('#@(Html.FieldIdFor(x=> x.Post.Tags))')
+        $('#@(Html.IdFor(x=> x.Post.Tags))')
             // don't navigate away from the field on tab when selecting an item
             .bind("keydown", function(event) {
                 if (event.keyCode === $.ui.keyCode.TAB &&
@@ -215,15 +215,15 @@
     });
 
     function CheckPublishRoles () {
-        
-        var hasPublishOwn = @(User.IsInRole(Role.PublishOwnPosts)?"true":"false");;
-        var hasPublishOtherUsers = @(User.IsInRole(Role.PublishOtherUsersPosts)?"true":"false");
+
+        var hasPublishOwn = @(Context.UserHasClaimPermission(PermissionClaims.PublishOwnPosts)?"true":"false");;
+        var hasPublishOtherUsers = @(Context.UserHasClaimPermission(PermissionClaims.PublishOtherUsersPosts)?"true":"false");
         var userName = '@(User.Identity.Name)';
         var currentPublishedValue = @(Model.Post.Id.HasValue && Model.Post.IsPublished?"true":"false");
 
-        var publishedField = $('#@(Html.FieldIdFor(x=> x.Post.IsPublished))');
-        var newAuthor = $('#@(Html.FieldIdFor(x=> x.Post.AuthorId)) :selected').text();
-        
+        var publishedField = $('#@(Html.IdFor(x=> x.Post.IsPublished))');
+        var newAuthor = $('#@(Html.IdFor(x=> x.Post.AuthorId)) :selected').text();
+
         if (!currentPublishedValue) {
             if (!(newAuthor != userName && hasPublishOtherUsers) && !(newAuthor == userName && hasPublishOwn)) {
                 publishedField.attr('disabled', true);
@@ -234,10 +234,10 @@
             }
         }
     }
-    
+
     CheckPublishRoles();
-    
-    $('#@(Html.FieldIdFor(x=> x.Post.AuthorId))').change(CheckPublishRoles);
+
+    $('#@(Html.IdFor(x=> x.Post.AuthorId))').change(CheckPublishRoles);
 
     $('#add-category').click(function () {
 
@@ -245,7 +245,7 @@
             return;
         }
         $('#new-category-name-error').text('').hide();
-        var callUrl = '@Url.Action(MVC.Admin.Post.AddCategory())';
+        var callUrl = '@Url.Action("AddCategory", "Post", new { area = "Admin" })';
         var callData = "NewCategory.Name=" + $('#new-category-name').val();
         $.ajax({
             type: "POST",
@@ -255,7 +255,7 @@
                 if (!response.errorMessage) {
                     var container = $('#categories-list');
 
-                    var html = '<li><input checked=checked type="checkbox" name="Post.selectedCategories" value="' + response.Id + '" />' + response.Name + '</li>';
+                    var html = '<li><input checked=checked type="checkbox" name="Post.selectedCategories" value="' + response.id + '" />' + response.name + '</li>';
                     container.append($(html));
                 }
                 else {
@@ -269,16 +269,15 @@
     });
 
     $('#extract-from-title').click(function() {
-        var callUrl = '@(Url.Action(MVC.Admin.Page.GenerateSlug()))';
-        var postData = JSON.stringify({ text: $('#@Html.FieldIdFor(x=>x.Post.Title)').val() });
+        var callUrl = '@Url.Action("GenerateSlug", "Page", new { area="Admin"})';
+        var postData = { text: $('#@Html.IdFor(x=>x.Post.Title)').val() };
 
         $.ajax({
                 type: "POST",
-                contentType: 'application/json; charset=utf-8',
                 url: callUrl,
                 data: postData,
                 success: function(response) {
-                    $('#@Html.FieldIdFor(x=>x.Post.Slug)').val(response);
+                    $('#@Html.IdFor(x=>x.Post.Slug)').val(response);
                 },
                 error: function() {
                     alert('Error');

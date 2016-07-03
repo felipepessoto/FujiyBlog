@@ -18,12 +18,12 @@ namespace FujiyBlog.Core.DomainObjects
         [StringLength(50)]
         public string AuthorName { get; set; }
 
-        [DisplayName("Email")]
+        [Display(Name ="Email")]
         [StringLength(255), EmailAddress]
         [DataType(DataType.EmailAddress)]
         public string AuthorEmail { get; set; }
 
-        [DisplayName("Site")]
+        [Display(Name = "Site")]
         [StringLength(200), Url]
         [DataType(DataType.Url)]
         public string AuthorWebsite { get; set; }
@@ -56,9 +56,9 @@ namespace FujiyBlog.Core.DomainObjects
 
         public ICollection<PostComment> NestedComments { get; set; }
 
-        public User Author { get; set; }
+        public ApplicationUser Author { get; set; }
 
-        public User ModeratedBy { get; set; }
+        public ApplicationUser ModeratedBy { get; set; }
 
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

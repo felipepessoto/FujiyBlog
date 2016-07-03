@@ -1,28 +1,30 @@
 ﻿@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Core.Extensions
-@using FujiyBlog.Web.Common
+
+@inject FujiyBlog.Core.DateTimeUtil DateTimeUtil
+
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPostIndex
 
 @{
-    Layout = MVC.Admin.Post.Views._Layout;
+    Layout = "_Layout";
     ViewBag.Title = "Posts";
 }
 
 <h2>Posts</h2>
 
-@if (User.IsInRole(Role.CreateNewPosts))
+@if (Context.UserHasClaimPermission(PermissionClaims.CreateNewPosts))
 {
     <p>
-        @Html.ActionLink("Write new post", MVC.Admin.Post.Edit())
+        <a asp-area="Admin" asp-controller="Post" asp-action="Edit">Write new post</a>
     </p>
 }
-    
+
 
 <div id="posts-type-filters">
-@Html.ActionLink("All", MVC.Admin.Post.Index()) | @Html.ActionLink("Drafts", MVC.Admin.Post.Index(null, false))| @Html.ActionLink("Published", MVC.Admin.Post.Index(null, true))
+    @Html.ActionLink("All", "Index", "Post", new { area = "Admin" }) | @Html.ActionLink("Drafts", "Index", "Post", new { published = false, Area = "Admin" })| @Html.ActionLink("Published", "Index", "Post", new { published = true, Area = "Admin" })
 </div>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 
 <table>
     <tr>
@@ -53,54 +55,55 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.RecentPosts)
-{
-    <tr id="item-row-@item.Post.Id">
-        <td class="@(item.Post.IsPublished ? "published" : "notpublished")">
-            @Html.DisplayFor(modelItem => item.Post.IsPublished)
-        </td>
-        <td>
-            @Html.ActionLink(item.Post.Title, MVC.Post.Details(item.Post.Slug))
-        </td>
-        <td>
-            @(item.Post.Author.DisplayName ?? item.Post.Author.Username)
-        </td>
-        <td>
-            @string.Join(", ", item.Post.Categories.Select(x => x.Name).ToList())
-        </td>
-        <td>
-            @string.Join(", ", item.Post.Tags.Select(x => x.Name).ToList())
-        </td>
-        <td>
-            @DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.CreationDate)
-        </td>
-        <td>
-            @DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.PublicationDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelitem => item.CommentsTotal)
-        </td>
-        <td>
-        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)) || User.IsInRole(Role.EditOtherUsersPosts))
-        {
-            @Html.ActionLink("Edit", MVC.Admin.Post.Edit(item.Post.Id))
-        }
-        @if ((item.Post.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPosts)) || (item.Post.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPosts)))
-        {
-            <text>
-            | @Ajax.ActionLink("Delete", MVC.Admin.Post.Delete(item.Post.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Post.Id + ");" })
-            </text>
-        }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.RecentPosts)
+    {
+        <tr id="item-row-@item.Post.Id">
+            <td class="@(item.Post.IsPublished ? "published" : "notpublished")">
+                @Html.DisplayFor(modelItem => item.Post.IsPublished)
+            </td>
+            <td>
+                @Html.ActionLink(item.Post.Title, "Details", "Post", new { postSlug = item.Post.Slug })
+            </td>
+            <td>
+                @(item.Post.Author.DisplayName ?? item.Post.Author.UserName)
+            </td>
+            <td>
+                @string.Join(", ", item.Post.PostCategories.Select(x => x.Category.Name).ToList())
+            </td>
+            <td>
+                @string.Join(", ", item.Post.PostTags.Select(x => x.Tag.Name).ToList())
+            </td>
+            <td>
+                @DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.CreationDate)
+            </td>
+            <td>
+                @DateTimeUtil.ConvertUtcToMyTimeZone(item.Post.PublicationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelitem => item.CommentsTotal)
+            </td>
+            <td>
+                @if ((item.Post.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPosts)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Post", new { id = item.Post.Id, Area="Admin" })
+                }
+                @if ((item.Post.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOwnPosts)) || (item.Post.Author.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOtherUsersPosts)))
+                {
+                    
+                    
+                <a asp-area="Admin" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Post.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Post.Id + ");")">Delete</a>
+                    
+                }
+            </td>
+        </tr>
+    }
 </table>
 
 <script type="text/javascript">
     function RemoveItemRow(itemId) {
         $('#item-row-' + itemId).hide();
     }
-    
+
 </script>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })

@@ -6,8 +6,9 @@
 <body>
     <div>
         <h1>
-            A new comment on @Model.BlogName blog</h1>
-        <strong>Post:</strong> @Html.ActionLink((string)Model.Post.Title, MVC.Post.Details((string)Model.Post.Slug), null, protocol: Request.Url.Scheme)
+            A new comment on @Model.BlogName blog
+        </h1>
+        <strong>Post:</strong> @Html.ActionLink((string)Model.Post.Title, "Details", "Post", Context.Request.Scheme, null, null, new { postSlug = Model.Post.Slug }, null)
         <ul>
             <li><strong>Author:</strong> @Model.Comment.AuthorName</li>
             <li><strong>Url:</strong> @Model.Comment.AuthorWebsite</li>
@@ -17,7 +18,7 @@
         <strong>Comment:</strong>
         <pre>@Model.Comment.Comment</pre>
         <p>
-            @Html.ActionLink("View Comment", MVC.Post.Details((string)Model.Post.Slug), null, Request.Url.Scheme, null, "comment_id" + ((FujiyBlog.Core.DomainObjects.PostComment)Model.Comment).Id)
+            @Html.ActionLink("View Comment", "Details", "Post", Context.Request.Scheme, null, "comment_id" + ((FujiyBlog.Core.DomainObjects.PostComment)Model.Comment).Id, new { postSlug = Model.Post.Slug }, null)
         </p>
     </div>
 </body>

@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
-using FujiyBlog.Core.DomainObjects;
+﻿using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
-using FujiyBlog.Web.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    [AuthorizeRole(Role.ModerateComments)]
-    public partial class CommentController : AdminController
+    [Authorize(nameof(PermissionClaims.ModerateComments))]
+    public class CommentController : AdminController
     {
         private readonly FujiyBlogDatabase db;
 
@@ -21,25 +21,25 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             this.db = db;
         }
 
-        public virtual ViewResult Index(int? page)
+        public ViewResult Index(int? page)
         {
             AdminCommentIndex model = GetCommentsViewModel(page, false);
 
             return View(model);
         }
 
-        public virtual ViewResult Approved(int? page)
+        public ViewResult Approved(int? page)
         {
             AdminCommentIndex model = GetCommentsViewModel(page, true);
 
-            return View(MVC.Admin.Comment.Views.Index, model);
+            return View("Index", model);
         }
 
         [HttpPost]
         public virtual ActionResult ApproveSelected(IEnumerable<int> selectedComments)
         {
             List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
-            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+            var moderatedBy = db.Users.Single(x => x.UserName == User.Identity.Name);
 
             foreach (PostComment postComment in comments)
             {
@@ -47,7 +47,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 postComment.IsApproved = true;
             }
             
-            db.SaveChangesBypassingValidation();
+            db.SaveChanges();
 
             return Json(true);
         }
@@ -56,7 +56,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult DisapproveSelected(IEnumerable<int> selectedComments)
         {
             List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
-            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+            var moderatedBy = db.Users.Single(x => x.UserName == User.Identity.Name);
 
             foreach (PostComment postComment in comments)
             {
@@ -64,7 +64,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 postComment.IsApproved = false;
             }
             
-            db.SaveChangesBypassingValidation();
+            db.SaveChanges();
 
             return Json(true);
         }
@@ -73,7 +73,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult DeleteSelected(IEnumerable<int> selectedComments)
         {
             List<PostComment> comments = db.PostComments.Where(x => selectedComments.Contains(x.Id)).ToList();
-            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+            var moderatedBy = db.Users.Single(x => x.UserName == User.Identity.Name);
 
             foreach (PostComment postComment in comments)
             {
@@ -81,7 +81,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 postComment.IsDeleted = true;
             }
             
-            db.SaveChangesBypassingValidation();
+            db.SaveChanges();
 
             return Json(true);
         }
@@ -131,7 +131,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Delete(int id)
         {
             db.PostComments.Single(x => x.Id == id).IsDeleted = true;
-            db.SaveChangesBypassingValidation();
+            db.SaveChanges();
             return Json(true);
         }
     }

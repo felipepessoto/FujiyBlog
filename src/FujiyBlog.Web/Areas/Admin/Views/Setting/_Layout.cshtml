@@ -1,13 +1,13 @@
 ﻿@{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@Html.ActionLink("Basic", MVC.Admin.Setting.Index())
-@Html.ActionLink("Email", MVC.Admin.Setting.Email())
-@Html.ActionLink("Comments", MVC.Admin.Setting.Comments())
-@Html.ActionLink("Social Networks", MVC.Admin.Setting.SocialNetworks())
-@Html.ActionLink("Feed", MVC.Admin.Setting.Feed())
-@Html.ActionLink("Import", MVC.Admin.Setting.Import())
-@Html.ActionLink("Cache", MVC.Admin.Setting.Cache())
-@Html.ActionLink("Logs", MVC.Admin.Setting.Logs())
+<a asp-area="Admin" asp-controller="Setting" asp-action="Index">Basic</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="Email">Email</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="Comments">Comments</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="SocialNetworks">Social Networks</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="Feed">Feed</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="Import">Import</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="Cache">Cache</a>
+<a asp-area="Admin" asp-controller="Setting" asp-action="Logs">Logs</a>
 @RenderBody()

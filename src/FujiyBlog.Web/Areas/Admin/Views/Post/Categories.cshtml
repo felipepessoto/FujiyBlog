@@ -1,10 +1,11 @@
 ﻿@model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCategoriesList
 @{
     ViewBag.Title = "Categories";
-    Layout = MVC.Admin.Post.Views._Layout;
+    Layout = "_Layout";
 }
 <h2>
-    Categories</h2>
+    Categories
+</h2>
 <p>
     <a href="javascript:void(0);" id="open-new-item-dialog">Add new category</a>
 </p>
@@ -24,11 +25,11 @@
         <tr data-item-id="@item.Key.Id" id="item-row-@item.Key.Id">
             <td>
                 <a href="javascript:void(0);" class="btn-edit-item">Edit</a>
-                @Ajax.ActionLink("Delete", MVC.Admin.Post.DeleteCategory(item.Key.Id), new AjaxOptions() { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Key.Id + ");" }, new { @class = "btn-delete-item" })
+                <a asp-area="Admin" asp-controller="Post" asp-action="DeleteCategory" asp-route-id="@item.Key.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"RemoveItemRow({item.Key.Id});" )" class = "btn-delete-item">@FujiyBlog.Web.Resources.Labels.Delete</a>
 
                 <a href="javascript:void(0);" class="btn-update-item" style="display:none">Update</a>
                 <a href="javascript:void(0);" class="btn-cancel-item" style="display:none">Cancel</a>
-                
+
             </td>
             <td>
                 @Html.TextBoxFor(modelItem => item.Key.Name, new { id = "txt-item-name" + item.Key.Id, style = "display:none", @class = "txt-item-name" })
@@ -42,8 +43,7 @@
 </table>
 
 <div id="add-new-item">
-    @using (Ajax.BeginForm(MVC.Admin.Post.AddCategory(), new AjaxOptions { HttpMethod = "POST", OnSuccess = "location.href=location.href;" }, new { id = "form-new-item" }))
-    {
+    <form asp-area="Admin" asp-controller="Post" asp-action="AddCategory" data-ajax="true" data-ajax-method="POST" data-ajax-success="location.href=location.href;" id="form-new-item">
         <fieldset>
             <legend>Add New Category</legend>
 
@@ -55,7 +55,7 @@
                 @Html.ValidationMessageFor(model => model.NewCategory.Name)
             </div>
         </fieldset>
-    }
+    </form>
 </div>
 
 <script type="text/javascript">
@@ -97,7 +97,7 @@
             return;
         }
 
-        var callUrl = '@Url.Action(MVC.Admin.Post.UpdateCategory())';
+        var callUrl = '@Url.Action("UpdateCategory", "Post", new {area="Admin" })';
         var callData = { id: itemId, name: itemName };
         $.ajax({
             type: "POST",

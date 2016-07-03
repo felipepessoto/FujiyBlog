@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Xml;
 
 namespace FujiyBlog.Core.Caching
@@ -34,10 +35,11 @@ namespace FujiyBlog.Core.Caching
         {
             ValidateArguments(method);
 
-            string chave = method.Method.ReflectedType.FullName + ": " + method.Method + ". Param Count:" + method.Arguments.Count + ". Params:";
+            string chave = method.Method.DeclaringType.FullName + ": " + method.Method + ". Params:";
 
             object[] valoresArgumentos = new object[method.Arguments.Count];
 
+            //TODO possivel bug qdo o valor do argumento é null
             for (int i = 0; i < valoresArgumentos.Length; i++)
             {
                 valoresArgumentos[i] = GetArgumentValue(method.Arguments[i]);
@@ -63,19 +65,13 @@ namespace FujiyBlog.Core.Caching
             }
         }
 
+        private static Type UnwrapNullableType(this Type type) => Nullable.GetUnderlyingType(type) ?? type;
+
         private static bool IsValidType(Type type, bool validateGeneric)
         {
-            if (validateGeneric && type.IsGenericType)
-            {
-                Type genericType = type.GetGenericTypeDefinition();
+            type = type.UnwrapNullableType();
 
-                if (ValidWrappingGenericTypes.Any(t => genericType == t.Type))
-                {
-                    return type.GetGenericArguments().All(x => IsValidType(x, false));
-                }
-            }
-
-            if (typeof(Enum).IsAssignableFrom(type))
+            if (type.GetTypeInfo().IsEnum)
             {
                 return true;
             }

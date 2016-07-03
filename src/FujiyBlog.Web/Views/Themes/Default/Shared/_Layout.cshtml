@@ -1,16 +1,24 @@
 ﻿@using FujiyBlog.Web.Models
+
+@inject FujiyBlog.Core.EntityFramework.SettingRepository settings
+@inject SignInManager<FujiyBlog.Core.DomainObjects.ApplicationUser> SignInManager
+
 @functions{
     public string FeedsUrl()
     {
-        if (!string.IsNullOrWhiteSpace(Settings.SettingRepository.AlternateFeedUrl))
+        if (!string.IsNullOrWhiteSpace(settings.AlternateFeedUrl))
         {
-            return Settings.SettingRepository.AlternateFeedUrl;
+            return settings.AlternateFeedUrl;
         }
-        return Settings.SettingRepository.DefaultFeedOutput == "RSS" ? Url.Action(MVC.Feed.Rss20()) : Url.Action(MVC.Feed.Atom10());
+        return Url.Action("Rss20", "Feed");
+        //TODO return settings.DefaultFeedOutput == "RSS" ? Url.Action(MVC.Feed.Rss20()) : Url.Action(MVC.Feed.Atom10());
     }
 
     public string CanonicalUrl()
     {
+        return "";
+        //TODO implementar
+        /*
         RouteValueDictionary valores = new RouteValueDictionary(ViewContext.RouteData.Values);
         foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState.Where(x => x.Value.Value != null))
         {
@@ -18,6 +26,7 @@
         }
 
         return Url.RouteUrl(null, valores, Request.Url.Scheme, null);
+        */
     }
 
 }
@@ -25,9 +34,10 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
-    @Styles.Render("~/Content/Themes/Default/css")
-    @Styles.Render("~/Content/Themes/base/css")
-    @Styles.Render("~/Content/openid/css")
+    <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" />
+    <link rel="stylesheet" href="~/Content/Themes/base/all.css" />
+    @*<link rel="stylesheet" href="~/Content/openid/openid.css" />*@
+
     <link rel="canonical" href="@CanonicalUrl()" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,15 +47,15 @@
 
     <link type="application/rss+xml" rel="alternate" href="@FeedsUrl()" />
 
-    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAdminIds))
+    @if (!string.IsNullOrEmpty(@settings.FacebookAdminIds))
     {
-        <meta property="fb:admins" content="@Settings.SettingRepository.FacebookAdminIds" />
+        <meta property="fb:admins" content="@settings.FacebookAdminIds" />
     }
-    @if (!string.IsNullOrEmpty(@Settings.SettingRepository.FacebookAppId))
+    @if (!string.IsNullOrEmpty(@settings.FacebookAppId))
     {
-        <meta property="fb:app_id" content="@Settings.SettingRepository.FacebookAppId" />
+        <meta property="fb:app_id" content="@settings.FacebookAppId" />
     }
-    <meta property="og:site_name" content="@Settings.SettingRepository.BlogName" />
+    <meta property="og:site_name" content="@settings.BlogName" />
 
     @if (IsSectionDefined("OpenGraphTags"))
     {
@@ -55,8 +65,8 @@
     {
         <meta property="og:title" content="@ViewBag.Title" />
         <meta property="og:type" content="blog" />
-        <meta property="og:url" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)" />
-        <meta property="og:image" content="@Settings.SettingRepository.OpenGraphImageUrl" />
+        <meta property="og:url" content="@Url.Action("Index", "Post", null, Context.Request.Scheme)" />
+        <meta property="og:image" content="@settings.OpenGraphImageUrl" />
         <meta property="og:description" content="@ViewBag.Description" />
     }
 
@@ -67,26 +77,26 @@
     else
     {
         <meta name="twitter:card" content="summary">
-        <meta name="twitter:site" content="@Settings.SettingRepository.TwitterBlogAccount">
+        <meta name="twitter:site" content="@settings.TwitterBlogAccount">
         <meta name="twitter:title" content="@ViewBag.Title">
         <meta name="twitter:description" content="@ViewBag.Description">
         <meta name="twitter:creator" content="">
-        <meta name="twitter:image:src" content="@Settings.SettingRepository.OpenGraphImageUrl">
-        <meta name="twitter:domain" content="@Url.Action(MVC.Post.Index(), Request.Url.Scheme)">
+        <meta name="twitter:image:src" content="@settings.OpenGraphImageUrl">
+        <meta name="twitter:domain" content="@Url.Action("Index", "Post", null, Context.Request.Scheme)">
     }
 
-    @if (!string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey))
+    @if (!string.IsNullOrWhiteSpace(settings.ApplicationInsightsInstrumentationKey))
     {
         <script type="text/javascript">
             var appInsights = window.appInsights || function (config) {
                 function r(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, u = document, e = window, o = "script", s = u.createElement(o), i, f; for (s.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", u.getElementsByTagName(o)[0].parentNode.appendChild(s), t.cookie = u.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) r("track" + i.pop()); return r("setAuthenticatedUserContext"), r("clearAuthenticatedUserContext"), config.disableExceptionTracking || (i = "onerror", r("_" + i), f = e[i], e[i] = function (config, r, u, e, o) { var s = f && f(config, r, u, e, o); return s !== !0 && t["_" + i](config, r, u, e, o), s }), t
             }({
-                instrumentationKey: "@Html.Raw(Settings.SettingRepository.ApplicationInsightsInstrumentationKey)"
+                instrumentationKey: "@Html.Raw(settings.ApplicationInsightsInstrumentationKey)"
             });
 
             window.appInsights = appInsights;
             appInsights.trackPageView();
-        </script>        
+        </script>
     }
 </head>
 
@@ -94,17 +104,28 @@
     <div>
         <div id="header-wrapper">
             <div id="header-title">
-                <h1><a href="@Url.Content("~/")">@Settings.SettingRepository.BlogName</a></h1>
-                <p>@Settings.SettingRepository.BlogDescription</p>
+                <h1><a href="@Url.Content("~/")">@settings.BlogName</a></h1>
+                <p>@settings.BlogDescription</p>
             </div>
             <div id="menu">
                 <ul>
 
-                    <li class="@(Url.Action(MVC.Post.Index(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")"><a href="@Url.Content("~/")">Home</a></li>
-                    <li class="@(Url.Action(MVC.Post.Archive(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(Resources.Labels.Archive, MVC.Post.Archive())</li>
-                    <li class="@(Url.Action(MVC.Contact.Index(), Request.Url.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(Resources.Labels.Contact, MVC.Contact.Index())</li>
+                    <li class="@(Url.Action("Index", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " current_page_item" : "")"><a href="@Url.Content("~/")">Home</a></li>
+                    <li class="@(Url.Action("Archive", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Archive, "Archive", "Post")</li>
+                    <li class="@(Url.Action("Contact", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Contact, "Index", "Contact")</li>
                     <li><a href="@FeedsUrl()">Feed</a></li>
-                    <li>@(Request.IsAuthenticated ? Html.ActionLink("Log Off", "LogOff", "Account") : Html.ActionLink("Log On", "LogOn", "Account"))</li>
+                    <li>
+                            @if (SignInManager.IsSignedIn(User))
+                        {
+                            <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" style="display:inline">
+                                        <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit(); return false;">Log off</a>
+                            </form>
+                        }
+                        else
+                        {
+                           <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                        }
+                    </li>
                 </ul>
             </div>
         </div>
@@ -116,7 +137,7 @@
 
             <div id="sidebar">
                 <ul id="sidebar-wrapper">
-                    @Html.Action(MVC.Widget.Index("Zone1"))
+                    @await Component.InvokeAsync("Widget", new { zoneName = "Zone1" })
                 </ul>
             </div>
             <div style="clear: both;">&nbsp;</div>
@@ -127,18 +148,43 @@
         <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.5</p>
     </div>
 
-    <script src="@Url.Action(MVC.JavaScript.FujiyBlogBundle())" type="text/javascript"></script>
-    @Scripts.Render("~/bundles/FujiyBlogBundle")
+    <script type="text/javascript">
+        fujiyBlogUrls = {};
+        fujiyBlogUrls.Search_Index = '@Url.Action("Index", "Search")';
+        fujiyBlogUrls.Widget_Edit = '@Url.Action("Edit", "Widget")';
+        fujiyBlogUrls.Widget_Sort = '@Url.Action("Sort","Widget")';
+        fujiyBlogUrls.Social_LoginOpenId = '@Url.Action("LoginOpenId", "Social")';
+        fujiyBlogUrls.OpenIdSelectorImages = '@Url.Content("~/Content/openid/images/")';
+    </script>
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+
     @RenderSection("scripts", false)
 
-    @if (!string.IsNullOrEmpty(Settings.SettingRepository.CustomCode))
+    @if (!string.IsNullOrEmpty(settings.CustomCode))
     {
-        @Html.Raw(Settings.SettingRepository.CustomCode)
-    }
-
-    @if (StackExchange.Profiling.MiniProfiler.Settings.Results_Authorize(HttpContext.Current.Request))
-    {
-        @StackExchange.Profiling.MiniProfiler.RenderIncludes(useExistingjQuery: true)
+        @Html.Raw(settings.CustomCode)
     }
 </body>
 </html>

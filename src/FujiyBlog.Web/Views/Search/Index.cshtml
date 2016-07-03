@@ -1,47 +1,61 @@
 ﻿@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Core.Extensions
 @using FujiyBlog.Web.Extensions
-@model FujiyBlog.Web.ViewModels.SearchResult
+@model FujiyBlog.Web.ViewModels.SearchViewModels.SearchResult
 
 @{
-    Layout = this.FindLayoutPath("_Layout");
+    Layout = "_Layout";
 }
 
-
-    @helper GetDescription(Post item)
+@functions {
+    private string GetDescription(Post item)
     {
         string text = item.Description;
-        
-         if (string.IsNullOrWhiteSpace(text))
-            {
-                text = item.Content.StripHtml();
 
-                if (text.Length > 200)
-                {
-                    text = text.Substring(0, 200) + " ...";
-                }
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            text = item.Content.StripHtml();
+
+            if (text.Length > 200)
+            {
+                text = text.Substring(0, 200) + " ...";
             }
-        @(new HtmlString(text))
+        }
+        return text;
     }
+}
 
 
 <div class="searchpage post">
     <h1>@ViewBag.Title</h1>
-    <div id="searchpage">    
+    <div id="searchpage">
 
-        <input type="text" id="searchPageTerms" value="@Request.QueryString["terms"]" />
+        <input type="text" id="searchPageTerms" value="@Context.Request.Query["terms"]" />
         <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#searchPageTerms').val());">Search</a>
 
-    </div>  
+    </div>
     @foreach (var item in Model.Posts)
     {
         <div class="searchresult">
-            @Html.ActionLink(item.Title, MVC.Post.Details(item.Slug))
+            @Html.ActionLink(item.Title, "Details", "Post", new { postSlug = item.Slug })
             <span>"@GetDescription(item)"</span>
-            <span><strong>Categorias</strong> : @Html.Raw(item.Categories.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Category(y, null)) + ", ", x => x.Trim(',', ' ')))</span>
-            <span><strong>Tags</strong> : @Html.Raw(item.Tags.Select(x => x.Name).Aggregate("", (x, y) => x + Html.ActionLink(y, MVC.Post.Tag(y, null)) + ", ", x => x.Trim(',', ' ')))</span>
+            <span>
+                <strong>Categorias</strong> :
+                @foreach (var category in item.PostCategories.Select(x => x.Category))
+                {
+                    <a asp-controller="Post" asp-action="Category" asp-route-category="@category.Name">@category.Name</a>
+                }
+            </span>
+
+            <span>
+                <strong>Tags</strong> :
+                @foreach (var tag in item.PostTags.Select(x => x.Tag))
+                {
+                    <a asp-controller="Post" asp-action="Tag" asp-route-tag="@tag.Name">@tag.Name</a>
+                }
+            </span>
         </div>
     }
 </div>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })

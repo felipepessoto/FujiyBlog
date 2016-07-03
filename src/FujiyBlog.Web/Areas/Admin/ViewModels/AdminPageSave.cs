@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FujiyBlog.Core;
+using FujiyBlog.Core.DomainObjects;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
-using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Web.Common;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -14,7 +15,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         {
         }
 
-        public AdminPageSave(Page page)
+        public AdminPageSave(Page page, DateTimeUtil dateTimeUtil)
         {
             if (page.Id > 0)
             {
@@ -26,7 +27,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
             Slug = page.Slug;
             Content = page.Content;
             Keywords = page.Keywords;
-            PublicationDate = DateTimeUtil.ConvertUtcToMyTimeZone(page.PublicationDate);
+            PublicationDate = dateTimeUtil.ConvertUtcToMyTimeZone(page.PublicationDate);
             IsPublished = page.IsPublished;
             IsFrontPage = page.IsFrontPage;
             ParentId = page.ParentId;
@@ -39,16 +40,15 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public string Title { get; set; }
 
         [Display(Name = "Author")]
-        public int? AuthorId { get; set; }
+        public string AuthorId { get; set; }
 
-        [StringLength(500), AllowHtml]
+        [StringLength(500)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [Required, StringLength(200)]
         public string Slug { get; set; }
 
-        [AllowHtml]
         public string Content { get; set; }
 
         [StringLength(500)]
@@ -74,7 +74,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public IEnumerable<SelectListItem> Pages { get; set; }
         public IEnumerable<SelectListItem> Authors { get; set; }
 
-        public void FillPage(Page page)
+        public void FillPage(Page page, DateTimeUtil dateTimeUtil)
         {
             page.Id = Id.GetValueOrDefault();
             page.Title = Title;
@@ -82,7 +82,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
             page.Slug = Slug;
             page.Content = Content;
             page.Keywords = Keywords;
-            page.PublicationDate = DateTimeUtil.ConvertMyTimeZoneToUtc(PublicationDate);
+            page.PublicationDate = dateTimeUtil.ConvertMyTimeZoneToUtc(PublicationDate);
             page.IsPublished = IsPublished;
             page.IsFrontPage = IsFrontPage;
             page.ParentId = ParentId;

@@ -1,17 +1,19 @@
 ﻿@using FujiyBlog.Web.Extensions
 @model FujiyBlog.Core.DomainObjects.Page
 @{
-    Layout = this.FindLayoutPath("_Layout");
+    Layout = "_Layout";
 }
 <div id="page">
     <h1>
-        @Model.Title</h1>
+        @Model.Title
+    </h1>
     <div>
         @Html.Raw(Model.Content)
     </div>
-    @if (Request.IsAuthenticated)
+    @if (User.Identity.IsAuthenticated)
     {
         <div id="admin">
-            @Html.ActionLink("Edit", MVC.Admin.Page.Edit(Model.Id))</div>
+            @Html.ActionLink("Edit", "Edit", "Page", new { id = Model.Id })
+        </div>
     }
 </div>

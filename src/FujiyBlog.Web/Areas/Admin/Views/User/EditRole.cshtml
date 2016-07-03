@@ -1,0 +1,52 @@
+﻿@model AdminRoleSave
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = (Model.Id != null ? "Edit" : "Add") + " Role";
+}
+
+<h2>@(Model.Id != null ? "Edit" : "Add") Role</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        <legend>Role</legend>
+
+        @if (Model.Id != null)
+        {
+            @Html.HiddenFor(model => model.Id)
+        }
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+        @if (string.Equals(Model.Name, "Anonymous", StringComparison.OrdinalIgnoreCase))
+        {
+            @Html.DisplayTextFor(model => model.Name)
+        }
+        else
+        {
+            @Html.EditorFor(model => model.Name)
+        }
+            
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="role-category">
+            <ul id="roles-list">
+            @foreach (var role in Enum.GetNames(typeof(PermissionClaims)))
+            {
+                <li><input type="checkbox" name="claims" value="@role" @(Model.Claims.Any(x => x == role) ? "checked=checked" : string.Empty) />@role</li>
+            }
+            </ul>
+        </div>
+
+        <p>
+            <input type="submit" value="Save" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

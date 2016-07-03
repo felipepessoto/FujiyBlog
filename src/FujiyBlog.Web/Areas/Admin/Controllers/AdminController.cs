@@ -1,11 +1,12 @@
 ﻿using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Web.Controllers;
-using FujiyBlog.Web.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    [AuthorizeRole(Role.AccessAdminPages)]
-    public abstract partial class AdminController : AbstractController
+    [Area("Admin")]
+    [Authorize(nameof(PermissionClaims.AccessAdminPages))]
+    public abstract class AdminController : Controller
     {
     }
 }

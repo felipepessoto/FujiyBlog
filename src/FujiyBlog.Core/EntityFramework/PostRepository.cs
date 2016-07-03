@@ -1,38 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace FujiyBlog.Core.EntityFramework
 {
     public class PostRepository : RepositoryBase<Post>
     {
-        public PostRepository(FujiyBlogDatabase database)
+        private readonly IHttpContextAccessor contextAccessor;
+
+        public PostRepository(FujiyBlogDatabase database, IHttpContextAccessor contextAccessor)
             : base(database)
         {
+            this.contextAccessor = contextAccessor;
         }
 
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
         {
-            IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHaveRoles(contextAccessor.HttpContext).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.PostTags).ThenInclude(x=>x.Tag).Include(x => x.PostCategories).ThenInclude(x=>x.Category);
 
             if (tag != null)
             {
-                posts = posts.Where(x => x.Tags.Any(y => y.Name == tag));
+                posts = posts.Where(x => x.PostTags.Any(y => y.Tag.Name == tag));
             }
 
             if (category != null)
             {
-                posts = posts.Where(x => x.Categories.Any(y => y.Name == category));
+                posts = posts.Where(x => x.PostCategories.Any(y => y.Category.Name == category));
             }
 
             if (authorUserName != null)
             {
-                posts = posts.Where(x => x.Author.Username == authorUserName);
+                posts = posts.Where(x => x.Author.UserName == authorUserName);
             }
             
             if (skip > 0)
@@ -66,8 +70,8 @@ namespace FujiyBlog.Core.EntityFramework
 
         private Dictionary<int, int> GetPostsCounts(IQueryable<Post> posts)
         {
-            bool publicComments = RolesService.UserHasRole(Role.ViewPublicComments);
-            bool unmoderatedComments = RolesService.UserHasRole(Role.ViewUnmoderatedComments);
+            bool publicComments = contextAccessor.HttpContext.UserHasClaimPermission(PermissionClaims.ViewPublicComments);
+            bool unmoderatedComments = contextAccessor.HttpContext.UserHasClaimPermission(PermissionClaims.ViewUnmoderatedComments);
 
             if (publicComments && unmoderatedComments)
             {
@@ -95,7 +99,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<PostSummary> GetArchive()
         {
-            IQueryable<Post> posts = Database.Posts.WhereHaveRoles().OrderByDescending(x => x.PublicationDate).Include(x => x.Categories);
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles(contextAccessor.HttpContext).OrderByDescending(x => x.PublicationDate).Include(x => x.PostCategories).ThenInclude(x=>x.Category);
 
             Dictionary<int, int> counts = GetPostsCounts(posts);
 
@@ -111,21 +115,21 @@ namespace FujiyBlog.Core.EntityFramework
 
         public int GetTotal(string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
         {
-            IQueryable<Post> posts = Database.Posts.WhereHaveRoles();
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles(contextAccessor.HttpContext);
 
             if (tag != null)
             {
-                posts = posts.Where(x => x.Tags.Any(y => y.Name == tag));
+                posts = posts.Where(x => x.PostTags.Any(y => y.Tag.Name == tag));
             }
 
             if (category != null)
             {
-                posts = posts.Where(x => x.Categories.Any(y => y.Name == category));
+                posts = posts.Where(x => x.PostCategories.Any(y => y.Category.Name == category));
             }
 
             if (authorUserName != null)
             {
-                posts = posts.Where(x => x.Author.Username == authorUserName);
+                posts = posts.Where(x => x.Author.UserName == authorUserName);
             }
 
             if (startDate.HasValue)
@@ -143,7 +147,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<Tuple<DateTime, int>> GetArchiveCountByMonth(bool descending)
         {
-            var months = Database.Posts.WhereHaveRoles().GroupBy(data => new {data.PublicationDate.Year, data.PublicationDate.Month});
+            var months = Database.Posts.WhereHaveRoles(contextAccessor.HttpContext).GroupBy(data => new {data.PublicationDate.Year, data.PublicationDate.Month});
 
             if(descending)
             {
@@ -181,7 +185,7 @@ namespace FujiyBlog.Core.EntityFramework
             {
                 Tag newTag = new Tag();
                 newTag.Name = newTagName;
-                tags.Add(Database.Tags.Add(newTag));
+                tags.Add(Database.Tags.Add(newTag).Entity);
             }
             return tags;
         }

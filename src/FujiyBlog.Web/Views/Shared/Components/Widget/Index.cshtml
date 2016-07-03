@@ -1,0 +1,26 @@
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+
+@model FujiyBlog.Web.ViewModels.WidgetIndex
+
+<div class="widgetzone" id="widgetzone_@(Model.ZoneName)">
+    @foreach (WidgetSetting widgetSetting in Model.WidgetSettings)
+    {
+        Html.RenderPartial("~/Views/Shared/Components/Widget/" + widgetSetting.Name  + ".cshtml", widgetSetting);
+    }
+</div>
+@if (Context.UserHasClaimPermission(PermissionClaims.ManageWidgets))
+{
+    <script type="text/javascript">
+        var shouldStartDragAndDrop = true;
+    </script>
+
+    <div id="addedwidgets"></div>
+    <form asp-controller="Widget" asp-action="Add" asp-route-zoneName="@Model.ZoneName" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("fujiyBlog.widget.showAddedWidget('widgetzone_" + Model.ZoneName + "', arguments[0]);" )" id=@("addwidgetform" + Model.ZoneName)>
+        @Html.DropDownList("widgetName", Model.AvailableWidgets.Select(x => new SelectListItem { Text = x }), FujiyBlog.Web.Resources.Labels.Select)
+        <a href="javascript:void(0);" onclick="javascript:$('#addwidgetform@(Model.ZoneName)').trigger('submit');">
+            @FujiyBlog.Web.Resources.Labels.Add
+        </a>
+
+    </form>
+}

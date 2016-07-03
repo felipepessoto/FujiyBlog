@@ -1,12 +1,13 @@
-﻿@using FujiyBlog.Web.Common
+﻿@inject FujiyBlog.Core.DateTimeUtil DateTimeUtil
+
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminCommentIndex
 @{
-    ViewBag.Title = Resources.Labels.Comments;
-    Layout = MVC.Admin.Comment.Views._Layout;
+    ViewBag.Title = FujiyBlog.Web.Resources.Labels.Comments;
+    Layout = "_Layout";
 }
 <h2>
-    @Resources.Labels.Comments</h2>
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+    @FujiyBlog.Web.Resources.Labels.Comments</h2>
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 <table>
     <tr>
         <th>
@@ -80,14 +81,16 @@
                 @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
             </td>
             <td>
-                @Html.ActionLink("View", MVC.Post.Details(item.Post.Slug), null, null, null, "comment_id" + item.Id) |
-                @Html.ActionLink("Edit", MVC.Admin.Comment.Edit(item.Id)) |
-                @Ajax.ActionLink("Delete", MVC.Admin.Comment.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Id + ");" }, new { @class = "btn-delete-item" })
+                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-postSlug="@item.Post.Slug" asp-fragment="@("comment_id" + item.Id)">View</a>
+                 |
+                <a asp-area="Admin" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id" asp-fragment="@("comment_id" + item.Id)">Edit</a>
+                 |
+                <a asp-area="Admin" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")" class="btn-delete-item">Delete</a>
             </td>
         </tr>
     }
 </table>
-@if (ViewContext.Controller.ValueProvider.GetValue("action").RawValue.ToString() == "Index")
+@if (ViewContext.ActionDescriptor.RouteValues["action"] == "Index")
 { 
     <a href="javascript:void(0);" id="approve-comments">Approve Selected</a>
 }
@@ -96,7 +99,7 @@ else
     <a href="javascript:void(0);" id="disapprove-comments">Disapprove Selected</a>
 }
 <a href="javascript:void(0);" id="delete-comments">Delete Selected</a>
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 <script type="text/javascript">
 
     $('#check-all-items').click(function () {
@@ -122,13 +125,10 @@ else
 
         var ids = GetSelectedItems();
 
-        var postData = JSON.stringify({ selectedComments: ids });
-
         $.ajax({
             type: "POST",
-            contentType: 'application/json; charset=utf-8',
             url: callUrl,
-            data: postData,
+            data: { selectedComments: ids },
             success: function (response) {
                 var len = ids.length;
                 for (var i = 0; i < len; i++) {
@@ -142,15 +142,15 @@ else
     }
 
     $('#approve-comments').click(function () {
-        SendCommentStatusChange('@Url.Action(MVC.Admin.Comment.ApproveSelected())');
+        SendCommentStatusChange('@Url.Action("ApproveSelected", "Comment")');
     });
 
     $('#disapprove-comments').click(function () {
-        SendCommentStatusChange('@Url.Action(MVC.Admin.Comment.DisapproveSelected())');
+        SendCommentStatusChange('@Url.Action("DisapproveSelected", "Comment")');
     });
 
     $('#delete-comments').click(function () {
-        SendCommentStatusChange('@Url.Action(MVC.Admin.Comment.DeleteSelected())');
+        SendCommentStatusChange('@Url.Action("DeleteSelected", "Comment")');
     });
 
 </script>

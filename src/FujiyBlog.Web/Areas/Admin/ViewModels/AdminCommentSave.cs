@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -15,7 +14,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [StringLength(200)]
         public string AuthorWebsite { get; set; }
 
-        [Required, AllowHtml]
+        [Required]
         public string Comment { get; set; }
     }
 }

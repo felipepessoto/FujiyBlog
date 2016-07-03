@@ -1,10 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FujiyBlog.Core.DomainObjects
 {
     public class Setting
     {
-        [Required]
+        [Required,  DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
 
         [Required, StringLength(500)]

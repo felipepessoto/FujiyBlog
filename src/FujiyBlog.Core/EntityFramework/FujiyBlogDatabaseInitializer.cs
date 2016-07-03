@@ -1,92 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using FujiyBlog.Core.DomainObjects;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace FujiyBlog.Core.EntityFramework
 {
-    public class FujiyBlogDatabaseInitializer : CreateDatabaseIfNotExists<FujiyBlogDatabase>
+    public class FujiyBlogDatabaseInitializer// : CreateDatabaseIfNotExists<FujiyBlogDatabase>
     {
-        protected override void Seed(FujiyBlogDatabase context)
-        {
-            SeedDatabase(context);
-            base.Seed(context);
-        }
+        //protected override void Seed(FujiyBlogDatabase context)
+        //{
+        //    SeedDatabase(context);
+        //    base.Seed(context);
+        //}
 
-        public static void SeedDatabase(FujiyBlogDatabase context)
+        public static async Task SeedDatabase(FujiyBlogDatabase context, RoleManager<IdentityRole> _roleManager)
         {
             DateTime utcNow = DateTime.UtcNow;
 
-            User admin = new User
-                             {
-                                 CreationDate = utcNow,
-                                 Username = "admin",
-                                 Password = "admin",
-                                 Email = "admin@example.com",
-                                 Enabled = true,
-                             };
+            //User admin = new User
+            //{
+            //    CreationDate = utcNow,
+            //    Username = "admin",
+            //    Password = "admin",
+            //    Email = "admin@example.com",
+            //    Enabled = true,
+            //};
 
-            context.Users.Add(admin);
+            //context.Users.Add(admin);
 
-            RoleGroup adminGroup = new RoleGroup {Name = "Admin"};
-            adminGroup.Roles = Enum.GetValues(typeof (Role)).Cast<Role>();
-            adminGroup.Users.Add(admin);
+            var adminRole = await _roleManager.FindByNameAsync("Admin");
+            if (adminRole == null)
+            {
+                adminRole = new IdentityRole("Admin");
+                await _roleManager.CreateAsync(adminRole);
 
-            RoleGroup editorGroup = new RoleGroup {Name = "Editor"};
-            List<Role> editorRoles = new List<Role>
+                foreach (var role in Enum.GetNames(typeof(PermissionClaims)))
+                {
+                    await _roleManager.AddClaimAsync(adminRole, new Claim(CustomClaimTypes.Permission, role));
+                }
+            }
+
+            List<PermissionClaims> editorRoles = new List<PermissionClaims>
                                          {
-                                             Role.AccessAdminPages,
-                                             Role.ViewPublicPosts,
-                                             Role.ViewUnpublishedPosts,
-                                             Role.CreateNewPosts,
-                                             Role.EditOwnPosts,
-                                             Role.DeleteOwnPosts,
-                                             Role.PublishOwnPosts,
-                                             Role.EditOwnUser,
-                                             Role.ViewPublicComments,
-                                             Role.ViewUnmoderatedComments,
-                                             Role.CreateComments,
-                                             Role.ModerateComments,
-                                             Role.ViewPublicPages,
-                                             Role.ViewUnpublishedPages,
-                                             Role.CreateNewPages,
-                                             Role.EditOwnPages,
-                                             Role.DeleteOwnPages,
-                                             Role.PublishOwnPages,
+                                             PermissionClaims.AccessAdminPages,
+                                             PermissionClaims.ViewPublicPosts,
+                                             PermissionClaims.ViewUnpublishedPosts,
+                                             PermissionClaims.CreateNewPosts,
+                                             PermissionClaims.EditOwnPosts,
+                                             PermissionClaims.DeleteOwnPosts,
+                                             PermissionClaims.PublishOwnPosts,
+                                             PermissionClaims.EditOwnUser,
+                                             PermissionClaims.ViewPublicComments,
+                                             PermissionClaims.ViewUnmoderatedComments,
+                                             PermissionClaims.CreateComments,
+                                             PermissionClaims.ModerateComments,
+                                             PermissionClaims.ViewPublicPages,
+                                             PermissionClaims.ViewUnpublishedPages,
+                                             PermissionClaims.CreateNewPages,
+                                             PermissionClaims.EditOwnPages,
+                                             PermissionClaims.DeleteOwnPages,
+                                             PermissionClaims.PublishOwnPages,
                                          };
 
-            editorGroup.Roles = editorRoles;
+            var editorRole = await _roleManager.FindByNameAsync("Editor");
+            if (editorRole == null)
+            {
+                editorRole = new IdentityRole("Editor");
+                await _roleManager.CreateAsync(editorRole);
 
-            RoleGroup anonymGroup = new RoleGroup {Name = "Anonymous"};
-            List<Role> anonymRoles = new List<Role>
+                foreach (var role in editorRoles)
+                {
+                    await _roleManager.AddClaimAsync(editorRole, new Claim(CustomClaimTypes.Permission, role.ToString()));
+                }
+            }
+
+            List<PermissionClaims> anonymRoles = new List<PermissionClaims>
                                          {
-                                             Role.ViewPublicPosts,
-                                             Role.ViewPublicComments,
-                                             Role.CreateComments,
-                                             Role.ViewPublicPages,
+                                             PermissionClaims.ViewPublicPosts,
+                                             PermissionClaims.ViewPublicComments,
+                                             PermissionClaims.CreateComments,
+                                             PermissionClaims.ViewPublicPages,
                                          };
 
-            anonymGroup.Roles = anonymRoles;
+            var anonymousRole = await _roleManager.FindByNameAsync("Anonymous");
+            if (anonymousRole == null)
+            {
+                anonymousRole = new IdentityRole("Anonymous");
+                await _roleManager.CreateAsync(anonymousRole);
 
-            context.RoleGroups.Add(adminGroup);
-            context.RoleGroups.Add(editorGroup);
-            context.RoleGroups.Add(anonymGroup);
+                foreach (var role in anonymRoles)
+                {
+                    await _roleManager.AddClaimAsync(anonymousRole, new Claim(CustomClaimTypes.Permission, role.ToString()));
+                }
+            }
 
-            Post examplePost = new Post
-                                   {
-                                       Title = "Example post. You blog is now installed",
-                                       Slug = "example",
-                                       Content = "Example post",
-                                       Author = admin,
-                                       IsPublished = true,
-                                       IsCommentEnabled = true,
-                                       CreationDate = utcNow,
-                                       LastModificationDate = utcNow,
-                                       PublicationDate = utcNow,
-                                   };
+            //Post examplePost = new Post
+            //{
+            //    Title = "Example post. You blog is now installed",
+            //    Slug = "example",
+            //    Content = "Example post",
+            //    Author = admin,
+            //    IsPublished = true,
+            //    IsCommentEnabled = true,
+            //    CreationDate = utcNow,
+            //    LastModificationDate = utcNow,
+            //    PublicationDate = utcNow,
+            //};
 
-            context.Posts.Add(examplePost);
+            //context.Posts.Add(examplePost);
         }
     }
 }

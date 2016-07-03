@@ -1,48 +1,56 @@
 ﻿using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
-using FujiyBlog.Core.Tasks;
-using FujiyBlog.Web.Infrastructure;
+using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc.ViewEngines;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
 
 namespace FujiyBlog.Web.Controllers
 {
     public partial class CommentController : Controller
     {
         private readonly FujiyBlogDatabase db;
+        private readonly SettingRepository settings;
+        private readonly ICompositeViewEngine viewEngine;
 
-        public CommentController(FujiyBlogDatabase db)
+        public CommentController(FujiyBlogDatabase db, SettingRepository settings, ICompositeViewEngine viewEngine)
         {
             this.db = db;
+            this.settings = settings;
+            this.viewEngine = viewEngine;
         }
 
-        [AuthorizeRole(Role.CreateComments)]
-        public async virtual Task<ActionResult> DoComment(int id, int? parentCommentId)
+        [Authorize(nameof(PermissionClaims.CreateComments))]
+        public async Task<ActionResult> DoComment(int id, int? parentCommentId)
         {
-            if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments) && (await ValidateRecaptcha(Request, Request.Form["g-recaptcha-response"]) == false))
+            if (settings.ReCaptchaEnabled && !HttpContext.UserHasClaimPermission(PermissionClaims.ModerateComments) && (await ValidateRecaptcha(Request, settings, Request.Form["g-recaptcha-response"]) == false))
             {
                 return Json(new { errorMessage = "Invalid Captcha!" });
             }
 
-            bool isLogged = Request.IsAuthenticated;
-            Post post = db.Posts.Include(x => x.Author).WhereHaveRoles().SingleOrDefault(x => x.Id == id);
+            bool isLogged = User.Identity.IsAuthenticated;
+            Post post = db.Posts.Include(x => x.Author).WhereHaveRoles(HttpContext).SingleOrDefault(x => x.Id == id);
 
-            if (post == null || !post.IsCommentEnabled || !Settings.SettingRepository.EnableComments)
+            if (post == null || !post.IsCommentEnabled || !settings.EnableComments)
             {
                 throw new InvalidOperationException();
             }
 
-            if (Settings.SettingRepository.CloseCommentsAfterDays.HasValue && post.PublicationDate.AddDays(Settings.SettingRepository.CloseCommentsAfterDays.Value) < DateTime.UtcNow)
+            if (settings.CloseCommentsAfterDays.HasValue && post.PublicationDate.AddDays(settings.CloseCommentsAfterDays.Value) < DateTime.UtcNow)
             {
                 throw new InvalidOperationException();
             }
@@ -50,30 +58,31 @@ namespace FujiyBlog.Web.Controllers
             PostComment postComment = new PostComment
             {
                 CreationDate = DateTime.UtcNow,
-                IpAddress = Request.UserHostAddress,
+                IpAddress = HttpContext.Connection.RemoteIpAddress.ToString(),
                 Post = post,
-                IsApproved = isLogged || !Settings.SettingRepository.ModerateComments,
+                IsApproved = isLogged || !settings.ModerateComments,
             };
 
             if (isLogged)
             {
-                postComment.Author = db.Users.SingleOrDefault(x => x.Username == User.Identity.Name);
+                postComment.Author = db.Users.SingleOrDefault(x => x.UserName == User.Identity.Name);
                 postComment.IsApproved = true;
-                UpdateModel(postComment, new[] { "Comment" });
+
+                await TryUpdateModelAsync(postComment, "", x => x.Comment);
             }
             else
             {
-                SocialUserData socialUserData = SocialController.GetLoggedUser();
+                SocialUserData socialUserData = null;//TODO SocialController.GetLoggedUser();
                 if (socialUserData != null)
                 {
                     postComment.AuthorName = socialUserData.Name;
                     postComment.AuthorEmail = socialUserData.Email;
                     postComment.AuthorWebsite = socialUserData.WebSite;
-                    UpdateModel(postComment, new[] { "Comment" });
+                    await TryUpdateModelAsync(postComment, "", x => x.Comment);
                 }
                 else
                 {
-                    UpdateModel(postComment, new[] { "AuthorName", "AuthorEmail", "AuthorWebsite", "Comment" });
+                    await TryUpdateModelAsync(postComment, "", x => x.AuthorName, x => x.AuthorEmail, x => x.AuthorWebsite, x => x.Comment);
                 }
             }
 
@@ -85,31 +94,31 @@ namespace FujiyBlog.Web.Controllers
             db.PostComments.Add(postComment);
             db.SaveChanges();
 
-            if (!isLogged && Settings.SettingRepository.NotifyNewComments)
+            if (!isLogged && settings.NotifyNewComments)
             {
-                string subject = string.Format("Comment on \"{0}\" from {1}", post.Title, Settings.SettingRepository.BlogName);
+                string subject = string.Format("Comment on \"{0}\" from {1}", post.Title, settings.BlogName);
                 dynamic viewModel = new ExpandoObject();
-                viewModel.BlogName = Settings.SettingRepository.BlogName;
+                viewModel.BlogName = settings.BlogName;
                 viewModel.Post = post;
                 viewModel.Comment = postComment;
                 string body = RenderPartialViewToString("NewComment", viewModel);
 
-                new SendEmailTask(Settings.SettingRepository.EmailTo, subject, body).ExcuteLater();
+                await new EmailService(settings).Send(settings.EmailTo, subject, body, true, null, null);
             }
 
             return View("Comments", new[] { postComment });
         }
 
         //TODO Should Refactor to proper class
-        internal static async Task<bool> ValidateRecaptcha(HttpRequestBase request, string gRecaptchaResponse)
+        internal static async Task<bool> ValidateRecaptcha(HttpRequest request, SettingRepository settings, string gRecaptchaResponse)
         {
             using (HttpClient client = new HttpClient())
             {
                 using (var content = new FormUrlEncodedContent(new[]
                {
-                new KeyValuePair<string, string>("secret", Settings.SettingRepository.ReCaptchaPrivateKey),
+                new KeyValuePair<string, string>("secret", settings.ReCaptchaPrivateKey),
                 new KeyValuePair<string, string>("response", gRecaptchaResponse),
-                new KeyValuePair<string, string>("remoteip", request.ServerVariables["REMOTE_ADDR"]),
+                new KeyValuePair<string, string>("remoteip", request.HttpContext.Connection.RemoteIpAddress.ToString()),//.ServerVariables["REMOTE_ADDR"]
             }))
                 {
 
@@ -123,23 +132,23 @@ namespace FujiyBlog.Web.Controllers
             }
         }
 
-        [AuthorizeRole(Role.ModerateComments), HttpPost]
-        public virtual ActionResult Approve(int id)
+        [Authorize(nameof(PermissionClaims.ModerateComments)), HttpPost]
+        public ActionResult Approve(int id)
         {
             return ChangeCommentStatus(id, true);
         }
 
-        [AuthorizeRole(Role.ModerateComments), HttpPost]
-        public virtual ActionResult Disapprove(int id)
+        [Authorize(nameof(PermissionClaims.ModerateComments)), HttpPost]
+        public ActionResult Disapprove(int id)
         {
             return ChangeCommentStatus(id, false);
         }
 
-        [AuthorizeRole(Role.ModerateComments), HttpPost]
-        public virtual ActionResult Delete(int id, bool deleteReplies)
+        [Authorize(nameof(PermissionClaims.ModerateComments)), HttpPost]
+        public ActionResult Delete(int id, bool deleteReplies)
         {
             PostComment deletedComment = db.PostComments.Single(x => x.Id == id);
-            User moderatedBy = db.Users.Single(x => x.Username == User.Identity.Name);
+            var moderatedBy = db.Users.Single(x => x.UserName == User.Identity.Name);
 
             List<PostComment> commentsToDelete = new List<PostComment>();
             commentsToDelete.Add(deletedComment);
@@ -155,7 +164,7 @@ namespace FujiyBlog.Web.Controllers
                 comment.ModeratedBy = moderatedBy;
             }
 
-            db.SaveChanges(bypassValidation: true);
+            db.SaveChanges();
 
             return Json(true);
         }
@@ -170,8 +179,8 @@ namespace FujiyBlog.Web.Controllers
         {
             PostComment comment = db.PostComments.Single(x => x.Id == id);
             comment.IsApproved = approved;
-            comment.ModeratedBy = db.Users.Single(x => x.Username == User.Identity.Name);
-            db.SaveChangesBypassingValidation();
+            comment.ModeratedBy = db.Users.Single(x => x.UserName == User.Identity.Name);
+            db.SaveChanges();
 
             return Json(true);
         }
@@ -179,11 +188,15 @@ namespace FujiyBlog.Web.Controllers
         private string RenderPartialViewToString(string viewName, object model)
         {
             ViewData.Model = model;
-            using (System.IO.StringWriter sw = new System.IO.StringWriter())
+
+            using (StringWriter sw = new StringWriter())
             {
-                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw);
-                viewResult.View.Render(viewContext, sw);
+                ViewEngineResult viewResult = viewEngine.FindView(ControllerContext, viewName, false);
+
+                ViewContext viewContext = new ViewContext(ControllerContext, viewResult.View, ViewData, TempData, sw, new HtmlHelperOptions());
+
+                var t = viewResult.View.RenderAsync(viewContext);
+                t.Wait();
 
                 return sw.GetStringBuilder().ToString();
             }

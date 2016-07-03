@@ -11,14 +11,8 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        public new void FillUser(User user)
-        {
-            user.Username = Username;
-            user.Password = Password;
-            base.FillUser(user);
-        }
     }
 }

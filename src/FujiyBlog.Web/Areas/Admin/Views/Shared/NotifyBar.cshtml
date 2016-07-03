@@ -2,20 +2,8 @@
     Layout = null;
 }
 
-@if (Request.Cookies["NotifyBar"] != null)
+@if (Context.Request.Cookies["NotifyBar"] != null)
 {
-    <div id="notify-bar" class="success" style="display: none;"><span>@Request.Cookies["NotifyBar"].Value</span> <a id="close-notify" href="javascript:void(0);">X</a></div>
-    var c = new HttpCookie("NotifyBar");
-    c.Expires = DateTime.Now.AddDays(-1);
-    Response.Cookies.Add(c);
+    <div id="notify-bar" class="success" style="display: none;"><span>@Context.Request.Cookies["NotifyBar"]</span> <a id="close-notify" href="javascript:void(0);">X</a></div>
+    Context.Response.Cookies.Append("NotifyBar", "", new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.Now.AddDays(-1) });
 }
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#notify-bar").fadeIn(2000);
-        $("#notify-bar").delay(5000).fadeOut(1000);
-        $("#close-notify").click(function () {
-            $("#notify-bar").stop(true).fadeOut('slow');
-        });
-    });
-</script>

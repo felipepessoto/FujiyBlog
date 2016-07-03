@@ -1,34 +1,37 @@
-﻿using System.Linq;
-using System.Security.Principal;
-using System.Web;
-using System.Web.Mvc;
-using FujiyBlog.Core.Caching;
-using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.EntityFramework;
+﻿using FujiyBlog.Core.DomainObjects;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FujiyBlog.Core.Extensions
 {
     public static class PrincipalExtensions
     {
-        public static bool IsInRole(this IPrincipal principal, Role role)
+        public static bool UserHasClaimPermission(this HttpContext context, PermissionClaims permission)
         {
-            if (principal.Identity.IsAuthenticated)
+            if (context.User.Identity.IsAuthenticated)
             {
-                return principal.IsInRole(role.ToString());
+                return context.User.HasClaim(CustomClaimTypes.Permission, permission.ToString());
             }
 
-            return GetAnonymousRoles(role);
+            return GetAnonymousRoles(context, permission).Result;
         }
+        
 
-        public static bool GetAnonymousRoles(Role role)
+        private static async Task<bool> GetAnonymousRoles(HttpContext httpContext, PermissionClaims permission)
         {
-            if (HttpContext.Current.Items["AnonymousRoleGroup"] == null)
-            {
-                RoleGroup roleGroup = CacheHelper.FromCacheOrExecute(() => DependencyResolver.Current.GetService<FujiyBlogDatabase>().RoleGroups.AsNoTracking().Single(x => x.Name == "Anonymous"), key: "FujiyBlog.Core.Extensions.PrincipalExtensions.GetAnonymousRoles", condition: !HttpContext.Current.User.Identity.IsAuthenticated);
-                HttpContext.Current.Items["AnonymousRoleGroup"] = roleGroup;
-            }
+            //TODO validar performance
+            string roleName = permission.ToString();
+            var roleManager = httpContext.RequestServices.GetService<RoleManager<IdentityRole>>();
+            var role = await roleManager.FindByNameAsync("Anonymous");
+            var claims = await roleManager.GetClaimsAsync(role);
+            var hasClaim = claims.Any(x => x.Type == CustomClaimTypes.Permission && x.Value == roleName);
 
-            return ((RoleGroup)HttpContext.Current.Items["AnonymousRoleGroup"]).Roles.Any(x => x == role);
+            return hasClaim;
         }
     }
 }

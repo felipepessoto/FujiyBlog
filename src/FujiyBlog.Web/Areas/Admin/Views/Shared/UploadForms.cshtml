@@ -1,9 +1,9 @@
 ﻿@model string
 
-<script type="text/javascript" src="@Url.Content(Links.Scripts.jquery_form_js)"></script>
+<script type="text/javascript" src="~/lib/jquery-form/jquery.form.js"></script>
 
 <div id="div-upload-image" style="display: none;">
-    <form id="form-upload-image" action="@Url.Action(MVC.Admin.File.Upload(null, Model))" method="post" enctype="multipart/form-data">
+    <form id="form-upload-image" asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload a image</legend>
             <label>File to Upload: <input type="file" id="uploadedFilesImages" name="uploadedFiles" accept="image/*" multiple />(4MB max size)</label>
@@ -16,7 +16,7 @@
 </div>
 
 <div id="div-upload-video" style="display: none;">
-    <form id="form-upload-video" action="@Url.Action(MVC.Admin.File.Upload(null, Model))" method="post" enctype="multipart/form-data">
+    <form id="form-upload-video" asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model"  method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload a video/audio</legend>
             <label>File to Upload: <input type="file" id="uploadedFilesVideo" name="uploadedFiles" accept="audio/*,video/*" multiple />(4MB max size)</label>
@@ -29,7 +29,7 @@
 </div>
 
 <div id="div-upload-file" style="display: none;">
-    <form id="form-upload-file" action="@Url.Action(MVC.Admin.File.Upload(null, Model))" method="post" enctype="multipart/form-data">
+    <form id="form-upload-file" asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Upload a file</legend>
             <label>File to Upload: <input type="file" id="uploadedFilesFiles" name="uploadedFiles" multiple />(4MB max size)</label>

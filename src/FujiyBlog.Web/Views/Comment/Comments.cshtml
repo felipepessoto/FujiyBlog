@@ -1,4 +1,6 @@
-﻿@using FujiyBlog.Core.DomainObjects
+﻿@inject FujiyBlog.Core.DateTimeUtil DateTimeUtil
+
+@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Web.Models
 @using FujiyBlog.Core.Extensions
 @using FujiyBlog.Web.Extensions
@@ -8,12 +10,12 @@
     @foreach (PostComment comment in Model)
     { 
         <div id="comment_id@(comment.Id)" class="comment@(comment.Post.Author == comment.Author ? " self" : "")">
-            <p class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(comment.CreationDate)</p>
+            <p class="date">@DateTimeUtil.ConvertUtcToMyTimeZone(comment.CreationDate)</p>
 
-            @if (!string.IsNullOrEmpty(Settings.SettingRepository.CommentsAvatar))
+            @if (!string.IsNullOrEmpty(settings.CommentsAvatar))
             {
                 <p class="gravatar">
-                    @Html.Gravatar(comment.Author == null ? comment.AuthorEmail : comment.Author.Email, 80, Settings.SettingRepository.CommentsAvatar)</p>
+                    @Html.Gravatar(comment.Author == null ? comment.AuthorEmail : comment.Author.Email, 80, settings.CommentsAvatar)</p>
             }
             
             <p class="content">@Html.Raw(comment.Comment.Replace(Environment.NewLine, "<br />"))</p>
@@ -30,27 +32,27 @@
                 }
             }
             else { 
-                @Html.ActionLink(comment.Author.DisplayName ?? comment.Author.Username, MVC.Post.Author(comment.Author.Username, null))
+                @Html.ActionLink(comment.Author.DisplayName ?? comment.Author.UserName, "Author", "Post", new { author = comment.Author.UserName })
             }
 
-            @if (User.IsInRole(Role.CreateComments))
+            @if (Context.UserHasClaimPermission(PermissionClaims.CreateComments))
             {
-                <text>| <a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.replyComment(@comment.Id);">@Resources.Labels.Reply</a> </text>
+                <text>| <a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.replyComment(@comment.Id);">@FujiyBlog.Web.Resources.Labels.Reply</a> </text>
             }
             
-            @if (User.IsInRole(Role.ModerateComments))
+            @if (Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
             {
-                
-                @(Ajax.ActionLink("Approve", MVC.Comment.Approve(comment.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "$('#link-approve-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-disapprove-comment-" + comment.Id + "').fadeIn('normal');});" }, new { id = "link-approve-comment-" + comment.Id, style = comment.IsApproved ? "display: none;" : string.Empty }))
-                
-                @(Ajax.ActionLink("Disapprove", MVC.Comment.Disapprove(comment.Id), new AjaxOptions { HttpMethod = "POST", OnSuccess = "$('#link-disapprove-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-approve-comment-" + comment.Id + "').fadeIn('normal');});" }, new { id = "link-disapprove-comment-" + comment.Id, style = !comment.IsApproved ? "display: none;" : string.Empty }))
+                <a asp-controller="Comment" asp-action="Approve" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("$('#link-approve-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-disapprove-comment-" + comment.Id + "').fadeIn('normal');});")" id="@("link-approve-comment-" + comment.Id)" style="@(comment.IsApproved ? "display: none;" : string.Empty)">Approve</a>
+
+                <a asp-controller="Comment" asp-action="Disapprove" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("$('#link-disapprove-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-approve-comment-" + comment.Id + "').fadeIn('normal');});")" id="@("link-disapprove-comment-" + comment.Id)" style="@(!comment.IsApproved ? "display: none;" : string.Empty)">Disapprove</a>
                 
                 <text>|</text>
-                @(Ajax.ActionLink("Delete", MVC.Comment.Delete(comment.Id, false), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "$('#replies_" + comment.Id + " > *').insertAfter('#comment_id" + comment.Id + "');$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" }))
+                <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("$('#replies_" + comment.Id + " > *').insertAfter('#comment_id" + comment.Id + "');$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" )">Delete</a>
+
                 if (comment.NestedComments.Any())
                 {
                     <text>|</text>
-                    @(Ajax.ActionLink("Delete this and replies", MVC.Comment.Delete(comment.Id, true), new AjaxOptions {HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});"}))
+                    <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" asp-route-deleteReplies="true" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("$('#comment_id" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" )">Delete this and replies</a>
                 }
             }
             

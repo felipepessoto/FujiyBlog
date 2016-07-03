@@ -1,48 +1,48 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Web.Mvc;
-using FujiyBlog.Core.BlogML;
+﻿//using FujiyBlog.Core.BlogML;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Web.Areas.Admin.Models;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
-using FujiyBlog.Web.Infrastructure;
-using FujiyBlog.Web.Models;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
+//using NLog;
+//using NLog.Config;
+//using NLog.Targets;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.PlatformAbstractions;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    [AuthorizeRole(Role.AccessAdminSettingsPages)]
+    [Authorize(nameof(PermissionClaims.AccessAdminSettingsPages))]
     public partial class SettingController : AdminController
     {
         private readonly FujiyBlogDatabase db;
+        private readonly SettingRepository settingRepository;
 
-        public SettingController(FujiyBlogDatabase db)
+        public SettingController(FujiyBlogDatabase db, SettingRepository settings)
         {
             this.db = db;
+            this.settingRepository = settings;
         }
 
-        public virtual ActionResult Index()
+        public ActionResult Index()
         {
             AdminBasicSettings viewModel = new AdminBasicSettings
             {
-                BlogName = Settings.SettingRepository.BlogName,
-                BlogDescription = Settings.SettingRepository.BlogDescription,
-                Theme = Settings.SettingRepository.Theme,
-                Themes = new DirectoryInfo(Server.MapPath("~/Views/Themes/")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
-                PostsPerPage = Settings.SettingRepository.PostsPerPage,
-                TimeZoneId = Settings.SettingRepository.TimeZone.Id,
+                BlogName = settingRepository.BlogName,
+                BlogDescription = settingRepository.BlogDescription,
+                Theme = settingRepository.Theme,
+                Themes = new DirectoryInfo(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Views", "Themes")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
+                PostsPerPage = settingRepository.PostsPerPage,
+                TimeZoneId = settingRepository.TimeZone.Id,
                 TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
-                Language = Settings.SettingRepository.Culture,
-                ApplicationInsightsInstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey,
-                CustomCode = Settings.SettingRepository.CustomCode,
+                Language = settingRepository.Culture,
+                ApplicationInsightsInstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey,
+                CustomCode = settingRepository.CustomCode,
             };
 
             return View(viewModel);
@@ -56,36 +56,38 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return View();
             }
 
-            Settings.SettingRepository.BlogName = settings.BlogName;
-            Settings.SettingRepository.BlogDescription = settings.BlogDescription;
-            Settings.SettingRepository.Theme = settings.Theme;
-            Settings.SettingRepository.PostsPerPage = settings.PostsPerPage;
-            Settings.SettingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
-            Settings.SettingRepository.Culture = settings.Language;
-            Settings.SettingRepository.ApplicationInsightsInstrumentationKey = settings.ApplicationInsightsInstrumentationKey;
-            Settings.SettingRepository.CustomCode = settings.CustomCode;
+            settingRepository.BlogName = settings.BlogName;
+            settingRepository.BlogDescription = settings.BlogDescription;
+            settingRepository.Theme = settings.Theme;
+            settingRepository.PostsPerPage = settings.PostsPerPage;
+            settingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
+            settingRepository.Culture = settings.Language;
+            settingRepository.ApplicationInsightsInstrumentationKey = settings.ApplicationInsightsInstrumentationKey;
+            settingRepository.CustomCode = settings.CustomCode;
 
-            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey);
+            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
 
             if (TelemetryConfiguration.Active.DisableTelemetry == false)
             {
-                TelemetryConfiguration.Active.InstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey;
+                TelemetryConfiguration.Active.InstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey;
             }
 
-            return RedirectToAction(MVC.Admin.Setting.Index()).SetSuccessMessage("Settings saved");
+            SetSuccessMessage("Settings saved");
+
+            return RedirectToAction("Index");
         }
 
         public virtual ActionResult Email()
         {
             AdminEmailSettings viewModel = new AdminEmailSettings
             {
-                EmailTo = Settings.SettingRepository.EmailTo,
-                EmailSubjectPrefix = Settings.SettingRepository.EmailSubjectPrefix,
-                SmtpAddress = Settings.SettingRepository.SmtpAddress,
-                SmtpPort = Settings.SettingRepository.SmtpPort,
-                SmtpUserName = Settings.SettingRepository.SmtpUserName,
-                SmtpPassword = Settings.SettingRepository.SmtpPassword,
-                SmtpSsl = Settings.SettingRepository.SmtpSsl,
+                EmailTo = settingRepository.EmailTo,
+                EmailSubjectPrefix = settingRepository.EmailSubjectPrefix,
+                SmtpAddress = settingRepository.SmtpAddress,
+                SmtpPort = settingRepository.SmtpPort,
+                SmtpUserName = settingRepository.SmtpUserName,
+                SmtpPassword = settingRepository.SmtpPassword,
+                SmtpSsl = settingRepository.SmtpSsl,
             };
 
             return View(viewModel);
@@ -99,31 +101,33 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return View();
             }
 
-            Settings.SettingRepository.EmailTo = settings.EmailTo;
-            Settings.SettingRepository.EmailSubjectPrefix = settings.EmailSubjectPrefix;
-            Settings.SettingRepository.SmtpAddress = settings.SmtpAddress;
-            Settings.SettingRepository.SmtpPort = settings.SmtpPort;
-            Settings.SettingRepository.SmtpUserName = settings.SmtpUserName;
-            Settings.SettingRepository.SmtpPassword = settings.SmtpPassword;
-            Settings.SettingRepository.SmtpSsl = settings.SmtpSsl;
+            settingRepository.EmailTo = settings.EmailTo;
+            settingRepository.EmailSubjectPrefix = settings.EmailSubjectPrefix;
+            settingRepository.SmtpAddress = settings.SmtpAddress;
+            settingRepository.SmtpPort = settings.SmtpPort;
+            settingRepository.SmtpUserName = settings.SmtpUserName;
+            settingRepository.SmtpPassword = settings.SmtpPassword;
+            settingRepository.SmtpSsl = settings.SmtpSsl;
 
-            return RedirectToAction(MVC.Admin.Setting.Email()).SetSuccessMessage("Settings saved");
+            SetSuccessMessage("Settings saved");
+
+            return RedirectToAction("Email");
         }
 
         public virtual ActionResult Comments()
         {
             AdminCommentsSettings viewModel = new AdminCommentsSettings
             {
-                EnableComments = Settings.SettingRepository.EnableComments,
-                ModerateComments = Settings.SettingRepository.ModerateComments,
-                EnableNestedComments = Settings.SettingRepository.EnableNestedComments,
-                CloseCommentsAfterDays = Settings.SettingRepository.CloseCommentsAfterDays,
-                CommentsPerPage = Settings.SettingRepository.CommentsPerPage,
-                CommentsAvatar = Settings.SettingRepository.CommentsAvatar ?? string.Empty,
-                ReCaptchaEnabled = Settings.SettingRepository.ReCaptchaEnabled,
-                ReCaptchaPrivateKey = Settings.SettingRepository.ReCaptchaPrivateKey,
-                ReCaptchaPublicKey = Settings.SettingRepository.ReCaptchaPublicKey,
-                NotifyNewComments = Settings.SettingRepository.NotifyNewComments,
+                EnableComments = settingRepository.EnableComments,
+                ModerateComments = settingRepository.ModerateComments,
+                EnableNestedComments = settingRepository.EnableNestedComments,
+                CloseCommentsAfterDays = settingRepository.CloseCommentsAfterDays,
+                CommentsPerPage = settingRepository.CommentsPerPage,
+                CommentsAvatar = settingRepository.CommentsAvatar ?? string.Empty,
+                ReCaptchaEnabled = settingRepository.ReCaptchaEnabled,
+                ReCaptchaPrivateKey = settingRepository.ReCaptchaPrivateKey,
+                ReCaptchaPublicKey = settingRepository.ReCaptchaPublicKey,
+                NotifyNewComments = settingRepository.NotifyNewComments,
             };
 
             return View(viewModel);
@@ -137,41 +141,45 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return View();
             }
 
-            Settings.SettingRepository.EnableComments = settings.EnableComments;
-            Settings.SettingRepository.ModerateComments = settings.ModerateComments;
-            Settings.SettingRepository.EnableNestedComments = settings.EnableNestedComments;
-            Settings.SettingRepository.CloseCommentsAfterDays = settings.CloseCommentsAfterDays;
-            Settings.SettingRepository.CommentsPerPage = settings.CommentsPerPage;
-            Settings.SettingRepository.CommentsAvatar = settings.CommentsAvatar;
-            Settings.SettingRepository.ReCaptchaEnabled = settings.ReCaptchaEnabled;
-            Settings.SettingRepository.ReCaptchaPrivateKey = settings.ReCaptchaPrivateKey;
-            Settings.SettingRepository.ReCaptchaPublicKey = settings.ReCaptchaPublicKey;
-            Settings.SettingRepository.NotifyNewComments = settings.NotifyNewComments;
+            settingRepository.EnableComments = settings.EnableComments;
+            settingRepository.ModerateComments = settings.ModerateComments;
+            settingRepository.EnableNestedComments = settings.EnableNestedComments;
+            settingRepository.CloseCommentsAfterDays = settings.CloseCommentsAfterDays;
+            settingRepository.CommentsPerPage = settings.CommentsPerPage;
+            settingRepository.CommentsAvatar = settings.CommentsAvatar;
+            settingRepository.ReCaptchaEnabled = settings.ReCaptchaEnabled;
+            settingRepository.ReCaptchaPrivateKey = settings.ReCaptchaPrivateKey;
+            settingRepository.ReCaptchaPublicKey = settings.ReCaptchaPublicKey;
+            settingRepository.NotifyNewComments = settings.NotifyNewComments;
 
-            return RedirectToAction(MVC.Admin.Setting.Comments()).SetSuccessMessage("Settings saved");
+            SetSuccessMessage("Settings saved");
+
+            return RedirectToAction("Comments");
         }
 
-        public virtual ActionResult Import()
-        {
-            return View();
-        }
+        //TODO
+        //public virtual ActionResult Import()
+        //{
+        //    return View();
+        //}
 
-        [HttpPost, ActionName("Import")]
-        public virtual ActionResult ImportPost()
-        {
-            var file = Request.Files[0];
+        //[HttpPost, ActionName("Import")]
+        //public virtual ActionResult ImportPost()
+        //{
+        //    var file = Request.Files[0];
 
-            if (file == null || file.ContentLength == 0)
-            {
-                return Content("Select a file");
-            }
+        //    if (file == null || file.ContentLength == 0)
+        //    {
+        //        return Content("Select a file");
+        //    }
 
-            BlogMLImporter importer = new BlogMLImporter(new BlogMLRepository(db));
+        //    BlogMLImporter importer = new BlogMLImporter(new BlogMLRepository(db));
 
-            importer.Import(file.InputStream);
-            db.SaveChanges();
-            return RedirectToAction(MVC.Admin.Setting.ImportSuccessful());
-        }
+        //    importer.Import(file.InputStream);
+        //    db.SaveChanges();
+            
+        //    return RedirectToAction("ImportSuccessful");
+        //}
 
         public virtual ActionResult ImportSuccessful()
         {
@@ -182,13 +190,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             AdminSettingsSocialNetworks viewModel = new AdminSettingsSocialNetworks
             {
-                EnableFacebookLikePosts = Settings.SettingRepository.EnableFacebookLikePosts,
-                EnableGooglePlusOnePosts = Settings.SettingRepository.EnableGooglePlusOnePosts,
-                EnableTwitterSharePosts = Settings.SettingRepository.EnableTwitterSharePosts,
-                FacebookAdminIds = Settings.SettingRepository.FacebookAdminIds,
-                FacebookAppId = Settings.SettingRepository.FacebookAppId,
-                OpenGraphImageUrl = Settings.SettingRepository.OpenGraphImageUrl,
-                TwitterBlogAccount = Settings.SettingRepository.TwitterBlogAccount,
+                EnableFacebookLikePosts = settingRepository.EnableFacebookLikePosts,
+                EnableGooglePlusOnePosts = settingRepository.EnableGooglePlusOnePosts,
+                EnableTwitterSharePosts = settingRepository.EnableTwitterSharePosts,
+                FacebookAdminIds = settingRepository.FacebookAdminIds,
+                FacebookAppId = settingRepository.FacebookAppId,
+                OpenGraphImageUrl = settingRepository.OpenGraphImageUrl,
+                TwitterBlogAccount = settingRepository.TwitterBlogAccount,
             };
 
             return View(viewModel);
@@ -202,24 +210,26 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return View();
             }
 
-            Settings.SettingRepository.EnableFacebookLikePosts = settings.EnableFacebookLikePosts;
-            Settings.SettingRepository.EnableGooglePlusOnePosts = settings.EnableGooglePlusOnePosts;
-            Settings.SettingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
-            Settings.SettingRepository.FacebookAdminIds = settings.FacebookAdminIds;
-            Settings.SettingRepository.FacebookAppId = settings.FacebookAppId;
-            Settings.SettingRepository.OpenGraphImageUrl = settings.OpenGraphImageUrl;
-            Settings.SettingRepository.TwitterBlogAccount = settings.TwitterBlogAccount;
+            settingRepository.EnableFacebookLikePosts = settings.EnableFacebookLikePosts;
+            settingRepository.EnableGooglePlusOnePosts = settings.EnableGooglePlusOnePosts;
+            settingRepository.EnableTwitterSharePosts = settings.EnableTwitterSharePosts;
+            settingRepository.FacebookAdminIds = settings.FacebookAdminIds;
+            settingRepository.FacebookAppId = settings.FacebookAppId;
+            settingRepository.OpenGraphImageUrl = settings.OpenGraphImageUrl;
+            settingRepository.TwitterBlogAccount = settings.TwitterBlogAccount;
 
-            return RedirectToAction(MVC.Admin.Setting.SocialNetworks()).SetSuccessMessage("Settings saved");
+            SetSuccessMessage("Settings saved");
+
+            return RedirectToAction("SocialNetworks");
         }
 
         public virtual ActionResult Feed()
         {
             AdminFeedSettings viewModel = new AdminFeedSettings
             {
-                AlternateFeedUrl = Settings.SettingRepository.AlternateFeedUrl,
-                ItemsShownInFeed = Settings.SettingRepository.ItemsShownInFeed,
-                DefaultFeedOutput = Settings.SettingRepository.DefaultFeedOutput,
+                AlternateFeedUrl = settingRepository.AlternateFeedUrl,
+                ItemsShownInFeed = settingRepository.ItemsShownInFeed,
+                DefaultFeedOutput = settingRepository.DefaultFeedOutput,
                 DefaultFeedOutputs = new List<SelectListItem> { new SelectListItem { Text = "RSS", Value = "RSS" }, new SelectListItem { Text = "Atom", Value = "Atom" } },
             };
 
@@ -234,52 +244,65 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return View();
             }
 
-            Settings.SettingRepository.AlternateFeedUrl = settings.AlternateFeedUrl;
-            Settings.SettingRepository.ItemsShownInFeed = settings.ItemsShownInFeed;
-            Settings.SettingRepository.DefaultFeedOutput = settings.DefaultFeedOutput;
+            settingRepository.AlternateFeedUrl = settings.AlternateFeedUrl;
+            settingRepository.ItemsShownInFeed = settings.ItemsShownInFeed;
+            settingRepository.DefaultFeedOutput = settings.DefaultFeedOutput;
 
-            return RedirectToAction(MVC.Admin.Setting.Feed()).SetSuccessMessage("Settings saved");
+            SetSuccessMessage("Settings saved");
+
+            return RedirectToAction("Feed");
         }
 
-        public virtual ActionResult Cache()
+        public ActionResult Cache()
         {
             return View();
         }
 
-        public virtual ActionResult ClearCache()
+        public ActionResult ClearCache()
         {
             db.UpdateLastDbChange();
-            return RedirectToAction(MVC.Admin.Setting.Cache()).SetSuccessMessage("Cache cleared");
+
+            SetSuccessMessage("Cache cleared");
+
+            return RedirectToAction("Cache");
         }
 
-        public virtual ActionResult Logs()
+        //TODO
+        //public ActionResult Logs()
+        //{
+        //    var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
+        //    DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
+        //    return View(logDirectory);
+        //}
+
+        //public ActionResult LogView(string file)
+        //{
+        //    var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
+        //    DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
+        //    FileInfo fileInfo = logDirectory.GetFiles(file).Single();
+
+        //    using (StreamReader reader = fileInfo.OpenText())
+        //    {
+        //        string content = reader.ReadToEnd();
+        //        return Content("<pre>" + Server.HtmlEncode(content) + "</pre>");
+        //    }
+        //}
+
+        //public ActionResult LogDelete(string file)
+        //{
+        //    var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
+        //    DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
+        //    FileInfo fileInfo = logDirectory.GetFiles(file).Single();
+        //    fileInfo.Delete();
+
+        //    SetSuccessMessage("Log file " + file + " deleted");
+
+        //    return RedirectToAction(MVC.Admin.Setting.Logs());
+        //}
+
+        public void SetSuccessMessage(string str)
         {
-            var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
-            DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
-            return View(logDirectory);
-        }
-
-        public virtual ActionResult LogView(string file)
-        {
-            var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
-            DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
-            FileInfo fileInfo = logDirectory.GetFiles(file).Single();
-
-            using (StreamReader reader = fileInfo.OpenText())
-            {
-                string content = reader.ReadToEnd();
-                return Content("<pre>" + Server.HtmlEncode(content) + "</pre>");
-            }
-        }
-
-        public virtual ActionResult LogDelete(string file)
-        {
-            var targets = LogManager.GetCurrentClassLogger().Factory.Configuration.ConfiguredNamedTargets;
-            DirectoryInfo logDirectory = new FileInfo(((FileTarget)((NLog.Targets.Wrappers.AsyncTargetWrapper)targets[0]).WrappedTarget).FileName.Render(new LogEventInfo())).Directory;
-            FileInfo fileInfo = logDirectory.GetFiles(file).Single();
-            fileInfo.Delete();
-
-            return RedirectToAction(MVC.Admin.Setting.Logs()).SetSuccessMessage("Log file " + file + " deleted");
+            Response.Cookies.Append("NotifyBar", str);
         }
     }
 }

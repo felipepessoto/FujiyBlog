@@ -1,0 +1,50 @@
+﻿
+@functions {
+    private string GenerateQueryString(int page)
+    {
+        return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(Context.Request.QueryString.Value, "page", page.ToString());
+    }
+}
+
+
+<ul class="PostPager">
+    @if (ViewBag.CurrentPage == 1)
+    {
+        <li class="PagerLinkDisabled">@ViewBag.PreviousPageText</li>
+    }
+    else
+    {
+        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.CurrentPage - 1)">@ViewBag.PreviousPageText</a></li>
+    }
+    @if (ViewBag.ShowTwoFirst)
+    {
+        <li class="PagerLink"><a href="?@GenerateQueryString(1)">1</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(2)">2</a></li>
+        <li class="PagerEllipses">...</li>
+    }
+    @foreach (int page in Enumerable.Range(ViewBag.InitialPage, ViewBag.NumbersToShow))
+    {
+        if (page == ViewBag.CurrentPage)
+        {
+            <li class="PagerLinkCurrent">@page</li>
+        }
+        else
+        {
+            <li class="PagerLink"><a href="?@GenerateQueryString(page)">@page</a></li>
+        }
+    }
+    @if (ViewBag.ShowTwoLasts)
+    {
+        <li class="PagerEllipses">...</li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.TotalPages - 1)">@( ViewBag.TotalPages - 1)</a></li>
+        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.TotalPages)">@ViewBag.TotalPages</a></li>
+    }
+    @if (ViewBag.CurrentPage == ViewBag.TotalPages)
+    {
+        <li class="PagerLinkDisabled">@ViewBag.NextPageText</li>
+    }
+    else
+    {
+        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.CurrentPage + 1)">@ViewBag.NextPageText</a></li>
+    }
+</ul>

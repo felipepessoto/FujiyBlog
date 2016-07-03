@@ -1,6 +1,9 @@
 ﻿@{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@Html.ActionLink("Posts", MVC.Admin.Post.Index()) - @Html.ActionLink("Categories", MVC.Admin.Post.Categories()) - @Html.ActionLink("Tags", MVC.Admin.Post.Tags())
+<a asp-area="Admin" asp-controller="Post" asp-action="Index">Posts</a> - 
+<a asp-area="Admin" asp-controller="Post" asp-action="Categories">Categories</a> - 
+<a asp-area="Admin" asp-controller="Post" asp-action="Tags">Tags</a>
+
 @RenderBody()

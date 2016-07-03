@@ -19,7 +19,7 @@ namespace FujiyBlog.Core.EntityFramework
             this.database = database;
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<ApplicationUser> GetAllUsers()
         {
             return database.Users.Where(x => x.Enabled).ToList();
         }

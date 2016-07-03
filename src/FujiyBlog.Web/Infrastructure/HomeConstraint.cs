@@ -1,22 +1,24 @@
-﻿using System;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
+﻿using FujiyBlog.Core;
 using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Linq;
 
 namespace FujiyBlog.Web.Infrastructure
 {
     public class HomeConstraint : IRouteConstraint
     {
-        public bool Match(HttpContextBase httpContext, Route route, string parameterName, RouteValueDictionary values, RouteDirection routeDirection)
+        public bool Match(HttpContext httpContext, IRouter route, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            if (string.Equals(values["controller"] as string, MVC.Post.Name, StringComparison.OrdinalIgnoreCase) && string.Equals(values["action"] as string, MVC.Post.ActionNames.Index, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(values["controller"] as string, "Post", StringComparison.OrdinalIgnoreCase) && string.Equals(values["action"] as string, "Index", StringComparison.OrdinalIgnoreCase))
             {
-                string cacheKey = "FujiyBlog.Web.Infrastructure.HomeConstraint.Match" + " as " + HttpContext.Current.User.Identity.Name;
-                bool match = CacheHelper.FromCacheOrExecute(() => !DependencyResolver.Current.GetService<FujiyBlogDatabase>().Pages.WhereHaveRoles().Any(x => x.IsFrontPage), cacheKey);
+                string cacheKey = "FujiyBlog.Web.Infrastructure.HomeConstraint.Match" + " as " + httpContext.User.Identity.Name;
+                var db = httpContext.RequestServices.GetRequiredService<FujiyBlogDatabase>();
+                bool match = CacheHelper.FromCacheOrExecute(db, () => !db.Pages.WhereHaveRoles(httpContext).Any(x => x.IsFrontPage), cacheKey);
                 return match;
             }
 

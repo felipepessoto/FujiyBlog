@@ -1,33 +1,35 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
-using FujiyBlog.Core.DomainObjects;
+﻿using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
-using FujiyBlog.Web.Models;
-using FujiyBlog.Web.ViewModels;
+using FujiyBlog.Web.ViewModels.SearchViewModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Text.Encodings.Web;
 
 namespace FujiyBlog.Web.Controllers
 {
-    public partial class SearchController : AbstractController
+    public class SearchController : Controller
     {
         private readonly FujiyBlogDatabase db;
+        private readonly SettingRepository settings;
 
-        public SearchController(FujiyBlogDatabase db)
+        public SearchController(FujiyBlogDatabase db, SettingRepository settings)
         {
             this.db = db;
+            this.settings = settings;
         }
 
-        public virtual ActionResult Index(int? page, string terms)
+        public ActionResult Index(int? page, string terms)
         {
-            int skip = (page.GetValueOrDefault(1) - 1) * Settings.SettingRepository.PostsPerPage;
+            int skip = (page.GetValueOrDefault(1) - 1) * settings.PostsPerPage;
             string[] termsSplit = terms.Split(' ');
 
-            var encodedTerm = Server.HtmlEncode(terms);
+            var encodedTerm = HtmlEncoder.Default.Encode(terms);
             ViewBag.Title = "Search for" + " '" + encodedTerm + "'";
 
-            IQueryable<Post> query = from post in db.Posts.WhereHaveRoles().Include(x => x.Tags).Include(x => x.Categories)
+            IQueryable<Post> query = from post in db.Posts.WhereHaveRoles(HttpContext).Include(x => x.PostTags).ThenInclude(x=>x.Tag).Include(x => x.PostCategories).ThenInclude(x=>x.Category)
                                      orderby post.PublicationDate descending 
                                      where termsSplit.Any(x => post.Content.Contains(x)) || termsSplit.Any(x => post.Title.Contains(x)) || termsSplit.Any(x => post.Description.Contains(x))
                                      select post;
@@ -35,8 +37,8 @@ namespace FujiyBlog.Web.Controllers
             SearchResult viewModel = new SearchResult
                                          {
                                              CurrentPage = page.GetValueOrDefault(1),
-                                             Posts = query.Skip(skip).Take(Settings.SettingRepository.PostsPerPage).ToList(),
-                                             TotalPages = (int) Math.Ceiling(query.Count()/(double) Settings.SettingRepository.PostsPerPage),
+                                             Posts = query.Skip(skip).Take(settings.PostsPerPage).ToList(),
+                                             TotalPages = (int) Math.Ceiling(query.Count()/(double) settings.PostsPerPage),
                                          };
 
             return View(viewModel);

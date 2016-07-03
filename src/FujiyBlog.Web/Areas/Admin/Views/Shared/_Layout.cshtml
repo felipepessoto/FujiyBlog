@@ -1,38 +1,67 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>@ViewBag.Title</title>
-        <link href="@Url.Content(Links.Content.Admin.Site_css)" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content(Links.Content.Themes.@base.all_css)" rel="stylesheet" type="text/css" />
-        <script src="@Url.Action(MVC.JavaScript.FujiyBlogBundle())" type="text/javascript"></script>
-        @Scripts.Render("~/bundles/FujiyBlogBundle")
-    </head>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="~/content/admin/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/content/Themes/base/all.css" rel="stylesheet" type="text/css" />
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="~/lib/jquery-ui/jquery-ui.js"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
+        <script src="~/lib/jquery-ui-timepicker-addon/jquery-ui-timepicker-addon.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"
+                asp-fallback-src="~/lib/jquery-validation/dist/jquery.validate.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.6/jquery.validate.unobtrusive.min.js"
+                asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive">
+        </script>
+    </environment>
 
-    <body>
-        @Html.Partial("NotifyBar")
-        <div class="page">
-            <header>
-                <div id="title">
-                    <h1>Blog Admin</h1>
-                </div>
-                <div id="logindisplay">
-                    Welcome @Context.User.Identity.Name | @Html.ActionLink("Go to Blog", MVC.Post.Index())
-                </div>
-                <nav>
-                    <ul id="menu">
-                        <li>@Html.ActionLink(Resources.Labels.Posts, MVC.Admin.Post.Index())</li>
-                        <li>@Html.ActionLink(Resources.Labels.Comments, MVC.Admin.Comment.Index())</li>
-                        <li>@Html.ActionLink(Resources.Labels.Users, MVC.Admin.User.Index())</li>
-                        <li>@Html.ActionLink(Resources.Labels.Settings, MVC.Admin.Setting.Index())</li>
-                        <li>@Html.ActionLink(Resources.Labels.Pages, MVC.Admin.Page.Index())</li>
-                    </ul>
-                </nav>
-            </header>
-            <section id="main">
-                @RenderBody()
-            </section>
-            <footer>
-            </footer>
-        </div>
-    </body>
+    <script src="~/js/admin.js"></script>
+</head>
+
+<body>
+    @Html.Partial("NotifyBar")
+    <div class="page">
+        <header>
+            <div id="title">
+                <h1>Blog Admin</h1>
+            </div>
+            <div id="logindisplay">
+                Welcome @Context.User.Identity.Name | @Html.ActionLink("Go to Blog", "Index", "Post", new { area = "" })
+            </div>
+            <nav>
+                <ul id="menu">
+                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Posts, "Index", "Post", new { area = "Admin" })</li>
+                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Comments, "Index", "Comment", new { area = "Admin" })</li>
+                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Users, "Index", "User", new { area = "Admin" })</li>
+                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Settings, "Index", "Setting", new { area = "Admin" })</li>
+                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Pages, "Index", "Page", new { area = "Admin" })</li>
+                </ul>
+            </nav>
+        </header>
+        <section id="main">
+            @RenderBody()
+        </section>
+        <footer></footer>
+    </div>
+</body>
 </html>

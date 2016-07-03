@@ -5,6 +5,7 @@ using System.Reflection;
 using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using System.ComponentModel;
+using FujiyBlog.Core.Extensions;
 
 namespace FujiyBlog.Core.EntityFramework
 {
@@ -16,7 +17,7 @@ namespace FujiyBlog.Core.EntityFramework
         public SettingRepository(FujiyBlogDatabase database)
         {
             this.database = database;
-            settings = CacheHelper.FromCacheOrExecute(() => database.Settings.ToDictionary(x => x.Id, x => x.Value), "FujiyBlog.Core.EntityFramework.SettingRepository.settings");
+            settings = CacheHelper.FromCacheOrExecute(database, () => database.Settings.ToDictionary(x => x.Id, x => x.Value), "FujiyBlog.Core.EntityFramework.SettingRepository.settings");
         }
 
         public int  MinRequiredPasswordLength
@@ -280,7 +281,8 @@ namespace FujiyBlog.Core.EntityFramework
         private void SaveSetting(SettingNames settingName, string value)
         {
             int settingId = (int) settingName;
-            Setting setting = database.Settings.Find(settingId);
+            
+            Setting setting = database.Settings.Find(database, settingId);
 
             if (setting == null)
             {

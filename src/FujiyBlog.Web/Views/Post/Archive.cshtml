@@ -1,81 +1,89 @@
-﻿@using FujiyBlog.Web.Extensions
+﻿@inject FujiyBlog.Core.DateTimeUtil DateTimeUtil
+@using FujiyBlog.Web.Extensions
 @model FujiyBlog.Web.ViewModels.PostArchive
-           
+
 @{
-    ViewBag.Title = Resources.Labels.Archive;
-    Layout = this.FindLayoutPath("_Layout");
+    ViewBag.Title = FujiyBlog.Web.Resources.Labels.Archive;
+    Layout = "_Layout";
 }
 
 <div id="archive">
     <h1>
-        @Resources.Labels.Archive</h1>
+        @FujiyBlog.Web.Resources.Labels.Archive
+    </h1>
     <ul>
         @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
         {
             <li><a href="#@category.Id">@category.Name</a></li>
         }
-        <li><a href="#Uncategorized">@Resources.Labels.Uncategorized</a></li>
+        <li><a href="#Uncategorized">@FujiyBlog.Web.Resources.Labels.Uncategorized</a></li>
     </ul>
     @foreach (FujiyBlog.Core.DomainObjects.Category category in Model.AllCategories)
     {
         <h2 id="@category.Id">
-            @category.Name (@category.Posts.Count())
+            @category.Name (@category.PostCategories.Count())
         </h2>
-            
+
 
         <table>
             <tr>
                 <th>
-                    @Resources.Labels.Date
+                    @FujiyBlog.Web.Resources.Labels.Date
                 </th>
                 <th>
-                    @Resources.Labels.Title
+                    @FujiyBlog.Web.Resources.Labels.Title
                 </th>
                 <th class="comments">
-                    @Resources.Labels.Comments
+                    @FujiyBlog.Web.Resources.Labels.Comments
                 </th>
             </tr>
-            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Post.Categories.Any(y => y == category)))
+            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.AllPosts.Where(x => x.Post.PostCategories.Any(y => y.Category == category)))
             {
                 <tr>
-                    <td class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToShortDateString()
-                    </td>
-                    <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
-                    </td>
-                    <td class="comments">@postSummary.CommentsTotal
-                    </td>
-                </tr>  
+                    <td class="date">
+                        @DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToString("d")
+                </td>
+                <td class="title">
+                    @Html.ActionLink(postSummary.Post.Title, "Details", "Post", new { postSlug = postSummary.Post.Slug })
+            </td>
+            <td class="comments">
+                @postSummary.CommentsTotal
+        </td>
+    </tr>
             }
         </table>
     }
 
-     <h2 id="Uncategorized">
-            @Resources.Labels.Uncategorized (@Model.UncategorizedPosts.Count())
-        </h2>
-            
+    <h2 id="Uncategorized">
+        @FujiyBlog.Web.Resources.Labels.Uncategorized (@Model.UncategorizedPosts.Count())
+    </h2>
 
-        <table>
-            <tr>
-                <th>
-                    @Resources.Labels.Date
-                </th>
-                <th>
-                    @Resources.Labels.Title
-                </th>
-                <th class="comments">
-                    @Resources.Labels.Comments
-                </th>
-            </tr>
-            @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.UncategorizedPosts)
+
+    <table>
+        <tr>
+            <th>
+                @FujiyBlog.Web.Resources.Labels.Date
+            </th>
+            <th>
+                @FujiyBlog.Web.Resources.Labels.Title
+            </th>
+            <th class="comments">
+                @FujiyBlog.Web.Resources.Labels.Comments
+            </th>
+        </tr>
+        @foreach (FujiyBlog.Core.Dto.PostSummary postSummary in Model.UncategorizedPosts)
             {
-                <tr>
-                    <td class="date">@FujiyBlog.Web.Common.DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToShortDateString()
-                    </td>
-                    <td class="title">@Html.ActionLink(postSummary.Post.Title, MVC.Post.Details(postSummary.Post.Slug))
-                    </td>
-                    <td class="comments">@postSummary.CommentsTotal
-                    </td>
-                </tr>  
-            }
-        </table>
+            <tr>
+                <td class="date">
+                    @DateTimeUtil.ConvertUtcToMyTimeZone(postSummary.Post.PublicationDate).ToString("d")
+            </td>
+            <td class="title">
+                @Html.ActionLink(postSummary.Post.Title, "Details", "Post", new { postSlug = postSummary.Post.Slug })
+        </td>
+        <td class="comments">
+            @postSummary.CommentsTotal
+    </td>
+</tr>
+        }
+    </table>
 </div>

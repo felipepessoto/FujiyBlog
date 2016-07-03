@@ -5,11 +5,11 @@
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageSave
 
 @{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Edit";
     string uploadFolder = "Page" + (Model.Id.HasValue ? Model.Id.ToString() : Guid.NewGuid().ToString());
 }
-<script type="text/javascript" src="@Url.Content(Links.Scripts.tinymce.jquery_tinymce_min_js)"></script>
+<script type="text/javascript" src="~/lib/tinymce/jquery.tinymce.min.js"></script>
 
 <h2>@(Model.Id.HasValue ? "Edit" : "Add") page</h2>
 
@@ -160,15 +160,15 @@
 <script type="text/javascript">
 
     function CheckPublishRoles () {
-        
-        var hasPublishOwn = @(User.IsInRole(Role.PublishOwnPages)?"true":"false");;
-        var hasPublishOtherUsers = @(User.IsInRole(Role.PublishOtherUsersPages)?"true":"false");
+
+        var hasPublishOwn = @(Context.UserHasClaimPermission(PermissionClaims.PublishOwnPages)?"true":"false");;
+        var hasPublishOtherUsers = @(Context.UserHasClaimPermission(PermissionClaims.PublishOtherUsersPages)?"true":"false");
         var userName = '@(User.Identity.Name)';
         var currentPublishedValue = @(Model.Id.HasValue && Model.IsPublished ? "true" : "false");
 
-        var publishedField = $('#@(Html.FieldIdFor(x=> x.IsPublished))');
-        var newAuthor = $('#@(Html.FieldIdFor(x=> x.AuthorId)) :selected').text();
-        
+        var publishedField = $('#@(Html.IdFor(x=> x.IsPublished))');
+        var newAuthor = $('#@(Html.IdFor(x=> x.AuthorId)) :selected').text();
+
         if (!currentPublishedValue) {
             if (!(newAuthor != userName && hasPublishOtherUsers) && !(newAuthor == userName && hasPublishOwn)) {
                 publishedField.attr('disabled', true);
@@ -179,22 +179,20 @@
             }
         }
     }
-    
+
     CheckPublishRoles();
-    
-    $('#@(Html.FieldIdFor(x=> x.AuthorId))').change(CheckPublishRoles);
+
+    $('#@(Html.IdFor(x=> x.AuthorId))').change(CheckPublishRoles);
 
     $('#extract-from-title').click(function() {
-        var callUrl = '@(Url.Action(MVC.Admin.Page.GenerateSlug()))';
-        var postData = JSON.stringify({ text: $('#@Html.FieldIdFor(x=>x.Title)').val() });
+        var callUrl = '@(Url.Action("GenerateSlug", "Page"))';
 
         $.ajax({
                 type: "POST",
-                contentType: 'application/json; charset=utf-8',
                 url: callUrl,
-                data: postData,
+                data: { text: $('#@Html.IdFor(x=>x.Title)').val() },
                 success: function(response) {
-                    $('#@Html.FieldIdFor(x=>x.Slug)').val(response);
+                    $('#@Html.IdFor(x=>x.Slug)').val(response);
                 },
                 error: function() {
                     alert('Error');

@@ -1,6 +1,8 @@
 ﻿@{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
+<a asp-controller="Comment" asp-action="Index">Pending</a>
+-
+<a asp-controller="Comment" asp-action="Approved">Approved</a>
 
-@Html.ActionLink("Pending", MVC.Admin.Comment.Index()) - @Html.ActionLink("Approved", MVC.Admin.Comment.Approved())
 @RenderBody()

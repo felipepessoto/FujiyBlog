@@ -1,0 +1,11 @@
+﻿@using Newtonsoft.Json.Linq
+@model FujiyBlog.Core.DomainObjects.WidgetSetting
+@{
+
+        JObject settings = JObject.Parse(Model.Settings??"{}");
+}
+Title: @Html.TextBox("Title" + Model.Id, settings.Value<string>("Title") ?? "Archive")<br />
+Recent Dates At Top: @Html.CheckBox("RecentDatesAtTop" + Model.Id, settings.Value<bool?>("RecentDatesAtTop").GetValueOrDefault())<br />
+<br />
+<a href="javascript:void(0);" onclick="javascript:fujiyBlog.widget.saveWidgetSettings(@Model.Id, JSON.stringify({ Title: $('#Title@(Model.Id)').val(), RecentDatesAtTop: $('#RecentDatesAtTop@(Model.Id)').is(':checked') }));">
+    Save</a>

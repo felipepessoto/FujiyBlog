@@ -1,6 +1,5 @@
 ﻿@{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-
-@Html.ActionLink("Pages", MVC.Admin.Page.Index())
+<a asp-controller="Page" asp-action="Index">Pages</a>
 @RenderBody()

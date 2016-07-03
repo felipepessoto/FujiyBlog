@@ -1,28 +1,29 @@
-﻿@using FujiyBlog.Core.DomainObjects
-@using FujiyBlog.Web.Common
+﻿@inject FujiyBlog.Core.DateTimeUtil DateTimeUtil
+
+@using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Core.Extensions
 
 @model FujiyBlog.Web.Areas.Admin.ViewModels.AdminPageIndex
 
 @{
-    Layout = MVC.Admin.Page.Views._Layout;
-    ViewBag.Title = Resources.Labels.Pages;
+    Layout = "_Layout";
+    ViewBag.Title = FujiyBlog.Web.Resources.Labels.Pages;
 }
 
-<h2>@Resources.Labels.Pages</h2>
+<h2>@FujiyBlog.Web.Resources.Labels.Pages</h2>
 
-@if (User.IsInRole(Role.CreateNewPages))
+@if (Context.UserHasClaimPermission(PermissionClaims.CreateNewPages))
 {
     <p>
-        @Html.ActionLink("Add new page", MVC.Admin.Page.Edit())
+        @Html.ActionLink("Add new page", "Edit", "Page")
     </p>
 }
 
 <div id="pages-type-filters">
-@Html.ActionLink("All", MVC.Admin.Page.Index()) | @Html.ActionLink("Drafts", MVC.Admin.Page.Index(null, false))| @Html.ActionLink("Published", MVC.Admin.Page.Index(null, true))
+    @Html.ActionLink("All", "Index", "Page") | @Html.ActionLink("Drafts", "Index", "Page", new { published = false })| @Html.ActionLink("Published", "Index", "Page", new { published = true })
 </div>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 
 <table>
     <tr>
@@ -44,45 +45,44 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Pages)
-{
-    <tr id="item-row-@item.Id">
-        <td class="@(item.IsPublished ? "published" : "notpublished")">
-            @Html.DisplayFor(modelItem => item.IsPublished)
-        </td>
-        <td>
-            @Html.ActionLink(item.Title, MVC.Page.Details(item.Slug))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ShowInList)
-        </td>
-        <td>
-            @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
-        </td>
-        <td>
-            @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
-        </td>
-        <td>
-            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPages)) || User.IsInRole(Role.EditOtherUsersPages))
-            {
-                @Html.ActionLink("Edit", MVC.Admin.Page.Edit(item.Id))
-            }
-            @if ((item.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPages)) || (item.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPages)))
-            {
-                <text>|
-                @Ajax.ActionLink("Delete", MVC.Admin.Page.Delete(item.Id), new AjaxOptions { HttpMethod = "POST", Confirm = "Sure?", OnSuccess = "RemoveItemRow(" + item.Id + ");" })
-                </text>
-            }
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Pages)
+    {
+        <tr id="item-row-@item.Id">
+            <td class="@(item.IsPublished ? "published" : "notpublished")">
+                @Html.DisplayFor(modelItem => item.IsPublished)
+            </td>
+            <td>
+                @Html.ActionLink(item.Title, "Details", "Page", new { pageSlug = item.Slug })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShowInList)
+            </td>
+            <td>
+                @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
+            </td>
+            <td>
+                @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
+            </td>
+            <td>
+                @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPages)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPages))
+                {
+                    @Html.ActionLink("Edit", "Edit", "Page", new { id = item.Id })
+                }
+                @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOwnPages)) || (item.Author.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOtherUsersPages)))
+                {
+                    <text>|</text>
+                    <a asp-controller="Page" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")">Delete</a>
+                }
+            </td>
+        </tr>
+    }
 </table>
 
 <script type="text/javascript">
     function RemoveItemRow(itemId) {
         $('#item-row-' + itemId).hide();
     }
-    
+
 </script>
 
-@Pager.Links(Model.CurrentPage, Model.TotalPages, Resources.Labels.NextPage, Resources.Labels.PreviousPage)
+@await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })

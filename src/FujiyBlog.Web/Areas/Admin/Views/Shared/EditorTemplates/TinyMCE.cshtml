@@ -6,9 +6,9 @@
 <script type="text/javascript">
     var tinymceContent = null;
     $().ready(function () {
-        tinymceContent = $('#@Html.FieldIdFor(x => Model)').tinymce({
+        tinymceContent = $('#@Html.IdFor(x => Model)').tinymce({
             // Location of TinyMCE script
-            script_url: "@(Url.Content(Links.Scripts.tinymce.tinymce_js))",
+            script_url: "@(Url.Content("~/lib/tinymce/tinymce.js"))",
 
             // General options
             theme: "modern",
@@ -17,7 +17,7 @@
                  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
                  "save table contextmenu directionality emoticons template paste textcolor"
             ],
-            content_css: "@(Url.Content(Links.Scripts.tinymce.skins.lightgray.content_min_css))",
+            content_css: "@(Url.Content("~/lib/tinymce/skins/lightgray/content.min.css"))",
             toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
             style_formats: [
         { title: 'Bold text', inline: 'b' },

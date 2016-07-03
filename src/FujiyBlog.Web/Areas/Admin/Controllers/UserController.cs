@@ -1,148 +1,207 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
+﻿using FujiyBlog.Core;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
-using FujiyBlog.Web.Extensions;
-using FujiyBlog.Web.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
     public partial class UserController : AdminController
     {
         private readonly FujiyBlogDatabase db;
-        private const string AnonymousGroup = "Anonymous";
-        private const string AdminGroup = "Admin";
+        private const string AnonymousRole = "Anonymous";
+        private const string AdminRole = "Admin";
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public UserController(FujiyBlogDatabase db)
+        public UserController(FujiyBlogDatabase db, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.db = db;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
-        public virtual ViewResult Index()
+        public ViewResult Index()
         {
             return View(db.Users.ToList());
         }
 
-        [AuthorizeRole(Role.CreateNewUsers)]
-        public virtual ActionResult Create()
+        [Authorize(nameof(PermissionClaims.CreateNewUsers))]
+        public ActionResult Create()
         {
             AdminUserCreate viewModel = new AdminUserCreate();
-            viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+            viewModel.AllRoles = db.Roles.Where(x => x.Name != AnonymousRole).ToList();
 
             return View(viewModel);
         }
 
-        [HttpPost, AuthorizeRole(Role.CreateNewUsers)]
-        public virtual ActionResult Create(AdminUserCreate userData)
+        [HttpPost, Authorize(nameof(PermissionClaims.CreateNewUsers))]
+        public async Task<ActionResult> Create(AdminUserCreate userData)
         {
-            if (db.Users.Any(x => x.Username == userData.Username && x.Id != userData.Id))
-            {
-                ModelState.AddModelError("Username", "This Username already exists");
-            }
-
             if (ModelState.IsValid)
             {
-                User newUser = new User
-                                   {
-                                       CreationDate = DateTime.UtcNow,
-                                       Enabled = true
-                                   };
-                userData.FillUser(newUser);
-
-                CheckEditRolesPermission(userData, newUser);
-
-                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Any())
+                var user = new ApplicationUser
                 {
-                    newUser.RoleGroups = db.RoleGroups.Where(x => userData.SelectedRoleGroups.Any(y => x.Id == y)).ToList();
+                    UserName = userData.Username,
+                    Email = userData.Email,
+                    DisplayName = userData.DisplayName,
+                    FullName = userData.FullName,
+                    BirthDate = userData.BirthDate,
+                    Location = userData.Location,
+                    About = userData.About,
+                    Enabled = true,
+                    CreationDate = DateTime.UtcNow,
+                };
+
+                if (CheckEditRolesPermission(userData, user) == false)
+                {
+                    return Forbid();
                 }
-                db.Users.Add(newUser);
-                db.SaveChanges();
-                return RedirectToAction(MVC.Admin.User.Index());  
+
+                var result = await userManager.CreateAsync(user, userData.Password);
+
+                if (result.Succeeded)
+                {
+                    result = await userManager.AddToRolesAsync(user, userData.SelectedRoles);
+
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                AddErrors(result);
             }
 
-            userData.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+            userData.AllRoles = db.Roles.Where(x => x.Name != AnonymousRole).ToList();
             return View(userData);
         }
 
-        public virtual ActionResult Edit(int id)
+        private void AddErrors(IdentityResult result)
         {
-            User user = db.Users.Include(x => x.RoleGroups).Single(x => x.Id == id);
-
-            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
-                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            foreach (var error in result.Errors)
             {
-                Response.SendToUnauthorized();
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        public ActionResult Edit(string id)
+        {
+            var user = db.Users.Include(x => x.Roles).Single(x => x.Id == id);
+
+            if (!(user.UserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) &&
+                    !(user.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
+            {
+                return Forbid();
             }
 
             AdminUserSave viewModel = new AdminUserSave(user);
-            viewModel.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+            viewModel.AllRoles = db.Roles.Where(x => x.Name != AnonymousRole).ToList();
 
             return View(viewModel);
         }
 
         [HttpPost]
-        public virtual ActionResult Edit(AdminUserSave userData)
+        public async Task<ActionResult> Edit(AdminUserSave userData)
         {
-            User user = db.Users.Include(x => x.RoleGroups).Single(x => x.Id == userData.Id);
+            var user = db.Users.Include(x => x.Roles).Single(x => x.Id == userData.Id);
 
-            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
-                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            if (!(user.UserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) &&
+                    !(user.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            CheckEditRolesPermission(userData, user);
+            if (CheckEditRolesPermission(userData, user) == false)
+            {
+                return Forbid();
+            }
 
             if (ModelState.IsValid)
-            {    
-                userData.FillUser(user);
-                user.RoleGroups = null;
-                if (userData.SelectedRoleGroups != null && userData.SelectedRoleGroups.Any())
+            {
+                user.UserName = userData.Username;
+                user.Email = userData.Email;
+                user.DisplayName = userData.DisplayName;
+                user.FullName = userData.FullName;
+                user.BirthDate = userData.BirthDate;
+                user.Location = userData.Location;
+                user.About = userData.About;
+                user.Enabled = true;
+
+                var rolesRemoved = new List<string>();
+                foreach (var removedRole in user.Roles.Where(x => userData.SelectedRoles.Contains(x.RoleId) == false))
                 {
-                    user.RoleGroups = db.RoleGroups.Where(x => userData.SelectedRoleGroups.Any(y => x.Id == y)).ToList();
+                    var role = await roleManager.FindByIdAsync(removedRole.RoleId);
+                    rolesRemoved.Add(role.Name);
                 }
-                db.SaveChanges();
-                return RedirectToAction(MVC.Admin.User.Index());
+
+                var result = await userManager.RemoveFromRolesAsync(user, rolesRemoved);
+
+                if (result.Succeeded)
+                {
+                    var rolesAdded = new List<string>();
+                    foreach (var addedRole in userData.SelectedRoles.Where(x => user.Roles.Any(y => y.RoleId == x) == false))
+                    {
+                        var role = await roleManager.FindByIdAsync(addedRole);
+                        rolesAdded.Add(role.Name);
+                    }
+
+                    result = await userManager.AddToRolesAsync(user, rolesAdded);
+
+                    if (result.Succeeded)
+                    {
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+
+                    AddErrors(result);
+                }
             }
 
-            userData.AllRoleGroups = db.RoleGroups.Where(x => x.Name != AnonymousGroup).ToList();
+            userData.AllRoles = db.Roles.Where(x => x.Name != AnonymousRole).ToList();
 
             return View(userData);
         }
 
-        private void CheckEditRolesPermission(AdminUserSave userData, User user)
+        private bool CheckEditRolesPermission(AdminUserSave userData, ApplicationUser user)
         {
-            var currentRoles = user.RoleGroups.Select(x => x.Id);
-            var newRoles = userData.SelectedRoleGroups ?? Enumerable.Empty<int>();
+            var currentRoles = user.Roles.Select(x => x.RoleId);
+            var newRoles = userData.SelectedRoles ?? Enumerable.Empty<string>();
             //If changed some role
             if (currentRoles.Except(newRoles).Count() != 0 || newRoles.Except(currentRoles).Count() != 0)
             {
-                if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsersRoleGroups)) &&
-                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnRoleGroups)))
+                if (!(user.UserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersRoles)) &&
+                    !(user.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnRoles)))
                 {
-                    Response.SendToUnauthorized();
+                    return false;
                 }
             }
+
+            return true;
         }
 
         [HttpPost]
-        public virtual ActionResult Disable(int id)
+        public ActionResult Disable(string id)
         {
-            if (!db.Users.Any(x => x.Enabled && x.Id != id && x.RoleGroups.Any(y => y.Name == AdminGroup)))
+            if (!db.Users.Any(x => x.Enabled && x.Id != id && x.Roles.Any(y => db.Roles.Any(z => z.Id == y.RoleId && z.Name == AdminRole))))
             {
                 return Json(new { errorMessage = "You can´t disable the unique enabled admin" });
             }
-            User user = db.Users.Find(id);
+            ApplicationUser user = db.Users.SingleOrDefault(x => x.Id == id);
 
-            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
-                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            if (!(user.UserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) &&
+                    !(user.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
             user.Enabled = false;
@@ -151,14 +210,14 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult Enable(int id)
+        public ActionResult Enable(string id)
         {
-            User user = db.Users.Find(id);
+            var user = db.Users.SingleOrDefault(x => x.Id == id);
 
-            if (!(user.Username != User.Identity.Name && User.IsInRole(Role.EditOtherUsers)) &&
-                    !(user.Username == User.Identity.Name && User.IsInRole(Role.EditOwnUser)))
+            if (!(user.UserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) &&
+                    !(user.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
             user.Enabled = true;
@@ -166,93 +225,137 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return Json(true);
         }
 
-        [AuthorizeRole(Role.ViewRoleGroups)]
-        public virtual ViewResult RoleGroups()
+        [Authorize(nameof(PermissionClaims.ViewRoles))]
+        public ViewResult Roles()
         {
-            return View(db.RoleGroups.ToList());
+            return View(db.Roles.ToList());
         }
 
-        public virtual ActionResult EditRoleGroup(int? id)
+        public async Task<ActionResult> EditRole(string id)
         {
-            RoleGroup roleGroup = id.HasValue ? db.RoleGroups.Find(id) : new RoleGroup();
+            IdentityRole role = id != null ? await roleManager.FindByIdAsync(id) : null;
 
-            if (!id.HasValue && !User.IsInRole(Role.CreateRoleGroups))
+            if (id == null && !HttpContext.UserHasClaimPermission(PermissionClaims.CreateRoles))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            if (id.HasValue && !User.IsInRole(Role.EditRoleGroups))
+            if (id != null && !HttpContext.UserHasClaimPermission(PermissionClaims.EditRoles))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            if (string.Equals(roleGroup.Name, AdminGroup, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(role?.Name, AdminRole, StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Cannot edit admin roles");
             }
 
-            return View(roleGroup);
+            var model = new AdminRoleSave();
+            model.Id = id;
+            model.Name = role?.Name;
+            model.Claims = role != null ? (await roleManager.GetClaimsAsync(role)).Where(x=>x.Type == CustomClaimTypes.Permission).Select(x=>x.Value) : Enumerable.Empty<string>();
+
+            return View(model);
         }
 
         [HttpPost]
-        public virtual ActionResult EditRoleGroup(int? id, string name, IEnumerable<string> roles)
+        public async Task<ActionResult> EditRole(string id, string name, IEnumerable<string> claims)
         {
-            RoleGroup roleGroup = id.HasValue ? db.RoleGroups.Find(id) : db.RoleGroups.Add(new RoleGroup());
-            roles = roles ?? Enumerable.Empty<string>();
+            var role = id != null ? await roleManager.FindByIdAsync(id) : db.Roles.Add(new IdentityRole()).Entity;
+            claims = claims ?? Enumerable.Empty<string>();
 
-            if (!id.HasValue && !User.IsInRole(Role.CreateRoleGroups))
+            if (id == null && !HttpContext.UserHasClaimPermission(PermissionClaims.CreateRoles))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            if (id.HasValue && !User.IsInRole(Role.EditRoleGroups))
+            if (id != null && !HttpContext.UserHasClaimPermission(PermissionClaims.EditRoles))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            if (string.Equals(roleGroup.Name, AdminGroup, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(role.Name, AdminRole, StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Cannot edit admin roles");
             }
 
-            if (!string.Equals(roleGroup.Name, AnonymousGroup, StringComparison.OrdinalIgnoreCase))
+            if (!string.Equals(role.Name, AnonymousRole, StringComparison.OrdinalIgnoreCase))
             {
-                roleGroup.Name = name;
-            }
-
-            if (db.RoleGroups.Any(x => x.Name == roleGroup.Name && x.Id != id))
-            {
-                ModelState.AddModelError("Name", "This name already exists");
+                role.Name = name;
             }
 
             if (ModelState.IsValid)
             {
-                roleGroup.Roles = roles.Select(x => (Role) Enum.Parse(typeof (Role), x));
-                db.SaveChanges();
-                return RedirectToAction(MVC.Admin.User.RoleGroups());
+                IdentityResult result = IdentityResult.Success;
+
+                if (id == null)
+                {
+                    result = await roleManager.CreateAsync(role);
+                }
+
+                if (result.Succeeded)
+                {
+                    var currentClaims = await roleManager.GetClaimsAsync(role);
+
+                    foreach (var removedClaim in currentClaims.Where(x => x.Type == CustomClaimTypes.Permission && claims.Contains(x.Value) == false).ToList())
+                    {
+                        result = await roleManager.RemoveClaimAsync(role, removedClaim);
+                        if (result.Succeeded == false)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (result.Succeeded)
+                    {
+
+                        var rolesAdded = new List<string>();
+                        foreach (var addedRole in claims.Except(currentClaims.Where(y => y.Type == CustomClaimTypes.Permission).Select(x => x.Value)).ToList())
+                        {
+                            result = await roleManager.AddClaimAsync(role, new Claim(CustomClaimTypes.Permission, addedRole));
+
+                            if (result.Succeeded == false)
+                            {
+                                break;
+                            }
+                        }
+
+                        if (result.Succeeded)
+                        {
+                            db.SaveChanges();
+                            return RedirectToAction("Roles");
+                        }
+                    }
+                }
+
+                AddErrors(result);
             }
 
-            return View(roleGroup);
+            var model = new AdminRoleSave();
+            model.Id = id;
+            model.Name = role.Name;
+            model.Claims = claims;
+
+            return View(model);
         }
 
         [HttpPost]
-        public virtual ActionResult DeleteRoleGroup(int id)
+        public async Task<ActionResult> DeleteRole(string id)
         {
-            RoleGroup deletedRoleGorup = db.RoleGroups.Single(x => x.Id == id);
+            IdentityRole deletedRoleGorup =await roleManager.FindByIdAsync(id);
 
-            if (string.Equals(deletedRoleGorup.Name, AdminGroup, StringComparison.OrdinalIgnoreCase) || string.Equals(deletedRoleGorup.Name, AnonymousGroup, StringComparison.OrdinalIgnoreCase))
+            if (string.Equals(deletedRoleGorup.Name, AdminRole, StringComparison.OrdinalIgnoreCase) || string.Equals(deletedRoleGorup.Name, AnonymousRole, StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception("Cannot delete " + deletedRoleGorup.Name + " roles");
             }
 
-            if (!User.IsInRole(Role.DeleteRoleGroups))
+            if (!HttpContext.UserHasClaimPermission(PermissionClaims.DeleteRoles))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            db.RoleGroups.Remove(deletedRoleGorup);
-            db.SaveChanges();
-
+            await roleManager.DeleteAsync(deletedRoleGorup);
+            
             return Json(true);
         }
     }

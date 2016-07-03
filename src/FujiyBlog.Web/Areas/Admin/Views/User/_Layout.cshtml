@@ -1,7 +1,7 @@
 ﻿@{
-    Layout = MVC.Admin.Shared.Views._Layout;
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@Html.ActionLink("Users", MVC.Admin.User.Index())
-@Html.ActionLink("Roles", MVC.Admin.User.RoleGroups())
+@Html.ActionLink("Users", "Index", "User")
+@Html.ActionLink("Roles", "Roles", "User")
 @RenderBody()

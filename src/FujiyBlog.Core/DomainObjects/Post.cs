@@ -9,8 +9,8 @@ namespace FujiyBlog.Core.DomainObjects
         public Post()
         {
             Comments = new List<PostComment>();
-            Categories = new List<Category>();
-            Tags = new List<Tag>();
+            PostCategories = new List<PostCategory>();
+            PostTags = new List<PostTag>();
         }
 
         public int Id { get; set; }
@@ -46,12 +46,12 @@ namespace FujiyBlog.Core.DomainObjects
         public bool IsDeleted { get; set; }
 
         [Required]
-        public User Author { get; set; }
+        public ApplicationUser Author { get; set; }
 
         public ICollection<PostComment> Comments { get; set; }
 
-        public ICollection<Tag> Tags { get; set; }
+        public ICollection<PostTag> PostTags { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
+        public ICollection<PostCategory> PostCategories { get; set; }
     }
 }

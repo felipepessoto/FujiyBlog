@@ -1,0 +1,20 @@
+﻿@using FujiyBlog.Core.DomainObjects
+@using FujiyBlog.Core.Extensions
+
+@model WidgetSetting
+
+<div class="widget @(Model.Name.ToLower())" id="widget@(Model.Id)">
+    @if (Context.UserHasClaimPermission(PermissionClaims.ManageWidgets))
+    {
+        <div class="config-widget-links">
+            <a asp-controller="Widget" asp-action="Remove" asp-route-id="@Model.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("(function(){$('#widget" + @Model.Id + "').remove();})()")" class="delete">X</a>
+            @*@if (ViewEngines.Engines.FindView(ViewContext, Model.Name + "Edit", null).View != null)
+            {*@
+            <a asp-controller="Widget" asp-action="Edit" asp-route-id="@Model.Id" data-ajax="true" data-ajax-success="fujiyBlog.widget.showEditWidget" class="edit">@FujiyBlog.Web.Resources.Labels.Edit</a>
+
+            @*}*@
+            <a class="move" href="javascript:void(0);" title="Move widget">@FujiyBlog.Web.Resources.Labels.Move</a>
+        </div>
+    }
+    @RenderBody()
+</div>

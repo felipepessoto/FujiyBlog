@@ -1,8 +1,9 @@
-﻿using System;
+﻿using FujiyBlog.Core.DomainObjects;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using FujiyBlog.Core.DomainObjects;
 
 namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
@@ -10,25 +11,25 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
     {
         public AdminUserSave()
         {
-            SelectedRoleGroups = Enumerable.Empty<int>();
+            SelectedRoles =new List<string>(Enumerable.Empty<string>());
         }
 
-         public AdminUserSave(User user)
+         public AdminUserSave(ApplicationUser user)
          {
              Id = user.Id;
-             Username = user.Username;
+             Username = user.UserName;
              Email = user.Email;
              DisplayName = user.DisplayName;
              FullName = user.FullName;
              BirthDate = user.BirthDate;
              Location = user.Location;
              About = user.About;
-             SelectedRoleGroups = user.RoleGroups.Select(x => x.Id);
+             SelectedRoles = user.Roles.Select(x => x.RoleId).ToList();
          }
 
-        public int Id { get; set; }
+        public string Id { get; set; }
 
-        [Required, StringLength(20), RegularExpression(User.UsernameRegex)]
+        [Required]
         public string Username { get; set; }
 
         [Required, StringLength(255), EmailAddress]
@@ -53,20 +54,9 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [DataType(DataType.MultilineText)]
         public string About { get; set; }
 
-        [Display(Name = "Role Groups")]
-        public IEnumerable<int> SelectedRoleGroups { get; set; }
+        [Display(Name = "Roles")]
+        public List<string> SelectedRoles { get; set; }
 
-        public IEnumerable<RoleGroup> AllRoleGroups { get; set; }
-
-        public void FillUser(User user)
-        {
-            user.Id = Id;
-            user.Email = Email;
-            user.DisplayName = DisplayName;
-            user.FullName = FullName;
-            user.BirthDate = BirthDate;
-            user.Location = Location;
-            user.About = About;
-        }
+        public IEnumerable<IdentityRole> AllRoles { get; set; }
     }
 }

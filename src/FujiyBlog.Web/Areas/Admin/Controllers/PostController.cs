@@ -1,33 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
-using System.Web.Script.Serialization;
+﻿using FujiyBlog.Core;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.Dto;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
-using FujiyBlog.Web.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
-    public partial class PostController : AdminController
+    public class PostController : AdminController
     {
         private readonly FujiyBlogDatabase db;
         private readonly PostRepository postRepository;
         private readonly UserRepository userRepository;
         private const int PageSize = 10;
+        private readonly DateTimeUtil dateTimeUtil;
 
-        public PostController(FujiyBlogDatabase db, PostRepository postRepository, UserRepository userRepository)
+        public PostController(FujiyBlogDatabase db, PostRepository postRepository, UserRepository userRepository, DateTimeUtil dateTimeUtil)
         {
             this.db = db;
             this.postRepository = postRepository;
             this.userRepository = userRepository;
+            this.dateTimeUtil = dateTimeUtil;
         }
 
-        public virtual ViewResult Index(int? page, bool? published)
+        public ViewResult Index(int? page, bool? published)
         {
             IQueryable<Post> posts = db.Posts.Where(x => !x.IsDeleted);
 
@@ -36,21 +39,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 posts = published.Value ? posts.Where(x => x.IsPublished) : posts.Where(x => !x.IsPublished);
             }
 
-            IQueryable<Post> pagePosts = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories)
+            IQueryable<Post> pagePosts = posts.OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.PostTags).ThenInclude(x => x.Tag).Include(x => x.PostCategories).ThenInclude(x => x.Category)
                 .Paging(page.GetValueOrDefault(1), PageSize);
 
             Dictionary<int, int> counts = (from post in pagePosts
-                      select new { post.Id, C = post.Comments.Where(x => !x.IsDeleted).Count() }).ToDictionary(e => e.Id, e => e.C);
+                                           select new { post.Id, C = post.Comments.Where(x => !x.IsDeleted).Count() }).ToDictionary(e => e.Id, e => e.C);
 
             AdminPostIndex model = new AdminPostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
                 RecentPosts = (from post in pagePosts.ToList()
                                select new PostSummary
-                                          {
-                                              Post = post,
-                                              CommentsTotal = counts[post.Id]
-                                          }),
+                               {
+                                   Post = post,
+                                   CommentsTotal = counts[post.Id]
+                               }),
                 TotalPages = (int)Math.Ceiling((double)posts.Count() / PageSize),
             };
 
@@ -59,76 +62,80 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public virtual ActionResult Edit(int? id)
         {
-            if (!id.HasValue && !User.IsInRole(Role.CreateNewPosts))
+            if (!id.HasValue && !HttpContext.UserHasClaimPermission(PermissionClaims.CreateNewPosts))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
-            Post post = id.HasValue ? db.Posts.Include(x => x.Tags).Include(x => x.Categories).Include(x => x.Author).Single(x => x.Id == id)
+            Post post = id.HasValue ? db.Posts.Include(x => x.PostTags).ThenInclude(x => x.Tag).Include(x => x.PostCategories).ThenInclude(x => x.Category).Include(x => x.Author).Single(x => x.Id == id)
                             : new Post
-                                  {
-                                      PublicationDate = DateTime.UtcNow,
-                                      IsCommentEnabled = true,
-                                      IsPublished = true,
-                                      Author = db.Users.Single(x => x.Username == User.Identity.Name),
-                                  };
+                            {
+                                PublicationDate = DateTime.UtcNow,
+                                IsCommentEnabled = true,
+                                IsPublished = true,
+                                Author = db.Users.Single(x => x.UserName == User.Identity.Name),
+                            };
 
-            if (id.HasValue && !User.IsInRole(Role.EditOtherUsersPosts) && !(post.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)))
+            if (id.HasValue && !HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts) && !(post.Author.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnPosts)))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
             return View(CreateAdminPostEdit(post));
         }
 
         [HttpPost]
-        public virtual ActionResult Edit([Bind(Prefix="Post")]AdminPostSave postSave)
+        public virtual ActionResult Edit([Bind(Prefix = "Post")]AdminPostSave postSave)
         {
-            Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.Tags).Include(x => x.Categories).Single(x => x.Id == postSave.Id)
+            Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.PostTags).ThenInclude(x => x.Tag).Include(x => x.PostCategories).ThenInclude(x => x.Category).Single(x => x.Id == postSave.Id)
                                   : db.Posts.Add(new Post
-                                        {
-                                            CreationDate = DateTime.UtcNow,
-                                        });
+                                  {
+                                      CreationDate = DateTime.UtcNow,
+                                      Slug = postSave.Slug,
+                                  }).Entity;
 
-            User newAuthor = userRepository.GetById(postSave.AuthorId.Value); //postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
+            var newAuthor = userRepository.GetById(postSave.AuthorId); //postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
 
-            CheckPostsSaveRoles(postSave, editedPost, newAuthor);
+            if (CheckPostsSaveRoles(postSave, editedPost, newAuthor) == false)
+            {
+                return Forbid();
+            }
 
             editedPost.Author = newAuthor;
             editedPost.LastModificationDate = DateTime.UtcNow;
-            postSave.FillPost(editedPost);
+            postSave.FillPost(editedPost, dateTimeUtil);
 
             if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
             {
                 ModelState.AddModelError("Post.Slug", "This slug already exists");
             }
 
-            editedPost.Tags.Clear();
+            editedPost.PostTags.Clear();
             if (postSave.Tags != null)
             {
-                IEnumerable<string> tags = from tag in postSave.Tags.Split(new[] {','})
+                IEnumerable<string> tags = from tag in postSave.Tags.Split(new[] { ',' })
                                            where !string.IsNullOrWhiteSpace(tag)
                                            select tag.Trim();
 
                 foreach (Tag tag in postRepository.GetOrCreateTags(tags))
                 {
-                    editedPost.Tags.Add(tag);
+                    editedPost.PostTags.Add(new PostTag() { Tag = tag });
                 }
             }
 
-            editedPost.Categories.Clear();
+            editedPost.PostCategories.Clear();
             if (postSave.SelectedCategories != null)
             {
                 foreach (Category category in db.Categories.Where(x => postSave.SelectedCategories.Contains(x.Id)))
                 {
-                    editedPost.Categories.Add(category);
+                    editedPost.PostCategories.Add(new PostCategory() { Category = category });
                 }
             }
             if (ModelState.IsValid)
             {
                 db.SaveChanges();
                 CreatePostRevision(editedPost);
-                return RedirectToAction(MVC.Post.Details(editedPost.Slug));
+                return RedirectToAction("Details", "Post", new { postSlug = editedPost.Slug });
             }
 
             return View(CreateAdminPostEdit(editedPost));
@@ -164,63 +171,64 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         private AdminPostEdit CreateAdminPostEdit(Post post)
         {
-            IQueryable<User> authors = db.Users.Where(x => x.Enabled);
-            if (!User.IsInRole(Role.EditOtherUsersPosts))
+            IQueryable<ApplicationUser> authors = db.Users.Where(x => x.Enabled);
+            if (!HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts))
             {
-                authors = authors.Where(x => x.Username == User.Identity.Name);
+                authors = authors.Where(x => x.UserName == User.Identity.Name);
             }
 
             AdminPostEdit viewModel = new AdminPostEdit();
-            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Username });
+            viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.UserName });
 
-            viewModel.Post = new AdminPostSave(post);
+            viewModel.Post = new AdminPostSave(post, dateTimeUtil);
             viewModel.AllCategories = db.Categories.ToList();
-            viewModel.AllTagsJson = new JavaScriptSerializer().Serialize(db.Tags.Select(x => x.Name));
+            viewModel.AllTagsJson = JsonConvert.SerializeObject(db.Tags.Select(x => x.Name));
             return viewModel;
         }
 
-        private void CheckPostsSaveRoles(AdminPostSave postSave, Post editedPost, User newAuthor)
+        private bool CheckPostsSaveRoles(AdminPostSave postSave, Post editedPost, ApplicationUser newAuthor)
         {
-            if (!postSave.Id.HasValue && !User.IsInRole(Role.CreateNewPosts))
+            if (!postSave.Id.HasValue && !HttpContext.UserHasClaimPermission(PermissionClaims.CreateNewPosts))
             {
-                Response.SendToUnauthorized();
+                return false;
             }
 
-            if (postSave.Id.HasValue && !User.IsInRole(Role.EditOtherUsersPosts) &&
-                !(editedPost.Author.Username == User.Identity.Name && User.IsInRole(Role.EditOwnPosts)))
+            if (postSave.Id.HasValue && !HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts) &&
+                !(editedPost.Author.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.EditOwnPosts)))
             {
-                Response.SendToUnauthorized();
+                return false;
             }
 
-            if (!User.IsInRole(Role.EditOtherUsersPosts) && newAuthor.Username != User.Identity.Name)
+            if (!HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts) && newAuthor.UserName != User.Identity.Name)
             {
-                Response.SendToUnauthorized();
+                return false;
             }
 
             if (postSave.IsPublished && (!postSave.Id.HasValue || !editedPost.IsPublished))
             {
-                string authorUserName = newAuthor.Username;
+                string authorUserName = newAuthor.UserName;
 
-                if (!(authorUserName != User.Identity.Name && User.IsInRole(Role.PublishOtherUsersPosts)) &&
-                    !(authorUserName == User.Identity.Name && User.IsInRole(Role.PublishOwnPosts)))
+                if (!(authorUserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.PublishOtherUsersPosts)) &&
+                    !(authorUserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.PublishOwnPosts)))
                 {
-                    Response.SendToUnauthorized();
+                    return false;
                 }
             }
+            return true;
         }
 
         [HttpPost]
         public virtual ActionResult Delete(int id)
         {
-            Post deletedPost = db.Posts.Include(x=>x.Author).Single(x => x.Id == id);
+            Post deletedPost = db.Posts.Include(x => x.Author).Single(x => x.Id == id);
 
-            if (!(deletedPost.Author.Username == User.Identity.Name && User.IsInRole(Role.DeleteOwnPosts)) && !(deletedPost.Author.Username != User.Identity.Name && User.IsInRole(Role.DeleteOtherUsersPosts)))
+            if (!(deletedPost.Author.UserName == User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.DeleteOwnPosts)) && !(deletedPost.Author.UserName != User.Identity.Name && HttpContext.UserHasClaimPermission(PermissionClaims.DeleteOtherUsersPosts)))
             {
-                Response.SendToUnauthorized();
+                return Forbid();
             }
 
             deletedPost.IsDeleted = true;
-            db.SaveChangesBypassingValidation();
+            db.SaveChanges();
 
             return Json(true);
         }
@@ -228,7 +236,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Categories()
         {
             Dictionary<Category, int> categoriesPostCount = (from category in db.Categories
-                                                             select new { Category = category, PostCount = category.Posts.Where(x => !x.IsDeleted).Count() }).ToDictionary(e => e.Category, e => e.PostCount);
+                                                             select new { Category = category, PostCount = category.PostCategories.Where(x => !x.Post.IsDeleted).Count() }).ToDictionary(e => e.Category, e => e.PostCount);
 
             AdminCategoriesList adminCategoriesList = new AdminCategoriesList { CategoriesPostCount = categoriesPostCount };
             return View(adminCategoriesList);
@@ -239,7 +247,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             if (db.Categories.Any(x => x.Id != id && x.Name == name))
             {
-                return Json(new {errorMessage = "The category already exist"});
+                return Json(new { errorMessage = "The category already exist" });
             }
 
             Category category = db.Categories.Single(x => x.Id == id);
@@ -250,7 +258,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult AddCategory([Bind(Include = "Name", Prefix = "NewCategory")]Category newCategory)
+        public ActionResult AddCategory([Bind("Name", Prefix = "NewCategory")]Category newCategory)
         {
             if (db.Categories.Any(x => x.Name == newCategory.Name))
             {
@@ -263,7 +271,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public virtual ActionResult DeleteCategory(int id)
+        public ActionResult DeleteCategory(int id)
         {
             Category category = db.Categories.Single(x => x.Id == id);
             db.Categories.Remove(category);
@@ -271,12 +279,12 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             return Json(true);
         }
 
-        public virtual ActionResult Tags()
+        public ActionResult Tags()
         {
             Dictionary<Tag, int> tagsPostCount = (from tag in db.Tags
-                                                             select new { Tag = tag, PostCount = tag.Posts.Count() }).ToDictionary(e => e.Tag, e => e.PostCount);
+                                                  select new { Tag = tag, PostCount = tag.PostTags.Count() }).ToDictionary(e => e.Tag, e => e.PostCount);
 
-            AdminTagsList tagsList = new AdminTagsList {TagsPostCount = tagsPostCount};
+            AdminTagsList tagsList = new AdminTagsList { TagsPostCount = tagsPostCount };
             return View(tagsList);
         }
 

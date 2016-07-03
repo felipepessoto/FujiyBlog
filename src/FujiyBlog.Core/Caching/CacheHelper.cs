@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using FujiyBlog.Core.EntityFramework;
+using Microsoft.Extensions.Caching.Memory;
+using System;
 using System.Linq.Expressions;
-using System.Runtime.Caching;
-using System.Web.Mvc;
-using FujiyBlog.Core.EntityFramework;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace FujiyBlog.Core.Caching
 {
     public static class CacheHelper
     {
         private static string lastDatabaseChange;
-        private static readonly ObjectCache DefaultCache = MemoryCache.Default;
+        private static IMemoryCache DefaultCache = new MemoryCache(new MemoryCacheOptions());
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "MethodCallExpression"), System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1006:DoNotNestGenericTypesInMemberSignatures", Justification = "Não há outra técnica para isto. E não aumenta a complexidade já que a expression é um syntactic sugar, o cliente apenas escreve um lambda")]
-        public static TResult FromCacheOrExecute<TResult>(Expression<Func<TResult>> func, string key = null, CacheItemPolicy cacheItemPolicy = null, bool condition = true)
+        public static TResult FromCacheOrExecute<TResult>(FujiyBlogDatabase db, Expression<Func<TResult>> func, string key = null, MemoryCacheEntryOptions cacheItemPolicy = null, bool condition = true)
         {
-            string lastDatabaseChangeAtDb = DependencyResolver.Current.GetService<FujiyBlogDatabase>().LastDatabaseChange;
+            string lastDatabaseChangeAtDb = db.LastDatabaseChange;
 
             if (lastDatabaseChangeAtDb != lastDatabaseChange)
             {
@@ -43,7 +42,7 @@ namespace FujiyBlog.Core.Caching
                 key = CacheKeyGenerator.GenerateKey(method);
             }
 
-            object returnObject = DefaultCache[key];
+            object returnObject = DefaultCache.Get(key);
 
             if (!(returnObject is TResult))
             {
@@ -59,10 +58,9 @@ namespace FujiyBlog.Core.Caching
 
         public static void ClearCache()
         {
-            foreach (KeyValuePair<string, object> a in DefaultCache)
-            {
-                DefaultCache.Remove(a.Key);
-            }
+            var oldCache = DefaultCache;
+            DefaultCache = new MemoryCache(new MemoryCacheOptions());
+            oldCache.Dispose();
         }
     }
 }

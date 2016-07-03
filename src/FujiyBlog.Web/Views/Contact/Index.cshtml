@@ -3,19 +3,22 @@
 @using FujiyBlog.Web.Models
 @using FujiyBlog.Core.DomainObjects
 @using FujiyBlog.Core.Extensions
+
+@inject  FujiyBlog.Core.EntityFramework.SettingRepository settings
+
 @model ContactForm
 @{
-    ViewBag.Title = Resources.Labels.Contact;
-    Layout = this.FindLayoutPath("_Layout");
+    ViewBag.Title = FujiyBlog.Web.Resources.Labels.Contact;
+    Layout = "_Layout";
 }
 
-@using (Html.BeginForm(MVC.Contact.Index()))
+@using (Html.BeginForm())
 {
     <div id="contact">
         <div>
-            <h1>@Resources.Labels.Contact</h1>
+            <h1>@FujiyBlog.Web.Resources.Labels.Contact</h1>
 
-            <div><p>@Resources.Labels.SendYourMessage</p></div>
+            <div><p>@FujiyBlog.Web.Resources.Labels.SendYourMessage</p></div>
 
             @Html.LabelFor(x => x.Name)
             @Html.EditorFor(x => x.Name)
@@ -33,13 +36,13 @@
             @Html.EditorFor(x => x.Body)
             @Html.ValidationMessageFor(x => x.Body)
 
-            @if (Settings.SettingRepository.ReCaptchaEnabled && !User.IsInRole(Role.ModerateComments))
+            @if (settings.ReCaptchaEnabled && !Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
             {
                 <script src='https://www.google.com/recaptcha/api.js'></script>
-                <div class="g-recaptcha" data-sitekey="@Settings.SettingRepository.ReCaptchaPublicKey"></div>
+                <div class="g-recaptcha" data-sitekey="@settings.ReCaptchaPublicKey"></div>
             }
 
-            <input type="submit" value="@Resources.Labels.Send" />
+            <input type="submit" value="@FujiyBlog.Web.Resources.Labels.Send" />
         </div>
     </div>
 }

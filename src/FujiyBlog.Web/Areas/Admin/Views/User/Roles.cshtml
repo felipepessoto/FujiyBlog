@@ -1,0 +1,56 @@
+﻿@using FujiyBlog.Core.Extensions
+
+@model IEnumerable<IdentityRole<string>>
+
+@{
+    Layout = "_Layout";
+    ViewBag.Title = "Role";
+}
+
+<h2>Role</h2>
+
+@if (Context.UserHasClaimPermission(PermissionClaims.CreateRoles))
+{
+    <p>
+        @Html.ActionLink("Create Role", "EditRole")
+    </p>
+}
+<table>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr id="item-row-@item.Id">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @if (!string.Equals(item.Name, "Admin", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (Context.UserHasClaimPermission(PermissionClaims.EditRoles))
+                    {
+                        @Html.ActionLink("Edit", "EditRole", new { id = item.Id })
+                    }
+                    if (Context.UserHasClaimPermission(PermissionClaims.DeleteRoles) && item.Name != "Anonymous")
+                    {
+                        <text>|</text>
+                        <a asp-action="DeleteRole" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")">Delete</a>
+
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+
+<script type="text/javascript">
+    function RemoveItemRow(itemId) {
+        $('#item-row-' + itemId).hide();
+    }
+
+</script>

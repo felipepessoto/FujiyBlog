@@ -34,7 +34,7 @@ namespace FujiyBlog.Core.EntityFramework
             database.Tags.Add(tag);
         }
 
-        public void AddUser(User user)
+        public void AddUser(ApplicationUser user)
         {
             database.Users.Add(user);
         }
@@ -49,7 +49,7 @@ namespace FujiyBlog.Core.EntityFramework
             return database.Tags.ToList();
         }
 
-        public List<User> GetAllUsers()
+        public List<ApplicationUser> GetAllUsers()
         {
             return database.Users.ToList();
         }
@@ -64,9 +64,9 @@ namespace FujiyBlog.Core.EntityFramework
             return database.Tags.SingleOrDefault(x => x.Name == tagName);
         }
 
-        public User GetUser(string userName)
+        public ApplicationUser GetUser(string userName)
         {
-            return database.Users.SingleOrDefault(x => x.Username == userName);
+            return database.Users.SingleOrDefault(x => x.UserName == userName);
         }
 
         public Post GetPost(string slug)

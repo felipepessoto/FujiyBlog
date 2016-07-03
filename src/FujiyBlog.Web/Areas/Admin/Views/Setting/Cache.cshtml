@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Cache Settings";
-    Layout = MVC.Admin.Setting.Views._Layout;
+    Layout = "_Layout";
 }
 <h2>
     Cache Settings</h2>
@@ -10,7 +10,7 @@
     <fieldset>
         <legend>Cache</legend>
         <div class="editor-field">
-            @Html.ActionLink("Clear Cache", MVC.Admin.Setting.ClearCache())
+            <a asp-area="Admin" asp-controller="Setting" asp-action="ClearCache">Clear Cache</a>
         </div>
     </fieldset>
 }
