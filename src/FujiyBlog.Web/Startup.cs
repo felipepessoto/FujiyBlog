@@ -99,7 +99,7 @@ namespace FujiyBlog.Web
             // Add Application Insights monitoring to the request pipeline as a very first middleware.
             app.UseApplicationInsightsRequestTelemetry();
 
-            if (env.IsDevelopment())
+            if (false && env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -107,7 +107,7 @@ namespace FujiyBlog.Web
             }
             else
             {
-                app.UseExceptionHandler("/Post/Error");
+                app.UseExceptionHandler("/Error");
             }
 
             // Add Application Insights exceptions handling to the request pipeline.
@@ -121,6 +121,7 @@ namespace FujiyBlog.Web
 
             app.UseMvc(routes =>
             {
+                routes.MapRoute("Error", "Error", new { controller = "Post", action = "Error" });
                 routes.MapRoute("PostDetailId", "postid/{Id}", new { controller = "Post", action = "DetailsById" });
                 routes.MapRoute("PostDetail", "post/{*PostSlug}", new { controller = "Post", action = "Details" });
                 routes.MapRoute("PageById", "pageid/{Id}", new { controller = "Page", action = "DetailsById" });
