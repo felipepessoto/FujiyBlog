@@ -99,7 +99,7 @@ namespace FujiyBlog.Web
             // Add Application Insights monitoring to the request pipeline as a very first middleware.
             app.UseApplicationInsightsRequestTelemetry();
 
-            if (false && env.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
