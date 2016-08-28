@@ -110,27 +110,35 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 ModelState.AddModelError("Post.Slug", "This slug already exists");
             }
 
-            editedPost.PostTags.Clear();
-            if (postSave.Tags != null)
-            {
-                IEnumerable<string> tags = from tag in postSave.Tags.Split(new[] { ',' })
-                                           where !string.IsNullOrWhiteSpace(tag)
-                                           select tag.Trim();
+            IEnumerable<string> tags = from tag in (postSave.Tags ?? string.Empty).Split(new[] { ',' })
+                                       where !string.IsNullOrWhiteSpace(tag)
+                                       select tag.Trim();
 
-                foreach (Tag tag in postRepository.GetOrCreateTags(tags))
-                {
-                    editedPost.PostTags.Add(new PostTag() { Tag = tag });
-                }
+            var existingTags = editedPost.PostTags.Select(x => x.Tag.Name).ToList();
+
+            foreach (var removedTag in editedPost.PostTags.Where(x => tags.Contains(x.Tag.Name, StringComparer.OrdinalIgnoreCase) == false).ToList())
+            {
+                editedPost.PostTags.Remove(removedTag);
             }
 
-            editedPost.PostCategories.Clear();
-            if (postSave.SelectedCategories != null)
+            foreach (var item in postRepository.GetOrCreateTags(tags.Where(x => existingTags.Contains(x, StringComparer.OrdinalIgnoreCase) == false)))
             {
-                foreach (Category category in db.Categories.Where(x => postSave.SelectedCategories.Contains(x.Id)))
-                {
-                    editedPost.PostCategories.Add(new PostCategory() { Category = category });
-                }
+                editedPost.PostTags.Add(new PostTag() { Tag = item });
             }
+
+            postSave.SelectedCategories = postSave.SelectedCategories ?? Enumerable.Empty<int>();
+            var categoriesToAdd = postSave.SelectedCategories.Except(editedPost.PostCategories.Select(x => x.CategoryId));
+
+            foreach (var removedCategory in editedPost.PostCategories.Where(x => postSave.SelectedCategories.Contains(x.CategoryId) == false).ToList())
+            {
+                editedPost.PostCategories.Remove(removedCategory);
+            }
+
+            foreach (Category category in db.Categories.Where(x => categoriesToAdd.Contains(x.Id)))
+            {
+                editedPost.PostCategories.Add(new PostCategory() { Category = category });
+            }
+
             if (ModelState.IsValid)
             {
                 db.SaveChanges();
