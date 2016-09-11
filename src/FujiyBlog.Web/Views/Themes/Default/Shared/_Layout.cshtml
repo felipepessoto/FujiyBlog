@@ -31,16 +31,30 @@
 
 }
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" />
-    <link rel="stylesheet" href="~/Content/Themes/base/all.css" />
-    @*<link rel="stylesheet" href="~/Content/openid/openid.css" />*@
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        @*<link rel="stylesheet" href="~/css/site.css" />*@
+        <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        @*<link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />*@
+        <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" asp-append-version="true" />
+    </environment>
+
+    <link href="~/lib/jquery-ui/themes/base/all.css" rel="stylesheet" type="text/css" />
 
     <link rel="canonical" href="@CanonicalUrl()" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>@ViewBag.Title</title>
+
     <meta name="title" content="@ViewBag.Title" />
     <meta name="keywords" content="@ViewBag.Keywords" />
     <meta name="description" content="@ViewBag.Description" />
@@ -101,51 +115,61 @@
 </head>
 
 <body>
-    <div>
-        <div id="header-wrapper">
-            <div id="header-title">
-                <h1><a href="@Url.Content("~/")">@settings.BlogName</a></h1>
-                <p>@settings.BlogDescription</p>
-            </div>
-            <div id="menu">
-                <ul>
-
-                    <li class="@(Url.Action("Index", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " current_page_item" : "")"><a href="@Url.Content("~/")">Home</a></li>
-                    <li class="@(Url.Action("Archive", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Archive, "Archive", "Post")</li>
-                    <li class="@(Url.Action("Contact", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " current_page_item" : "")">@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Contact, "Index", "Contact")</li>
-                    <li><a href="@FeedsUrl()">Feed</a></li>
-                    <li>
-                            @if (SignInManager.IsSignedIn(User))
-                        {
-                            <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" style="display:inline">
+    <div class="container-fluid">
+        <header class="blog-header row">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <h1><a href="@Url.Content("~/")">@settings.BlogName</a></h1>
+                        <p>@settings.BlogDescription</p>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="@(Url.Action("Index", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a href="@Url.Content("~/")">Home</a></li>
+                            <li class="@(Url.Action("Archive", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")">@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Archive, "Archive", "Post")</li>
+                            <li class="@(Url.Action("Contact", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")">@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Contact, "Index", "Contact")</li>
+                            <li><a href="@FeedsUrl()">Feed</a></li>
+                            <li>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" style="display:inline">
                                         <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit(); return false;">Log off</a>
-                            </form>
-                        }
-                        else
-                        {
-                           <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
-                        }
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div id="page">
-            <div id="content">
-                @RenderBody()
-                <div style="clear: both;">&nbsp;</div>
-            </div>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                                }
+                            </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </nav>
+        </header>
 
-            <div id="sidebar">
+        <div class="row">
+            <div class="col-sm-9">
+                <div id="content">
+                    @RenderBody()
+                    <div style="clear: both;">&nbsp;</div>
+                </div>
+            </div>
+            <div class="col-sm-3">
                 <ul id="sidebar-wrapper">
                     @await Component.InvokeAsync("Widget", new { zoneName = "Zone1" })
                 </ul>
             </div>
-            <div style="clear: both;">&nbsp;</div>
         </div>
-    </div>
+        <div id="footer">
+            <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.5</p>
+        </div>
 
-    <div id="footer">
-        <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.5</p>
     </div>
 
     <script type="text/javascript">
