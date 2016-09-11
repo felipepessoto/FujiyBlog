@@ -41,7 +41,7 @@
 
 }
 
-<div class="post" id="post@(Model.Post.Id)">
+<article class="post" id="post-@(Model.Post.Id)">
     <h2 class="title">
         @Html.ActionLink(Model.Post.Title, "Details", "Post", new { postSlug = Model.Post.Slug })
     </h2>
@@ -109,4 +109,4 @@
             </div>
         </div>
     </div>
-</div>
+</article>

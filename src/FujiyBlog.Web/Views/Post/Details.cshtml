@@ -43,16 +43,18 @@
     }
 </div>
 @{Html.RenderPartial("Post", Model);}
+
+<hr />
+
 <div id="commentlist">
-    @if (Model.Post.Comments.Count > 0)
+    <div id="comment-title" class="comment-title">
+        @FujiyBlog.Web.Resources.Labels.Comments (@Model.Post.Comments.Count)
+    </div>
+
+    @if (Context.UserHasClaimPermission(PermissionClaims.CreateComments) && Model.Post.IsCommentEnabled && settings.EnableComments && (!settings.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(settings.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
     {
-        <h1 class="comment-title">
-            @FujiyBlog.Web.Resources.Labels.Comments
-        </h1>
+        Html.RenderPartial("../Comment/DoComment", new PostComment { Post = Model.Post });
     }
+
     @{Html.RenderPartial("../Comment/Comments", Model.Post.Comments.Where(x => x.ParentComment == null));}
 </div>
-@if (Context.UserHasClaimPermission(PermissionClaims.CreateComments) && Model.Post.IsCommentEnabled && settings.EnableComments && (!settings.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(settings.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
-{
-    Html.RenderPartial("../Comment/DoComment", new PostComment { Post = Model.Post });
-}

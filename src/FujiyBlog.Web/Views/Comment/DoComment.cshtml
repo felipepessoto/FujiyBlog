@@ -8,49 +8,59 @@
         <div class="commentForm">
             @Html.Hidden("ParentCommentId", Model.ParentComment != null ? Model.ParentComment.Id.ToString() : string.Empty)
             <p class="addcomment">
-                @FujiyBlog.Web.Resources.Labels.AddComment
+                @*@FujiyBlog.Web.Resources.Labels.AddComment*@
             </p><div style="display:none" id="cancel-replying"><a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">@FujiyBlog.Web.Resources.Labels.CancelReply</a></div>
+
+            <div>
+                @Html.TextAreaFor(x => x.Comment, 4, 45, new { @class = "form-control" })
+                @Html.ValidationMessageFor(x => x.Comment)
+            </div>
+
             @if (User.Identity.IsAuthenticated == false)
             {
                 <div id="comment-user-data">
 
-                    <div style="display: none;" id="openid_choice">
-                        <p>Please select your account provider and <a href="javascript:void(0);" id="open-openid-login">click here to login with your OpenID</a>:</p>
-                        <div id="openid_btns"></div>
+                    @*<div style="display: none;" id="openid_choice">
+                            <p>Please select your account provider and <a href="javascript:void(0);" id="open-openid-login">click here to login with your OpenID</a>:</p>
+                            <div id="openid_btns"></div>
+                        </div>
+                        <div id="openid_input_area">
+                        </div>
+                        <input id="openid_identifier" name="openid_identifier" type="hidden" />
+
+                        <div><p><strong>Or enter your details below</strong></p></div>*@
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.AuthorName)
+                        @Html.TextBoxFor(x => x.AuthorName, new { data_val = "true", data_val_required = "The Name field is required.", @class = "form-control" })
+                        @Html.ValidationMessageFor(x => x.AuthorName)
                     </div>
-                    <div id="openid_input_area">
+
+
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.AuthorEmail)
+                        <input asp-for="AuthorEmail" class="form-control" />
+                        @Html.ValidationMessageFor(x => x.AuthorEmail)
                     </div>
-                    <input id="openid_identifier" name="openid_identifier" type="hidden" />
 
-                    <div><p><strong>Or enter your details below</strong></p></div>
-
-                    @Html.LabelFor(x => x.AuthorName)
-                    @Html.TextBoxFor(x => x.AuthorName, new { data_val = "true", data_val_required = "The Name field is required." })
-                    @Html.ValidationMessageFor(x => x.AuthorName)
-
-                    @Html.LabelFor(x => x.AuthorEmail)
-                    @Html.EditorFor(x => x.AuthorEmail)
-                    @Html.ValidationMessageFor(x => x.AuthorEmail)
-
-                    @Html.LabelFor(x => x.AuthorWebsite)
-                    @Html.EditorFor(x => x.AuthorWebsite)
-                    @Html.ValidationMessageFor(x => x.AuthorWebsite)
+                    <div class="form-group">
+                        @Html.LabelFor(x => x.AuthorWebsite)
+                        <input asp-for="AuthorWebsite" class="form-control" />
+                        @Html.ValidationMessageFor(x => x.AuthorWebsite)
+                    </div>
                 </div>
 
                 <div id="logout-social-id" style="display: none;">
                     <a asp-controller="Social" asp-action="Logout" data-ajax-success="fujiyBlog.socialId.callbackLogout">Logout</a>
                 </div>
             }
-            <div>
-                @Html.TextAreaFor(x => x.Comment)
-                @Html.ValidationMessageFor(x => x.Comment)
-            </div>
+
             @if (settings.ReCaptchaEnabled && !Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
             {
                 <script src='https://www.google.com/recaptcha/api.js'></script>
                 <div class="g-recaptcha" data-sitekey="@settings.ReCaptchaPublicKey"></div>
             }
-            <input type="submit" value="@FujiyBlog.Web.Resources.Labels.SaveComment" /><div id="comment-sucess" style="display: none;"><strong>@FujiyBlog.Web.Resources.Labels.CommentSent</strong></div>
+            <input type="submit" value="@FujiyBlog.Web.Resources.Labels.PostComment" /><div id="comment-sucess" style="display: none;"><strong>@FujiyBlog.Web.Resources.Labels.CommentSent</strong></div>
         </div>
     
 </form>

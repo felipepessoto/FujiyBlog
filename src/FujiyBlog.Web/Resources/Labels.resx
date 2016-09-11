@@ -186,8 +186,8 @@
   <data name="Reply" xml:space="preserve">
     <value>Reply</value>
   </data>
-  <data name="SaveComment" xml:space="preserve">
-    <value>Save comment</value>
+  <data name="PostComment" xml:space="preserve">
+    <value>Post Comment</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>

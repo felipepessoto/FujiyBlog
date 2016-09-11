@@ -111,7 +111,7 @@
 
             $('#ParentCommentId').val('');
             $('#cancel-replying').hide();
-            $('#add-comment-form').insertAfter($('#commentlist'));
+            $('#add-comment-form').insertAfter($('#comment-title'));
         },
         resetRepliesPaddingLeft: function () {
             $('.comment-replies').animate({ 'padding-left': fujiyBlog.comments.originalRepliesPaddingLeft }, 'fast', 'linear');

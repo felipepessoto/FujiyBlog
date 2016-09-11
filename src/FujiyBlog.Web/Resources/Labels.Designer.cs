@@ -240,6 +240,15 @@ namespace FujiyBlog.Web.Resources {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to Post Comment.
+        /// </summary>
+        public static string PostComment {
+            get {
+                return ResourceManager.GetString("PostComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to Posts.
         /// </summary>
         public static string Posts {
@@ -281,15 +290,6 @@ namespace FujiyBlog.Web.Resources {
         public static string Reply {
             get {
                 return ResourceManager.GetString("Reply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///    Looks up a localized string similar to Save comment.
-        /// </summary>
-        public static string SaveComment {
-            get {
-                return ResourceManager.GetString("SaveComment", resourceCulture);
             }
         }
         
