@@ -15,3 +15,15 @@
     color: inherit;
     line-height: 50px;
 }
+
+.blog-footer {
+    padding: 40px 0;
+    margin-top: 20px;
+    color: #FFF;
+    text-align: center;
+    background-color: #222;
+}
+
+.blog-footer a {
+    color: inherit;
+}
