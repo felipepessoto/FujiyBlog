@@ -53,3 +53,43 @@ a:focus {
     float: left;
     margin-right: 20px;
 }
+
+#sidebar ul {
+    padding: 0;
+    list-style: none;
+}
+
+/* Tag Cloud */
+#sidebar .tagcloud li {
+    display: inline;
+    border-bottom: 0px;
+    line-height: normal;
+    margin-left: 0px;
+    list-style-type: none;
+}
+
+#sidebar .tagcloud li a
+{
+    padding-left: 0px;
+}
+
+#sidebar .tagcloud a.biggest
+{
+    font-size:19px
+}                    
+                    
+#sidebar .tagcloud a.big {
+    font-size:17px
+}
+
+#sidebar .tagcloud a.medium {
+    font-size:14px
+}
+
+#sidebar .tagcloud a.small {
+    font-size:12px
+}
+
+#sidebar .tagcloud a.smallest {
+    font-size:10px
+}
