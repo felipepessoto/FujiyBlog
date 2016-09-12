@@ -6,6 +6,13 @@
 
 @functions {
 
+    private static string GetString(Microsoft.AspNetCore.Html.IHtmlContent content)
+    {
+        var writer = new System.IO.StringWriter();
+        content.WriteTo(writer, System.Text.Encodings.Web.HtmlEncoder.Default);
+        return writer.ToString();
+    }
+
     private string ShowPostContent(string content)
     {
         content = content ?? string.Empty;
@@ -24,7 +31,7 @@
             if (moreIndex >= 0)
             {
                 content = content.Substring(0, content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase));
-                return CloseOpenedTags(content) + " " + Html.ActionLink(FujiyBlog.Web.Resources.Labels.ReadMore, "Details", "Post", null, null, "continue", new { postSlug = Model.Post.Slug }, null);
+                return CloseOpenedTags(content) + " " + GetString(Html.ActionLink(FujiyBlog.Web.Resources.Labels.ReadMore, "Details", "Post", null, null, "continue", new { postSlug = Model.Post.Slug }, null));
             }
         }
         return CloseOpenedTags(content);
