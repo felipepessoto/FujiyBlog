@@ -1,8 +1,33 @@
 ﻿
 @functions {
+
+    private static Uri ToUri(Microsoft.AspNetCore.Http.HttpRequest request)
+    {
+        var hostComponents = request.Host.ToUriComponent().Split(':');
+
+        var builder = new UriBuilder
+        {
+            Scheme = request.Scheme,
+            Host = hostComponents[0],
+            Path = request.Path,
+            //Query = request.QueryString.ToUriComponent()
+        };
+
+        if (hostComponents.Length == 2)
+        {
+            builder.Port = Convert.ToInt32(hostComponents[1]);
+        }
+
+        return builder.Uri;
+    }
+
     private string GenerateQueryString(int page)
     {
-        return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(Context.Request.QueryString.Value, "page", page.ToString());
+        var values = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(Context.Request.QueryString.Value);
+        values["page"] = page.ToString();
+
+
+        return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(ToUri(Context.Request).ToString(), values.ToDictionary(x=>x.Key, x=>x.Value.First()));
     }
 }
 
@@ -14,12 +39,12 @@
     }
     else
     {
-        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.CurrentPage - 1)">@ViewBag.PreviousPageText</a></li>
+        <li class="PagerLink"><a href="@GenerateQueryString(ViewBag.CurrentPage - 1)">@ViewBag.PreviousPageText</a></li>
     }
     @if (ViewBag.ShowTwoFirst)
     {
-        <li class="PagerLink"><a href="?@GenerateQueryString(1)">1</a></li>
-        <li class="PagerLink"><a href="?@GenerateQueryString(2)">2</a></li>
+        <li class="PagerLink"><a href="@GenerateQueryString(1)">1</a></li>
+        <li class="PagerLink"><a href="@GenerateQueryString(2)">2</a></li>
         <li class="PagerEllipses">...</li>
     }
     @foreach (int page in Enumerable.Range(ViewBag.InitialPage, ViewBag.NumbersToShow))
@@ -30,14 +55,14 @@
         }
         else
         {
-            <li class="PagerLink"><a href="?@GenerateQueryString(page)">@page</a></li>
+            <li class="PagerLink"><a href="@GenerateQueryString(page)">@page</a></li>
         }
     }
     @if (ViewBag.ShowTwoLasts)
     {
         <li class="PagerEllipses">...</li>
-        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.TotalPages - 1)">@( ViewBag.TotalPages - 1)</a></li>
-        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.TotalPages)">@ViewBag.TotalPages</a></li>
+        <li class="PagerLink"><a href="@GenerateQueryString(ViewBag.TotalPages - 1)">@( ViewBag.TotalPages - 1)</a></li>
+        <li class="PagerLink"><a href="@GenerateQueryString(ViewBag.TotalPages)">@ViewBag.TotalPages</a></li>
     }
     @if (ViewBag.CurrentPage == ViewBag.TotalPages)
     {
@@ -45,6 +70,6 @@
     }
     else
     {
-        <li class="PagerLink"><a href="?@GenerateQueryString(ViewBag.CurrentPage + 1)">@ViewBag.NextPageText</a></li>
+        <li class="PagerLink"><a href="@GenerateQueryString(ViewBag.CurrentPage + 1)">@ViewBag.NextPageText</a></li>
     }
 </ul>
