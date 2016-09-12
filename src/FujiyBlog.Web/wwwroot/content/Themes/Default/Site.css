@@ -44,3 +44,12 @@ a:focus {
 .comment-title {
     font-size: 18px;
 }
+
+.commentForm {
+    margin-bottom: 50px;
+}
+
+.gravatar {
+    float: left;
+    margin-right: 20px;
+}

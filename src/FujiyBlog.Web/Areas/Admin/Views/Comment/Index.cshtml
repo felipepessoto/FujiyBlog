@@ -81,9 +81,9 @@
                 @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
             </td>
             <td>
-                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-postSlug="@item.Post.Slug" asp-fragment="@("comment_id" + item.Id)">View</a>
+                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-postSlug="@item.Post.Slug" asp-fragment="@("comment_id-" + item.Id)">View</a>
                  |
-                <a asp-area="Admin" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id" asp-fragment="@("comment_id" + item.Id)">Edit</a>
+                <a asp-area="Admin" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                  |
                 <a asp-area="Admin" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")" class="btn-delete-item">Delete</a>
             </td>

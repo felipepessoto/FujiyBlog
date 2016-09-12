@@ -18,7 +18,7 @@
         <strong>Comment:</strong>
         <pre>@Model.Comment.Comment</pre>
         <p>
-            @Html.ActionLink("View Comment", "Details", "Post", Context.Request.Scheme, null, "comment_id" + ((FujiyBlog.Core.DomainObjects.PostComment)Model.Comment).Id, new { postSlug = Model.Post.Slug }, null)
+            @Html.ActionLink("View Comment", "Details", "Post", Context.Request.Scheme, null, "comment_id-" + ((FujiyBlog.Core.DomainObjects.PostComment)Model.Comment).Id, new { postSlug = Model.Post.Slug }, null)
         </p>
     </div>
 </body>

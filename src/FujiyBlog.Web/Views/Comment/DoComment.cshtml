@@ -5,62 +5,68 @@
 
 <form asp-controller="Comment" asp-action="DoComment" asp-route-id="@Model.Post.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("fujiyBlog.comments.addCommentSuccess(arguments[0]);")" data-ajax-failure="@("fujiyBlog.comments.addCommentFailure")" id="add-comment-form">
 
-        <div class="commentForm">
-            @Html.Hidden("ParentCommentId", Model.ParentComment != null ? Model.ParentComment.Id.ToString() : string.Empty)
-            <p class="addcomment">
-                @*@FujiyBlog.Web.Resources.Labels.AddComment*@
-            </p><div style="display:none" id="cancel-replying"><a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">@FujiyBlog.Web.Resources.Labels.CancelReply</a></div>
+    <div class="commentForm">
+        @Html.Hidden("ParentCommentId", Model.ParentComment != null ? Model.ParentComment.Id.ToString() : string.Empty)
+        <p class="addcomment">
+            @*@FujiyBlog.Web.Resources.Labels.AddComment*@
+        </p><div style="display:none" id="cancel-replying"><a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.cancelReplyComment();">@FujiyBlog.Web.Resources.Labels.CancelReply</a></div>
 
-            <div>
-                @Html.TextAreaFor(x => x.Comment, 4, 45, new { @class = "form-control" })
-                @Html.ValidationMessageFor(x => x.Comment)
-            </div>
+        <div>
+            @Html.TextAreaFor(x => x.Comment, 4, 45, new { @class = "form-control" })
+            @Html.ValidationMessageFor(x => x.Comment)
+        </div>
 
-            @if (User.Identity.IsAuthenticated == false)
+        @if (User.Identity.IsAuthenticated == false)
             {
-                <div id="comment-user-data">
+            <div id="comment-user-data">
 
-                    @*<div style="display: none;" id="openid_choice">
-                            <p>Please select your account provider and <a href="javascript:void(0);" id="open-openid-login">click here to login with your OpenID</a>:</p>
-                            <div id="openid_btns"></div>
-                        </div>
-                        <div id="openid_input_area">
-                        </div>
-                        <input id="openid_identifier" name="openid_identifier" type="hidden" />
-
-                        <div><p><strong>Or enter your details below</strong></p></div>*@
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.AuthorName)
-                        @Html.TextBoxFor(x => x.AuthorName, new { data_val = "true", data_val_required = "The Name field is required.", @class = "form-control" })
-                        @Html.ValidationMessageFor(x => x.AuthorName)
+                @*<div style="display: none;" id="openid_choice">
+                        <p>Please select your account provider and <a href="javascript:void(0);" id="open-openid-login">click here to login with your OpenID</a>:</p>
+                        <div id="openid_btns"></div>
                     </div>
-
-
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.AuthorEmail)
-                        <input asp-for="AuthorEmail" class="form-control" />
-                        @Html.ValidationMessageFor(x => x.AuthorEmail)
+                    <div id="openid_input_area">
                     </div>
+                    <input id="openid_identifier" name="openid_identifier" type="hidden" />
 
-                    <div class="form-group">
-                        @Html.LabelFor(x => x.AuthorWebsite)
-                        <input asp-for="AuthorWebsite" class="form-control" />
-                        @Html.ValidationMessageFor(x => x.AuthorWebsite)
-                    </div>
+                    <div><p><strong>Or enter your details below</strong></p></div>*@
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.AuthorName)
+                    @Html.TextBoxFor(x => x.AuthorName, new { data_val = "true", data_val_required = "The Name field is required.", @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.AuthorName)
                 </div>
+
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.AuthorEmail)
+                    <input asp-for="AuthorEmail" class="form-control" />
+                    @Html.ValidationMessageFor(x => x.AuthorEmail)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(x => x.AuthorWebsite)
+                    <input asp-for="AuthorWebsite" class="form-control" />
+                    @Html.ValidationMessageFor(x => x.AuthorWebsite)
+                </div>
+            </div>
 
                 <div id="logout-social-id" style="display: none;">
                     <a asp-controller="Social" asp-action="Logout" data-ajax-success="fujiyBlog.socialId.callbackLogout">Logout</a>
                 </div>
-            }
+        }
 
-            @if (settings.ReCaptchaEnabled && !Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
+        @if (settings.ReCaptchaEnabled && !Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
             {
-                <script src='https://www.google.com/recaptcha/api.js'></script>
+            <script src='https://www.google.com/recaptcha/api.js'></script>
                 <div class="g-recaptcha" data-sitekey="@settings.ReCaptchaPublicKey"></div>
-            }
-            <input type="submit" value="@FujiyBlog.Web.Resources.Labels.PostComment" /><div id="comment-sucess" style="display: none;"><strong>@FujiyBlog.Web.Resources.Labels.CommentSent</strong></div>
+        }
+
+        <button type="submit" class="btn btn-default pull-right">@FujiyBlog.Web.Resources.Labels.PostComment</button>
+
+        <div id="comment-sucess" style="display: none;">
+            <strong>@FujiyBlog.Web.Resources.Labels.CommentSent</strong>
+
         </div>
-    
+    </div>
+
 </form>
