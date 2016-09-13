@@ -25,57 +25,60 @@
 
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 
-<table>
-    <tr>
-        <th>
-            Published
-        </th>
-        <th>
-            Title
-        </th>
-        <th>
-            Show In List
-        </th>
-        <th>
-            CreationDate
-        </th>
-        <th>
-            PublicationDate
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model.Pages)
-    {
-        <tr id="item-row-@item.Id">
-            <td class="@(item.IsPublished ? "published" : "notpublished")">
-                @Html.DisplayFor(modelItem => item.IsPublished)
-            </td>
-            <td>
-                @Html.ActionLink(item.Title, "Details", "Page", new { pageSlug = item.Slug })
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShowInList)
-            </td>
-            <td>
-                @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
-            </td>
-            <td>
-                @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
-            </td>
-            <td>
-                @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPages)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPages))
-                {
-                    @Html.ActionLink("Edit", "Edit", "Page", new { id = item.Id })
-                }
-                @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOwnPages)) || (item.Author.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOtherUsersPages)))
-                {
-                    <text>|</text>
-                    <a asp-controller="Page" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")">Delete</a>
-                }
-            </td>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Published
+            </th>
+            <th>
+                Title
+            </th>
+            <th>
+                Show In List
+            </th>
+            <th>
+                CreationDate
+            </th>
+            <th>
+                PublicationDate
+            </th>
+            <th></th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Pages)
+        {
+            <tr id="item-row-@item.Id">
+                <td class="@(item.IsPublished ? "published" : "notpublished")">
+                    @Html.DisplayFor(modelItem => item.IsPublished)
+                </td>
+                <td>
+                    @Html.ActionLink(item.Title, "Details", "Page", new { pageSlug = item.Slug })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShowInList)
+                </td>
+                <td>
+                    @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
+                </td>
+                <td>
+                    @DateTimeUtil.ConvertUtcToMyTimeZone(item.PublicationDate)
+                </td>
+                <td>
+                    @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPages)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPages))
+                {
+                        @Html.ActionLink("Edit", "Edit", "Page", new { id = item.Id })
+                    }
+                    @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOwnPages)) || (item.Author.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOtherUsersPages)))
+                {
+                        <text>|</text>
+                        <a asp-controller="Page" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")">Delete</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <script type="text/javascript">

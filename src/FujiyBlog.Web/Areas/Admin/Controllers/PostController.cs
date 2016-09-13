@@ -55,6 +55,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                                    CommentsTotal = counts[post.Id]
                                }),
                 TotalPages = (int)Math.Ceiling((double)posts.Count() / PageSize),
+                Published = published
             };
 
             return View(model);

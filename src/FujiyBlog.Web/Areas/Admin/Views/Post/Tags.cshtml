@@ -7,37 +7,41 @@
     Tags
 </h2>
 
-<table>
-    <tr>
-        <th>
-        </th>
-        <th>
-            @Html.LabelFor(model => model.TagsPostCount.FirstOrDefault().Key.Name)
-        </th>
-        <th>
-            Posts
-        </th>
-    </tr>
-    @foreach (var item in Model.TagsPostCount)
-    {
-        <tr data-item-id="@item.Key.Id" id="item-row-@item.Key.Id">
-            <td>
-                <a href="javascript:void(0);" class="btn-edit-item">Edit</a>
-                <a asp-area="Admin" asp-controller="Post" asp-action="DeleteTag" asp-route-id="@item.Key.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"RemoveItemRow({item.Key.Id});" )" class="btn-delete-item">@FujiyBlog.Web.Resources.Labels.Delete</a>
-
-                <a href="javascript:void(0);" class="btn-update-item" style="display:none">Update</a>
-                <a href="javascript:void(0);" class="btn-cancel-item" style="display:none">Cancel</a>
-
-            </td>
-            <td>
-                @Html.TextBoxFor(modelItem => item.Key.Name, new { id = "txt-item-name" + item.Key.Id, style = "display:none", @class = "txt-item-name" })
-                <span class="lbl-item-name">@Html.DisplayFor(modelItem => item.Key.Name)</span>
-            </td>
-            <td>
-                @item.Value
-            </td>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+                @Html.LabelFor(model => model.TagsPostCount.FirstOrDefault().Key.Name)
+            </th>
+            <th>
+                Posts
+            </th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TagsPostCount)
+        {
+            <tr data-item-id="@item.Key.Id" id="item-row-@item.Key.Id">
+                <td>
+                    <a href="javascript:void(0);" class="btn btn-default btn-edit-item">Edit</a>
+                    <a asp-area="Admin" asp-controller="Post" asp-action="DeleteTag" asp-route-id="@item.Key.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"RemoveItemRow({item.Key.Id});" )" class="btn btn-default btn-delete-item">@FujiyBlog.Web.Resources.Labels.Delete</a>
+
+                    <a href="javascript:void(0);" class="btn btn-default btn-update-item" style="display:none">Update</a>
+                    <a href="javascript:void(0);" class="btn btn-default btn-cancel-item" style="display:none">Cancel</a>
+
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => item.Key.Name, new { id = "txt-item-name" + item.Key.Id, style = "display:none", @class = "txt-item-name" })
+                    <span class="lbl-item-name">@Html.DisplayFor(modelItem => item.Key.Name)</span>
+                </td>
+                <td>
+                    @item.Value
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <script type="text/javascript">

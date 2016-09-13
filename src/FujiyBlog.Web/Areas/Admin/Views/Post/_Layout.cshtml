@@ -2,8 +2,15 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<a asp-area="Admin" asp-controller="Post" asp-action="Index">Posts</a> - 
-<a asp-area="Admin" asp-controller="Post" asp-action="Categories">Categories</a> - 
-<a asp-area="Admin" asp-controller="Post" asp-action="Tags">Tags</a>
-
+<ul class="nav nav-tabs">
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">
+        <a asp-area="Admin" asp-controller="Post" asp-action="Index">Posts</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Categories" ? "active": "")">
+        <a asp-area="Admin" asp-controller="Post" asp-action="Categories">Categories</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Tags" ? "active": "")">
+        <a asp-area="Admin" asp-controller="Post" asp-action="Tags">Tags</a>
+    </li>
+</ul>
 @RenderBody()

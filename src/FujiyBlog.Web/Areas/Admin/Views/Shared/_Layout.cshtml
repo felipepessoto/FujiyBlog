@@ -1,10 +1,16 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <title>@ViewBag.Title</title>
-    <link href="~/content/admin/Site.css" rel="stylesheet" type="text/css" />
+
     <link href="~/lib/jquery-ui/themes/base/all.css" rel="stylesheet" type="text/css" />
     <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/content/admin/site.css" />
+
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-ui/jquery-ui.js"></script>
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
@@ -14,6 +20,11 @@
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     </environment>
     <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/content/admin/site.min.css" />
+
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
                 asp-fallback-test="window.jQuery">
@@ -40,28 +51,46 @@
 
 <body>
     @Html.Partial("NotifyBar")
-    <div class="page">
-        <header>
-            <div id="title">
-                <h1>Blog Admin</h1>
-            </div>
-            <div id="logindisplay">
-                Welcome @Context.User.Identity.Name | @Html.ActionLink("Go to Blog", "Index", "Post", new { area = "" })
-            </div>
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Posts, "Index", "Post", new { area = "Admin" })</li>
-                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Comments, "Index", "Comment", new { area = "Admin" })</li>
-                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Users, "Index", "User", new { area = "Admin" })</li>
-                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Settings, "Index", "Setting", new { area = "Admin" })</li>
-                    <li>@Html.ActionLink(FujiyBlog.Web.Resources.Labels.Pages, "Index", "Page", new { area = "Admin" })</li>
-                </ul>
+    <div class="container-fluid">
+        <header class="row">
+            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a asp-area="" asp-controller="Post" asp-action="Index" class="navbar-brand">Go to Blog</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li><a asp-area="Admin" asp-controller="Post" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Posts</a></li>
+                            <li><a asp-area="Admin" asp-controller="Comment" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Comments</a></li>
+                            <li><a asp-area="Admin" asp-controller="User" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Users</a></li>
+                            <li><a asp-area="Admin" asp-controller="Setting" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Settings</a></li>
+                            <li><a asp-area="Admin" asp-controller="Page" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Pages</a></li>
+                            <li>
+                                Welcome @Context.User.Identity.Name
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </header>
-        <section id="main">
-            @RenderBody()
-        </section>
-        <footer></footer>
+        <div class="row">
+            <div class="col-sm-12">
+                @RenderBody()
+                <hr />
+            </div>
+        </div>
+        <footer class="row">
+            <div class="col-sm-12 text-center">
+                <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.5</p>
+            </div>
+        </footer>
     </div>
+    @RenderSection("scripts", required: false)
 </body>
 </html>
