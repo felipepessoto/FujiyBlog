@@ -139,12 +139,12 @@
                                 @if (SignInManager.IsSignedIn(User))
                                 {
                                     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" style="display:inline">
-                                        <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit(); return false;">Log off</a>
+                                        <a href="javascript:void(0);" onclick="document.getElementById('logoutForm').submit(); return false;">Sign out</a>
                                     </form>
                                 }
                                 else
                                 {
-                                    <a asp-area="" asp-controller="Account" asp-action="Login">Log in</a>
+                                    <a asp-area="" asp-controller="Account" asp-action="Login">Sign in</a>
                                 }
                             </li>
                         </ul>
