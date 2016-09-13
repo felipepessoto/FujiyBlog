@@ -15,7 +15,7 @@
             <li>@Html.ActionLink(@FujiyBlog.Web.Resources.Labels.Pages, "Index", "Page", new { area = "Admin" })</li>
             <li>@Html.ActionLink(@FujiyBlog.Web.Resources.Labels.Users, "Index", "User", new { area = "Admin" })</li>
             <li>@Html.ActionLink(@FujiyBlog.Web.Resources.Labels.Settings, "Index", "Setting", new { area = "Admin" })</li>
-            <li>@Html.ActionLink(@FujiyBlog.Web.Resources.Labels.ChangePassword, "ChangePassword", "Account", new { area = "Admin" })</li>
+            <li><a asp-controller="Manage" asp-action="ChangePassword">@FujiyBlog.Web.Resources.Labels.ChangePassword</a></li>
         </ul>
     </div>
 }

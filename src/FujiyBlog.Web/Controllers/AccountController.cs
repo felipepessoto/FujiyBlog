@@ -63,6 +63,7 @@ namespace FujiyBlog.Web.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.FirstUser = _userManager.Users.Any() == false;
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
