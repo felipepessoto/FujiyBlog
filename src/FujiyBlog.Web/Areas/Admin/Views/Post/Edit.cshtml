@@ -15,158 +15,140 @@
 
 @Html.Partial("UploadForms", uploadFolder)
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Post</legend>
 
-        @Html.HiddenFor(model => model.Post.Id)
-        
-        <div class="edit-content-left">
-            
-            <div class="editor-wrapper-title">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.Title)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.Title)
-                    @Html.ValidationMessageFor(model => model.Post.Title)
-                </div>
+
+    @Html.HiddenFor(model => model.Post.Id)
+
+    <div class="row">
+
+        <div class="col-xs-9">
+
+            <div class="form-group">
+                <label asp-for="Post.Title" class="control-label"></label>
+                <input asp-for="Post.Title" class="form-control" placeholder="Title" />
+                <span asp-validation-for="Post.Title" class="text-danger"></span>
             </div>
 
-            <div class="editor-wrapper-slug">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.Slug)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.Slug) <a href="javascript:void(0)" id="extract-from-title">Extract from title</a>
-                    @Html.ValidationMessageFor(model => model.Post.Slug)
+            <div class="form-group">
+                <label asp-for="Post.Slug" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Post.Slug" class="form-control" placeholder="Slug" />
+                    <span class="input-group-btn">
+                        <a class="btn btn-primary" href="javascript:void(0)" id="extract-from-title">Extract from title</a>
+                    </span>
+                    <span asp-validation-for="Post.Slug" class="text-danger"></span>
                 </div>
             </div>
-            
-            <div class="upload-links">
-                <a href="javascript:void(0)" id="link-upload-image">Insert image</a>
-                <a href="javascript:void(0)" id="link-upload-video">Insert video</a>
-                <a href="javascript:void(0)" id="link-upload-file">Insert file</a>
+
+            <div class="row">
+                <div class="col-xs-1">
+                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-image">Insert image</a>
+                </div>
+                <div class="col-xs-1">
+                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-video">Insert video</a>
+                </div>
+                <div class="col-xs-1">
+                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-file">Insert file</a>
+                </div>
             </div>
-            
-            <div class="editor-wrapper-content">
-                <div class="editor-field">
+
+            <div class="row">
+                <div class="col-xs-12">
                     @Html.EditorFor(model => model.Post.Content, "TinyMCE")
-                    @Html.ValidationMessageFor(model => model.Post.Content)
-                </div>
-            </div>
-            
-            <div class="editor-wrapper-description">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.Description) (Optional)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.Description)
-                    @Html.ValidationMessageFor(model => model.Post.Description)
-                </div>
-            </div>
-            
-            <div class="editor-wrapper-checkboxes">
-                <div class="editor-wrapper-ispublished">
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.Post.IsPublished)
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.Post.IsPublished)
-                        @Html.ValidationMessageFor(model => model.Post.IsPublished)
-                    </div>
-                </div>
-            
-                <div class="editor-wrapper-iscommentenabled">
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.Post.IsCommentEnabled)
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.Post.IsCommentEnabled)
-                        @Html.ValidationMessageFor(model => model.Post.IsCommentEnabled)
-                    </div>
-                </div>
-            </div>
-            
-            <div class="editor-wrapper-imageurl">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.ImageUrl) (Optional)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.ImageUrl)
-                    @Html.ValidationMessageFor(model => model.Post.ImageUrl)
+                    <span asp-validation-for="Post.Content" class="text-danger"></span>
                 </div>
             </div>
 
-            <p class="submit-wrapper">
-                <input type="submit" value="Save" />
-            </p>
+            <div class="form-group">
+                <label asp-for="Post.Description" class="control-label"></label> (Optional)
+                <textarea asp-for="Post.Description" class="form-control" maxlength="500"></textarea>
+                <span asp-validation-for="Post.Description" class="text-danger"></span>
+                <div id="textarea_feedback"></div>
+            </div>
+
+
+            <div class="checkbox">
+                <label>
+                    <input asp-for="Post.IsPublished" />@Html.DisplayNameFor(model => model.Post.IsPublished)
+                </label>
+                <span asp-validation-for="Post.IsPublished" class="text-danger"></span>
+            </div>
+
+            <div class="checkbox">
+                <label>
+                    <input asp-for="Post.IsCommentEnabled" />@Html.DisplayNameFor(model => model.Post.IsCommentEnabled)
+                </label>
+                <span asp-validation-for="Post.IsCommentEnabled" class="text-danger"></span>
+            </div>
+
+
+
+            <div class="form-group">
+                <label asp-for="Post.ImageUrl" class="control-label"></label> (Optional)
+                <input asp-for="Post.ImageUrl" class="form-control" />
+                <span asp-validation-for="Post.Title" class="text-danger"></span>
+            </div>
+
+
+            <button class="btn btn-default" type="submit">Save</button>
         </div>
-        <div class="edit-content-right">
-            
-            <div class="editor-wrapper-author">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.AuthorId)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(x => x.Post.AuthorId, Model.Authors)
-                    @Html.ValidationMessageFor(model => model.Post.AuthorId)
-                </div>
-            </div>
-            
-            <div class="editor-wrapper-publicationdate">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.PublicationDate)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.PublicationDate)
-                    @Html.ValidationMessageFor(model => model.Post.PublicationDate)
-                </div>
-            </div>
-            
-            <div class="editor-wrapper-categories">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.Categories)
-                </div>
-                <div class="editor-field">
-                    <ul id="categories-list">
-                        @foreach (Category category in Model.AllCategories)
-                        {
-                            <li><input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x=>x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name</li>
-                        }
-                    </ul>
-                </div>
 
-                <div class="editor-label">
-                    <label for="new-category-name">Add new category</label>
-                </div>
-                <div class="editor-field">
-                    <input type="text" id="new-category-name" />
-                    <span id="new-category-name-error" class="field-validation-error" style="display:none"></span>
-                    <a href="javascript:void(0);" id="add-category">Add</a>
-                </div>
+        <div class="col-xs-3">
 
+            <div class="form-group">
+                <label asp-for="Post.AuthorId" class="control-label"></label>
+                <select asp-for="Post.AuthorId" asp-items="Model.Authors" class="form-control"></select>
+                <span asp-validation-for="Post.AuthorId" class="text-danger"></span>
             </div>
 
-            <div class="editor-wrapper-tags">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Post.Tags)
+            <div class="form-group">
+                <label asp-for="Post.PublicationDate" class="control-label"></label>
+                <div class='input-group'>
+                    <input asp-for="Post.PublicationDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control datetime-picker" placeholder="Title" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
                 </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Post.Tags)
+                <span asp-validation-for="Post.PublicationDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Post.Categories" class="control-label"></label>
+                <div id="categories-list">
+                    @foreach (Category category in Model.AllCategories)
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x => x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name
+                            </label>
+                        </div>
+                    }
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="new-category-name">Add new category</label>
+                <div class="input-group">
+                    <input type="text" id="new-category-name" class="form-control" />
+                    <span class="input-group-btn">
+                        <a href="javascript:void(0);" id="add-category" class="btn btn-primary">Add</a>
+                    </span>
+                </div>
+                <span id="new-category-name-error" class="field-validation-error" style="display:none"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="Post.Tags" class="control-label"></label>
+                <textarea asp-for="Post.Tags" class="form-control"></textarea>
                 Separate each tag with a comma
             </div>
-
-
         </div>
-    </fieldset>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script type="text/javascript">
 
@@ -212,6 +194,17 @@
                     return false;
                 }
             });
+
+
+        var text_max = $('#@Html.IdFor(x=>x.Post.Description)').prop("maxlength");
+        $('#textarea_feedback').html(text_max + ' characters remaining');
+
+        $('#@Html.IdFor(x=>x.Post.Description)').on('change keyup input', function() {
+            var text_length = $(this).val().length;
+            var text_remaining = text_max - text_length;
+
+            $('#textarea_feedback').html(text_remaining + ' characters remaining');
+        });
     });
 
     function CheckPublishRoles () {
@@ -255,7 +248,7 @@
                 if (!response.errorMessage) {
                     var container = $('#categories-list');
 
-                    var html = '<li><input checked=checked type="checkbox" name="Post.selectedCategories" value="' + response.id + '" />' + response.name + '</li>';
+                    var html = '<div class="checkbox"><label><input checked=checked type="checkbox" name="Post.selectedCategories" value="' + response.id + '" />' + response.name + '</label></div>';
                     container.append($(html));
                 }
                 else {
@@ -273,15 +266,15 @@
         var postData = { text: $('#@Html.IdFor(x=>x.Post.Title)').val() };
 
         $.ajax({
-                type: "POST",
-                url: callUrl,
-                data: postData,
-                success: function(response) {
-                    $('#@Html.IdFor(x=>x.Post.Slug)').val(response);
-                },
-                error: function() {
-                    alert('Error');
-                }
-            });
+            type: "POST",
+            url: callUrl,
+            data: postData,
+            success: function(response) {
+                $('#@Html.IdFor(x=>x.Post.Slug)').val(response);
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
     });
 </script>

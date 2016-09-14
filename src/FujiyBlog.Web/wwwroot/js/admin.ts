@@ -1,7 +1,7 @@
 ﻿/// <reference path="jquery.d.ts" />
 $(function () {
     $('.datetime-picker').datetimepicker({
-        ampm: true
+        format: 'YYYY/MM/DD HH:mm'
     });
 
     $("#notify-bar").fadeIn(2000);
