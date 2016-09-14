@@ -11,21 +11,21 @@
 }
 <script type="text/javascript" src="~/lib/tinymce/jquery.tinymce.min.js"></script>
 
-<h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
-
 @Html.Partial("UploadForms", uploadFolder)
 
 @using (Html.BeginForm())
 {
-    @Html.ValidationSummary(true)
+    <button class="btn btn-primary" type="submit">Save</button>
+    <h2>@(Model.Post.Id.HasValue ? "Edit" : "Add") post</h2>
 
+    @Html.ValidationSummary(true)
 
     @Html.HiddenFor(model => model.Post.Id)
 
     <div class="row">
 
         <div class="col-xs-9">
-
+            
             <div class="form-group">
                 <label asp-for="Post.Title" class="control-label"></label>
                 <input asp-for="Post.Title" class="form-control" placeholder="Title" />
@@ -93,7 +93,7 @@
             </div>
 
 
-            <button class="btn btn-default" type="submit">Save</button>
+            <button class="btn btn-primary" type="submit">Save</button>
         </div>
 
         <div class="col-xs-3">
