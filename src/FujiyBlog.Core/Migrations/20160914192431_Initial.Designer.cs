@@ -8,13 +8,13 @@ using FujiyBlog.Core.EntityFramework;
 namespace FujiyBlog.Core.Migrations
 {
     [DbContext(typeof(FujiyBlogDatabase))]
-    [Migration("20160710234824_Initial")]
+    [Migration("20160914192431_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
+                .HasAnnotation("ProductVersion", "1.0.1")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FujiyBlog.Core.DomainObjects.ApplicationUser", b =>
@@ -187,9 +187,10 @@ namespace FujiyBlog.Core.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasAlternateKey("Slug");
-
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
 
                     b.ToTable("Posts");
                 });

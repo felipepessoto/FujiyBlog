@@ -36,8 +36,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<Post>().HasIndex(x => x.Slug);
-            modelBuilder.Entity<Post>().HasAlternateKey(x => x.Slug);
+            modelBuilder.Entity<Post>().HasIndex(x => x.Slug).IsUnique();
 
             modelBuilder.Entity<ApplicationUser>()
                 .HasMany(b => b.AuthoredPostComments)
