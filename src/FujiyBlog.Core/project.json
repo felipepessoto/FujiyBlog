@@ -3,7 +3,7 @@
 
   "dependencies": {
     "Microsoft.AspNetCore.Http.Abstractions": "1.0.0",
-    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
     "NETStandard.Library": "1.6.0",
     "System.Security.Principal": "4.0.1",
     "cloudscribe.Syndication.Web": "1.0.0",
