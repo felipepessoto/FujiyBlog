@@ -14,7 +14,8 @@ namespace FujiyBlog.Core
 
         public DateTime ConvertUtcToMyTimeZone(DateTime dateTime)
         {
-            return TimeZoneInfo.ConvertTime(dateTime, settings.TimeZone);
+            var dateTimeUtc = DateTime.SpecifyKind(dateTime, DateTimeKind.Utc);
+            return TimeZoneInfo.ConvertTime(dateTimeUtc, settings.TimeZone);
         }
 
         public DateTime? ConvertUtcToMyTimeZone(DateTime? dateTime)
