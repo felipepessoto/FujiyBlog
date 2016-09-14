@@ -196,15 +196,20 @@
             });
 
 
-        var text_max = $('#@Html.IdFor(x=>x.Post.Description)').prop("maxlength");
-        $('#textarea_feedback').html(text_max + ' characters remaining');
+        var descriptionControl = $('#@Html.IdFor(x=>x.Post.Description)')
 
-        $('#@Html.IdFor(x=>x.Post.Description)').on('change keyup input', function() {
-            var text_length = $(this).val().length;
+        var text_max = descriptionControl.prop("maxlength");
+
+        function updateDescriptionCounter() {
+            var text_length = descriptionControl.val().length;
             var text_remaining = text_max - text_length;
 
             $('#textarea_feedback').html(text_remaining + ' characters remaining');
-        });
+        }
+
+        updateDescriptionCounter();
+
+        descriptionControl.on('change keyup input', updateDescriptionCounter);
     });
 
     function CheckPublishRoles () {
