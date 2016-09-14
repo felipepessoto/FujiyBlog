@@ -56,10 +56,10 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public string Keywords { get; set; }
 
         [UIHint("DateTimePicker")]
-        [DisplayName("Publish Date")]
+        [Display(Name = "Publish Date")]
         public DateTime PublicationDate { get; set; }
 
-        [DisplayName("Publish")]
+        [Display(Name = "Publish")]
         public bool IsPublished { get; set; }
 
         [Display(Name = "Front Page")]

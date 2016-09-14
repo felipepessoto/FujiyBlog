@@ -7,13 +7,13 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 {
     public class AdminFeedSettings
     {
-        [DisplayName("Alternate Feed Url")]
+        [Display(Name = "Alternate Feed Url")]
         public string AlternateFeedUrl { get; set; }
 
-        [Required, DisplayName("Items Shown In Feed")]
+        [Required, Display(Name = "Items Shown In Feed")]
         public int ItemsShownInFeed { get; set; }
 
-        [Required, DisplayName("Default Feed Output")]
+        [Required, Display(Name = "Default Feed Output")]
         public string DefaultFeedOutput { get; set; }
 
         public IEnumerable<SelectListItem> DefaultFeedOutputs { get; set; }
