@@ -1,7 +1,7 @@
 ﻿@using FujiyBlog.Web.Extensions
 @model string
 
-@Html.TextBoxFor(model => Model)
+@Html.TextAreaFor(model => Model)
 
 <script type="text/javascript">
     var tinymceContent = null;
@@ -15,10 +15,10 @@
             plugins: [
                  "advlist autolink link image lists charmap print preview hr anchor pagebreak spellchecker",
                  "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-                 "save table contextmenu directionality emoticons template paste textcolor"
+                 "save table contextmenu directionality emoticons template paste textcolor codesample"
             ],
             content_css: "@(Url.Content("~/lib/tinymce/skins/lightgray/content.min.css"))",
-            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | l      ink image | print preview media fullpage | forecolor backcolor emoticons",
+            toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons codesample",
             style_formats: [
         { title: 'Bold text', inline: 'b' },
         { title: 'Red text', inline: 'span', styles: { color: '#ff0000' } },

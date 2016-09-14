@@ -8,7 +8,8 @@
     "jquery-validation-unobtrusive": "3.2.6",
     "jquery-ajax-unobtrusive": "3.2.4",
     "jquery-ui": "1.11.4",
-    "tinymce": "*",
-    "jquery-form": "*"
+    "tinymce": "4.4.3",
+    "jquery-form": "*",
+    "prism": "1.4.1"
   }
 }
