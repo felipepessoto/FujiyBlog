@@ -40,6 +40,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 CurrentPage = page.GetValueOrDefault(1),
                 Pages = pagePages.ToList(),
                 TotalPages = (int)Math.Ceiling((double)pages.Count() / PageSize),
+                Published = published
             };
 
             return View(model);

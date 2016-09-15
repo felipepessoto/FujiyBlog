@@ -3,68 +3,56 @@
     ViewBag.Title = "Edit";
     Layout = "_Layout";
 }
-<h2>
-    Edit</h2>
+<h2>Edit</h2>
+
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>PostComment</legend>
+    
         @Html.HiddenFor(model => model.Id)
         @if (Model.Author == null)
-        { 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.AuthorName)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.AuthorName)
-                @Html.ValidationMessageFor(model => model.AuthorName)
+        {
+            <div class="form-group">
+                <label asp-for="AuthorName" class="control-label"></label>
+                <input asp-for="AuthorName" class="form-control" />
+                <span asp-validation-for="AuthorName" class="text-danger"></span>
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.AuthorEmail)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.AuthorEmail)
-                @Html.ValidationMessageFor(model => model.AuthorEmail)
+            <div class="form-group">
+                <label asp-for="AuthorEmail" class="control-label"></label>
+                <input asp-for="AuthorEmail" class="form-control" />
+                <span asp-validation-for="AuthorEmail" class="text-danger"></span>
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.AuthorWebsite)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.AuthorWebsite)
-                @Html.ValidationMessageFor(model => model.AuthorWebsite)
+            <div class="form-group">
+                <label asp-for="AuthorWebsite" class="control-label"></label>
+                <input asp-for="AuthorWebsite" class="form-control" />
+                <span asp-validation-for="AuthorWebsite" class="text-danger"></span>
             </div>
         }
         else
-        { 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Author.UserName)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(model => model.Author.UserName, new { @readonly = "readonly" })
+        {
+            <div class="form-group">
+                <label asp-for="Author.UserName" class="control-label"></label>
+                <input asp-for="Author.UserName" class="form-control" readonly />
             </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Author.Email)
-            </div>
-            <div class="editor-field">
-                @Html.TextBoxFor(model => model.Author.Email, new { @readonly = "readonly" })
+
+            <div class="form-group">
+                <label asp-for="Author.Email" class="control-label"></label>
+                <input asp-for="Author.Email" class="form-control" readonly />
             </div>
         }
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Comment)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Comment)
-            @Html.ValidationMessageFor(model => model.Comment)
-        </div>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+
+    <div class="form-group">
+        <label asp-for="Comment" class="control-label"></label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+        <span asp-validation-for="Comment" class="text-danger"></span>
+    </div>
+
+        
+            <input type="submit" value="Save" class="btn btn-primary" />
+        
+    
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<a asp-action="Index" class="btn btn-default pull-right">Back</a>

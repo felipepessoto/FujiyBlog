@@ -6,7 +6,8 @@
     Layout = "_Layout";
 }
 <h2>
-    @FujiyBlog.Web.Resources.Labels.Comments</h2>
+    @FujiyBlog.Web.Resources.Labels.Comments
+</h2>
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 <table class="table table-striped table-hover">
     <thead>
@@ -34,6 +35,10 @@
                 </th>*@
             <th>
                 @Html.LabelFor(x => x.Comments.FirstOrDefault().CreationDate)
+            </th>
+            <th>
+            </th>
+            <th>
             </th>
             <th>
             </th>
@@ -84,25 +89,27 @@
                     @DateTimeUtil.ConvertUtcToMyTimeZone(item.CreationDate)
                 </td>
                 <td>
-                    <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-postSlug="@item.Post.Slug" asp-fragment="@("comment_id-" + item.Id)">View</a>
-                    |
-                    <a asp-area="Admin" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    |
-                    <a asp-area="Admin" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")" class="btn-delete-item">Delete</a>
+                    <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-postSlug="@item.Post.Slug" asp-fragment="@("comment_id-" + item.Id)" class="btn btn-default">View</a>
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Comment" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                </td>
+                <td>
+                    <a asp-area="Admin" asp-controller="Comment" asp-action="Delete" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")" class="btn btn-default">Delete</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 @if (ViewContext.ActionDescriptor.RouteValues["action"] == "Index")
-{ 
-    <a href="javascript:void(0);" id="approve-comments">Approve Selected</a>
+{
+    <a href="javascript:void(0);" id="approve-comments" class="btn btn-primary">Approve Selected</a>
 }
 else
-{ 
-    <a href="javascript:void(0);" id="disapprove-comments">Disapprove Selected</a>
+{
+    <a href="javascript:void(0);" id="disapprove-comments" class="btn btn-warning">Disapprove Selected</a>
 }
-<a href="javascript:void(0);" id="delete-comments">Delete Selected</a>
+<a href="javascript:void(0);" id="delete-comments" class="btn btn-danger">Delete Selected</a>
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 <script type="text/javascript">
 

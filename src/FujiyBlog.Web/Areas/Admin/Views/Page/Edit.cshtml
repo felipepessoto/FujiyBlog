@@ -11,151 +11,124 @@
 }
 <script type="text/javascript" src="~/lib/tinymce/jquery.tinymce.min.js"></script>
 
-<h2>@(Model.Id.HasValue ? "Edit" : "Add") page</h2>
-
 @Html.Partial("UploadForms", uploadFolder)
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
+    <button class="btn btn-primary" type="submit">Save</button>
+    <h2>@(Model.Id.HasValue ? "Edit" : "Add") page</h2>
+
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Page</legend>
 
-        @Html.HiddenFor(model => model.Id)
-        
-        <div class="edit-content-left">
+    @Html.HiddenFor(model => model.Id)
 
-            <div class="editor-wrapper-title">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Title)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Title)
-                    @Html.ValidationMessageFor(model => model.Title)
-                </div>
+    <div class="row">
+        <div class="col-xs-9">
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" placeholder="Title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            
-            <div class="editor-wrapper-slug">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Slug)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Slug) <a href="javascript:void(0)" id="extract-from-title">Extract from title</a>
-                    @Html.ValidationMessageFor(model => model.Slug)
+
+            <div class="form-group">
+                <label asp-for="Slug" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Slug" class="form-control" placeholder="Slug" />
+                    <span class="input-group-btn">
+                        <a class="btn btn-primary" href="javascript:void(0)" id="extract-from-title">Extract from title</a>
+                    </span>
+                    <span asp-validation-for="Slug" class="text-danger"></span>
                 </div>
             </div>
 
-            <div class="upload-links">
-                <a href="javascript:void(0)" id="link-upload-image">Insert image</a>
-                <a href="javascript:void(0)" id="link-upload-video">Insert video</a>
-                <a href="javascript:void(0)" id="link-upload-file">Insert file</a>
+            <div class="row">
+                <div class="col-xs-1">
+                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-image">Insert image</a>
+                </div>
+                <div class="col-xs-1">
+                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-video">Insert video</a>
+                </div>
+                <div class="col-xs-1">
+                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-file">Insert file</a>
+                </div>
             </div>
-            
-            <div class="editor-wrapper-content">
-                <div class="editor-field">
+
+            <div class="row">
+                <div class="col-xs-12">
                     @Html.EditorFor(model => model.Content, "TinyMCE")
-                    @Html.ValidationMessageFor(model => model.Content)
+                    <span asp-validation-for="Content" class="text-danger"></span>
                 </div>
             </div>
 
-            <div class="editor-wrapper-description">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Description) (Optional)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Description)
-                    @Html.ValidationMessageFor(model => model.Description)
-                </div>
-            </div>
-            
-            <div class="editor-wrapper-checkboxes">
-                <div class="editor-wrapper-ispublished">
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.IsPublished)
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.IsPublished)
-                        @Html.ValidationMessageFor(model => model.IsPublished)
-                    </div>
-                </div>
-
-                <div class="editor-wrapper-isfrontpage">
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.IsFrontPage)
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.IsFrontPage)
-                        @Html.ValidationMessageFor(model => model.IsFrontPage)
-                    </div>
-                </div>
-            
-                <div class="editor-wrapper-showinlist">
-                    <div class="editor-label">
-                        @Html.LabelFor(model => model.ShowInList)
-                    </div>
-                    <div class="editor-field">
-                        @Html.EditorFor(model => model.ShowInList)
-                        @Html.ValidationMessageFor(model => model.ShowInList)
-                    </div>
-                </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label> (Optional)
+                <textarea asp-for="Description" class="form-control" maxlength="500"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+                <div id="textarea_feedback"></div>
             </div>
 
 
-            <p class="submit-wrapper">
-                <input type="submit" value="Save" />
-            </p>
-
-        </div>
-        
-        <div class="edit-content-right">
-
-            <div class="editor-wrapper-author">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.AuthorId)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(x => x.AuthorId, Model.Authors)
-                    @Html.ValidationMessageFor(model => model.AuthorId)
-                </div>
-            </div>
-        
-            <div class="editor-wrapper-publicationdate">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.PublicationDate)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.PublicationDate)
-                    @Html.ValidationMessageFor(model => model.PublicationDate)
-                </div>
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsPublished" />@Html.DisplayNameFor(model => model.IsPublished)
+                </label>
+                <span asp-validation-for="IsPublished" class="text-danger"></span>
             </div>
 
-            <div class="editor-wrapper-keywords">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.Keywords)
-                </div>
-                <div class="editor-field">
-                    @Html.EditorFor(model => model.Keywords)
-                    @Html.ValidationMessageFor(model => model.Keywords)
-                </div>
+            <div class="checkbox">
+                <label>
+                    <input asp-for="IsFrontPage" />@Html.DisplayNameFor(model => model.IsFrontPage)
+                </label>
+                <span asp-validation-for="IsFrontPage" class="text-danger"></span>
             </div>
 
-            <div class="editor-wrapper-parentid">
-                <div class="editor-label">
-                    @Html.LabelFor(model => model.ParentId)
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownListFor(x=>x.ParentId, Model.Pages, "Select")
-                </div>
+            <div class="checkbox">
+                <label>
+                    <input asp-for="ShowInList" />@Html.DisplayNameFor(model => model.ShowInList)
+                </label>
+                <span asp-validation-for="ShowInList" class="text-danger"></span>
             </div>
+
+            <button class="btn btn-primary" type="submit">Save</button>
 
         </div>
 
-        
-    </fieldset>
+        <div class="col-xs-3">
+
+            <div class="form-group">
+                <label asp-for="AuthorId" class="control-label"></label>
+                <select asp-for="AuthorId" asp-items="Model.Authors" class="form-control"></select>
+                <span asp-validation-for="AuthorId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PublicationDate" class="control-label"></label>
+                <div class='input-group'>
+                    <input asp-for="PublicationDate" asp-format="{0:yyyy/MM/dd HH:mm}" class="form-control datetime-picker" placeholder="Title" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+                <span asp-validation-for="PublicationDate" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Keywords" class="control-label"></label>
+                <textarea asp-for="Keywords" class="form-control"></textarea>
+                <span asp-validation-for="Keywords" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ParentId" class="control-label"></label>
+                <select asp-for="ParentId" asp-items="Model.Pages" class="form-control">
+                    <option value="">Select</option>
+                </select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script type="text/javascript">
 
@@ -188,16 +161,16 @@
         var callUrl = '@(Url.Action("GenerateSlug", "Page"))';
 
         $.ajax({
-                type: "POST",
-                url: callUrl,
-                data: { text: $('#@Html.IdFor(x=>x.Title)').val() },
-                success: function(response) {
-                    $('#@Html.IdFor(x=>x.Slug)').val(response);
-                },
-                error: function() {
-                    alert('Error');
-                }
-            });
+            type: "POST",
+            url: callUrl,
+            data: { text: $('#@Html.IdFor(x=>x.Title)').val() },
+            success: function(response) {
+                $('#@Html.IdFor(x=>x.Slug)').val(response);
+            },
+            error: function() {
+                alert('Error');
+            }
+        });
     });
 
 </script>

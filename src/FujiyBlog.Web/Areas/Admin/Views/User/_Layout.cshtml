@@ -2,6 +2,13 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-@Html.ActionLink("Users", "Index", "User")
-@Html.ActionLink("Roles", "Roles", "User")
+<ul class="nav nav-tabs">
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">
+        <a asp-action="Index">Pending</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Roles" ? "active": "")">
+        <a asp-action="Roles">Roles</a>
+    </li>
+</ul>
+
 @RenderBody()

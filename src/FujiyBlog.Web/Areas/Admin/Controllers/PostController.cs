@@ -245,6 +245,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Categories()
         {
             Dictionary<Category, int> categoriesPostCount = (from category in db.Categories
+                                                             orderby category.Name
                                                              select new { Category = category, PostCount = category.PostCategories.Where(x => !x.Post.IsDeleted).Count() }).ToDictionary(e => e.Category, e => e.PostCount);
 
             AdminCategoriesList adminCategoriesList = new AdminCategoriesList { CategoriesPostCount = categoriesPostCount };
@@ -291,6 +292,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public ActionResult Tags()
         {
             Dictionary<Tag, int> tagsPostCount = (from tag in db.Tags
+                                                  orderby tag.Name
                                                   select new { Tag = tag, PostCount = tag.PostTags.Count() }).ToDictionary(e => e.Tag, e => e.PostCount);
 
             AdminTagsList tagsList = new AdminTagsList { TagsPostCount = tagsPostCount };

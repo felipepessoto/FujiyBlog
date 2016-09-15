@@ -1,8 +1,14 @@
 ﻿@{
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
-<a asp-controller="Comment" asp-action="Index">Pending</a>
--
-<a asp-controller="Comment" asp-action="Approved">Approved</a>
+
+<ul class="nav nav-tabs">
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">
+        <a asp-action="Index">Pending</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Approved" ? "active": "")">
+        <a asp-action="Approved">Approved</a>
+    </li>
+</ul>
 
 @RenderBody()

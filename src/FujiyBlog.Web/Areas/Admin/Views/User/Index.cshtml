@@ -13,9 +13,7 @@
 
 @if (Context.UserHasClaimPermission(PermissionClaims.CreateNewUsers))
 {
-    <p>
-        @Html.ActionLink("Create New User", "Create")
-    </p>
+    <a asp-action="Create" class="btn btn-default">Create New User</a>
 }
 
 <table class="table table-striped table-hover">
@@ -28,16 +26,18 @@
                 Email
             </th>
             <th>
-                DisplayName
+                Display Name
             </th>
             <th>
-                FullName
+                Full Name
             </th>
             <th>
-                CreationDate
+                Creation Date
             </th>
             <th>
-                LastLoginDate
+                Last Login Date
+            </th>
+            <th>
             </th>
             <th>
             </th>
@@ -67,18 +67,23 @@
                 </td>
                 <td>
                     @if ((item.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) ||
-        (item.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
+    (item.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
                     {
-                        <text>
-                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-
-                        <span id="disable-link-@item.Id" @if (!item.Enabled) { <text> style="display:none" </text>  }>
-                            <a asp-controller="User" asp-action="Disable" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("AfterDisable(arguments[0], '" + item.Id + "');")">Disable</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                    }
+                </td>
+                <td>
+                    @if ((item.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) ||
+(item.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
+                    {
+                        
+                        <span id="disable-link-@item.Id" style="@(item.Enabled == false ? "display:none": null)">
+                            <a asp-controller="User" asp-action="Disable" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("AfterDisable(arguments[0], '" + item.Id + "');")" class="btn btn-default">Disable</a>
                         </span>
-                        <span id="enable-link-@item.Id" @if (item.Enabled) { <text> style="display:none" </text>  }>
-                            <a asp-controller="User" asp-action="Enable" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("AfterEnable(arguments[0], '" + item.Id + "');")">Enable</a>
+                        <span id="enable-link-@item.Id" style="@(item.Enabled ? "display:none": null)">
+                            <a asp-controller="User" asp-action="Enable" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("AfterEnable(arguments[0], '" + item.Id + "');")" class="btn btn-default">Enable</a>
                         </span>
-                        </text>
+                        
                     }
                 </td>
             </tr>

@@ -20,7 +20,6 @@
 }
 
 <ul class="nav nav-pills">
-
     <li class="@(Model.Published == null ? "active": null)">@Html.ActionLink("All", "Index", "Post", new { area = "Admin" })</li>
     <li class="@(Model.Published == false ? "active": null)">@Html.ActionLink("Drafts", "Index", "Post", new { published = false, Area = "Admin" })</li>
     <li class="@(Model.Published == true ? "active": null)">@Html.ActionLink("Published", "Index", "Post", new { published = true, Area = "Admin" })</li>
@@ -31,6 +30,7 @@
 <table class="table table-striped table-hover">
     <thead>
         <tr>
+            <th></th>
             <th>
                 Published
             </th>
@@ -63,6 +63,12 @@
             {
             <tr id="item-row-@item.Post.Id" class="@(item.Post.IsPublished ? "" : "warning")">
                 <td>
+                    @if ((item.Post.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPosts)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts))
+                {
+                        <a asp-action="Edit" asp-route-id="@item.Post.Id" class="btn btn-primary" >Edit</a>
+                    }
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Post.IsPublished)
                 </td>
                 <td>
@@ -87,16 +93,9 @@
                     @Html.DisplayFor(modelitem => item.CommentsTotal)
                 </td>
                 <td>
-                    @if ((item.Post.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPosts)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts))
-                {
-                        @Html.ActionLink("Edit", "Edit", "Post", new { id = item.Post.Id, Area = "Admin" })
-                    }
                     @if ((item.Post.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOwnPosts)) || (item.Post.Author.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.DeleteOtherUsersPosts)))
                     {
-
-
-                        <a asp-area="Admin" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Post.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Post.Id + ");")">Delete</a>
-
+                        <a asp-action="Delete" asp-route-id="@item.Post.Id" class="btn btn-danger" asp data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Post.Id + ");")">Delete</a>
                     }
                 </td>
             </tr>
