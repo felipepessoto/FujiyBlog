@@ -118,21 +118,21 @@
         },
         originalRepliesPaddingLeft: null
     },
-    socialId: {
-        openLoginPopup: function (openIdIdentifier) {
-            window.open(fujiyBlogUrls.Social_LoginOpenId + '?openIdIdentifier=' + openIdIdentifier, 'openid', 'height=400, width=600');
-        },
-        callbackLogin: function (success, message) {
-            if (success) {
-                $('#comment-user-data').hide();
-                $('#logout-social-id').show();
-            }
-        },
-        callbackLogout: function () {
-            $('#comment-user-data').show();
-            $('#logout-social-id').hide();
-        }
-    },
+    //socialId: {
+    //    openLoginPopup: function (openIdIdentifier) {
+    //        window.open(fujiyBlogUrls.Social_LoginOpenId + '?openIdIdentifier=' + openIdIdentifier, 'openid', 'height=400, width=600');
+    //    },
+    //    callbackLogin: function (success, message) {
+    //        if (success) {
+    //            $('#comment-user-data').hide();
+    //            $('#logout-social-id').show();
+    //        }
+    //    },
+    //    callbackLogout: function () {
+    //        $('#comment-user-data').show();
+    //        $('#logout-social-id').hide();
+    //    }
+    //},
     windowOpenCenter: function (url, title, w, h) {
         var left = (screen.width / 2) - (w / 2);
         var top = (screen.height / 2) - (h / 2);
@@ -147,30 +147,30 @@ $(function () {
         }
     });
 
-    $('.datetime-picker').datetimepicker({
-        ampm: true
-    });
+    //$('.datetime-picker').datetimepicker({
+    //    ampm: true
+    //});
 
     if (window.shouldStartDragAndDrop) {
         $(function () { fujiyBlog.widget.startDragAndDrop(); });
     }
 
-    $('#open-openid-login').click(function () {
+    //$('#open-openid-login').click(function () {
 
-        var identifier = openid.provider_url;
-        if (identifier) {
-            identifier = identifier.replace('{username}', $('#openid_username').val());
-            fujiyBlog.socialId.openLoginPopup(identifier);
-        }
-    });
+    //    var identifier = openid.provider_url;
+    //    if (identifier) {
+    //        identifier = identifier.replace('{username}', $('#openid_username').val());
+    //        fujiyBlog.socialId.openLoginPopup(identifier);
+    //    }
+    //});
 
-    $(document).ready(function () {
-        openid.img_path = fujiyBlogUrls.OpenIdSelectorImages;
-        openid.init('openid_identifier');
+    //$(document).ready(function () {
+    //    openid.img_path = fujiyBlogUrls.OpenIdSelectorImages;
+    //    openid.init('openid_identifier');
 
-        if (document.cookie.search(/(^|;)openid=/) >= 0) {
-            $('#comment-user-data').hide();
-            $('#logout-social-id').show();
-        }
-    });
+    //    if (document.cookie.search(/(^|;)openid=/) >= 0) {
+    //        $('#comment-user-data').hide();
+    //        $('#logout-social-id').show();
+    //    }
+    //});
 });
