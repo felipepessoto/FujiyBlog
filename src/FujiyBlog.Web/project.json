@@ -44,7 +44,7 @@
       "type": "build"
     },
     "FujiyBlog.Core": "1.0.0-*",
-    "HtmlAgilityPack.NetCore": "1.4.9.2",
+    "HtmlAgilityPack.NetCore": "1.5.0.1",
     "Microsoft.AspNetCore.Authentication.Google": "1.0.0",
     "Microsoft.ApplicationInsights.AspNetCore": "1.0.0"
   },
