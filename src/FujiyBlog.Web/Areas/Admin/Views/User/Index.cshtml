@@ -20,6 +20,9 @@
     <thead>
         <tr>
             <th>
+
+            </th>
+            <th>
                 Username
             </th>
             <th>
@@ -39,14 +42,20 @@
             </th>
             <th>
             </th>
-            <th>
-            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
             <tr id="item-row-@item.Id">
+                <td>
+                    @if ((item.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) ||
+(item.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                    }
+                </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
@@ -67,23 +76,16 @@
                 </td>
                 <td>
                     @if ((item.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) ||
-    (item.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
-                    }
-                </td>
-                <td>
-                    @if ((item.UserName != User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOtherUsers)) ||
 (item.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnUser)))
                     {
-                        
+
                         <span id="disable-link-@item.Id" style="@(item.Enabled == false ? "display:none": null)">
                             <a asp-controller="User" asp-action="Disable" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("AfterDisable(arguments[0], '" + item.Id + "');")" class="btn btn-default">Disable</a>
                         </span>
                         <span id="enable-link-@item.Id" style="@(item.Enabled ? "display:none": null)">
                             <a asp-controller="User" asp-action="Enable" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("AfterEnable(arguments[0], '" + item.Id + "');")" class="btn btn-default">Enable</a>
                         </span>
-                        
+
                     }
                 </td>
             </tr>
