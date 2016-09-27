@@ -22,7 +22,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<PostSummary> GetRecentPosts(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
         {
-            IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHaveRoles(contextAccessor.HttpContext).OrderByDescending(x => x.PublicationDate).Include(x => x.Author).Include(x => x.PostTags).ThenInclude(x=>x.Tag).Include(x => x.PostCategories).ThenInclude(x=>x.Category);
+            IQueryable<Post> posts = Database.Posts.AsNoTracking().WhereHaveRoles(contextAccessor.HttpContext).Include(x => x.Author).Include(x => x.PostTags).ThenInclude(x=>x.Tag).Include(x => x.PostCategories).ThenInclude(x=>x.Category).OrderByDescending(x => x.PublicationDate);
 
             if (tag != null)
             {
