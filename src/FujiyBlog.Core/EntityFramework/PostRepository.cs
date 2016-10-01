@@ -54,11 +54,9 @@ namespace FujiyBlog.Core.EntityFramework
                 posts = posts.Where(x => x.PublicationDate <= endDate.Value);
             }
 
-            posts = posts.Take(take);
+            Dictionary<int, int> counts = GetPostsCounts(posts, take);
 
-            Dictionary<int, int> counts = GetPostsCounts(posts);
-
-            var postSummaries = (from post in posts.ToList()
+            var postSummaries = (from post in posts.Take(take).ToList()
                                   select new PostSummary
                                              {
                                                  Post = post,
@@ -68,7 +66,7 @@ namespace FujiyBlog.Core.EntityFramework
             return postSummaries;
         }
 
-        private Dictionary<int, int> GetPostsCounts(IQueryable<Post> posts)
+        private Dictionary<int, int> GetPostsCounts(IQueryable<Post> posts, int take)
         {
             bool publicComments = contextAccessor.HttpContext.UserHasClaimPermission(PermissionClaims.ViewPublicComments);
             bool unmoderatedComments = contextAccessor.HttpContext.UserHasClaimPermission(PermissionClaims.ViewUnmoderatedComments);
@@ -76,32 +74,32 @@ namespace FujiyBlog.Core.EntityFramework
             if (publicComments && unmoderatedComments)
             {
                 return (from post in posts
-                          select new { post.Id, C = post.Comments.Count(x => x.IsDeleted == false) }).ToDictionary(e => e.Id, e => e.C);
+                          select new { post.Id, C = post.Comments.Count(x => x.IsDeleted == false) }).Take(take).ToDictionary(e => e.Id, e => e.C);
             }
 
             if (publicComments)
             {
                 return (from post in posts
-                        select new {post.Id, C = post.Comments.Count(x => x.IsApproved && x.IsDeleted == false)}).ToDictionary(
+                        select new {post.Id, C = post.Comments.Count(x => x.IsApproved && x.IsDeleted == false)}).Take(take).ToDictionary(
                             e => e.Id, e => e.C);
             }
 
             if (unmoderatedComments)
             {
                 return (from post in posts
-                        select new { post.Id, C = post.Comments.Count(x => x.IsApproved == false && x.IsDeleted == false) }).ToDictionary(
+                        select new { post.Id, C = post.Comments.Count(x => x.IsApproved == false && x.IsDeleted == false) }).Take(take).ToDictionary(
             e => e.Id, e => e.C);
             }
 
             return (from post in posts
-                    select new { post.Id, C = 0 }).ToDictionary(e => e.Id, e => e.C);
+                    select new { post.Id, C = 0 }).Take(take).ToDictionary(e => e.Id, e => e.C);
         }
 
         public IEnumerable<PostSummary> GetArchive()
         {
             IQueryable<Post> posts = Database.Posts.WhereHaveRoles(contextAccessor.HttpContext).OrderByDescending(x => x.PublicationDate).Include(x => x.PostCategories).ThenInclude(x=>x.Category);
 
-            Dictionary<int, int> counts = GetPostsCounts(posts);
+            Dictionary<int, int> counts = GetPostsCounts(posts, int.MaxValue);
 
             var postSummaries = (from post in posts.ToList()
                                  select new PostSummary
