@@ -97,7 +97,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public IEnumerable<PostSummary> GetArchive()
         {
-            IQueryable<Post> posts = Database.Posts.WhereHaveRoles(contextAccessor.HttpContext).OrderByDescending(x => x.PublicationDate).Include(x => x.PostCategories).ThenInclude(x=>x.Category);
+            IQueryable<Post> posts = Database.Posts.WhereHaveRoles(contextAccessor.HttpContext).Include(x => x.PostCategories).ThenInclude(x=>x.Category).OrderByDescending(x => x.PublicationDate);
 
             Dictionary<int, int> counts = GetPostsCounts(posts, int.MaxValue);
 
