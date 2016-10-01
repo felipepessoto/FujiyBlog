@@ -12,37 +12,47 @@
     Layout = "_Layout";
 }
 
-@using (Html.BeginForm())
-{
-    <div id="contact">
-        <div>
-            <h1>@FujiyBlog.Web.Resources.Labels.Contact</h1>
+<div class="row">
+    <div class="col-xs-12 col-lg-6">
+        <form method="post">
+            <div>
+                <h1>@FujiyBlog.Web.Resources.Labels.Contact</h1>
 
-            <div><p>@FujiyBlog.Web.Resources.Labels.SendYourMessage</p></div>
+                <div><p>@FujiyBlog.Web.Resources.Labels.SendYourMessage</p></div>
 
-            @Html.LabelFor(x => x.Name)
-            @Html.EditorFor(x => x.Name)
-            @Html.ValidationMessageFor(x => x.Name)
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" placeholder="Name" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
 
-            @Html.LabelFor(x => x.Email)
-            @Html.EditorFor(x => x.Email)
-            @Html.ValidationMessageFor(x => x.Email)
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" placeholder="Email" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
 
-            @Html.LabelFor(x => x.Subject)
-            @Html.EditorFor(x => x.Subject)
-            @Html.ValidationMessageFor(x => x.Subject)
+                <div class="form-group">
+                    <label asp-for="Subject" class="control-label"></label>
+                    <input asp-for="Subject" class="form-control" placeholder="Subject" />
+                    <span asp-validation-for="Subject" class="text-danger"></span>
+                </div>
 
-            @Html.LabelFor(x => x.Body)
-            @Html.EditorFor(x => x.Body)
-            @Html.ValidationMessageFor(x => x.Body)
+                <div class="form-group">
+                    <label asp-for="Body" class="control-label"></label>
+                    <textarea asp-for="Body" class="form-control"></textarea>
+                    <span asp-validation-for="Body" class="text-danger"></span>
+                </div>
 
-            @if (settings.ReCaptchaEnabled && !Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
-            {
-                <script src='https://www.google.com/recaptcha/api.js'></script>
-                <div class="g-recaptcha" data-sitekey="@settings.ReCaptchaPublicKey"></div>
-            }
+                @if (settings.ReCaptchaEnabled && !Context.UserHasClaimPermission(PermissionClaims.ModerateComments))
+                {
+                    <script src='https://www.google.com/recaptcha/api.js'></script>
+                        <div class="g-recaptcha" data-sitekey="@settings.ReCaptchaPublicKey"></div>
+                }
 
-            <input type="submit" value="@FujiyBlog.Web.Resources.Labels.Send" />
-        </div>
+                <button class="btn btn-primary" type="submit">@FujiyBlog.Web.Resources.Labels.Send</button>
+            </div>
+
+        </form>
     </div>
-}
+</div>
