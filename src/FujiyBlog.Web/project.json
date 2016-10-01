@@ -46,7 +46,8 @@
     "FujiyBlog.Core": "1.0.0-*",
     "HtmlAgilityPack.NetCore": "1.5.0.1",
     "Microsoft.AspNetCore.Authentication.Google": "1.0.0",
-    "Microsoft.ApplicationInsights.AspNetCore": "1.0.0"
+    "Microsoft.ApplicationInsights.AspNetCore": "1.0.0",
+    "Fujiy.ApplicationInsights.AspNetCore.SqlTrack":  "1.0.0"
   },
 
   "tools": {
