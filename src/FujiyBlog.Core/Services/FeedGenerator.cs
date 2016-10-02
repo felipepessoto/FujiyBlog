@@ -3,6 +3,8 @@ using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +20,12 @@ namespace FujiyBlog.Core.Services
         private readonly SettingRepository settings;
         public IUrlHelper urlHelper { get; set; }
 
-        public FeedGenerator(FeedRepository feedRepository, SettingRepository settings, IHttpContextAccessor contextAccessor)
+        public FeedGenerator(FeedRepository feedRepository, SettingRepository settings, IHttpContextAccessor contextAccessor, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccesor)
         {
             this.feedRepository = feedRepository;
             this.settings = settings;
             this.contextAccessor = contextAccessor;
-            this.urlHelper = urlHelper;
+            this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccesor.ActionContext);
         }
 
         public string Name

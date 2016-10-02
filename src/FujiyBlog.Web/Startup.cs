@@ -10,6 +10,7 @@ using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -71,6 +72,7 @@ namespace FujiyBlog.Web
             services.AddScoped<WidgetSettingRepository>();
             services.AddScoped<FeedRepository>();
             services.AddScoped<FeedGenerator>();
+            services.AddScoped<cloudscribe.Syndication.Models.Rss.IChannelProvider, FeedGenerator>();//to enable cloudscribe.Syndication RssController
 
             services.Configure<RazorViewEngineOptions>(options =>
             {
@@ -83,6 +85,15 @@ namespace FujiyBlog.Web
                 {
                     options.AddPolicy(role, policy => policy.RequireClaim(CustomClaimTypes.Permission, role));
                 }
+            });
+
+            services.Configure<MvcOptions>(options =>
+            {
+                options.CacheProfiles.Add("RssCacheProfile",
+                     new CacheProfile
+                     {
+                         Duration = 100
+                     });
             });
         }
 
