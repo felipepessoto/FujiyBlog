@@ -4,63 +4,56 @@
     Layout = "_Layout";
 }
 <h2>
-    Email Settings</h2>
+    Email Settings
+</h2>
 @using (Html.BeginForm())
 {
+    <legend>Email</legend>
 
-    <fieldset>
-        <legend>Email</legend>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EmailTo)
+        <div class="form-group">
+            <label asp-for="EmailTo" class="control-label"></label>
+            <input asp-for="EmailTo" class="form-control" />
+            <span asp-validation-for="EmailTo" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EmailTo)
-            @Html.ValidationMessageFor(model => model.EmailTo)
+
+        <div class="form-group">
+            <label asp-for="EmailSubjectPrefix" class="control-label"></label>
+            <input asp-for="EmailSubjectPrefix" class="form-control" />
+            <span asp-validation-for="EmailSubjectPrefix" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EmailSubjectPrefix)
+
+        <div class="form-group">
+            <label asp-for="SmtpAddress" class="control-label"></label>
+            <input asp-for="SmtpAddress" class="form-control" />
+            <span asp-validation-for="SmtpAddress" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EmailSubjectPrefix)
-            @Html.ValidationMessageFor(model => model.EmailSubjectPrefix)
+
+        <div class="form-group">
+            <label asp-for="SmtpPort" class="control-label"></label>
+            <input asp-for="SmtpPort" class="form-control" />
+            <span asp-validation-for="SmtpPort" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SmtpAddress)
+
+        <div class="form-group">
+            <label asp-for="SmtpUserName" class="control-label"></label>
+            <input asp-for="SmtpUserName" class="form-control" />
+            <span asp-validation-for="SmtpUserName" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SmtpAddress)
-            @Html.ValidationMessageFor(model => model.SmtpAddress)
+
+        <div class="form-group">
+            <label asp-for="SmtpPassword" class="control-label"></label>
+            <input asp-for="SmtpPassword" class="form-control" />
+            <span asp-validation-for="SmtpPassword" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SmtpPort)
+
+        <div class="form-group">
+            <div class="checkbox">
+                <label>
+                    <input asp-for="SmtpSsl" type="checkbox" />@Html.DisplayNameFor(x => x.SmtpSsl)
+                </label>
+            </div>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SmtpPort)
-            @Html.ValidationMessageFor(model => model.SmtpPort)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SmtpUserName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SmtpUserName)
-            @Html.ValidationMessageFor(model => model.SmtpUserName)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SmtpPassword)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SmtpPassword)
-            @Html.ValidationMessageFor(model => model.SmtpPassword)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SmtpSsl)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.SmtpSsl)
-            @Html.ValidationMessageFor(model => model.SmtpSsl)
-        </div>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+
+        <button class="btn btn-primary" type="submit">Save</button>
+
 }

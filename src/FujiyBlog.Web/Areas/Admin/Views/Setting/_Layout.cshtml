@@ -2,12 +2,31 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<a asp-area="Admin" asp-controller="Setting" asp-action="Index">Basic</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="Email">Email</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="Comments">Comments</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="SocialNetworks">Social Networks</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="Feed">Feed</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="Import">Import</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="Cache">Cache</a>
-<a asp-area="Admin" asp-controller="Setting" asp-action="Logs">Logs</a>
+<ul class="nav nav-tabs">
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">
+        <a asp-action="Index">Basic</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Email" ? "active": "")">
+        <a asp-action="Email">Email</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Comments" ? "active": "")">
+        <a asp-action="Comments">Comments</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "SocialNetworks" ? "active": "")">
+        <a asp-action="SocialNetworks">Social Networks</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Feed" ? "active": "")">
+        <a asp-action="Feed">Feed</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Import" ? "active": "")">
+        <a asp-action="Import">Import</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Cache" ? "active": "")">
+        <a asp-action="Cache">Cache</a>
+    </li>
+    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Logs" ? "active": "")">
+        <a asp-action="Logs">Logs</a>
+    </li>
+</ul>
+
 @RenderBody()

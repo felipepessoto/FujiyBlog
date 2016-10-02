@@ -7,70 +7,46 @@
     Basic Settings</h2>
 @using (Html.BeginForm())
 {
-    <fieldset>
         <legend>Basic</legend>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BlogName)
+        <div class="form-group">
+            <label asp-for="BlogName" class="control-label"></label>
+            <input asp-for="BlogName" class="form-control" />
+            <span asp-validation-for="BlogName" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BlogName)
-            @Html.ValidationMessageFor(model => model.BlogName)
+        <div class="form-group">
+            <label asp-for="BlogDescription" class="control-label"></label>
+            <input asp-for="BlogDescription" class="form-control" />
+            <span asp-validation-for="BlogDescription" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BlogDescription)
+        <div class="form-group">
+            <label asp-for="Theme" class="control-label"></label>
+            <select asp-for="Theme" asp-items="Model.Themes" class="form-control"></select>
+            <span asp-validation-for="Theme" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BlogDescription)
-            @Html.ValidationMessageFor(model => model.BlogDescription)
+        <div class="form-group">
+            <label asp-for="PostsPerPage" class="control-label"></label>
+            <input asp-for="PostsPerPage" class="form-control" />
+            <span asp-validation-for="PostsPerPage" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Theme)
+        <div class="form-group">
+            <label asp-for="TimeZoneId" class="control-label"></label>
+            <select asp-for="TimeZoneId" asp-items="Model.TimeZones" class="form-control"></select>
+            <span asp-validation-for="TimeZoneId" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Theme, Model.Themes)
-            @Html.ValidationMessageFor(model => model.Theme)
+        <div class="form-group">
+            <label asp-for="Language" class="control-label"></label>
+            <select asp-for="Language" asp-items="Model.Languages" class="form-control"></select>
+            <span asp-validation-for="Language" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.PostsPerPage)
+        <div class="form-group">
+            <label asp-for="ApplicationInsightsInstrumentationKey" class="control-label"></label>
+            <input asp-for="ApplicationInsightsInstrumentationKey" class="form-control" />
+            <span asp-validation-for="ApplicationInsightsInstrumentationKey" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.PostsPerPage)
-            @Html.ValidationMessageFor(model => model.PostsPerPage)
+        <div class="form-group">
+            <label asp-for="CustomCode" class="control-label"></label>
+            <textarea asp-for="CustomCode" class="form-control" rows="10"></textarea>
+            <span asp-validation-for="CustomCode" class="text-danger"></span>
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.TimeZoneId)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.TimeZoneId, Model.TimeZones)
-            @Html.ValidationMessageFor(model => model.TimeZoneId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Language)
-        </div>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Language, Model.Languages)
-            @Html.ValidationMessageFor(model => model.Language)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ApplicationInsightsInstrumentationKey)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ApplicationInsightsInstrumentationKey)
-            @Html.ValidationMessageFor(model => model.ApplicationInsightsInstrumentationKey)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CustomCode)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CustomCode)
-            @Html.ValidationMessageFor(model => model.CustomCode)
-        </div>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+        <button class="btn btn-primary" type="submit">Save</button>
 }
