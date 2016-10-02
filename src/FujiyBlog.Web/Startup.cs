@@ -47,7 +47,9 @@ namespace FujiyBlog.Web
         {
             // Add framework services.
             services.AddDbContext<FujiyBlogDatabase>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));//TODO confirmar
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                //.ConfigureWarnings(warnings => warnings.Throw(Microsoft.EntityFrameworkCore.Infrastructure.RelationalEventId.QueryClientEvaluationWarning))
+                );
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<FujiyBlogDatabase>()

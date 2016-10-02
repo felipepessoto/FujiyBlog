@@ -24,21 +24,26 @@ namespace FujiyBlog.Web.Controllers
         public ActionResult Index(int? page, string terms)
         {
             int skip = (page.GetValueOrDefault(1) - 1) * settings.PostsPerPage;
-            string[] termsSplit = terms.Split(' ');
+            //workaround EF core doesn't translate termsSplit.Any(x => post.Content.Contains(x))
+            //string[] termsSplit = terms.Split(' ');
 
             var encodedTerm = HtmlEncoder.Default.Encode(terms);
             ViewBag.Title = "Search for" + " '" + encodedTerm + "'";
 
             IQueryable<Post> query = from post in db.Posts.WhereHaveRoles(HttpContext).Include(x => x.PostTags).ThenInclude(x=>x.Tag).Include(x => x.PostCategories).ThenInclude(x=>x.Category)
                                      orderby post.PublicationDate descending 
-                                     where termsSplit.Any(x => post.Content.Contains(x)) || termsSplit.Any(x => post.Title.Contains(x)) || termsSplit.Any(x => post.Description.Contains(x))
+                                     where post.Content.Contains(terms) || post.Title.Contains(terms) || post.Description.Contains(terms)
                                      select post;
+
+            int count = query.Count();
 
             SearchResult viewModel = new SearchResult
                                          {
                                              CurrentPage = page.GetValueOrDefault(1),
                                              Posts = query.Skip(skip).Take(settings.PostsPerPage).ToList(),
-                                             TotalPages = (int) Math.Ceiling(query.Count()/(double) settings.PostsPerPage),
+                                             TotalPages = (int) Math.Ceiling(count/(double) settings.PostsPerPage),
+                                             Count = count,
+                                             Terms = terms
                                          };
 
             return View(viewModel);

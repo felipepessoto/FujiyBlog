@@ -8,5 +8,7 @@ namespace FujiyBlog.Web.ViewModels.SearchViewModels
         public IEnumerable<Post> Posts { get; set; }
         public int CurrentPage { get; set; }
         public int TotalPages { get; set; }
+        public int Count { get; internal set; }
+        public string Terms { get; internal set; }
     }
 }

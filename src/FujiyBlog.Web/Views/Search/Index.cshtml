@@ -26,36 +26,43 @@
 }
 
 
-<div class="searchpage post">
-    <h1>@ViewBag.Title</h1>
-    <div id="searchpage">
-
-        <input type="text" id="searchPageTerms" value="@Context.Request.Query["terms"]" />
-        <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#searchPageTerms').val());">Search</a>
-
-    </div>
-    @foreach (var item in Model.Posts)
-    {
-        <div class="searchresult">
-            @Html.ActionLink(item.Title, "Details", "Post", new { postSlug = item.Slug })
-            <span>"@GetDescription(item)"</span>
-            <span>
-                <strong>Categorias</strong> :
-                @foreach (var category in item.PostCategories.Select(x => x.Category))
-                {
-                    <a asp-controller="Post" asp-action="Category" asp-route-category="@category.Name">@category.Name</a>
-                }
-            </span>
-
-            <span>
-                <strong>Tags</strong> :
-                @foreach (var tag in item.PostTags.Select(x => x.Tag))
-                {
-                    <a asp-controller="Post" asp-action="Tag" asp-route-tag="@tag.Name">@tag.Name</a>
-                }
+<h1>@ViewBag.Title <span class="badge">@Model.Count</span></h1>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="input-group">
+            <input type="text" id="searchPageTerms" value="@Model.Terms" class="form-control" />
+            <span class="input-group-btn">
+                <a class="btn btn-primary" href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#searchPageTerms').val());">Search</a>
             </span>
         </div>
-    }
+    </div>
 </div>
+
+@foreach (var item in Model.Posts)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <a asp-controller="Post" asp-action="Details" asp-route-postSlug="@item.Slug">@item.Title</a>
+            </h3>
+        </div>
+        <div class="panel-body">
+            @GetDescription(item)
+        </div>
+        <div class="panel-footer">
+            <strong>Categorias</strong> :
+            @foreach (var category in item.PostCategories.Select(x => x.Category))
+                {
+                <a asp-controller="Post" asp-action="Category" asp-route-category="@category.Name">@category.Name</a>
+            }
+            <strong>Tags</strong> :
+            @foreach (var tag in item.PostTags.Select(x => x.Tag))
+                {
+                <a asp-controller="Post" asp-action="Tag" asp-route-tag="@tag.Name">@tag.Name</a>
+            }
+        </div>
+    </div>
+}
+
 
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })

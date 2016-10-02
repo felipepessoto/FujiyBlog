@@ -7,8 +7,9 @@
 
 }
 <h4>@Html.Raw(settings.Value<string>("Title") ?? "Search")</h4>
-<div class="search">
-    <input type="text" id="@(Model.Id)_searchWidgetTerms" value="@Context.Request.Query["terms"]" class="searchWidgetTerms" />
-    <a href="javascript:void(0);" onclick="javascript:fujiyBlog.searchForm.sendSearch($('#@(Model.Id)_searchWidgetTerms').val());">
-        Search</a>
+<div class="input-group">
+    <input type="text" id="@(Model.Id)_searchWidgetTerms" value="@Context.Request.Query["terms"]" class="form-control" />
+    <span class="input-group-btn">
+        <a class="btn btn-primary" href="javascript:void(0);" onclick="javascript: fujiyBlog.searchForm.sendSearch($('#@(Model.Id)_searchWidgetTerms').val());">Search</a>
+    </span>
 </div>
