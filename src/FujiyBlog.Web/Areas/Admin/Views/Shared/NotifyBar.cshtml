@@ -4,6 +4,9 @@
 
 @if (Context.Request.Cookies["NotifyBar"] != null)
 {
-    <div id="notify-bar" class="success" style="display: none;"><span>@Context.Request.Cookies["NotifyBar"]</span> <a id="close-notify" href="javascript:void(0);">X</a></div>
+    <div id="notify-bar" style="display:none;" class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @Context.Request.Cookies["NotifyBar"]
+    </div>
     Context.Response.Cookies.Append("NotifyBar", "", new Microsoft.AspNetCore.Http.CookieOptions { Expires = DateTimeOffset.Now.AddDays(-1) });
 }
