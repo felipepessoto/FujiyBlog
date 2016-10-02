@@ -7,46 +7,48 @@
 
 <h2>@(Model.Id != null ? "Edit" : "Add") Role</h2>
 
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Role</legend>
 
-        @if (Model.Id != null)
-        {
-            @Html.HiddenFor(model => model.Id)
-        }
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Name)
-        </div>
-        <div class="editor-field">
+    <legend>Role</legend>
+
+    @if (Model.Id != null)
+    {
+        @Html.HiddenFor(model => model.Id)
+    }
+
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+
         @if (string.Equals(Model.Name, "Anonymous", StringComparison.OrdinalIgnoreCase))
         {
-            @Html.DisplayTextFor(model => model.Name)
+            @Model.Name
         }
         else
         {
-            @Html.EditorFor(model => model.Name)
+            <input asp-for="Name" class="form-control" />
         }
-            
-            @Html.ValidationMessageFor(model => model.Name)
-        </div>
 
-        <div class="role-category">
-            <ul id="roles-list">
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+        <div class="form-group">
+            <label asp-for="Claims" class="control-label"></label>
             @foreach (var role in Enum.GetNames(typeof(PermissionClaims)))
             {
-                <li><input type="checkbox" name="claims" value="@role" @(Model.Claims.Any(x => x == role) ? "checked=checked" : string.Empty) />@role</li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="claims" value="@role" @(Model.Claims.Any(x => x == role) ? "checked=checked" : string.Empty) />@role
+                    </label>
+                </div>
+
             }
-            </ul>
         </div>
 
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+        <div class="row">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-default pull-right">Back to list</a>
+        </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

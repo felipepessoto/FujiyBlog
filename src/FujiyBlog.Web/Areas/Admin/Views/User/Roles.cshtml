@@ -12,40 +12,42 @@
 @if (Context.UserHasClaimPermission(PermissionClaims.CreateRoles))
 {
     <p>
-        @Html.ActionLink("Create Role", "EditRole")
+        <a asp-action="EditRole" class="btn btn-default">Create Role</a>
     </p>
 }
-<table>
-    <tr>
-        <th>
-            Name
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
-        <tr id="item-row-@item.Id">
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @if (!string.Equals(item.Name, "Admin", StringComparison.OrdinalIgnoreCase))
-                {
-                    if (Context.UserHasClaimPermission(PermissionClaims.EditRoles))
-                    {
-                        @Html.ActionLink("Edit", "EditRole", new { id = item.Id })
-                    }
-                    if (Context.UserHasClaimPermission(PermissionClaims.DeleteRoles) && item.Name != "Anonymous")
-                    {
-                        <text>|</text>
-                        <a asp-action="DeleteRole" asp-route-id="@item.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")">Delete</a>
-
-                    }
-                }
-            </td>
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
-    }
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="item-row-@item.Id">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (string.Equals(item.Name, "Admin", StringComparison.OrdinalIgnoreCase) == false && Context.UserHasClaimPermission(PermissionClaims.EditRoles))
+                    {
+                        <a asp-action="EditRole" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                    }
+                </td>
+                <td>
+                    @if (string.Equals(item.Name, "Admin", StringComparison.OrdinalIgnoreCase) == false && Context.UserHasClaimPermission(PermissionClaims.DeleteRoles) && item.Name != "Anonymous")
+                    {
+                        <a asp-action="DeleteRole" asp-route-id="@item.Id" class="btn btn-danger" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("RemoveItemRow(" + item.Id + ");")">Delete</a>
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
 </table>
 
 <script type="text/javascript">

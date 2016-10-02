@@ -9,74 +9,61 @@
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
-    <fieldset>
+    
         <legend>User</legend>
         @Html.HiddenFor(model => model.Id)
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Username)
+
+        <div class="form-group">
+            <label asp-for="Username" class="control-label"></label>
+            <input asp-for="Username" class="form-control" readonly />
+            <span asp-validation-for="Username" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.TextBoxFor(model => model.Username, new { @readonly = "readonly" })
-            @Html.ValidationMessageFor(model => model.Username)
+        <div class="form-group">
+            <label asp-for="Email" class="control-label"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
+        <div class="form-group">
+            <label asp-for="DisplayName" class="control-label"></label>
+            <input asp-for="DisplayName" class="form-control" />
+            <span asp-validation-for="DisplayName" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
+        <div class="form-group">
+            <label asp-for="FullName" class="control-label"></label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.DisplayName)
+        <div class="form-group">
+            <label asp-for="BirthDate" class="control-label"></label>
+            <input asp-for="BirthDate" class="form-control" />
+            <span asp-validation-for="BirthDate" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.DisplayName)
-            @Html.ValidationMessageFor(model => model.DisplayName)
+        <div class="form-group">
+            <label asp-for="Location" class="control-label"></label>
+            <input asp-for="Location" class="form-control" />
+            <span asp-validation-for="Location" class="text-danger"></span>
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FullName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.FullName)
-            @Html.ValidationMessageFor(model => model.FullName)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BirthDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BirthDate)
-            @Html.ValidationMessageFor(model => model.BirthDate)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Location)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Location)
-            @Html.ValidationMessageFor(model => model.Location)
-        </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SelectedRoles)
-        </div>
-        <div class="editor-field">
-            <ul id="categories-list">
+        <div class="form-group">
+            <label asp-for="SelectedRoles" class="control-label"></label>
+            
             @foreach (var role in Model.AllRoles)
             {
-                <li><input type="checkbox" name="SelectedRoles" value="@role.Id" @(Model.SelectedRoles.Any(x => x == role.Id) ? "checked=checked" : string.Empty) @(canEditRoles ? string.Empty : "disabled=disabled")  />@role.Name</li>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox" name="SelectedRoles" value="@role.Id" @(Model.SelectedRoles.Any(x => x == role.Id) ? "checked=checked" : string.Empty) @(canEditRoles ? string.Empty : "disabled=disabled") />@role.Name
+                    </label>
+                </div>
             }
-            </ul>
+            
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.About)
+        <div class="form-group">
+            <label asp-for="About" class="control-label"></label>
+            <textarea asp-for="About" class="form-control"></textarea>
+            <span asp-validation-for="About" class="text-danger"></span>
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.About)
-            @Html.ValidationMessageFor(model => model.About)
+        <div class="row">
+            <input type="submit" value="Save" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-default pull-right">Back to list</a>
         </div>
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+
 }
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
