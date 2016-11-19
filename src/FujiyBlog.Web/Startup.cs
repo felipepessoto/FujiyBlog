@@ -32,7 +32,7 @@ namespace FujiyBlog.Web
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                //TODO builder.AddUserSecrets();
+                builder.AddUserSecrets("aspnet-FujiyBlog.Web-9a8a8b29-64e4-4024-989b-7ad956437d08");
 
                 builder.AddApplicationInsightsSettings(developerMode: true);
             }
