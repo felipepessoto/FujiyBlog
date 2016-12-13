@@ -92,8 +92,14 @@ a:focus {
     font-size: 10px;
 }
 
+
 article.post img {
     display: inline-block;
     max-width: 100%;
     height: auto;
+}
+
+article.post {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
