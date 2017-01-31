@@ -1,12 +1,10 @@
-﻿using Fujiy.ApplicationInsights.AspNetCore.SqlTrack;
-using FujiyBlog.Core;
+﻿using FujiyBlog.Core;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.Services;
-using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -26,15 +24,13 @@ namespace FujiyBlog.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
 
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets("aspnet-FujiyBlog.Web-9a8a8b29-64e4-4024-989b-7ad956437d08");
-
-                builder.AddApplicationInsightsSettings(developerMode: true);
+                builder.AddUserSecrets<Startup>();
             }
 
             builder.AddEnvironmentVariables();
@@ -61,8 +57,6 @@ namespace FujiyBlog.Web
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
-
-            services.AddApplicationInsightsTelemetry(Configuration);
 
             //Custom
             services.AddScoped<SettingRepository>();
@@ -98,14 +92,11 @@ namespace FujiyBlog.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TelemetryClient tc)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddProvider(new AiEfCoreLoggerProvider(tc));
+            //loggerFactory.AddProvider(new AiEfCoreLoggerProvider(tc));
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
-            // Add Application Insights monitoring to the request pipeline as a very first middleware.
-            app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
@@ -117,9 +108,6 @@ namespace FujiyBlog.Web
             {
                 app.UseExceptionHandler("/Error");
             }
-
-            // Add Application Insights exceptions handling to the request pipeline.
-            app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
 
