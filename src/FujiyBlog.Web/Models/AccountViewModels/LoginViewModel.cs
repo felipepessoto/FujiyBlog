@@ -9,7 +9,8 @@ namespace FujiyBlog.Web.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
-        public string UserName { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
