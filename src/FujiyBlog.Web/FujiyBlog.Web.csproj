@@ -15,7 +15,7 @@
     <ProjectReference Include="..\FujiyBlog.Core\FujiyBlog.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fujiy.ApplicationInsights.AspNetCore.SqlTrack" Version="1.0.0" />
+    <PackageReference Include="Fujiy.ApplicationInsights.AspNetCore.SqlTrack" Version="1.1.1" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Cookies" Version="1.1.2" />

@@ -6,6 +6,7 @@ using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.Services;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -93,7 +94,7 @@ namespace FujiyBlog.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TelemetryClient tc)
         {
             loggerFactory.AddProvider(new AiEfCoreLoggerProvider(tc));
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
