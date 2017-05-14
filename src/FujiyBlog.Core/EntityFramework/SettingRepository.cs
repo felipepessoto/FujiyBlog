@@ -282,7 +282,7 @@ namespace FujiyBlog.Core.EntityFramework
         {
             int settingId = (int) settingName;
             
-            Setting setting = database.Settings.Find(database, settingId);
+            Setting setting = database.Settings.Find(settingId);
 
             if (setting == null)
             {
