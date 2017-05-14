@@ -1,6 +1,7 @@
 ﻿using FujiyBlog.Core.EntityFramework;
 using MailKit.Net.Smtp;
 using MimeKit;
+using MimeKit.Text;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,8 +22,8 @@ namespace FujiyBlog.Web.Services
         public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
             var mimeMessage = new MimeMessage();
-            //message.From.Add(new MailboxAddress(fromName, settingRepository.EmailTo));
-            mimeMessage.To.Add(new MailboxAddress(toEmail, toEmail));
+            mimeMessage.From.Add(new MailboxAddress(settingRepository.EmailTo));
+            mimeMessage.To.Add(new MailboxAddress(toEmail));
 
             //if (!string.IsNullOrEmpty(fromEmail))
             //{
@@ -31,7 +32,7 @@ namespace FujiyBlog.Web.Services
 
             mimeMessage.Subject = settingRepository.EmailSubjectPrefix + " - " + subject;
 
-            mimeMessage.Body = new TextPart()
+            mimeMessage.Body = new TextPart(TextFormat.Html)
             {
                 Text = message
             };

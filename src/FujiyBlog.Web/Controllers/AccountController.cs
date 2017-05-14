@@ -333,7 +333,7 @@ namespace FujiyBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user == null /*|| !(await _userManager.IsEmailConfirmedAsync(user))*/)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
