@@ -17,6 +17,12 @@
                 <h4>Use a local account to log in.</h4>
                 <hr />
                 <div asp-validation-summary="All" class="text-danger"></div>
+                @if (Model?.ShowReSendConfirmationLinkUrl ?? false)
+                {
+                    <div>
+                        <a asp-action="ReSendConfirmationLink" asp-route-userEmail="@Model.Email">Click here</a> to send the confirmation link again.
+                    </div>
+                }
                 <div class="form-group">
                     <label asp-for="Email" class="col-md-2 control-label"></label>
                     <div class="col-md-10">

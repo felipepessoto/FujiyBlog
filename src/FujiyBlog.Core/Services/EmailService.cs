@@ -1,11 +1,13 @@
 ﻿using FujiyBlog.Core.EntityFramework;
 using MailKit.Net.Smtp;
 using MimeKit;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
 namespace FujiyBlog.Core.Services
 {
+    [Obsolete("Use MessageServices class")]
     public class EmailService
     {
         private readonly SettingRepository settingRepository;

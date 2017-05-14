@@ -50,7 +50,10 @@ namespace FujiyBlog.Web
                 //.ConfigureWarnings(warnings => warnings.Throw(Microsoft.EntityFrameworkCore.Infrastructure.RelationalEventId.QueryClientEvaluationWarning))
                 );
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.SignIn.RequireConfirmedEmail = true;
+            })
                 .AddEntityFrameworkStores<FujiyBlogDatabase>()
                 .AddDefaultTokenProviders();
 
