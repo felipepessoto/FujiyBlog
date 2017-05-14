@@ -52,7 +52,7 @@ namespace FujiyBlog.Web
 
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
-                config.SignIn.RequireConfirmedEmail = true;
+                //config.SignIn.RequireConfirmedEmail = true;
             })
                 .AddEntityFrameworkStores<FujiyBlogDatabase>()
                 .AddDefaultTokenProviders();

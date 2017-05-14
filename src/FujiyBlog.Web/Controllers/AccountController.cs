@@ -74,16 +74,16 @@ namespace FujiyBlog.Web.Controllers
             if (ModelState.IsValid)
             {
                 // Require the user to have a confirmed email before they can log on.
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user != null)
-                {
-                    if (!await _userManager.IsEmailConfirmedAsync(user))
-                    {
-                        model.ShowReSendConfirmationLinkUrl = true;
-                        ModelState.AddModelError(string.Empty, $"You must have a confirmed email to log in.");
-                        return View(model);
-                    }
-                }
+                //var user = await _userManager.FindByEmailAsync(model.Email);
+                //if (user != null)
+                //{
+                //    if (!await _userManager.IsEmailConfirmedAsync(user))
+                //    {
+                //        model.ShowReSendConfirmationLinkUrl = true;
+                //        ModelState.AddModelError(string.Empty, $"You must have a confirmed email to log in.");
+                //        return View(model);
+                //    }
+                //}
 
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
@@ -150,14 +150,14 @@ namespace FujiyBlog.Web.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SendConfirmationLink(user);
+                    //await SendConfirmationLink(user);
 
                     if (firstUser)
                     {
                         await CreateAdmin(user);
                     }
 
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
