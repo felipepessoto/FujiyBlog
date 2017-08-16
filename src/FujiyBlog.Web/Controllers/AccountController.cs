@@ -1,14 +1,12 @@
 ﻿using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Models.AccountViewModels;
 using FujiyBlog.Web.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -20,32 +18,23 @@ namespace FujiyBlog.Web.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly string _externalCookieScheme;
-        private readonly FujiyBlogDatabase db;
 
         public AccountController(
-            FujiyBlogDatabase db,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole> roleManager,
             SignInManager<ApplicationUser> signInManager,
-            IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILogger<AccountController> logger)
         {
-            this.db = db;
             _userManager = userManager;
-            _roleManager = roleManager;
             _signInManager = signInManager;
-            _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;
             _smsSender = smsSender;
-            _logger = loggerFactory.CreateLogger<AccountController>();
+            _logger = logger;
         }
 
         //
@@ -55,7 +44,7 @@ namespace FujiyBlog.Web.Controllers
         public async Task<IActionResult> Login(string returnUrl = null)
         {
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.Authentication.SignOutAsync(_externalCookieScheme);
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
             ViewBag.FirstUser = _userManager.Users.Any() == false;
@@ -131,7 +120,7 @@ namespace FujiyBlog.Web.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             var firstUser = _userManager.Users.Any() == false;
-            if(firstUser == false)
+            if (firstUser == false)
             {
                 return Content("Use admin page to create users.");
             }

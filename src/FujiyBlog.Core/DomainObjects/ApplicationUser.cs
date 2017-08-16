@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace FujiyBlog.Core.DomainObjects
 {
@@ -41,5 +42,8 @@ namespace FujiyBlog.Core.DomainObjects
         public ICollection<PostComment> AuthoredPostComments { get; set; }
 
         public ICollection<PostComment> ModeratedPostComments { get; set; }
+
+        public virtual ICollection<IdentityUserRole<string>> Roles { get; } = new List<IdentityUserRole<string>>();
+
     }
 }

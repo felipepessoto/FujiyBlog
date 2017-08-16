@@ -48,15 +48,15 @@
                 <li><a href="@GenerateQueryString(2)">2</a></li>
                 <li class="disabled"><span>...</span></li>
             }
-            @foreach (int page in Enumerable.Range(ViewBag.InitialPage, ViewBag.NumbersToShow))
+            @foreach (int pageNumber in Enumerable.Range(ViewBag.InitialPage, ViewBag.NumbersToShow))
             {
-                if (page == ViewBag.CurrentPage)
+                if (pageNumber == ViewBag.CurrentPage)
                 {
-                    <li class="active"><span>@page <span class="sr-only">(current)</span></span></li>
+                    <li class="active"><span>@pageNumber <span class="sr-only">(current)</span></span></li>
                 }
                 else
                 {
-                    <li><a href="@GenerateQueryString(page)">@page</a></li>
+                    <li><a href="@GenerateQueryString(pageNumber)">@pageNumber</a></li>
                 }
             }
             @if (ViewBag.ShowTwoLasts)
