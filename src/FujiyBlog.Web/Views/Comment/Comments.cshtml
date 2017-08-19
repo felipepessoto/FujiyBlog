@@ -62,7 +62,7 @@
 
 
         <div class="comment-replies" id="replies_@(comment.Id)">
-            @{Html.RenderPartial("../Comment/Comments", comment.NestedComments);}
+            @{Html.RenderPartial("~/Views/Comment/Comments.cshtml", comment.NestedComments);}
         </div>
     </div>
                 }

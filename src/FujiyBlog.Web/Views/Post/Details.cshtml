@@ -53,8 +53,8 @@
 
     @if (Context.UserHasClaimPermission(PermissionClaims.CreateComments) && Model.Post.IsCommentEnabled && settings.EnableComments && (!settings.CloseCommentsAfterDays.HasValue || Model.Post.PublicationDate.AddDays(settings.CloseCommentsAfterDays.Value) >= DateTime.UtcNow))
     {
-        Html.RenderPartial("../Comment/DoComment", new PostComment { Post = Model.Post });
+        Html.RenderPartial("~/Views/Comment/DoComment.cshtml", new PostComment { Post = Model.Post });
     }
 
-    @{Html.RenderPartial("../Comment/Comments", Model.Post.Comments.Where(x => x.ParentComment == null));}
+    @{Html.RenderPartial("~/Views/Comment/Comments.cshtml", Model.Post.Comments.Where(x => x.ParentComment == null));}
 </div>

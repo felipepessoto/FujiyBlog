@@ -36,8 +36,8 @@
                 @((file.Length/1024m).ToString("0.##")) KB
             </td>
             <td>
-                @Html.ActionLink("View", MVC.Admin.Setting.LogView(file.Name)) | 
-                @Html.ActionLink("Delete", MVC.Admin.Setting.LogDelete(file.Name), new{onclick = "return confirm('Sure?');"})
+                @*@Html.ActionLink("View", MVC.Admin.Setting.LogView(file.Name)) | 
+                @Html.ActionLink("Delete", MVC.Admin.Setting.LogDelete(file.Name), new{onclick = "return confirm('Sure?');"})*@
             </td>
         </tr>
     }
