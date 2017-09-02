@@ -2,6 +2,7 @@
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
+using FujiyBlog.Web.Infrastructure;
 //using NLog;
 //using NLog.Config;
 //using NLog.Targets;
@@ -31,12 +32,23 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
+            string themeDir = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Views", "Themes");
+            var fileThemes = Directory.Exists(themeDir) ? new DirectoryInfo(themeDir).GetDirectories().Select(x => new SelectListItem { Text = x.Name }) : Enumerable.Empty<SelectListItem>();
+
+            var themePrefix = "_Views_Themes_";
+            var themePrefixLength = themePrefix.Length;
+            var compiledViewsThemes = CompiledViewsHelper.GetAllViews()
+                .Where(x => x.Name.StartsWith(themePrefix))
+                .Select(x => x.Name.Substring(themePrefixLength))
+                .Select(x => x.Contains('_') ? x.Substring(0, x.IndexOf("_")) : x)
+                .Select(x => new SelectListItem { Text = x }).ToList();
+
             AdminBasicSettings viewModel = new AdminBasicSettings
             {
                 BlogName = settingRepository.BlogName,
                 BlogDescription = settingRepository.BlogDescription,
                 Theme = settingRepository.Theme,
-                Themes = new DirectoryInfo(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Views", "Themes")).GetDirectories().Select(x => new SelectListItem { Text = x.Name }),
+                Themes = fileThemes.Concat(compiledViewsThemes),
                 PostsPerPage = settingRepository.PostsPerPage,
                 TimeZoneId = settingRepository.TimeZone.Id,
                 TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),

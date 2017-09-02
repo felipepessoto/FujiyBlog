@@ -1,6 +1,7 @@
 ﻿using FujiyBlog.Core.Caching;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -25,16 +26,7 @@ namespace FujiyBlog.Web.ViewComponents
 
             if (widgets == null || widgets.Length == 0)
             {
-                Assembly[] allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-                var precompiledViews = allAssemblies.Where(x => x.GetName().Name == "FujiyBlog.Web.PrecompiledViews").ToList();
-
-                IEnumerable<Assembly> assemblies =
-                    precompiledViews.Any()
-                    ? precompiledViews
-                    : allAssemblies.Where(x => x.GetName().Name.StartsWith("Microsoft") == false && x.GetName().Name.StartsWith("System") == false && x.GetName().Name.StartsWith("netstandard") == false && x.GetName().Name.StartsWith("mscorlib") == false).ToList();
-
-                var widgetsViews = assemblies.SelectMany(assembly => assembly.GetTypes()).Where(x => x.Name.StartsWith("_Views_Shared_Components_Widget_")).ToList();
-                widgetsViews = widgetsViews.Where(type => type.IsSubclassOf(typeof(RazorPage<WidgetSetting>))).ToList();
+                var widgetsViews = CompiledViewsHelper.GetViewsTypes<WidgetSetting>();
 
                 widgets = (from widgetView in widgetsViews
                            let nameWithoutPrefix = widgetView.Name.Substring("_Views_Shared_Components_Widget_".Length)
