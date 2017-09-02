@@ -2,11 +2,12 @@
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Web.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.PlatformAbstractions;
-using System.IO;
+using Microsoft.AspNetCore.Mvc.Razor;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace FujiyBlog.Web.ViewComponents
@@ -22,13 +23,24 @@ namespace FujiyBlog.Web.ViewComponents
             this.db = db;
             this.widgetSettingRepository = widgetSettingRepository;
 
-            if (widgets == null)
+            if (widgets == null || widgets.Length == 0)
             {
-                var diretorio = new DirectoryInfo(Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Views", "Shared", "Components", "Widget"));
-                widgets = (from file in diretorio.GetFiles()
-                           let fileWithoutExtension = Path.GetFileNameWithoutExtension(file.FullName)
-                           where fileWithoutExtension != "Index" && fileWithoutExtension != "Widget" && !fileWithoutExtension.EndsWith("Edit")
-                           select fileWithoutExtension).ToArray();
+                Assembly[] allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
+                var precompiledViews = allAssemblies.Where(x => x.GetName().Name == "FujiyBlog.Web.PrecompiledViews").ToList();
+
+                IEnumerable<Assembly> assemblies =
+                    precompiledViews.Any()
+                    ? precompiledViews
+                    : allAssemblies.Where(x => x.GetName().Name.StartsWith("Microsoft") == false && x.GetName().Name.StartsWith("System") == false && x.GetName().Name.StartsWith("netstandard") == false && x.GetName().Name.StartsWith("mscorlib") == false).ToList();
+
+                var widgetsViews = assemblies.SelectMany(assembly => assembly.GetTypes()).Where(x => x.Name.StartsWith("_Views_Shared_Components_Widget_")).ToList();
+                widgetsViews = widgetsViews.Where(type => type.IsSubclassOf(typeof(RazorPage<WidgetSetting>))).ToList();
+
+                widgets = (from widgetView in widgetsViews
+                           let nameWithoutPrefix = widgetView.Name.Substring("_Views_Shared_Components_Widget_".Length)
+                           let nameWithoutSuffix = nameWithoutPrefix.Substring(0, nameWithoutPrefix.Length - 7)
+                           where nameWithoutSuffix != "Index" && nameWithoutSuffix != "Widget" && !nameWithoutSuffix.EndsWith("Edit")
+                           select nameWithoutSuffix).ToArray();
             }
         }
 
