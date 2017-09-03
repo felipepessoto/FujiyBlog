@@ -7,6 +7,7 @@ using FujiyBlog.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FujiyBlog.Web.Controllers
@@ -32,8 +33,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = CacheHelper.FromCacheOrExecute(db, () => postRepository.GetRecentPosts(skip, settings.PostsPerPage, null, null, null, null, null), cacheItemPolicy: new MemoryCacheEntryOptions { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, condition: !User.Identity.IsAuthenticated),
-                TotalPages = (int)Math.Ceiling(CacheHelper.FromCacheOrExecute(db, () => postRepository.GetTotal(null, null, null, null, null), cacheItemPolicy: new MemoryCacheEntryOptions { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, condition: !User.Identity.IsAuthenticated) / (double)settings.PostsPerPage),
+                RecentPosts = GetRecentPostsCache(skip, settings.PostsPerPage, null, null, null, null, null),
+                TotalPages = (int)Math.Ceiling(GetTotalCache(null, null, null, null, null) / (double)settings.PostsPerPage),
             };
 
             if (page > model.TotalPages)
@@ -61,8 +62,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = postRepository.GetRecentPosts(skip, settings.PostsPerPage, tag),
-                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(tag) / (double)settings.PostsPerPage),
+                RecentPosts = GetRecentPostsCache(skip, settings.PostsPerPage, tag),
+                TotalPages = (int)Math.Ceiling(GetTotalCache(tag) / (double)settings.PostsPerPage),
             };
 
             if (page > model.TotalPages || !model.RecentPosts.Any())
@@ -89,8 +90,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = postRepository.GetRecentPosts(skip, settings.PostsPerPage, category: category),
-                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(category: category) / (double)settings.PostsPerPage),
+                RecentPosts = GetRecentPostsCache(skip, settings.PostsPerPage, category: category),
+                TotalPages = (int)Math.Ceiling(GetTotalCache(category: category) / (double)settings.PostsPerPage),
             };
 
             if (page > model.TotalPages || !model.RecentPosts.Any())
@@ -117,8 +118,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = postRepository.GetRecentPosts(skip, settings.PostsPerPage, authorUserName: author),
-                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(authorUserName: author) / (double)settings.PostsPerPage),
+                RecentPosts = GetRecentPostsCache(skip, settings.PostsPerPage, authorUserName: author),
+                TotalPages = (int)Math.Ceiling(GetTotalCache(authorUserName: author) / (double)settings.PostsPerPage),
             };
 
             var authorUser = db.Users.SingleOrDefault(x => x.UserName == author && x.Enabled == true);
@@ -138,6 +139,24 @@ namespace FujiyBlog.Web.Controllers
             }
 
             return View("Index", model);
+        }
+
+        private IEnumerable<PostSummary> GetRecentPostsCache(int skip, int take, string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            string recentPostsCacheKey = $"FujiyBlog.Core.EntityFramework.PostRepository.GetRecentPosts(int, int, string, string, string, DateTime?, DateTime?). Params:{skip}, {take}, {tag}, {category}, {authorUserName}, {startDate?.ToString("O")}, {endDate?.ToString("O")})";
+
+            var result = CacheHelper.FromCacheOrExecute(db, () => postRepository.GetRecentPosts(skip, settings.PostsPerPage, tag, category, authorUserName, startDate, endDate), recentPostsCacheKey, new MemoryCacheEntryOptions { AbsoluteExpiration = DateTimeOffset.Now.AddMinutes(5) }, !User.Identity.IsAuthenticated);
+
+            return result;
+        }
+
+        private int GetTotalCache(string tag = null, string category = null, string authorUserName = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            string getTotalCacheKey = $"FujiyBlog.Core.EntityFramework.PostRepository.GetTotal(string, string, string, DateTime?, DateTime?). Params:{tag}, {category}, {authorUserName}, {startDate?.ToString("O")}, {endDate?.ToString("O")})";
+
+            var result = CacheHelper.FromCacheOrExecute(db, () => postRepository.GetTotal(tag, category, authorUserName, startDate, endDate), getTotalCacheKey, new MemoryCacheEntryOptions { AbsoluteExpiration = DateTimeOffset.Now.AddHours(1) }, !User.Identity.IsAuthenticated);
+
+            return result;
         }
 
         public ActionResult Archive()
@@ -165,8 +184,8 @@ namespace FujiyBlog.Web.Controllers
             PostIndex model = new PostIndex
             {
                 CurrentPage = page.GetValueOrDefault(1),
-                RecentPosts = postRepository.GetRecentPosts(skip, settings.PostsPerPage, startDate: startDate, endDate: endDate),
-                TotalPages = (int)Math.Ceiling(postRepository.GetTotal(startDate: startDate, endDate: endDate) / (double)settings.PostsPerPage),
+                RecentPosts = GetRecentPostsCache(skip, settings.PostsPerPage, startDate: startDate, endDate: endDate),
+                TotalPages = (int)Math.Ceiling(GetTotalCache(startDate: startDate, endDate: endDate) / (double)settings.PostsPerPage),
             };
 
             if (page > model.TotalPages)
