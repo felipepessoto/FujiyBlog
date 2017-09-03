@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -46,6 +47,7 @@ namespace FujiyBlog.Web
                 .AddDefaultTokenProviders();
 
             services.AddMvc();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
