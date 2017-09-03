@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Linq.Expressions;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace FujiyBlog.Core.Extensions
 {
@@ -25,14 +26,14 @@ namespace FujiyBlog.Core.Extensions
         {
             if (currentPage > 1)
             {
-                query = query.Skip((currentPage - 1)*pageSize);
+                query = query.Skip((currentPage - 1) * pageSize);
             }
 
             return query.Take(pageSize);
         }
 
         public static IQueryable<Post> WhereHaveRoles(this IQueryable<Post> query, HttpContext httpContext)
-        { 
+        {
             bool publicPost = httpContext.UserHasClaimPermission(PermissionClaims.ViewPublicPosts);
             bool unpublishedPost = httpContext.UserHasClaimPermission(PermissionClaims.ViewUnpublishedPosts);
 
@@ -84,7 +85,7 @@ namespace FujiyBlog.Core.Extensions
 
             if (publicPages && unpublishedPages)
             {
-                return query.Where(x=> x.IsDeleted == false);
+                return query.Where(x => x.IsDeleted == false);
             }
 
             if (publicPages)
@@ -110,18 +111,18 @@ namespace FujiyBlog.Core.Extensions
             return query.WhereHaveRoles(httpContext).OrderBy(x => x.PublicationDate).FirstOrDefault(x => x.PublicationDate >= post.PublicationDate && x.Id != post.Id);
         }
 
-        public static IEnumerable<TagWithCount> GetTagsCloud(this IQueryable<Tag> query, int minimumPosts)
+        public static Task<List<TagWithCount>> GetTagsCloud(this IQueryable<Tag> query, int minimumPosts)
         {
-            var tags = from tag in query
-                       where tag.PostTags.Count() >= minimumPosts
-                       orderby tag.Name
-                       select new TagWithCount
-                       {
-                           Tag = tag,
-                           PostsCount = tag.PostTags.Count()
-                       };
+            var tagsCount = (from tag in query
+                             where tag.PostTags.Count() >= minimumPosts
+                             orderby tag.Name
+                             select new TagWithCount
+                             {
+                                 TagName = tag.Name,
+                                 PostsCount = tag.PostTags.Count()
+                             });
 
-            return tags.ToList();
+            return tagsCount.ToListAsync();
         }
 
         public static Post GetCompletePost(this FujiyBlogDatabase database, string slug, HttpContext httpContext)
@@ -133,9 +134,9 @@ namespace FujiyBlog.Core.Extensions
                 return null;
             }
 
-            database.Tags.Include(x=>x.PostTags).Where(x => x.PostTags.Any(y => y.PostId == post.Id)).Load();
-            database.Categories.Include(x=>x.PostCategories).Where(x => x.PostCategories.Any(y => y.PostId == post.Id)).Load();
-            database.PostComments.Include(x=>x.Author).WhereHaveRoles(httpContext).Load();
+            database.Tags.Include(x => x.PostTags).Where(x => x.PostTags.Any(y => y.PostId == post.Id)).Load();
+            database.Categories.Include(x => x.PostCategories).Where(x => x.PostCategories.Any(y => y.PostId == post.Id)).Load();
+            database.PostComments.Include(x => x.Author).WhereHaveRoles(httpContext).Load();
 
             return post;
         }
