@@ -10,7 +10,7 @@
     "jquery-ui": "1.11.4",
     "tinymce": "4.4.3",
     "jquery-form": "*",
-    "prism": "1.4.1",
+    "prism": "Prism#v1.6.0"
     "eonasdan-bootstrap-datetimepicker": "4.17.37"
   }
 }
