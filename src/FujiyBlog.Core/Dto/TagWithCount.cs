@@ -1,8 +1,14 @@
-﻿namespace FujiyBlog.Core.Dto
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using FujiyBlog.Core.DomainObjects;
+
+namespace FujiyBlog.Core.Dto
 {
     public class TagWithCount
     {
-        public string TagName { get; set; }
+        public Tag Tag { get; set; }
         public int PostsCount { get; set; }
     }
 }

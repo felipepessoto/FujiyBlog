@@ -12,7 +12,7 @@
 
         JObject settings = JObject.Parse(Model.Settings ?? "{}");
 
-        IEnumerable<TagWithCount> tagCloud = await CacheHelper.FromCacheOrExecute(db, () => db.Tags.GetTagsCloud(settings.Value<int?>("MinimumPosts") ?? 1), "Widget.TagCloud.Tags.GetTagsCloud" + (settings.Value<int?>("MinimumPosts") ?? 1));
+        IEnumerable<TagWithCount> tagCloud = CacheHelper.FromCacheOrExecute(db, () => db.Tags.GetTagsCloud(settings.Value<int?>("MinimumPosts") ?? 1), "Widget.TagCloud.Tags.GetTagsCloud" + (settings.Value<int?>("MinimumPosts") ?? 1));
         int minTag = tagCloud.Select(x => x.PostsCount).DefaultIfEmpty().Min();
         int maxTag = tagCloud.Select(x => x.PostsCount).DefaultIfEmpty().Max();
         int distribution = (maxTag - minTag) / 3;
@@ -46,7 +46,7 @@
                     cssClass = "small";
                 }
 
-                <li>@Html.ActionLink(tag.TagName, "Tag", "Post", new { tag = tag.TagName }, new { @class = cssClass })</li>
+                <li>@Html.ActionLink(tag.Tag.Name, "Tag", "Post", new { tag = tag.Tag.Name }, new { @class = cssClass })</li>
             }
         </ul>
     </div>
