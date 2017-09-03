@@ -111,7 +111,7 @@ namespace FujiyBlog.Web
                     ctx.Context.Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue()
                     {
                         Public = true,
-                        MaxAge = TimeSpan.FromDays(1)
+                        MaxAge = TimeSpan.FromDays(7)
                     };
                 }
             });
