@@ -36,6 +36,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" />
+        <link rel="stylesheet" type="text/css" href="~/lib/prism/themes/prism.css">
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/Content/Themes/Default/site.min.css" asp-append-version="true" />
+        <link rel="stylesheet" type="text/css" href="~/lib/prism/themes/prism.css">
+    </environment>
+
+    <link href="~/lib/jquery-ui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+
     <link rel="canonical" href="@CanonicalUrl()" />
 
     <title>@ViewBag.Title</title>
@@ -155,21 +170,6 @@
         </footer>
 
     </div>
-
-    <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" />
-        <link rel="stylesheet" type="text/css" href="~/lib/prism/themes/prism.css">
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/Content/Themes/Default/site.min.css" asp-append-version="true" />
-        <link rel="stylesheet" type="text/css" href="~/lib/prism/themes/prism.css">
-    </environment>
-
-    <link href="~/lib/jquery-ui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 
     <script type="text/javascript">
         fujiyBlogUrls = {};
