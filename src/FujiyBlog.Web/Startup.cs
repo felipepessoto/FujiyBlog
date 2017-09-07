@@ -7,6 +7,7 @@ using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.Services;
 using Microsoft.ApplicationInsights;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -89,7 +90,7 @@ namespace FujiyBlog.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TelemetryClient tc)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, TelemetryClient tc, SettingRepository settingRepository)
         {
             loggerFactory.AddProvider(new AiEfCoreLoggerProvider(tc));
 
@@ -161,15 +162,12 @@ namespace FujiyBlog.Web
             //           SupportedUICultures = supportedCultures
             //       });
 
+            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
 
-            //TODO
-            //TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(Settings.SettingRepository.ApplicationInsightsInstrumentationKey);
-
-            //if (TelemetryConfiguration.Active.DisableTelemetry == false)
-            //{
-            //    TelemetryConfiguration.Active.InstrumentationKey = Settings.SettingRepository.ApplicationInsightsInstrumentationKey;
-            //}
-
+            if (TelemetryConfiguration.Active.DisableTelemetry == false)
+            {
+                TelemetryConfiguration.Active.InstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey;
+            }
         }
 
         //public override string GetVaryByCustomString(HttpContext context, string arg)
