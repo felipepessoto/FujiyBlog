@@ -2,9 +2,6 @@
 using MailKit.Net.Smtp;
 using MimeKit;
 using MimeKit.Text;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -19,16 +16,22 @@ namespace FujiyBlog.Web.Services
             this.settingRepository = settingRepository;
         }
 
-        public async Task SendEmailAsync(string toEmail, string subject, string message)
+
+        public Task SendEmailAsync(string toEmail, string subject, string message)
+        {
+            return SendEmailAsync(toEmail, subject, message, null, null);
+        }
+
+        public async Task SendEmailAsync(string toEmail, string subject, string message, string fromEmail, string fromName)
         {
             var mimeMessage = new MimeMessage();
             mimeMessage.From.Add(new MailboxAddress(settingRepository.EmailTo));
             mimeMessage.To.Add(new MailboxAddress(toEmail));
 
-            //if (!string.IsNullOrEmpty(fromEmail))
-            //{
-            //    message.ReplyTo.Add(new MailboxAddress(fromName, fromEmail));
-            //}
+            if (!string.IsNullOrEmpty(fromEmail))
+            {
+                mimeMessage.ReplyTo.Add(new MailboxAddress(fromName, fromEmail));
+            }
 
             mimeMessage.Subject = settingRepository.EmailSubjectPrefix + " - " + subject;
 
@@ -53,7 +56,6 @@ namespace FujiyBlog.Web.Services
 
         public Task SendSmsAsync(string number, string message)
         {
-            // Plug in your SMS service here to send a text message.
             return Task.FromResult(0);
         }
     }

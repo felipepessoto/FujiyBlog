@@ -2,6 +2,7 @@
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Services;
+using FujiyBlog.Web.Services;
 using FujiyBlog.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,10 +14,12 @@ namespace FujiyBlog.Web.Controllers
     public partial class ContactController : Controller
     {
         private readonly SettingRepository settings;
+        private readonly IEmailSender emailSender;
 
-        public ContactController(SettingRepository settings)
+        public ContactController(SettingRepository settings, IEmailSender emailSender)
         {
             this.settings = settings;
+            this.emailSender = emailSender;
         }
 
         public virtual ActionResult Index()
@@ -41,7 +44,7 @@ namespace FujiyBlog.Web.Controllers
                 body += "<strong>IP Address:</strong> " + HttpContext.Connection.RemoteIpAddress.ToString() + "<br />";
                 body += "<strong>Browser:</strong> " + Request.Headers["User-Agent"];
 
-                await new EmailService(settings).Send(settings.EmailTo, contactForm.Subject, body, true, contactForm.Email, contactForm.Name);
+                await emailSender.SendEmailAsync(settings.EmailTo, contactForm.Subject, body, contactForm.Email, contactForm.Name);
 
                 return RedirectToAction(nameof(Success));
             }

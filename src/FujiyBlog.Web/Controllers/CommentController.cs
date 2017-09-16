@@ -3,6 +3,7 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Extensions;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Models;
+using FujiyBlog.Web.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -26,12 +27,14 @@ namespace FujiyBlog.Web.Controllers
         private readonly FujiyBlogDatabase db;
         private readonly SettingRepository settings;
         private readonly ICompositeViewEngine viewEngine;
+        private readonly IEmailSender emailSender;
 
-        public CommentController(FujiyBlogDatabase db, SettingRepository settings, ICompositeViewEngine viewEngine)
+        public CommentController(FujiyBlogDatabase db, SettingRepository settings, ICompositeViewEngine viewEngine, IEmailSender emailSender)
         {
             this.db = db;
             this.settings = settings;
             this.viewEngine = viewEngine;
+            this.emailSender = emailSender;
         }
 
         [Authorize(nameof(PermissionClaims.CreateComments))]
@@ -103,7 +106,7 @@ namespace FujiyBlog.Web.Controllers
                 viewModel.Comment = postComment;
                 string body = RenderPartialViewToString("NewComment", viewModel);
 
-                await new EmailService(settings).Send(settings.EmailTo, subject, body, true, null, null);
+                await emailSender.SendEmailAsync(settings.EmailTo, subject, body);
             }
 
             return View("Comments", new[] { postComment });
