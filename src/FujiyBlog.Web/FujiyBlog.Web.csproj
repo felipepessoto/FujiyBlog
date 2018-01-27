@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup>
     <UserSecretsId>aspnet-FujiyBlog.Web-f393ceeb-00a4-41cf-af84-d6f518040fd5</UserSecretsId>
