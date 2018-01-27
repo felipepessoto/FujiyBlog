@@ -104,11 +104,8 @@
 
             <div class="form-group">
                 <label asp-for="PublicationDate" class="control-label"></label>
-                <div class='input-group'>
-                    <input asp-for="PublicationDate" asp-format="{0:yyyy/MM/dd HH:mm}" type="text" class="form-control datetime-picker" />
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+                <div class="input-group">
+                    <input asp-for="PublicationDate" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" class="form-control" />
                 </div>
                 <span asp-validation-for="PublicationDate" class="text-danger"></span>
             </div>

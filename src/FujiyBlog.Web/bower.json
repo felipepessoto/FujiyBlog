@@ -3,14 +3,16 @@
   "private": true,
   "dependencies": {
     "bootstrap": "3.3.6",
-    "jquery": "2.2.0",
+    "jquery": "3.3.1",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
     "jquery-ajax-unobtrusive": "3.2.4",
     "jquery-ui": "1.11.4",
     "tinymce": "4.4.3",
     "jquery-form": "*",
-    "prism": "Prism#v1.6.0",
-    "eonasdan-bootstrap-datetimepicker": "4.17.37"
+    "prism": "Prism#v1.6.0"
+  },
+  "resolutions": {
+    "jquery": "3.3.1"
   }
 }

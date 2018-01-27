@@ -61,7 +61,6 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [StringLength(255)]
         public string ImageUrl { get; set; }
 
-        [UIHint("DateTimePicker")]
         [Display(Name = "Publish Date")]
         public DateTime PublicationDate { get; set; }
 

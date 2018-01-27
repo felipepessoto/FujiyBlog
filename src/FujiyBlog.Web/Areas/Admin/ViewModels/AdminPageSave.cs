@@ -55,7 +55,6 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [DataType(DataType.MultilineText)]
         public string Keywords { get; set; }
 
-        [UIHint("DateTimePicker")]
         [Display(Name = "Publish Date")]
         public DateTime PublicationDate { get; set; }
 

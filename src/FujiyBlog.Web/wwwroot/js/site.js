@@ -147,10 +147,6 @@ $(function () {
         }
     });
 
-    //$('.datetime-picker').datetimepicker({
-    //    ampm: true
-    //});
-
     if (window.shouldStartDragAndDrop) {
         $(function () { fujiyBlog.widget.startDragAndDrop(); });
     }
