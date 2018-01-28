@@ -1,61 +1,193 @@
 ﻿@model string
 
-<script type="text/javascript" src="~/lib/jquery-form/jquery.form.js"></script>
-
-<div id="div-upload-image" style="display: none;">
-    <form id="form-upload-image" asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload a image</legend>
-            <label>File to Upload: <input type="file" id="uploadedFilesImages" name="uploadedFiles" accept="image/*" multiple />(4MB max size)</label>
-            <input class="ajaxUploadButton" type="submit" value="Submit" />
-            
-            <div style="display: none" class="upload-size-text"></div>
-            <progress style="display: none" max="100"></progress>
-        </fieldset>
-    </form>
-</div>
-
-<div id="div-upload-video" style="display: none;">
-    <form id="form-upload-video" asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model"  method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload a video/audio</legend>
-            <label>File to Upload: <input type="file" id="uploadedFilesVideo" name="uploadedFiles" accept="audio/*,video/*" multiple />(4MB max size)</label>
-            <input class="ajaxUploadButton" type="submit" value="Submit" />
-            
-            <div style="display: none" class="upload-size-text"></div>
-            <progress style="display: none" max="100"></progress>
-        </fieldset>
-    </form>
-</div>
-
 <div id="div-upload-file" style="display: none;">
-    <form id="form-upload-file" asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model" method="post" enctype="multipart/form-data">
-        <fieldset>
-            <legend>Upload a file</legend>
-            <label>File to Upload: <input type="file" id="uploadedFilesFiles" name="uploadedFiles" multiple />(4MB max size)</label>
-            <input class="ajaxUploadButton" type="submit" value="Submit" />
-            
-            <div style="display: none" class="upload-size-text"></div>
-            <progress style="display: none" max="100"></progress>
-        </fieldset>
+    <form id="form-upload-file" enctype="multipart/form-data" method="post"  asp-area="Admin" asp-action="Upload" asp-controller="File" asp-route-folderName="@Model">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <input type="file" name="uploadedFiles" id="fileUploader" class="btn btn-default" multiple>(20MB max size)
+                </div>
+                <div class="col-md-4">
+                    <input type="submit" id="btnUpload" style="display:none" class="btn btn-default" value="Upload File">
+                </div>
+            </div>
+            <div class="row">
+                <div id="divFiles" class="files">
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 
 <script type="text/javascript">
     var currentDialog = null;
     var tempUploadContentIE = null;
+    var uploadFileType = null;
+
+    $('#btnUpload').hide();
+
+    $(document).ready(function () {
+
+        $('#link-upload-image').click(function () {
+            uploadFileType = "image";
+            openUploadDiv('div-upload-file');
+        });
+
+        $('#link-upload-video').click(function () {
+            uploadFileType = "video";
+            openUploadDiv('div-upload-file');
+        });
+
+        $('#link-upload-file').click(function () {
+            uploadFileType = "file";
+            openUploadDiv('div-upload-file');
+        });
+
+        $("#fileUploader").change(function () {
+            $('#btnUpload').show();
+            $('#divFiles').html('');
+            var files = this.files;
+
+            var div = $("#divFiles").append('<div class="list-group"></div>');
+
+            for (var i = 0; i < files.length; i++) {
+                var fileId = i;
+                div.append('<li class="list-group-item"><div class="row"><div class="col-md-12">' +
+                    '<div class="progress"><div class="progress-bar" style="width: 0%" id="progressbar_' + fileId + '" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div></div>' +
+                    '</div></div>' +
+                    '<div class="row"><div class="col-md-6">' +
+                    '<input type="button" class="btn btn-danger" style="display:none;line-height:6px;height:25px" id="cancel_' + fileId + '" value="cancel">' +
+                    '</div>' +
+                    '<div class="col-md-6">' +
+                    '<p class="progress-status" style="text-align: right;margin-right:-15px;font-weight:bold;color:saddlebrown" id="status_' + fileId + '"></p>' +
+                    '</div></div>' +
+                    '<div class="row"><div class="col-md-12">' +
+                    files[i].name + '<p id="notify_' + fileId + '" style="text-align: right;"></p>' +
+                    '</div></div></li>');
+            }
+        });
+
+        function uploadSingleFile(file, i, url) {
+            var fileId = i;
+
+            return new Promise(function (resolve, reject) {
+
+                if (file.size > 20 * 1024 * 1024) {
+                    reject(Error('Max size is 20MB per upload'));
+                    $("#status_" + fileId).text("Max size is 20MB per upload");
+                    return;
+                }
+
+                var uploadRequest = new XMLHttpRequest();
+                //Progress Listener
+                uploadRequest.upload.addEventListener("progress", function (e) {
+                    var percent = (e.loaded / e.total) * 100;
+                    $("#status_" + fileId).text(Math.round(percent) + "% uploaded, please wait...");
+                    $('#progressbar_' + fileId).css("width", percent + "%")
+                    $("#notify_" + fileId).text("Uploaded " + (e.loaded / 1048576).toFixed(2) + " MB of " + (e.total / 1048576).toFixed(2) + " MB ");
+                }, false);
+                //Load Listener
+                uploadRequest.addEventListener("load", function (e) {
+
+                    if (uploadRequest.response.errorMessage) {
+                        reject(Error('Error:' + uploadRequest.response.errorMessage));
+                        $("#status_" + fileId).text(uploadRequest.response.errorMessage);
+                    }
+                    else if (uploadRequest.status !== 200) {
+                        reject(Error('Error code:' + uploadRequest.statusText));
+                        $("#status_" + fileId).text(uploadRequest.statusText);
+                    }
+                    else {
+                        $("#status_" + fileId).text("OK");
+                        resolve(uploadRequest);
+                    }
+
+                    $('#progressbar_' + fileId).css("width", "100%")
+
+                    //Hide cancel button
+                    var _cancel = $('#cancel_' + fileId);
+                    _cancel.hide();
+                }, false);
+                //Error Listener
+                uploadRequest.addEventListener("error", function (e) {
+                    $("#status_" + fileId).text("Upload Failed");
+                    reject(Error('There was a network error.'));
+                }, false);
+                //Abort Listener
+                uploadRequest.addEventListener("abort", function (e) {
+                    $("#status_" + fileId).text("Upload Aborted");
+                }, false);
+
+                uploadRequest.open("POST", url);
+
+                var uploaderForm = new FormData();
+                uploaderForm.append("uploadedFiles", file);
+                uploadRequest.send(uploaderForm);
+
+                //Cancel button
+                var _cancel = $('#cancel_' + fileId);
+                _cancel.show();
+
+                _cancel.on('click', function () {
+                    uploadRequest.abort();
+                });
+            });
+        }
+
+        $("#form-upload-file").on("submit", function (e) {
+            var file = document.getElementById("fileUploader");
+            var url = $(this).prop("action");
+
+            var insertedContent = '';
+            var uploadTasks = new Array();
+
+            for (var i = 0; i < file.files.length; i++) {
+                uploadTasks.push(uploadSingleFile(file.files[i], i, url).then(function (request) {
+
+                    var response = JSON.parse(request.responseText);
+
+                    for (var j = 0; j < response.urls.length; j++) {
+                        var fileUrl = response.urls[j];
+
+                        if (uploadFileType === "image") {
+                            insertedContent += '<img src="' + fileUrl + '" />';
+                        } else if (uploadFileType === 'video') {
+                            insertedContent += '<video controls="controls" src="' + fileUrl + '"></video>';
+                        } else {
+                            insertedContent += '<a href="' + fileUrl + '">' + fileUrl.substr(fileUrl.lastIndexOf('/') + 1) + '</a><br />';
+                        }
+                    }
+                }).catch(function (e) { return null; }));
+            }
+
+            Promise.all(uploadTasks).then(function () {
+                try {
+                    tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
+                }
+                catch (ex) {
+                    tempUploadContentIE = insertedContent;
+                }
+
+                if (currentDialog) {
+                    //currentDialog.dialog('close');
+                }
+            });            
+
+            e.preventDefault();
+        });
+    });
 
     function openUploadDiv(divId) {
 
         var uploadDiv = $('#' + divId);
-        $('input:file', uploadDiv).attr({ value: '' });
+        $('input:file', uploadDiv).prop("value", "");
 
         if (currentDialog) {
             currentDialog.dialog('close');
         }
 
-        currentDialog = uploadDiv.dialog({ height: 200,
-            width: 550,
+        currentDialog = uploadDiv.dialog({ height: 500,
+            width: 850,
             modal: true,
             overlay: { opacity: 0.7, background: 'black' },
             close: function () {
@@ -65,116 +197,6 @@
                 tempUploadContentIE = null;
             }
         });
-    }
-
-    $("#form-upload-image,#form-upload-video,#form-upload-file").ajaxForm({
-        dataType: "json",
-        beforeSubmit: function (arr, $form, options) {
-
-            var inputId = $form.find('input[type=file]').attr('id');
-
-            if (getFileUploadSize(inputId) > 4 * 1024 * 1024) {
-                alert('Max size is 4MB per upload');
-                return false;
-            }
-
-            $('.ajaxUploadButton').attr('disabled', 'disabled');
-        },
-        uploadProgress: function (event, position, total, percentComplete) {
-            $('progress').show().val(percentComplete);
-            $('.upload-size-text').show().text(Math.round(position / 1024) + 'KB of ' + Math.round(total / 1024) + 'KB');
-        },
-        success: function (response, statusText, xhr, elem) {
-            $('.ajaxUploadButton').removeAttr('disabled');
-            if (response.errorMessage) {
-                alert(response.errorMessage);
-            }
-            else {
-                var insertedContent = '';
-
-                for (var i = 0; i < response.urls.length; i++) {
-
-                    var fileUrl = response.urls[i];
-
-                    if (elem.attr('id') === 'form-upload-image') {
-                        insertedContent += '<img src="' + fileUrl + '" />';
-                    } else if (elem.attr('id') === 'form-upload-video') {
-                        insertedContent += '<video controls="controls" src="' + fileUrl + '"></video>';
-                    } else if (elem.attr('id') === 'form-upload-file') {
-                        insertedContent += '<a href="' + fileUrl + '">' + fileUrl.substr(fileUrl.lastIndexOf('/') + 1) + '</a><br />';
-                    }
-                }
-
-                try {
-                    tinymceContent.tinymce().execCommand('mceInsertContent', false, insertedContent);
-                }
-                catch (ex) {
-                    tempUploadContentIE = insertedContent;
-                }
-
-                if (currentDialog) {
-                    currentDialog.dialog('close');
-                }
-            }
-            $('progress').hide();
-            $('.upload-size-text').hide();
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            $('progress').hide();
-            $('.upload-size-text').hide();
-            $('.ajaxUploadButton').removeAttr('disabled');
-            alert('Error uploading file');
-        }
-    });
-
-
-    $(function() {
-        $('#link-upload-image').click(function() {
-            openUploadDiv('div-upload-image');
-        });
-
-        $('#link-upload-video').click(function() {
-            openUploadDiv('div-upload-video');
-        });
-
-        $('#link-upload-file').click(function() {
-            openUploadDiv('div-upload-file');
-        });
-    });
-
-    function getFileUploadSize(inputId) {
-
-        if (typeof window.FileReader === 'function') {
-            return getFileUploadSize_FileReader(inputId);
-        }
-        else {
-            return getFileUploadSize_InternetExplorer(inputId);
-        }
-    }
-
-    function getFileUploadSize_FileReader(inputId) {
-        var input = document.getElementById(inputId);
-
-        if (!input) {
-            return 0;
-        }
-        else if (!input.files) {
-            return 0;
-        }
-        else if (!input.files[0]) {
-            return 0;
-        }
-        else {
-            var totalSize = 0;
-            for (var i = 0; i < input.files.length; i++) {
-                totalSize += input.files[i].size;
-            }
-            return totalSize;
-        }
-    }
-
-    function getFileUploadSize_InternetExplorer() {
-        return 0;
     }
 
 </script>
