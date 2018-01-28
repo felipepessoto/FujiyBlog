@@ -8,13 +8,14 @@
     "jquery-validation-unobtrusive": "3.2.6",
     "jquery-ajax-unobtrusive": "3.2.4",
     "jquery-ui": "1.12.1",
-    "tinymce": "4.4.3",
+    "tinymce": "4.7.5",
     "prism": "v1.10.0"
   },
   "resolutions": {
     "jquery": "3.3.1",
     "jquery-ui": "1.12.1",
     "jquery-validation": "1.17.0",
-    "prism": "v1.10.0"
+    "prism": "v1.10.0",
+    "tinymce": "4.7.5"
   }
 }

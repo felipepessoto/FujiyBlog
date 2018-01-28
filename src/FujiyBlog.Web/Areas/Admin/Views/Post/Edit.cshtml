@@ -9,7 +9,7 @@
     ViewBag.Title = "Edit";
     string uploadFolder = "Post" + (Model.Post.Id.HasValue ? Model.Post.Id.ToString() : Guid.NewGuid().ToString());
 }
-<script type="text/javascript" src="~/lib/tinymce/jquery.tinymce.min.js"></script>
+<script type="text/javascript" src="~/lib/tinymce/jquery.tinymce.min.js" asp-append-version="true"></script>
 
 @Html.Partial("UploadForms", uploadFolder)
 
