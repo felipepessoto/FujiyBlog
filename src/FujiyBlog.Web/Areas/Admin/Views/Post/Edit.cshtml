@@ -24,7 +24,7 @@
 
     <div class="row">
 
-        <div class="col-xs-9">
+        <div class="col-9">
             
             <div class="form-group">
                 <label asp-for="Post.Title" class="control-label"></label>
@@ -36,7 +36,7 @@
                 <label asp-for="Post.Slug" class="control-label"></label>
                 <div class="input-group">
                     <input asp-for="Post.Slug" class="form-control" placeholder="Slug" />
-                    <span class="input-group-btn">
+                    <span class="input-group-append">
                         <a class="btn btn-primary" href="javascript:void(0)" id="extract-from-title">Extract from title</a>
                     </span>
                     <span asp-validation-for="Post.Slug" class="text-danger"></span>
@@ -44,19 +44,19 @@
             </div>
 
             <div class="row">
-                <div class="col-xs-1">
-                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-image">Insert image</a>
+                <div class="col-1">
+                    <a class="btn btn-secondary" href="javascript:void(0)" id="link-upload-image">Insert image</a>
                 </div>
-                <div class="col-xs-1">
-                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-video">Insert video</a>
+                <div class="col-1">
+                    <a class="btn btn-secondary" href="javascript:void(0)" id="link-upload-video">Insert video</a>
                 </div>
-                <div class="col-xs-1">
-                    <a class="btn btn-default" href="javascript:void(0)" id="link-upload-file">Insert file</a>
+                <div class="col-1">
+                    <a class="btn btn-secondary" href="javascript:void(0)" id="link-upload-file">Insert file</a>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-xs-12">
+                <div class="col-12">
                     @Html.EditorFor(model => model.Post.Content, "TinyMCE")
                     <span asp-validation-for="Post.Content" class="text-danger"></span>
                 </div>
@@ -96,7 +96,7 @@
             <button class="btn btn-primary" type="submit">Save</button>
         </div>
 
-        <div class="col-xs-3">
+        <div class="col-3">
 
             <div class="form-group">
                 <label asp-for="Post.AuthorId" class="control-label"></label>
@@ -130,7 +130,7 @@
                 <label for="new-category-name">Add new category</label>
                 <div class="input-group">
                     <input type="text" id="new-category-name" class="form-control" />
-                    <span class="input-group-btn">
+                    <span class="input-group-append">
                         <a href="javascript:void(0);" id="add-category" class="btn btn-primary">Add</a>
                     </span>
                 </div>

@@ -1,78 +1,76 @@
 ﻿
 @functions {
 
-    private static Uri ToUri(Microsoft.AspNetCore.Http.HttpRequest request)
+private static Uri ToUri(Microsoft.AspNetCore.Http.HttpRequest request)
+{
+    var hostComponents = request.Host.ToUriComponent().Split(':');
+
+    var builder = new UriBuilder
     {
-        var hostComponents = request.Host.ToUriComponent().Split(':');
+        Scheme = request.Scheme,
+        Host = hostComponents[0],
+        Path = request.Path,
+        //Query = request.QueryString.ToUriComponent()
+    };
 
-        var builder = new UriBuilder
-        {
-            Scheme = request.Scheme,
-            Host = hostComponents[0],
-            Path = request.Path,
-            //Query = request.QueryString.ToUriComponent()
-        };
-
-        if (hostComponents.Length == 2)
-        {
-            builder.Port = Convert.ToInt32(hostComponents[1]);
-        }
-
-        return builder.Uri;
+    if (hostComponents.Length == 2)
+    {
+        builder.Port = Convert.ToInt32(hostComponents[1]);
     }
 
-    private string GenerateQueryString(int page)
-    {
-        var values = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(Context.Request.QueryString.Value);
-        values["page"] = page.ToString();
+    return builder.Uri;
+}
+
+private string GenerateQueryString(int page)
+{
+    var values = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(Context.Request.QueryString.Value);
+    values["page"] = page.ToString();
 
 
-        return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(ToUri(Context.Request).ToString(), values.ToDictionary(x => x.Key, x => x.Value.First()));
-    }
+    return Microsoft.AspNetCore.WebUtilities.QueryHelpers.AddQueryString(ToUri(Context.Request).ToString(), values.ToDictionary(x => x.Key, x => x.Value.First()));
+}
 }
 
 <nav aria-label="Page navigation">
-    <div class="text-center">
-        <ul class="pagination">
-            @if (ViewBag.CurrentPage == 1)
+    <ul class="pagination justify-content-center">
+        @if (ViewBag.CurrentPage == 1)
+        {
+            <li class="page-item disabled"><span class="page-link" aria-hidden="true">@ViewBag.PreviousPageText</span></li>
+        }
+        else
+        {
+            <li class="page-item" aria-label="Previous"><a class="page-link" href="@GenerateQueryString(ViewBag.CurrentPage - 1)"><span aria-hidden="true">@ViewBag.PreviousPageText</span></a></li>
+        }
+        @if (ViewBag.ShowTwoFirst)
+        {
+            <li class="page-item"><a class="page-link" href="@GenerateQueryString(1)">1</a></li>
+            <li class="page-item"><a class="page-link" href="@GenerateQueryString(2)">2</a></li>
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+        }
+        @foreach (int pageNumber in Enumerable.Range(ViewBag.InitialPage, ViewBag.NumbersToShow))
+        {
+            if (pageNumber == ViewBag.CurrentPage)
             {
-                <li class="disabled"><span aria-hidden="true">@ViewBag.PreviousPageText</span></li>
+                <li class="page-item active"><span class="page-link">@pageNumber <span class="sr-only">(current)</span></span></li>
             }
             else
             {
-                <li aria-label="Previous"><a href="@GenerateQueryString(ViewBag.CurrentPage - 1)"><span aria-hidden="true">@ViewBag.PreviousPageText</span></a></li>
+                <li class="page-item"><a class="page-link" href="@GenerateQueryString(pageNumber)">@pageNumber</a></li>
             }
-            @if (ViewBag.ShowTwoFirst)
-            {
-                <li><a href="@GenerateQueryString(1)">1</a></li>
-                <li><a href="@GenerateQueryString(2)">2</a></li>
-                <li class="disabled"><span>...</span></li>
-            }
-            @foreach (int pageNumber in Enumerable.Range(ViewBag.InitialPage, ViewBag.NumbersToShow))
-            {
-                if (pageNumber == ViewBag.CurrentPage)
-                {
-                    <li class="active"><span>@pageNumber <span class="sr-only">(current)</span></span></li>
-                }
-                else
-                {
-                    <li><a href="@GenerateQueryString(pageNumber)">@pageNumber</a></li>
-                }
-            }
-            @if (ViewBag.ShowTwoLasts)
-            {
-                <li class="disabled"><span>...</span></li>
-                <li><a href="@GenerateQueryString(ViewBag.TotalPages - 1)">@( ViewBag.TotalPages - 1)</a></li>
-                <li><a href="@GenerateQueryString(ViewBag.TotalPages)">@ViewBag.TotalPages</a></li>
-            }
-            @if (ViewBag.CurrentPage == ViewBag.TotalPages)
-            {
-                <li class="disabled"><span aria-hidden="true">@ViewBag.NextPageText</span></li>
-            }
-            else
-            {
-                <li aria-label="Next"><a href="@GenerateQueryString(ViewBag.CurrentPage + 1)"><span aria-hidden="true">@ViewBag.NextPageText</span></a></li>
-            }
-        </ul>
-    </div>
+        }
+        @if (ViewBag.ShowTwoLasts)
+        {
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item"><a class="page-link" href="@GenerateQueryString(ViewBag.TotalPages - 1)">@( ViewBag.TotalPages - 1)</a></li>
+            <li class="page-item"><a class="page-link" href="@GenerateQueryString(ViewBag.TotalPages)">@ViewBag.TotalPages</a></li>
+        }
+        @if (ViewBag.CurrentPage == ViewBag.TotalPages)
+        {
+            <li class="page-item disabled"><span class="page-link" aria-hidden="true">@ViewBag.NextPageText</span></li>
+        }
+        else
+        {
+            <li class="page-item" aria-label="Next"><a class="page-link" href="@GenerateQueryString(ViewBag.CurrentPage + 1)"><span aria-hidden="true">@ViewBag.NextPageText</span></a></li>
+        }
+    </ul>
 </nav>

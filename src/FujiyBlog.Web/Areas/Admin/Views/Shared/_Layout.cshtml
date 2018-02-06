@@ -1,12 +1,9 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>@ViewBag.Title</title>
-
-    <link href="~/lib/jquery-ui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
 
@@ -18,7 +15,7 @@
         <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
     </environment>
     <environment names="Staging,Production">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
 
@@ -28,7 +25,7 @@
         </script>
         <script src="~/lib/jquery-ui/jquery-ui.js"></script>
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/bootstrap.min.js"
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
                 asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
@@ -42,48 +39,51 @@
         </script>
     </environment>
 
+    <link href="~/lib/jquery-ui/themes/base/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+
+    <title>@ViewBag.Title</title>
+
     <script src="~/js/admin.js" asp-append-version="true"></script>
 </head>
 
 <body>
     @Html.Partial("NotifyBar")
-    <div class="container-fluid">
-        <header class="row">
-            <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
-                <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        <a asp-area="" asp-controller="Post" asp-action="Index" class="navbar-brand">Go to Blog</a>
-                    </div>
-                    <div class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav">
-                            <li><a asp-area="Admin" asp-controller="Post" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Posts</a></li>
-                            <li><a asp-area="Admin" asp-controller="Comment" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Comments</a></li>
-                            <li><a asp-area="Admin" asp-controller="User" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Users</a></li>
-                            <li><a asp-area="Admin" asp-controller="Setting" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Settings</a></li>
-                            <li><a asp-area="Admin" asp-controller="Page" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Pages</a></li>
-                            <li>
-                                Welcome @Context.User.Identity.Name
-                            </li>
-                        </ul>
-                    </div>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark" role="navigation" style="background-color: rgb(34, 34, 34);">
+            <div class="container">
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-header">
+                    <a asp-area="" asp-controller="Post" asp-action="Index" class="navbar-brand">Go to Blog</a>
                 </div>
-            </nav>
-        </header>
+                <div id="navbar" class="collapse navbar-collapse">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                        <li class="nav-item"><a asp-area="Admin" asp-controller="Post" asp-action="Index" class="nav-link">@FujiyBlog.Web.Resources.Labels.Posts</a></li>
+                        <li class="nav-item"><a asp-area="Admin" asp-controller="Comment" asp-action="Index" class="nav-link">@FujiyBlog.Web.Resources.Labels.Comments</a></li>
+                        <li class="nav-item"><a asp-area="Admin" asp-controller="User" asp-action="Index" class="nav-link">@FujiyBlog.Web.Resources.Labels.Users</a></li>
+                        <li class="nav-item"><a asp-area="Admin" asp-controller="Setting" asp-action="Index" class="nav-link">@FujiyBlog.Web.Resources.Labels.Settings</a></li>
+                        <li class="nav-item"><a asp-area="Admin" asp-controller="Page" asp-action="Index" class="nav-link">@FujiyBlog.Web.Resources.Labels.Pages</a></li>
+                        <li class="nav-item">
+                            Welcome @Context.User.Identity.Name
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-12">
                 @RenderBody()
                 <hr />
             </div>
         </div>
         <footer class="row">
-            <div class="col-sm-12 text-center">
-                <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.5</p>
+            <div class="col-12 text-center">
+                <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.6</p>
             </div>
         </footer>
     </div>

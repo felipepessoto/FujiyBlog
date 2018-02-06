@@ -15,7 +15,7 @@
 @if (Context.UserHasClaimPermission(PermissionClaims.CreateNewPages))
 {
     <p>
-        <a asp-action="Edit" class="btn btn-default">Add new page</a>
+        <a asp-action="Edit" class="btn btn-secondary">Add new page</a>
     </p>
 }
 
@@ -56,7 +56,7 @@
                 <td>
                     @if ((item.Author.UserName == User.Identity.Name && Context.UserHasClaimPermission(PermissionClaims.EditOwnPages)) || Context.UserHasClaimPermission(PermissionClaims.EditOtherUsersPages))
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-default">Edit</a>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-secondary">Edit</a>
                     }
                 </td>
                 <td class="@(item.IsPublished ? "published" : "notpublished")">

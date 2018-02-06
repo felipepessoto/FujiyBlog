@@ -15,15 +15,15 @@
 @if (Context.UserHasClaimPermission(PermissionClaims.CreateNewPosts))
 {
     <p>
-        <a asp-area="Admin" asp-controller="Post" asp-action="Edit" class="btn btn-default">Write new post</a>
+        <a asp-area="Admin" asp-controller="Post" asp-action="Edit" class="btn btn-secondary">Write new post</a>
     </p>
 }
 
-<ul class="nav nav-pills">
-    <li class="@(Model.Published == null ? "active": null)">@Html.ActionLink("All", "Index", "Post", new { area = "Admin" })</li>
-    <li class="@(Model.Published == false ? "active": null)">@Html.ActionLink("Drafts", "Index", "Post", new { published = false, Area = "Admin" })</li>
-    <li class="@(Model.Published == true ? "active": null)">@Html.ActionLink("Published", "Index", "Post", new { published = true, Area = "Admin" })</li>
-</ul>
+    <ul class="nav nav-pills">
+        <li class="nav-item"><a asp-action="Index" class="nav-link @(Model.Published == null ? "active": null)">All</a></li>
+        <li class="nav-item"><a asp-action="Index" asp-route-published="false" class="nav-link @(Model.Published == false ? " active": null)">Drafts</a></li>
+        <li class="nav-item"><a asp-action="Index" asp-route-published="true" class="nav-link @(Model.Published == true ? "active": null)">Published</a></li>
+    </ul>
 
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 

@@ -25,11 +25,11 @@
         {
             <tr data-item-id="@item.Key.Id" id="item-row-@item.Key.Id">
                 <td>
-                    <a href="javascript:void(0);" class="btn btn-default btn-edit-item">Edit</a>
-                    <a asp-area="Admin" asp-controller="Post" asp-action="DeleteTag" asp-route-id="@item.Key.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"RemoveItemRow({item.Key.Id});" )" class="btn btn-default btn-delete-item">@FujiyBlog.Web.Resources.Labels.Delete</a>
+                    <a href="javascript:void(0);" class="btn btn-secondary btn-edit-item">Edit</a>
+                    <a asp-area="Admin" asp-controller="Post" asp-action="DeleteTag" asp-route-id="@item.Key.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@($"RemoveItemRow({item.Key.Id});" )" class="btn btn-secondary btn-delete-item">@FujiyBlog.Web.Resources.Labels.Delete</a>
 
-                    <a href="javascript:void(0);" class="btn btn-default btn-update-item" style="display:none">Update</a>
-                    <a href="javascript:void(0);" class="btn btn-default btn-cancel-item" style="display:none">Cancel</a>
+                    <a href="javascript:void(0);" class="btn btn-secondary btn-update-item" style="display:none">Update</a>
+                    <a href="javascript:void(0);" class="btn btn-secondary btn-cancel-item" style="display:none">Cancel</a>
 
                 </td>
                 <td>
