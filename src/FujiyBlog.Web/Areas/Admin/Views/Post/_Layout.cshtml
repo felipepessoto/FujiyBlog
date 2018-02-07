@@ -4,13 +4,13 @@
 
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a asp-area="Admin" asp-controller="Post" asp-action="Index" class="nav-link @(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">Posts</a>
+        <a asp-action="Index" class="nav-link @(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">Posts</a>
     </li>
     <li class="nav-item">
-        <a asp-area="Admin" asp-controller="Post" asp-action="Categories" class="nav-link @(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Categories" ? "active": "")">Categories</a>
+        <a asp-action="Categories" class="nav-link @(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Categories" ? "active": "")">Categories</a>
     </li>
     <li class="nav-item">
-        <a asp-area="Admin" asp-controller="Post" asp-action="Tags" class="nav-link @(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Tags" ? "active": "")">Tags</a>
+        <a asp-action="Tags" class="nav-link @(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Tags" ? "active": "")">Tags</a>
     </li>
 </ul>
 @RenderBody()

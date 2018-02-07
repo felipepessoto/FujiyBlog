@@ -3,29 +3,29 @@
 }
 
 <ul class="nav nav-tabs">
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">
-        <a asp-action="Index">Basic</a>
+    <li class="nav-item">
+        <a asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active": "")">Basic</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Email" ? "active": "")">
-        <a asp-action="Email">Email</a>
+    <li class="nav-item">
+        <a asp-action="Email" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Email" ? "active": "")">Email</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Comments" ? "active": "")">
-        <a asp-action="Comments">Comments</a>
+    <li class="nav-item">
+        <a asp-action="Comments" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Comments" ? "active": "")">Comments</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "SocialNetworks" ? "active": "")">
-        <a asp-action="SocialNetworks">Social Networks</a>
+    <li class="nav-item">
+        <a asp-action="SocialNetworks" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "SocialNetworks" ? "active": "")">Social Networks</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Feed" ? "active": "")">
-        <a asp-action="Feed">Feed</a>
+    <li class="nav-item">
+        <a asp-action="Feed" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Feed" ? "active": "")">Feed</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Import" ? "active": "")">
-        <a asp-action="Import">Import</a>
+    <li class="nav-item">
+        <a asp-action="Import" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Import" ? "active": "")">Import</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Cache" ? "active": "")">
-        <a asp-action="Cache">Cache</a>
+    <li class="nav-item">
+        <a asp-action="Cache" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Cache" ? "active": "")">Cache</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Logs" ? "active": "")">
-        <a asp-action="Logs">Logs</a>
+    <li class="nav-item">
+        <a asp-action="Logs" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Logs" ? "active": "")">Logs</a>
     </li>
 </ul>
 

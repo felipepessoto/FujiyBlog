@@ -68,25 +68,21 @@
                 <div id="textarea_feedback"></div>
             </div>
 
-
-            <div class="checkbox">
-                <label>
-                    <input asp-for="IsPublished" />@Html.DisplayNameFor(model => model.IsPublished)
-                </label>
+            <div class="form-check">
+                <input asp-for="IsPublished" class="form-check-input" />
+                <label asp-for="IsPublished" class="form-check-label"></label>
                 <span asp-validation-for="IsPublished" class="text-danger"></span>
             </div>
 
-            <div class="checkbox">
-                <label>
-                    <input asp-for="IsFrontPage" />@Html.DisplayNameFor(model => model.IsFrontPage)
-                </label>
+            <div class="form-check">
+                <input asp-for="IsFrontPage" class="form-check-input" />
+                <label asp-for="IsFrontPage" class="form-check-label"></label>
                 <span asp-validation-for="IsFrontPage" class="text-danger"></span>
             </div>
 
-            <div class="checkbox">
-                <label>
-                    <input asp-for="ShowInList" />@Html.DisplayNameFor(model => model.ShowInList)
-                </label>
+            <div class="form-check">
+                <input asp-for="ShowInList" class="form-check-input" />
+                <label asp-for="ShowInList" class="form-check-label"></label>
                 <span asp-validation-for="ShowInList" class="text-danger"></span>
             </div>
 

@@ -10,50 +10,47 @@
 {
     <legend>Email</legend>
 
-        <div class="form-group">
-            <label asp-for="EmailTo" class="control-label"></label>
-            <input asp-for="EmailTo" class="form-control" />
-            <span asp-validation-for="EmailTo" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EmailTo" class="control-label"></label>
+        <input asp-for="EmailTo" class="form-control" />
+        <span asp-validation-for="EmailTo" class="text-danger"></span>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="EmailSubjectPrefix" class="control-label"></label>
-            <input asp-for="EmailSubjectPrefix" class="form-control" />
-            <span asp-validation-for="EmailSubjectPrefix" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="EmailSubjectPrefix" class="control-label"></label>
+        <input asp-for="EmailSubjectPrefix" class="form-control" />
+        <span asp-validation-for="EmailSubjectPrefix" class="text-danger"></span>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="SmtpAddress" class="control-label"></label>
-            <input asp-for="SmtpAddress" class="form-control" />
-            <span asp-validation-for="SmtpAddress" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="SmtpAddress" class="control-label"></label>
+        <input asp-for="SmtpAddress" class="form-control" />
+        <span asp-validation-for="SmtpAddress" class="text-danger"></span>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="SmtpPort" class="control-label"></label>
-            <input asp-for="SmtpPort" class="form-control" />
-            <span asp-validation-for="SmtpPort" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="SmtpPort" class="control-label"></label>
+        <input asp-for="SmtpPort" class="form-control" />
+        <span asp-validation-for="SmtpPort" class="text-danger"></span>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="SmtpUserName" class="control-label"></label>
-            <input asp-for="SmtpUserName" class="form-control" />
-            <span asp-validation-for="SmtpUserName" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="SmtpUserName" class="control-label"></label>
+        <input asp-for="SmtpUserName" class="form-control" />
+        <span asp-validation-for="SmtpUserName" class="text-danger"></span>
+    </div>
 
-        <div class="form-group">
-            <label asp-for="SmtpPassword" class="control-label"></label>
-            <input asp-for="SmtpPassword" class="form-control" />
-            <span asp-validation-for="SmtpPassword" class="text-danger"></span>
-        </div>
+    <div class="form-group">
+        <label asp-for="SmtpPassword" class="control-label"></label>
+        <input asp-for="SmtpPassword" class="form-control" />
+        <span asp-validation-for="SmtpPassword" class="text-danger"></span>
+    </div>
 
-        <div class="form-group">
-            <div class="checkbox">
-                <label>
-                    <input asp-for="SmtpSsl" type="checkbox" />@Html.DisplayNameFor(x => x.SmtpSsl)
-                </label>
-            </div>
-        </div>
+    <div class="form-check">
+        <input asp-for="SmtpSsl" class="form-check-input" />
+        <label asp-for="SmtpSsl" class="form-check-label"></label>
+    </div>
 
-        <button class="btn btn-primary" type="submit">Save</button>
+    <button class="btn btn-primary" type="submit">Save</button>
 
 }

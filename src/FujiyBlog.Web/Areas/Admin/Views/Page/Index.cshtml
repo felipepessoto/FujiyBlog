@@ -19,11 +19,17 @@
     </p>
 }
 
-<ul class="nav nav-pills">
-    <li class="@(Model.Published == null ? "active": null)"><a asp-action="Index" >All</a></li>
-    <li class="@(Model.Published == false ? "active": null)"><a asp-action="Index" asp-route-published="false" >Drafts</a></li>
-    <li class="@(Model.Published == true ? "active": null)"><a asp-action="Index" asp-route-published="true" >Published</a></li>
-</ul>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a asp-action="Index" class="nav-link @(Model.Published == null ? " active": null)">All</a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" asp-route-published="false" class="nav-link @(Model.Published == false ? "active": null)">Drafts</a>
+        </li>
+        <li class="nav-item">
+            <a asp-action="Index" asp-route-published="true" class="nav-link @(Model.Published == true ? "active": null)">Published</a>
+        </li>
+    </ul>
 
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })
 

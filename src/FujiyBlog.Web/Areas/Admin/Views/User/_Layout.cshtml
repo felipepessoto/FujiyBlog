@@ -3,11 +3,11 @@
 }
 
 <ul class="nav nav-tabs">
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Index" ? "active": "")">
-        <a asp-action="Index">Users</a>
+    <li class="nav-item">
+        <a asp-action="Index" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active": "")">Users</a>
     </li>
-    <li class="@(((Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor)ViewContext.ActionDescriptor).ActionName == "Roles" ? "active": "")">
-        <a asp-action="Roles">Roles</a>
+    <li class="nav-item">
+        <a asp-action="Roles" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Roles" ? "active": "")">Roles</a>
     </li>
 </ul>
 

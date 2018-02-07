@@ -117,7 +117,7 @@
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark" role="navigation" style="background-color: rgb(34, 34, 34);">
+        <nav class="navbar navbar-expand-sm navbar-dark mb-4" role="navigation" style="background-color: rgb(34, 34, 34);">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -131,8 +131,8 @@
                         <li class="nav-item @(Url.Action("Index", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" href="@Url.Content("~/")">Home</a></li>
                         <li class="nav-item @(Url.Action("Archive", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" asp-controller="Post" asp-action="Archive">@FujiyBlog.Web.Resources.Labels.Archive</a></li>
                         <li class="nav-item @(Url.Action("Contact", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" asp-controller="Contact" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Contact</a></li>
-                        <li><a class="nav-link" href="nav-item @FeedsUrl()">Feed</a></li>
-                        <li>
+                        <li class="nav-item"><a class="nav-link" href="@FeedsUrl()">Feed</a></li>
+                        <li class="nav-item">
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
@@ -141,7 +141,7 @@
                             }
                             else
                             {
-                                <a asp-area="" asp-controller="Account" asp-action="Login">Sign in</a>
+                                <a asp-area="" asp-controller="Account" asp-action="Login" class="nav-link">Sign in</a>
                             }
                         </li>
                     </ul>

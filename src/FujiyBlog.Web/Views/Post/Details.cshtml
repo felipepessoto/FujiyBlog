@@ -8,7 +8,7 @@
     Layout = "_Layout";
 }
 @section OpenGraphTags
-{
+    {
     <meta property="og:title" content="@Model.Post.Title" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="@Url.Action("Details", "Post",new  { postSlug = Model.Post.Slug }, Context.Request.Scheme)" />
@@ -17,7 +17,7 @@
 }
 
 @section TwitterCardsTags
-{
+    {
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@settings.TwitterBlogAccount">
     <meta name="twitter:title" content="@Model.Post.Title">
@@ -28,20 +28,19 @@
 }
 
 
-<div id="postnavigation">
-    @if (Model.PreviousPost != null)
-    {
-        @Html.ActionLink("<< " + Model.PreviousPost.Title, "Details", "Post", new { postSlug = Model.PreviousPost.Slug })
-        if (Model.NextPost != null)
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        @if (Model.PreviousPost != null)
         {
-            <text>|</text>
+            <li class="breadcrumb-item"><a asp-controller="Post" asp-action="Details" asp-route-postSlug="@Model.PreviousPost.Slug">&#x3C;&#x3C; @Model.PreviousPost.Title</a></li>
         }
-    }
-    @if (Model.NextPost != null)
-    {
-        @Html.ActionLink(Model.NextPost.Title + " >>", "Details", "Post", new { postSlug = Model.NextPost.Slug })
-    }
-</div>
+        @if (Model.NextPost != null)
+        {
+            <li class="breadcrumb-item"><a asp-controller="Post" asp-action="Details" asp-route-postSlug="@Model.NextPost.Slug">@Model.NextPost.Title &#x3E;&#x3E;</a></li>
+        }
+    </ol>
+</nav>
+
 @{Html.RenderPartial("Post", Model);}
 
 <hr />
