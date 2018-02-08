@@ -1,13 +1,5 @@
-﻿using FujiyBlog.Core.Caching;
-using FujiyBlog.Core.DomainObjects;
-using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Web.ViewModels;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.PlatformAbstractions;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace FujiyBlog.Web.ViewComponents
@@ -17,7 +9,7 @@ namespace FujiyBlog.Web.ViewComponents
         public Task<IViewComponentResult> InvokeAsync(int currentPage, int totalPages, string nextPageText, string previousPageText)
         {
             totalPages = Math.Max(totalPages, 1);
-            int numbersToShow = Math.Min(13, totalPages);
+            int numbersToShow = Math.Min(5, totalPages);
 
             int initialPage = Math.Max(currentPage - (numbersToShow / 2), 1);
 

@@ -154,12 +154,12 @@
 
 
         <div class="row">
-            <div class="col-9">
+            <div class="col-sm-9">
                 <div id="content">
                     @RenderBody()
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col-sm-3">
                 <ul id="sidebar">
                     @await Component.InvokeAsync("Widget", new { zoneName = "Zone1" })
                 </ul>
