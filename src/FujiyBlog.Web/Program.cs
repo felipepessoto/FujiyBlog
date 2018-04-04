@@ -3,6 +3,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 
 namespace FujiyBlog.Web
 {
@@ -16,7 +18,16 @@ namespace FujiyBlog.Web
             {
                 var services = scope.ServiceProvider;
                 var db = services.GetRequiredService<FujiyBlogDatabase>();
-                db.Database.Migrate();
+
+                try
+                {
+                    db.Database.Migrate();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred while migrating the database.");
+                }
             }
 
             webHost.Run();
