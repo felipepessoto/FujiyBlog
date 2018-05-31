@@ -5,7 +5,7 @@
 
 @foreach (var item in Model.RecentPosts)
 {
-    Html.RenderPartial("Post", item);
+    <partial name="Post" model="item" />
 }
 
 @await Component.InvokeAsync("Pager", new { currentPage = Model.CurrentPage, totalPages = Model.TotalPages, nextPageText = FujiyBlog.Web.Resources.Labels.NextPosts, previousPageText = FujiyBlog.Web.Resources.Labels.PreviousPosts })

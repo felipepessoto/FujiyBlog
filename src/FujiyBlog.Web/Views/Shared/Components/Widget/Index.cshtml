@@ -6,7 +6,7 @@
 <div class="widgetzone" id="widgetzone_@(Model.ZoneName)">
     @foreach (WidgetSetting widgetSetting in Model.WidgetSettings)
     {
-        Html.RenderPartial("~/Views/Shared/Components/Widget/" + widgetSetting.Name  + ".cshtml", widgetSetting);
+        <partial name="@("~/Views/Shared/Components/Widget/" + widgetSetting.Name  + ".cshtml")" model="widgetSetting" />
     }
 </div>
 @if (Context.UserHasClaimPermission(PermissionClaims.ManageWidgets))

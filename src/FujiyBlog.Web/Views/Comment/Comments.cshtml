@@ -38,7 +38,7 @@
         <p class="date">@DateTimeUtil.ConvertUtcToMyTimeZone(comment.CreationDate)</p>
 
         <p class="content">@Html.Raw(comment.Comment.Replace(Environment.NewLine, "<br />"))</p>
-        
+
         @if (Context.UserHasClaimPermission(PermissionClaims.CreateComments))
         {
             <a href="javascript:void(0)" onclick="javascript:fujiyBlog.comments.replyComment(@comment.Id);">@FujiyBlog.Web.Resources.Labels.Reply</a>
@@ -48,10 +48,10 @@
         {
             <a asp-controller="Comment" asp-action="Approve" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("$('#link-approve-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-disapprove-comment-" + comment.Id + "').fadeIn('normal');});")" id="@("link-approve-comment-" + comment.Id)" style="@(comment.IsApproved ? "display: none;" : string.Empty)">Approve</a>
 
-                <a asp-controller="Comment" asp-action="Disapprove" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("$('#link-disapprove-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-approve-comment-" + comment.Id + "').fadeIn('normal');});")" id="@("link-disapprove-comment-" + comment.Id)" style="@(!comment.IsApproved ? "display: none;" : string.Empty)">Disapprove</a>
+            <a asp-controller="Comment" asp-action="Disapprove" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-success="@("$('#link-disapprove-comment-" + comment.Id + "').fadeOut('normal', function() {$('#link-approve-comment-" + comment.Id + "').fadeIn('normal');});")" id="@("link-disapprove-comment-" + comment.Id)" style="@(!comment.IsApproved ? "display: none;" : string.Empty)">Disapprove</a>
 
-                <text>|</text>
-                <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("$('#replies_" + comment.Id + " > *').insertAfter('#comment_id-" + comment.Id + "');$('#comment_id-" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" )">Delete</a>
+            <text>|</text>
+            <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" data-ajax="true" data-ajax-method="POST" data-ajax-confirm="Sure?" data-ajax-success="@("$('#replies_" + comment.Id + " > *').insertAfter('#comment_id-" + comment.Id + "');$('#comment_id-" + comment.Id + "').slideUp(1000, function () {$(this).remove();});" )">Delete</a>
 
             if (comment.NestedComments.Any())
             {
@@ -60,9 +60,8 @@
             }
         }
 
-
         <div class="comment-replies" id="replies_@(comment.Id)">
-            @{Html.RenderPartial("~/Views/Comment/Comments.cshtml", comment.NestedComments);}
+            <partial name="~/Views/Comment/Comments.cshtml" model="comment.NestedComments" />
         </div>
     </div>
-                }
+}
