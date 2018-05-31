@@ -5,20 +5,17 @@ using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.Services;
-using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using System;
 
@@ -33,22 +30,28 @@ namespace FujiyBlog.Web
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                //options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
+
             services.AddDbContext<FujiyBlogDatabase>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
-                //.ConfigureWarnings(warnings => warnings.Throw(Microsoft.EntityFrameworkCore.Infrastructure.RelationalEventId.QueryClientEvaluationWarning))
-                );
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("DefaultConnection"))
+                    .ConfigureWarnings(warnings => warnings.Throw(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.QueryClientEvaluationWarning)));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             {
                 //config.SignIn.RequireConfirmedEmail = true;
-            })
-                .AddEntityFrameworkStores<FujiyBlogDatabase>()
-                .AddDefaultTokenProviders();
+            }).AddEntityFrameworkStores<FujiyBlogDatabase>().AddDefaultTokenProviders();
 
-            services.AddMvc();
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddEntityFrameworkStores<FujiyBlogDatabase>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             // Add application services.
@@ -89,19 +92,20 @@ namespace FujiyBlog.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, SettingRepository settingRepository)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SettingRepository settingRepository)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
                 app.UseDatabaseErrorPage();
             }
             else
             {
                 app.UseExceptionHandler("/Error");
+                app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {
                 OnPrepareResponse = ctx =>
@@ -113,6 +117,7 @@ namespace FujiyBlog.Web
                     };
                 }
             });
+            app.UseCookiePolicy();
 
             app.UseAuthentication();
 

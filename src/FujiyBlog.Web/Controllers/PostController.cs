@@ -240,6 +240,7 @@ namespace FujiyBlog.Web.Controllers
             return RedirectToActionPermanent(nameof(Details), new { postSlug });
         }
 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View();

@@ -31,17 +31,17 @@
 
 }
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <environment names="Development">
+    <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/Content/Themes/Default/Site.css" />
         <link rel="stylesheet" type="text/css" href="~/lib/prism/themes/prism.css">
     </environment>
-    <environment names="Staging,Production">
+    <environment exclude="Development">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
@@ -148,7 +148,8 @@
                 </div><!--/.nav-collapse -->
             </div>
         </nav>
-    </header>
+        @*<partial name="_CookieConsentPartial" />*@
+    </header>    
 
     <div class="container-fluid">
 
@@ -182,7 +183,7 @@
         fujiyBlogUrls.OpenIdSelectorImages = '@Url.Content("~/Content/openid/images/")';
     </script>
 
-    <environment names="Development">
+    <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/jquery-ui/jquery-ui.js"></script>
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
@@ -191,10 +192,13 @@
         <script src="~/lib/prism/plugins/autoloader/prism-autoloader.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
-    <environment names="Staging,Production">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
+    <environment exclude="Development">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery">
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+
         </script>
         <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
@@ -211,7 +215,7 @@
             Prism.plugins.autoloader.languages_path = '@Url.Content("~/lib/prism/components/")';
     </script>
 
-    @RenderSection("scripts", false)
+    @RenderSection("scripts", required: false)
 
     @if (!string.IsNullOrEmpty(settings.CustomCode))
     {

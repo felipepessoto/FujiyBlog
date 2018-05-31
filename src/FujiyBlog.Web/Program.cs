@@ -12,7 +12,7 @@ namespace FujiyBlog.Web
     {
         public static void Main(string[] args)
         {
-            var webHost = BuildWebHost(args);
+            var webHost = CreateWebHostBuilder(args).Build();
 
             using (var scope = webHost.Services.CreateScope())
             {
@@ -33,9 +33,8 @@ namespace FujiyBlog.Web
             webHost.Run();
         }
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+          WebHost.CreateDefaultBuilder(args)
+              .UseStartup<Startup>();
     }
 }
