@@ -55,5 +55,5 @@
         <partial name="~/Views/Comment/DoComment.cshtml" model="new PostComment { Post = Model.Post }" />
     }
 
-    <partial name="~/Views/Comment/Comments.cshtml" for="Post.Comments.Where(x => x.ParentComment == null)" />
+    <partial name="~/Views/Comment/Comments.cshtml" model="Model.Post.Comments.Where(x => x.ParentComment == null)" />
 </div>
