@@ -8,53 +8,46 @@
 Prism.languages.rust = {
 	'comment': [
 		{
-			pattern: /(^|[^\\])\/\*[\s\S]*?\*\//,
+			pattern: /(^|[^\\])\/\*[\w\W]*?\*\//,
 			lookbehind: true
 		},
 		{
-			pattern: /(^|[^\\:])\/\/.*/,
+			pattern: /(^|[^\\:])\/\/.*?(\r?\n|$)/,
 			lookbehind: true
 		}
 	],
 	'string': [
-		{
-			pattern: /b?r(#*)"(?:\\.|(?!"\1)[^\\\r\n])*"\1/,
-			greedy: true
-		},
-		{
-			pattern: /b?("|')(?:\\.|(?!\1)[^\\\r\n])*\1/,
-			greedy: true
-		}
+		/b?r(#*)"(?:\\?.)*?"\1/,
+		/b?("|')(?:\\?.)*?\1/
 	],
 	'keyword': /\b(?:abstract|alignof|as|be|box|break|const|continue|crate|do|else|enum|extern|false|final|fn|for|if|impl|in|let|loop|match|mod|move|mut|offsetof|once|override|priv|pub|pure|ref|return|sizeof|static|self|struct|super|true|trait|type|typeof|unsafe|unsized|use|virtual|where|while|yield)\b/,
 
 	'attribute': {
 		pattern: /#!?\[.+?\]/,
-		greedy: true,
 		alias: 'attr-name'
 	},
 
 	'function': [
-		/\w+(?=\s*\()/,
+		/[a-z0-9_]+(?=\s*\()/i,
 		// Macros can use parens or brackets
-		/\w+!(?=\s*\(|\[)/
+		/[a-z0-9_]+!(?=\s*\(|\[)/i
 	],
 	'macro-rules': {
-		pattern: /\w+!/,
+		pattern: /[a-z0-9_]+!/i,
 		alias: 'function'
 	},
 
 	// Hex, oct, bin, dec numbers with visual separators and type suffix
-	'number': /\b-?(?:0x[\dA-Fa-f](?:_?[\dA-Fa-f])*|0o[0-7](?:_?[0-7])*|0b[01](?:_?[01])*|(\d(?:_?\d)*)?\.?\d(?:_?\d)*(?:[Ee][+-]?\d+)?)(?:_?(?:[iu](?:8|16|32|64)?|f32|f64))?\b/,
+	'number': /\b-?(?:0x[\dA-Fa-f](?:_?[\dA-Fa-f])*|0o[0-7](?:_?[0-7])*|0b[01](?:_?[01])*|(\d(_?\d)*)?\.?\d(_?\d)*([Ee][+-]?\d+)?)(?:_?(?:[iu](?:8|16|32)?|f32|f64))?\b/,
 
 	// Closure params should not be confused with bitwise OR |
 	'closure-params': {
 		pattern: /\|[^|]*\|(?=\s*[{-])/,
 		inside: {
-			'punctuation': /[|:,]/,
+			'punctuation': /[\|:,]/,
 			'operator': /[&*]/
 		}
 	},
-	'punctuation': /[{}[\];(),:]|\.+|->/,
-	'operator': /[-+*\/%!^=]=?|@|&[&=]?|\|[|=]?|<<?=?|>>?=?/
+	'punctuation': /[{}[\];(),.:]|->/,
+	'operator': /[-+]{1,2}|!=?|<=?|>=?|={1,3}|&&?|\|\|?|\*|\/|\^|%|<<|>>@/
 };
