@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,15 +17,17 @@ namespace FujiyBlog.Core.Services
     public class FeedGenerator : IChannelProvider
     {
         private readonly IHttpContextAccessor contextAccessor;
+        private readonly LinkGenerator linkGenerator;
         private readonly FeedRepository feedRepository;
         private readonly SettingRepository settings;
         public IUrlHelper urlHelper { get; set; }
 
-        public FeedGenerator(FeedRepository feedRepository, SettingRepository settings, IHttpContextAccessor contextAccessor, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccesor)
+        public FeedGenerator(FeedRepository feedRepository, SettingRepository settings, IHttpContextAccessor contextAccessor, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccesor, LinkGenerator linkGenerator )
         {
             this.feedRepository = feedRepository;
             this.settings = settings;
             this.contextAccessor = contextAccessor;
+            this.linkGenerator = linkGenerator;
             this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccesor.ActionContext);
         }
 
@@ -55,6 +58,10 @@ namespace FujiyBlog.Core.Services
             }
 
             channel.Generator = Name;
+
+            //TODO only works with compatiblity 2.2
+            //var indexUrl = linkGenerator.GetUriByAction(contextAccessor.HttpContext, action: "Index", controller: "Post");
+            //string feedUrl = linkGenerator.GetUriByAction(contextAccessor.HttpContext, "Rss20", "Feed");
 
             var indexUrl = urlHelper.Action("Index", "Post", null, contextAccessor.HttpContext.Request.Scheme);
             channel.Link = new Uri(indexUrl);
