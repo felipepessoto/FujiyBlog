@@ -51,7 +51,7 @@ namespace FujiyBlog.Web
             //services.AddDefaultIdentity<IdentityUser>()
             //    .AddEntityFrameworkStores<FujiyBlogDatabase>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);//TODO workaround https://github.com/aspnet/AspNetCore/issues/5712
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             // Add application services.
