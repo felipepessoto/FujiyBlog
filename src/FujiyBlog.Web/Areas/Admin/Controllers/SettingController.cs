@@ -35,7 +35,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             string themeDir = Path.Combine(AppContext.BaseDirectory, "Views", "Themes");
             var fileThemes = Directory.Exists(themeDir) ? new DirectoryInfo(themeDir).GetDirectories().Select(x => new SelectListItem { Text = x.Name }) : Enumerable.Empty<SelectListItem>();
 
-            var themePrefix = "_Views_Themes_";
+            var themePrefix = "Views_Themes_";
             var themePrefixLength = themePrefix.Length;
             var compiledViewsThemes = CompiledViewsHelper.GetAllViews()
                 .Where(x => x.Name.StartsWith(themePrefix))

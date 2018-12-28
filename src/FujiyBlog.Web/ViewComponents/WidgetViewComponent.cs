@@ -29,10 +29,9 @@ namespace FujiyBlog.Web.ViewComponents
                 var widgetsViews = CompiledViewsHelper.GetViewsTypes<WidgetSetting>();
 
                 widgets = (from widgetView in widgetsViews
-                           let nameWithoutPrefix = widgetView.Name.Substring("_Views_Shared_Components_Widget_".Length)
-                           let nameWithoutSuffix = nameWithoutPrefix.Substring(0, nameWithoutPrefix.Length - 7)
-                           where nameWithoutSuffix != "Index" && nameWithoutSuffix != "Widget" && !nameWithoutSuffix.EndsWith("Edit")
-                           select nameWithoutSuffix).ToArray();
+                           let nameWithoutPrefix = widgetView.Name.Substring("Views_Shared_Components_Widget_".Length)
+                           where nameWithoutPrefix != "Index" && nameWithoutPrefix != "Widget" && !nameWithoutPrefix.EndsWith("Edit")
+                           select nameWithoutPrefix).ToArray();
             }
         }
 

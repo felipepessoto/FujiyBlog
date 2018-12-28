@@ -12,7 +12,7 @@ namespace FujiyBlog.Web.Infrastructure
         public static List<Assembly> GetViewsAssemblies()
         {
             Assembly[] allAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            var precompiledViews = allAssemblies.Where(x => x.GetName().Name == "FujiyBlog.Web.PrecompiledViews").ToList();
+            var precompiledViews = allAssemblies.Where(x => x.GetName().Name == "FujiyBlog.Web.Views").ToList();
 
             List<Assembly> assemblies =
                 precompiledViews.Any()
@@ -33,7 +33,7 @@ namespace FujiyBlog.Web.Infrastructure
         public static List<Type> GetAllViews()
         {
             List<Assembly> assemblies = GetViewsAssemblies();
-            var viewsTypes = assemblies.SelectMany(assembly => assembly.GetTypes()).Where(x => x.Name.StartsWith("_Views_")).ToList();
+            var viewsTypes = assemblies.SelectMany(assembly => assembly.GetTypes()).Where(x => x.Name.StartsWith("Views_")).ToList();
             return viewsTypes;
         }
     }
