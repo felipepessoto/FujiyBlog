@@ -29,7 +29,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return Json(new { errorMessage = "The Uploaded file is empty" });
             }
 
-            if (folderName.Any(x=> char.IsLetterOrDigit(x) == false))
+            if (folderName.Any(x=> char.IsLetterOrDigit(x) == false && x != '-'))
             {
                 return Json(new { errorMessage = "Invalid Folder" });
             }
