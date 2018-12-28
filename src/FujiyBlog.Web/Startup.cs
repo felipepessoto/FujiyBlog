@@ -68,6 +68,11 @@ namespace FujiyBlog.Web
             services.AddScoped<FeedGenerator>();
             services.AddScoped<cloudscribe.Syndication.Models.Rss.IChannelProvider, FeedGenerator>();//to enable cloudscribe.Syndication RssController
 
+            //File upload
+            services.AddScoped<AzureStorageFileUploadService>();
+            services.AddScoped<LocalFolderFileUploadService>();
+            services.AddScoped(FileUploadServiceFactory.Build);
+
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.ViewLocationExpanders.Add(new ThemeViewLocationExpander());//TODO confirmar
@@ -133,6 +138,7 @@ namespace FujiyBlog.Web
                 routes.MapRoute("AuthorHome", "author/{author}", new { controller = "Post", action = "Author" });
                 routes.MapRoute("Archive", "archive", new { controller = "Post", action = "Archive" });
                 routes.MapRoute("ArchiveByMonth", "archive/{year:int:range(0,9999)}/{month:int:range(1,12)}", new { controller = "Post", action = "ArchiveDate" });
+                routes.MapRoute("UploadedFiles", "upload/{*filePath}", new { controller = "Upload", action = "Details" });
 
                 routes.MapRoute(name: "areaRoute", template: "{area:exists}/{controller}/{action}/{id?}");
 

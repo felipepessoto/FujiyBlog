@@ -268,6 +268,30 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.ApplicationInsightsInstrumentationKey, value); }
         }
 
+        public string FileUploadService
+        {
+            get { return LoadSetting(SettingNames.FileUploadService); }
+            set { SaveSetting(SettingNames.FileUploadService, value); }
+        }
+
+        public string AzureStorageAccountName
+        {
+            get { return LoadSetting(SettingNames.AzureStorageAccountName); }
+            set { SaveSetting(SettingNames.AzureStorageAccountName, value); }
+        }
+
+        public string AzureStorageAccountKey
+        {
+            get { return LoadSetting(SettingNames.AzureStorageAccountKey); }
+            set { SaveSetting(SettingNames.AzureStorageAccountKey, value); }
+        }
+
+        public string AzureStorageUploadContainerName
+        {
+            get { return LoadSetting(SettingNames.AzureStorageUploadContainerName); }
+            set { SaveSetting(SettingNames.AzureStorageUploadContainerName, value); }
+        }
+
         private string LoadSetting(SettingNames setting)
         {
             string value;
@@ -396,6 +420,18 @@ namespace FujiyBlog.Core.EntityFramework
 
             [Description("Application Insights Instrumentation Key")]
             ApplicationInsightsInstrumentationKey = 37,
+
+            [DefaultValue("LocalFolderFileUploadService"), Description("File upload service")]
+            FileUploadService = 38,
+
+            [Description("Azure Storage Account Name")]
+            AzureStorageAccountName = 39,
+
+            [Description("Azure Storage Account Key")]
+            AzureStorageAccountKey = 40,
+
+            [Description("Azure Storage Upload Container Name")]
+            AzureStorageUploadContainerName = 41,
         }
     }
 }

@@ -16,7 +16,10 @@
         <a asp-action="SocialNetworks" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "SocialNetworks" ? "active": "")">Social Networks</a>
     </li>
     <li class="nav-item">
-        <a asp-action="Feed" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Feed" ? "active": "")">Feed</a>
+        <a asp-action="Feed" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Feed" ? "active" : "")">Feed</a>
+    </li>
+    <li class="nav-item">
+        <a asp-action="Storage" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Storage" ? "active": "")">Storage</a>
     </li>
     <li class="nav-item">
         <a asp-action="Import" class="nav-link @(ViewContext.RouteData.Values["Action"].ToString() == "Import" ? "active": "")">Import</a>

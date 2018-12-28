@@ -1,6 +1,7 @@
 ﻿//using FujiyBlog.Core.BlogML;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
+using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Infrastructure;
 //using NLog;
@@ -262,6 +263,45 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             SetSuccessMessage("Settings saved");
 
             return RedirectToAction("Feed");
+        }
+
+        public ActionResult Storage()
+        {
+            var fileServiceType = typeof(IFileUploadService);
+
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => fileServiceType.IsAssignableFrom(p) && fileServiceType != p)
+                .Select(x => x.Name);
+
+            AdminStorageSettings viewModel = new AdminStorageSettings
+            {
+                FileUploadServices = types.Select(x => new SelectListItem { Text = x }).ToList(),
+                FileUploadService = settingRepository.FileUploadService,
+                AzureStorageAccountName = settingRepository.AzureStorageAccountName,
+                AzureStorageAccountKey = settingRepository.AzureStorageAccountKey,
+                AzureStorageUploadContainerName = settingRepository.AzureStorageUploadContainerName,
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Storage(AdminStorageSettings settings)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            settingRepository.FileUploadService = settings.FileUploadService;
+            settingRepository.AzureStorageAccountName = settings.AzureStorageAccountName;
+            settingRepository.AzureStorageAccountKey = settings.AzureStorageAccountKey;
+            settingRepository.AzureStorageUploadContainerName = settings.AzureStorageUploadContainerName;
+
+            SetSuccessMessage("Settings saved");
+
+            return RedirectToAction(nameof(Storage));
         }
 
         public ActionResult Cache()
