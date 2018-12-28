@@ -10,7 +10,6 @@ using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.PlatformAbstractions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +31,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            string themeDir = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, "Views", "Themes");
+            string themeDir = Path.Combine(AppContext.BaseDirectory, "Views", "Themes");
             var fileThemes = Directory.Exists(themeDir) ? new DirectoryInfo(themeDir).GetDirectories().Select(x => new SelectListItem { Text = x.Name }) : Enumerable.Empty<SelectListItem>();
 
             var themePrefix = "_Views_Themes_";

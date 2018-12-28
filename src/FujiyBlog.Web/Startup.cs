@@ -51,7 +51,7 @@ namespace FujiyBlog.Web
             //services.AddDefaultIdentity<IdentityUser>()
             //    .AddEntityFrameworkStores<FujiyBlogDatabase>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             // Add application services.
@@ -120,8 +120,6 @@ namespace FujiyBlog.Web
             app.UseCookiePolicy();
 
             app.UseAuthentication();
-
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
