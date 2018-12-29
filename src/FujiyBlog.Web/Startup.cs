@@ -138,7 +138,7 @@ namespace FujiyBlog.Web
                 routes.MapRoute("AuthorHome", "author/{author}", new { controller = "Post", action = "Author" });
                 routes.MapRoute("Archive", "archive", new { controller = "Post", action = "Archive" });
                 routes.MapRoute("ArchiveByMonth", "archive/{year:int:range(0,9999)}/{month:int:range(1,12)}", new { controller = "Post", action = "ArchiveDate" });
-                routes.MapRoute("UploadedFiles", "upload/{*filePath}", new { controller = "Upload", action = "Details" });
+                routes.MapRoute("UploadedFiles", "upload/{*filePath}", new { controller = "Upload", action = "Details" }, new { controller = new UploadServiceConfiguredConstraint() });
 
                 routes.MapRoute(name: "areaRoute", template: "{area:exists}/{controller}/{action}/{id?}");
 
