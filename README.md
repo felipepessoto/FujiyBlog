@@ -1,5 +1,5 @@
 ### Project Description
-A simple Open Source Blog using ASP.NET MVC, jQuery, Entity Framework Code First and SQL CE 4 or SQL Server.
+A simple Open Source Blog using ASP.NET Core, jQuery, Entity Framework Core and SQL Server.
 
 ### Demo
 You can see a live blog at <a href="http://blog.fujiy.net/">http://blog.fujiy.net/</a>.
