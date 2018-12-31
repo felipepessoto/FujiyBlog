@@ -65,15 +65,15 @@
             <div class="social-networks">
                 @if (settings.EnableTwitterSharePosts)
                 {
-                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Url.Action("Details", "Post", new { postSlug = Model.Post.Slug }, Context.Request.Scheme))&text=@Uri.EscapeDataString(Model.Post.Title)&via=@Uri.EscapeDataString(settings.TwitterBlogAccount ?? "")', '', 550, 420)"><img src="~/content/Images/tweet.png" /></a>
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://twitter.com/intent/tweet?url=@Uri.EscapeDataString(Url.Action("Details", "Post", new { postSlug = Model.Post.Slug }, Context.Request.Scheme))&text=@Uri.EscapeDataString(Model.Post.Title)&via=@Uri.EscapeDataString(settings.TwitterBlogAccount ?? "")', '', 550, 420)"><img src="~/content/images/tweet.png" /></a>
                 }
                 @if (settings.EnableGooglePlusOnePosts)
                 {
-                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('https://plus.google.com/share?url=@Uri.EscapeDataString(Url.Action("Details", "Post", new { postSlug = Model.Post.Slug }, Context.Request.Scheme))', '', 510, 420)"><img src="~/content/Images/googleplus.png" /></a>
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('https://plus.google.com/share?url=@Uri.EscapeDataString(Url.Action("Details", "Post", new { postSlug = Model.Post.Slug }, Context.Request.Scheme))', '', 510, 420)"><img src="~/content/images/googleplus.png" /></a>
                 }
                 @if (settings.EnableFacebookLikePosts)
                 {
-                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://facebook.com/sharer.php?u=@Uri.EscapeDataString(Url.Action("Details", "Post", new {postSlug= Model.Post.Slug }, Context.Request.Scheme))&app_id=@settings.FacebookAppId', '', 644, 368);"><img src="~/content/Images/facebook_share.png" /></a>
+                    <a href="javascript:void(0);" onclick="fujiyBlog.windowOpenCenter('http://facebook.com/sharer.php?u=@Uri.EscapeDataString(Url.Action("Details", "Post", new {postSlug= Model.Post.Slug }, Context.Request.Scheme))&app_id=@settings.FacebookAppId', '', 644, 368);"><img src="~/content/images/facebook_share.png" /></a>
                 }
             </div>
 
