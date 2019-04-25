@@ -12,8 +12,8 @@
     </div>
     @if (User.Identity.IsAuthenticated)
     {
-        <div id="admin">
-            @Html.ActionLink("Edit", "Edit", "Page", new { id = Model.Id })
-        </div>
+<div id="admin">
+    <a asp-area="Admin" asp-controller="Page" asp-action="Edit" asp-route-id="@Model.Id">@FujiyBlog.Web.Resources.Labels.Edit</a>
+</div>
     }
 </div>

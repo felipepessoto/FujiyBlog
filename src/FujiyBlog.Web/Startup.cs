@@ -51,7 +51,7 @@ namespace FujiyBlog.Web
             //services.AddDefaultIdentity<IdentityUser>()
             //    .AddEntityFrameworkStores<FujiyBlogDatabase>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);//TODO workaround https://github.com/aspnet/AspNetCore/issues/5712
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             // Add application services.
@@ -148,7 +148,7 @@ namespace FujiyBlog.Web
 
                 routes.MapRoute("BlogHome", "blog", new { controller = "Post", action = "Index" });
 
-                routes.MapRoute("DefaultPage", "", new { controller = "Page", action = "Index" });
+                routes.MapRoute("DefaultPage", "", new { controller = "Page", action = "Index" }, new { controller = new HomeConstraint() });
 
                 routes.MapRoute(name: "default", template: "{controller}/{action}/{id?}");
             });

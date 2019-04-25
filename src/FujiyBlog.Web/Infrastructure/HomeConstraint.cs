@@ -14,12 +14,16 @@ namespace FujiyBlog.Web.Infrastructure
     {
         public bool Match(HttpContext httpContext, IRouter route, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            if (string.Equals(values["controller"] as string, "Post", StringComparison.OrdinalIgnoreCase) && string.Equals(values["action"] as string, "Index", StringComparison.OrdinalIgnoreCase))
+            string controllerName = values["controller"] as string;
+            bool isPageController = string.Equals(controllerName, "Page", StringComparison.OrdinalIgnoreCase);
+            bool isPostController = string.Equals(controllerName, "Post", StringComparison.OrdinalIgnoreCase);
+
+            if ((isPageController || isPostController) && string.Equals(values["action"] as string, "Index", StringComparison.OrdinalIgnoreCase))
             {
                 string cacheKey = "FujiyBlog.Web.Infrastructure.HomeConstraint.Match" + " as " + httpContext.User.Identity.Name;
                 var db = httpContext.RequestServices.GetRequiredService<FujiyBlogDatabase>();
-                bool match = CacheHelper.FromCacheOrExecute(db, () => !db.Pages.WhereHaveRoles(httpContext).Any(x => x.IsFrontPage), cacheKey);
-                return match;
+                bool hasFrontPage = CacheHelper.FromCacheOrExecute(db, () => db.Pages.WhereHaveRoles(httpContext).Any(x => x.IsFrontPage), cacheKey);
+                return hasFrontPage == isPageController;
             }
 
             return true;
