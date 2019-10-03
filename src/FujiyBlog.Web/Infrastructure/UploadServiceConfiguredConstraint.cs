@@ -9,14 +9,21 @@ namespace FujiyBlog.Web.Infrastructure
     {
         public bool Match(HttpContext httpContext, IRouter route, string routeKey, RouteValueDictionary values, RouteDirection routeDirection)
         {
-            var settings = httpContext.RequestServices.GetRequiredService<SettingRepository>();
-
-            if (string.IsNullOrEmpty(settings.AzureStorageAccountName) || string.IsNullOrEmpty(settings.AzureStorageUploadContainerName))
+            if (httpContext != null)
             {
-                return false;
-            }
+                var settings = httpContext.RequestServices.GetRequiredService<SettingRepository>();
 
-            return true;
+                if (string.IsNullOrEmpty(settings.AzureStorageAccountName) || string.IsNullOrEmpty(settings.AzureStorageUploadContainerName))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            else
+            {
+                return true;
+            }
         }
     }
 }
