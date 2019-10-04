@@ -4,16 +4,16 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.0-buster AS build
-WORKDIR /src
-COPY ["FujiyBlog.Web/FujiyBlog.Web.csproj", "FujiyBlog.Web/"]
-COPY ["FujiyBlog.Core/FujiyBlog.Core.csproj", "FujiyBlog.Core/"]
+#WORKDIR /src
+COPY ["/src/FujiyBlog.Web/FujiyBlog.Web.csproj", "FujiyBlog.Web/"]
+COPY ["/src/FujiyBlog.Core/FujiyBlog.Core.csproj", "FujiyBlog.Core/"]
 RUN dotnet restore "FujiyBlog.Web/FujiyBlog.Web.csproj"
 COPY . .
-WORKDIR "/src/FujiyBlog.Web"
-RUN dotnet build "FujiyBlog.Web.csproj" -c Release -o /app/build
+#WORKDIR "/src/FujiyBlog.Web"
+RUN dotnet build "/src/FujiyBlog.Web.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "FujiyBlog.Web.csproj" -c Release -o /app/publish
+RUN dotnet publish "/src/FujiyBlog.Web.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
