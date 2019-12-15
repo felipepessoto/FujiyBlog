@@ -12,12 +12,10 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 {
     public partial class FileController : AdminController
     {
-        private readonly IHostingEnvironment env;
         private readonly IFileUploadService fileUploadService;
 
-        public FileController(IHostingEnvironment env, IFileUploadService fileUploadService)
+        public FileController(IFileUploadService fileUploadService)
         {
-            this.env = env;
             this.fileUploadService = fileUploadService;
         }
 

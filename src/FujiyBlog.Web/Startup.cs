@@ -33,6 +33,8 @@ namespace FujiyBlog.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationInsightsTelemetry();
+
             services.AddDbContext<FujiyBlogDatabase>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
@@ -91,7 +93,7 @@ namespace FujiyBlog.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SettingRepository settingRepository)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, SettingRepository settingRepository, TelemetryConfiguration configuration)
         {
             if (env.IsDevelopment())
             {
@@ -163,11 +165,11 @@ namespace FujiyBlog.Web
             //           SupportedUICultures = supportedCultures
             //       });
 
-            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
+            configuration.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
 
-            if (TelemetryConfiguration.Active.DisableTelemetry == false)
+            if (configuration.DisableTelemetry == false)
             {
-                TelemetryConfiguration.Active.InstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey;
+                configuration.InstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey;
             }
         }
 

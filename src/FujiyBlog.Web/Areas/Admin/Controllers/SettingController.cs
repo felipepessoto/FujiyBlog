@@ -4,9 +4,6 @@ using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Areas.Admin.ViewModels;
 using FujiyBlog.Web.Infrastructure;
-//using NLog;
-//using NLog.Config;
-//using NLog.Targets;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,11 +20,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
     {
         private readonly FujiyBlogDatabase db;
         private readonly SettingRepository settingRepository;
+        private readonly TelemetryConfiguration configuration;
 
-        public SettingController(FujiyBlogDatabase db, SettingRepository settings)
+        public SettingController(FujiyBlogDatabase db, SettingRepository settings, TelemetryConfiguration configuration)
         {
             this.db = db;
             this.settingRepository = settings;
+            this.configuration = configuration;
         }
 
         public ActionResult Index()
@@ -77,11 +76,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             settingRepository.ApplicationInsightsInstrumentationKey = settings.ApplicationInsightsInstrumentationKey;
             settingRepository.CustomCode = settings.CustomCode;
 
-            TelemetryConfiguration.Active.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
+            configuration.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
 
-            if (TelemetryConfiguration.Active.DisableTelemetry == false)
+            if (configuration.DisableTelemetry == false)
             {
-                TelemetryConfiguration.Active.InstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey;
+                configuration.InstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey;
             }
 
             SetSuccessMessage("Settings saved");
