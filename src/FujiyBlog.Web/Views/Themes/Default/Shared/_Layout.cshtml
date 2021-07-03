@@ -13,17 +13,13 @@
 
     public string CanonicalUrl()
     {
-        return "";
-        //TODO implementar
-        /*
-        RouteValueDictionary valores = new RouteValueDictionary(ViewContext.RouteData.Values);
-        foreach (KeyValuePair<string, ModelState> keyValuePair in ViewContext.ViewData.ModelState.Where(x => x.Value.Value != null))
+        Microsoft.AspNetCore.Routing.RouteValueDictionary routingValues = new Microsoft.AspNetCore.Routing.RouteValueDictionary(ViewContext.RouteData.Values);
+        foreach (KeyValuePair<string, Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry> keyValuePair in ViewContext.ViewData.ModelState.Where(x => x.Value != null))
         {
-            valores[keyValuePair.Key] = keyValuePair.Value.Value.AttemptedValue;
+            routingValues[keyValuePair.Key] = keyValuePair.Value.AttemptedValue;
         }
 
-        return Url.RouteUrl(null, valores, Request.Url.Scheme, null);
-        */
+        return Url.RouteUrl(null, routingValues, Context.Request.Scheme, null);
     }
 
 }
@@ -127,7 +123,7 @@
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item @(Url.Action("Index", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" href="@Url.Content("~/")">Home</a></li>
                         <li class="nav-item @(Url.Action("Archive", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" asp-controller="Post" asp-action="Archive">@FujiyBlog.Web.Resources.Labels.Archive</a></li>
-                        <li class="nav-item @(Url.Action("Contact", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" asp-controller="Contact" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Contact</a></li>
+                        @*<li class="nav-item @(Url.Action("Contact", "Post", null, Context.Request.Scheme) == CanonicalUrl() ? " active" : "")"><a class="nav-link" asp-controller="Contact" asp-action="Index">@FujiyBlog.Web.Resources.Labels.Contact</a></li>*@
                         <li class="nav-item"><a class="nav-link" href="@FeedsUrl()">Feed</a></li>
                         <li class="nav-item">
                             @if (SignInManager.IsSignedIn(User))

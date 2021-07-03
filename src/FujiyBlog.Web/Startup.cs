@@ -1,4 +1,5 @@
-﻿using FujiyBlog.Core;
+﻿using System;
+using FujiyBlog.Core;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using FujiyBlog.Core.Services;
@@ -19,7 +20,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Net.Http.Headers;
-using System;
 
 namespace FujiyBlog.Web
 {
@@ -40,17 +40,15 @@ namespace FujiyBlog.Web
             services.AddDbContext<FujiyBlogDatabase>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)//true
+            //    .AddEntityFrameworkStores<FujiyBlogDatabase>();
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddEntityFrameworkStores<FujiyBlogDatabase>();
 
             services.AddControllersWithViews();
-            //services.AddRazorPages();
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();//TODO necessario ainda?
 
