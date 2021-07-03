@@ -1,13 +1,8 @@
-﻿using FujiyBlog.Core.Caching;
-using FujiyBlog.Core.DomainObjects;
+﻿using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
-using FujiyBlog.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.PlatformAbstractions;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace FujiyBlog.Web.ViewComponents
 {
