@@ -5,6 +5,7 @@ using FujiyBlog.Core.Services;
 using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.Services;
+using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,7 @@ namespace FujiyBlog.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationInsightsTelemetry();
+            services.ConfigureTelemetryModule<DependencyTrackingTelemetryModule>((module, o) => { module.EnableSqlCommandTextInstrumentation = true; });
 
             services.AddDbContext<FujiyBlogDatabase>(options =>
                 options.UseSqlServer(

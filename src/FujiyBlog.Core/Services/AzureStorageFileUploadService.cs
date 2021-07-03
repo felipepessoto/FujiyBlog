@@ -1,7 +1,5 @@
-﻿using FujiyBlog.Core.EntityFramework;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
+﻿using Azure.Storage.Blobs;
+using FujiyBlog.Core.EntityFramework;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,44 +7,41 @@ namespace FujiyBlog.Core.Services
 {
     public class AzureStorageFileUploadService : IFileUploadService
     {
-        private readonly string accountName;
-        private readonly string accountKey;
+        private readonly string connectionString;
         private readonly string uploadContainerName;
 
         public AzureStorageFileUploadService(SettingRepository settings)
         {
-            accountName = settings.AzureStorageAccountName;
-            accountKey = settings.AzureStorageAccountKey;
+            connectionString = $"DefaultEndpointsProtocol=https;AccountName={settings.AzureStorageAccountName};AccountKey={settings.AzureStorageAccountKey}";
             uploadContainerName = settings.AzureStorageUploadContainerName;
         }
 
         public async Task<string> UploadFile(Stream fileStream, string filePath)
         {
-            StorageCredentials storageCredentials = new StorageCredentials(accountName, accountKey);
-            CloudStorageAccount storageAccount = new CloudStorageAccount(storageCredentials, true);
+            BlobServiceClient blobServiceClient = new BlobServiceClient(connectionString);
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(uploadContainerName);
 
-            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+            await containerClient.CreateIfNotExistsAsync();
 
-            CloudBlobContainer container = blobClient.GetContainerReference(uploadContainerName);
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference(filePath);
+            BlobClient blobClient = containerClient.GetBlobClient(filePath);
 
-            if (await blockBlob.ExistsAsync())
+            if (await blobClient.ExistsAsync())
             {
                 string folder = Path.GetDirectoryName(filePath);
                 string originalFileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
                 string extension = Path.GetExtension(filePath);
 
                 int fileCount = 2;
-                while (await blockBlob.ExistsAsync())
+                while (await blobClient.ExistsAsync())
                 {
                     string fileName = originalFileNameWithoutExtension + fileCount.ToString() + extension;
                     filePath = Path.Combine(folder, fileName);
-                    blockBlob = container.GetBlockBlobReference(filePath);
+                    blobClient = containerClient.GetBlobClient(filePath);
                     fileCount++;
                 }
             }
 
-            await blockBlob.UploadFromStreamAsync(fileStream);
+            await blobClient.UploadAsync(fileStream);
 
             return filePath;
         }

@@ -1,7 +1,4 @@
-﻿using FujiyBlog.Core.EntityFramework;
-using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Auth;
-using Microsoft.WindowsAzure.Storage.Blob;
+﻿using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,9 +6,9 @@ namespace FujiyBlog.Core.Services
 {
     public class LocalFolderFileUploadService : IFileUploadService
     {
-        private readonly Microsoft.AspNetCore.Hosting.IHostingEnvironment env;
+        private readonly IWebHostEnvironment env;
 
-        public LocalFolderFileUploadService(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public LocalFolderFileUploadService(IWebHostEnvironment env)
         {
             this.env = env;
         }
