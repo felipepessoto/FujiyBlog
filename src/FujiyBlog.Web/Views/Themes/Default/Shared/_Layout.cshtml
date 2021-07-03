@@ -1,6 +1,4 @@
-﻿@using FujiyBlog.Web.Models
-
-@inject FujiyBlog.Core.EntityFramework.SettingRepository settings
+﻿@inject FujiyBlog.Core.EntityFramework.SettingRepository settings
 @inject SignInManager<FujiyBlog.Core.DomainObjects.ApplicationUser> SignInManager
 
 @functions{
@@ -11,7 +9,6 @@
             return settings.AlternateFeedUrl;
         }
         return Url.Action("Rss20", "Feed");
-        //TODO return settings.DefaultFeedOutput == "RSS" ? Url.Action(MVC.Feed.Rss20()) : Url.Action(MVC.Feed.Atom10());
     }
 
     public string CanonicalUrl()

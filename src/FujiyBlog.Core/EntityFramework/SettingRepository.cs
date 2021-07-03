@@ -204,11 +204,11 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.ItemsShownInFeed, value.ToString()); }
         }
 
-        public string DefaultFeedOutput
-        {
-            get { return LoadSetting(SettingNames.DefaultFeedOutput); }
-            set { SaveSetting(SettingNames.DefaultFeedOutput, value); }
-        }
+        //public string DefaultFeedOutput
+        //{
+        //    get { return LoadSetting(SettingNames.DefaultFeedOutput); }
+        //    set { SaveSetting(SettingNames.DefaultFeedOutput, value); }
+        //}
 
         public string FacebookAdminIds
         {
@@ -391,8 +391,9 @@ namespace FujiyBlog.Core.EntityFramework
             AlternateFeedUrl = 26,
             [Description("Items Shown In Feed")]
             ItemsShownInFeed = 27,
-            [Description("Default Feed Output")]
-            DefaultFeedOutput = 28,
+
+            //[Description("Default Feed Output")]
+            //DefaultFeedOutput = 28,
 
             [Description("Comma-separated list of the user IDs or usernames of the Facebook accounts")]
             FacebookAdminIds = 29,

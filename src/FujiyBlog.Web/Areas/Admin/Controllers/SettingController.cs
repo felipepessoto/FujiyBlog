@@ -240,8 +240,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             {
                 AlternateFeedUrl = settingRepository.AlternateFeedUrl,
                 ItemsShownInFeed = settingRepository.ItemsShownInFeed,
-                DefaultFeedOutput = settingRepository.DefaultFeedOutput,
-                DefaultFeedOutputs = new List<SelectListItem> { new SelectListItem { Text = "RSS", Value = "RSS" }, new SelectListItem { Text = "Atom", Value = "Atom" } },
             };
 
             return View(viewModel);
@@ -257,7 +255,6 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
             settingRepository.AlternateFeedUrl = settings.AlternateFeedUrl;
             settingRepository.ItemsShownInFeed = settings.ItemsShownInFeed;
-            settingRepository.DefaultFeedOutput = settings.DefaultFeedOutput;
 
             SetSuccessMessage("Settings saved");
 
