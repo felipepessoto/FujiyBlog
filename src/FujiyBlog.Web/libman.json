@@ -23,7 +23,7 @@
       "destination": "wwwroot/lib/jquery-validation-unobtrusive"
     },
     {
-      "library": "prism@9000.0.1",
+      "library": "prism@1.24.1",
       "destination": "wwwroot/lib/prism"
     },
     {
