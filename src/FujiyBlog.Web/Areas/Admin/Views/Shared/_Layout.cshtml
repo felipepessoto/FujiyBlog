@@ -7,36 +7,38 @@
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.css" />
 
-        <script src="~/lib/jquery/jquery.js"></script>
-        <script src="~/lib/jqueryui/jquery-ui.js"></script>
-        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-        <script src="~/lib/twitter-bootstrap/js/bootstrap.js"></script>
-        <script src="~/lib/jquery-validate/jquery.validate.js"></script>
-        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+        <script src="~/lib/jquery/jquery.js" asp-append-version="true"></script>
+        <script src="~/lib/jqueryui/jquery-ui.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js" asp-append-version="true"></script>
+        <script src="~/lib/twitter-bootstrap/js/bootstrap.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validate/jquery.validate.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
+        <script src="~/lib/tinymce/tinymce.min.js" asp-append-version="true"></script>
+        <script src="~/lib/tinymce/jquery.tinymce.min.js" asp-append-version="true"></script>
         <link href="~/lib/jqueryui/jquery-ui.css" rel="stylesheet" type="text/css" />
     </environment>
     <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
                 asp-fallback-src="~/lib/jquery/jquery.min.js"
                 asp-fallback-test="window.jQuery">
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
         <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"
                 asp-fallback-src="~/lib/twitter-bootstrap/js/bootstrap.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"
                 asp-fallback-src="~/lib/jquery-validate/jquery.validate.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.validator"
                 crossorigin="anonymous"
                 integrity="sha256-F6h55Qw6sweK+t7SiOJX+2bpSAa3b/fnlrVCJvmEj1A=">
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.10/jquery.validate.unobtrusive.min.js"
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"
                 asp-fallback-src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
                 asp-fallback-test="window.jQuery && window.jQuery.validator && window.jQuery.validator.unobtrusive"
                 crossorigin="anonymous"
@@ -87,7 +89,7 @@
         </div>
         <footer class="row">
             <div class="col-12 text-center">
-                <p><a href="http://www.fujiyblog.com/">FUJIYBLOG</a> v0.6</p>
+                <p><a href="https://github.com/felipepessoto/FujiyBlog">FUJIYBLOG</a> v0.6</p>
             </div>
         </footer>
     </div>

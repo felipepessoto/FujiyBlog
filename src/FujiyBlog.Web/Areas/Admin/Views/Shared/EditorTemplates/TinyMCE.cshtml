@@ -7,12 +7,7 @@
     var tinymceContent = null;
     $().ready(function () {
         tinymceContent = $('#@Html.IdFor(x => Model)').tinymce({
-            // Location of TinyMCE script
-            script_url: "@(Url.Content("~/lib/tinymce/tinymce.min.js"))",
             height: 500,
-
-            // General options
-            theme: "modern",
             plugins: [
                  "advlist autolink lists link image charmap print preview hr anchor pagebreak",
                  "searchreplace wordcount visualblocks visualchars code fullscreen",
@@ -20,7 +15,6 @@
                  "emoticons template paste textcolor colorpicker textpattern",
                  "codesample imagetools"
             ],
-            content_css: "@(Url.Content("~/lib/tinymce/skins/lightgray/content.min.css"))",
             toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
             toolbar2: "print preview media | forecolor backcolor emoticons codesample",
             style_formats: [
