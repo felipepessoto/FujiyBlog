@@ -1,39 +1,46 @@
+/**
+ * Copyright (c) Tiny Technologies, Inc. All rights reserved.
+ * Licensed under the LGPL or a commercial license.
+ * For LGPL see License.txt in the project root for license information.
+ * For commercial licenses see https://www.tiny.cloud/
+ *
+ * Version: 5.8.2 (2021-06-23)
+ */
 (function () {
-var hr = (function () {
-  'use strict';
+    'use strict';
 
-  var global = tinymce.util.Tools.resolve('tinymce.PluginManager');
+    var global = tinymce.util.Tools.resolve('tinymce.PluginManager');
 
-  var register = function (editor) {
-    editor.addCommand('InsertHorizontalRule', function () {
-      editor.execCommand('mceInsertContent', false, '<hr />');
-    });
-  };
-  var $_6gbesvcnjkmcwoly = { register: register };
+    var register = function (editor) {
+      editor.addCommand('InsertHorizontalRule', function () {
+        editor.execCommand('mceInsertContent', false, '<hr />');
+      });
+    };
 
-  var register$1 = function (editor) {
-    editor.addButton('hr', {
-      icon: 'hr',
-      tooltip: 'Horizontal line',
-      cmd: 'InsertHorizontalRule'
-    });
-    editor.addMenuItem('hr', {
-      icon: 'hr',
-      text: 'Horizontal line',
-      cmd: 'InsertHorizontalRule',
-      context: 'insert'
-    });
-  };
-  var $_cy4wl6cojkmcwolz = { register: register$1 };
+    var register$1 = function (editor) {
+      editor.ui.registry.addButton('hr', {
+        icon: 'horizontal-rule',
+        tooltip: 'Horizontal line',
+        onAction: function () {
+          return editor.execCommand('InsertHorizontalRule');
+        }
+      });
+      editor.ui.registry.addMenuItem('hr', {
+        icon: 'horizontal-rule',
+        text: 'Horizontal line',
+        onAction: function () {
+          return editor.execCommand('InsertHorizontalRule');
+        }
+      });
+    };
 
-  global.add('hr', function (editor) {
-    $_6gbesvcnjkmcwoly.register(editor);
-    $_cy4wl6cojkmcwolz.register(editor);
-  });
-  function Plugin () {
-  }
+    function Plugin () {
+      global.add('hr', function (editor) {
+        register(editor);
+        register$1(editor);
+      });
+    }
 
-  return Plugin;
+    Plugin();
 
 }());
-})();

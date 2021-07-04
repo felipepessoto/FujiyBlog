@@ -27,7 +27,7 @@
       "destination": "wwwroot/lib/prism"
     },
     {
-      "library": "tinymce@4.8.2",
+      "library": "tinymce@5.8.2",
       "destination": "wwwroot/lib/tinymce"
     },
     {
