@@ -50,8 +50,6 @@ namespace FujiyBlog.Web
 
             services.AddControllersWithViews();
 
-            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();//TODO necessario ainda?
-
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -64,7 +62,6 @@ namespace FujiyBlog.Web
             services.AddScoped<WidgetSettingRepository>();
             services.AddScoped<FeedRepository>();
             services.AddScoped<FeedGenerator>();
-            services.AddScoped<cloudscribe.Syndication.Models.Rss.IChannelProvider, FeedGenerator>();//to enable cloudscribe.Syndication RssController
 
             //File upload
             services.AddScoped<AzureStorageFileUploadService>();
@@ -82,15 +79,6 @@ namespace FujiyBlog.Web
                 {
                     options.AddPolicy(role, policy => policy.RequireClaim(CustomClaimTypes.Permission, role));
                 }
-            });
-
-            services.Configure<MvcOptions>(options =>
-            {
-                options.CacheProfiles.Add("RssCacheProfile",
-                     new CacheProfile
-                     {
-                         Duration = 100
-                     });
             });
         }
 

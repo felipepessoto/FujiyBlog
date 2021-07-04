@@ -389,7 +389,8 @@ namespace FujiyBlog.Core.EntityFramework
 
             [Description("Alternate Feed Url")]
             AlternateFeedUrl = 26,
-            [Description("Items Shown In Feed")]
+
+            [DefaultValue(10), Description("Items Shown In Feed")]
             ItemsShownInFeed = 27,
 
             //[Description("Default Feed Output")]

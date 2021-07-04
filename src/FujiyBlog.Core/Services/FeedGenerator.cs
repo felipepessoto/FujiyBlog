@@ -1,86 +1,48 @@
-﻿using cloudscribe.Syndication.Models.Rss;
+﻿using System;
+using System.Collections.Generic;
+using System.ServiceModel.Syndication;
 using FujiyBlog.Core.DomainObjects;
 using FujiyBlog.Core.EntityFramework;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Routing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace FujiyBlog.Core.Services
 {
-    public class FeedGenerator : IChannelProvider
+    public class FeedGenerator
     {
-        private readonly IHttpContextAccessor contextAccessor;
-        private readonly LinkGenerator linkGenerator;
+        private readonly SettingRepository settingRepository;
         private readonly FeedRepository feedRepository;
-        private readonly SettingRepository settings;
-        public IUrlHelper urlHelper { get; set; }
+        private readonly LinkGenerator linkGenerator;
+        private readonly IHttpContextAccessor contextAccessor;
 
-        public FeedGenerator(FeedRepository feedRepository, SettingRepository settings, IHttpContextAccessor contextAccessor, IUrlHelperFactory urlHelperFactory, IActionContextAccessor actionContextAccesor, LinkGenerator linkGenerator )
+        public FeedGenerator(SettingRepository settingRepository, FeedRepository feedRepository, LinkGenerator linkGenerator, IHttpContextAccessor contextAccessor)
         {
+            this.settingRepository = settingRepository;
             this.feedRepository = feedRepository;
-            this.settings = settings;
-            this.contextAccessor = contextAccessor;
             this.linkGenerator = linkGenerator;
-            this.urlHelper = urlHelperFactory.GetUrlHelper(actionContextAccesor.ActionContext);
+            this.contextAccessor = contextAccessor;
         }
 
-        public string Name
+        public SyndicationFeed GetBlog()
         {
-            get
-            {
-                return settings.BlogName;
-            }
-        }
+            string feedUrl = linkGenerator.GetUriByAction(contextAccessor.HttpContext, "Rss20", "Feed");
 
-        public Task<RssChannel> GetChannel(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            var posts = feedRepository.GetPosts(settings.ItemsShownInFeed);
+            SyndicationFeed feed = new SyndicationFeed(settingRepository.BlogName, settingRepository.BlogDescription, new Uri(feedUrl));
 
-            var channel = new RssChannel();
-            channel.Title = settings.BlogName;
-            channel.Description = settings.BlogDescription;
-
-            foreach (Category category in feedRepository.GetAllCategories())
-            {
-                channel.Categories.Add(new RssCategory(category.Name));
-            }
-
-            foreach (var user in feedRepository.GetAllUsers())
-            {
+            //foreach (ApplicationUser user in feedRepository.GetAllUsers())
+            //{
             //    feed.Authors.Add(new SyndicationPerson(user.Email, user.DisplayName, getAuthorUrl(user)));
-            }
+            //}
 
-            channel.Generator = Name;
+            //foreach (Category category in feedRepository.GetAllCategories())
+            //{
+            //    feed.Categories.Add(new SyndicationCategory(category.Name));
+            //}
 
-            //TODO only works with compatiblity 2.2
-            //var indexUrl = linkGenerator.GetUriByAction(contextAccessor.HttpContext, action: "Index", controller: "Post");
-            //string feedUrl = linkGenerator.GetUriByAction(contextAccessor.HttpContext, "Rss20", "Feed");
+            List<SyndicationItem> items = new List<SyndicationItem>(settingRepository.ItemsShownInFeed);
 
-            var indexUrl = urlHelper.Action("Index", "Post", null, contextAccessor.HttpContext.Request.Scheme);
-            channel.Link = new Uri(indexUrl);
-
-            string feedUrl = urlHelper.Action("Rss20", "Feed", null, contextAccessor.HttpContext.Request.Scheme);
-
-            channel.SelfLink = new Uri(feedUrl);
-
-            var items = new List<RssItem>();
-            foreach (var post in posts)
+            foreach (Post post in feedRepository.GetPosts(settingRepository.ItemsShownInFeed))
             {
-                var rssItem = new RssItem();
-                rssItem.Author = post.Author.DisplayName;
-
-                foreach (var c in post.PostCategories)
-                {
-                    rssItem.Categories.Add(new RssCategory(c.Category.Name));
-                }
-
                 string content = post.Content ?? string.Empty;
 
                 int moreIndex = content.IndexOf("[more]", StringComparison.OrdinalIgnoreCase);
@@ -88,21 +50,18 @@ namespace FujiyBlog.Core.Services
                 {
                     content = content.Remove(moreIndex, 6);
                 }
-                rssItem.Description = content;
-                rssItem.Guid = new RssGuid(post.Id.ToString());
-                string postUrl = urlHelper.RouteUrl("PostDetail", new { postSlug = post.Slug }, contextAccessor.HttpContext.Request.Scheme);
 
-                rssItem.Link = new Uri(postUrl);
-                rssItem.PublicationDate = post.LastModificationDate;
-                rssItem.Title = post.Title;
-
-                items.Add(rssItem);
+                items.Add(new SyndicationItem(
+                              post.Title,
+                              new TextSyndicationContent(content, TextSyndicationContentKind.Html),
+                              new Uri(linkGenerator.GetUriByRouteValues(contextAccessor.HttpContext, "PostDetailId", new { Id = post.Id })),
+                              post.Id.ToString(),
+                              post.LastModificationDate));
             }
 
-            channel.PublicationDate = posts.Max(x => (DateTime?)x.LastModificationDate).GetValueOrDefault(DateTime.MinValue);
-            channel.Items = items;
+            feed.Items = items;
 
-            return Task.FromResult(channel);
+            return feed;
         }
     }
 }
