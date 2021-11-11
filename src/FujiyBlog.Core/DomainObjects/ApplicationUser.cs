@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Identity;
 
 namespace FujiyBlog.Core.DomainObjects
 {
@@ -16,13 +14,13 @@ namespace FujiyBlog.Core.DomainObjects
         }
 
         [StringLength(20)]
-        public string DisplayName { get; set; }
+        public string? DisplayName { get; set; }
 
         [StringLength(100)]
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
 
         [StringLength(20)]
-        public string Location { get; set; }
+        public string? Location { get; set; }
 
         public DateTime CreationDate { get; set; }
 
@@ -30,7 +28,7 @@ namespace FujiyBlog.Core.DomainObjects
 
         [StringLength(500)]
         [DataType(DataType.MultilineText)]
-        public string About { get; set; }
+        public string? About { get; set; }
 
         public DateTime? BirthDate { get; set; }
 

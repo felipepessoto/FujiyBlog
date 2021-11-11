@@ -1,10 +1,7 @@
 ﻿using FujiyBlog.Core.DomainObjects;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Globalization;
-using System.Linq;
 
 namespace FujiyBlog.Core.EntityFramework
 {

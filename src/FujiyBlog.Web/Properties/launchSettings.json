@@ -3,11 +3,20 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:43740/",
-      "sslPort": 44395
+      "applicationUrl": "http://localhost:55741",
+      "sslPort": 44383
     }
   },
   "profiles": {
+    "FujiyBlog.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:7254;http://localhost:5254",
+      "dotnetRunMessages": true
+    },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
@@ -15,25 +24,12 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "FujiyBlog.Web": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
-    },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
-      "environmentVariables": {
-        "ASPNETCORE_URLS": "https://+:443;http://+:80",
-        "ASPNETCORE_HTTPS_PORT": "44335"
-      },
-      "httpPort": 53824,
-      "useSSL": true,
-      "sslPort": 44335
+      "publishAllPorts": true,
+      "useSSL": true
     }
   }
 }

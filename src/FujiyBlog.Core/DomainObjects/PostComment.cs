@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FujiyBlog.Core.DomainObjects
 {
@@ -16,29 +13,28 @@ namespace FujiyBlog.Core.DomainObjects
 
         [Display(Name = "Name", ResourceType = typeof(Resources.Names))]
         [StringLength(50)]
-        public string AuthorName { get; set; }
+        public string? AuthorName { get; set; }
 
         [Display(Name ="Email")]
         [StringLength(255), EmailAddress]
         [DataType(DataType.EmailAddress)]
-        public string AuthorEmail { get; set; }
+        public string? AuthorEmail { get; set; }
 
         [Display(Name = "Site")]
         [StringLength(200), Url]
         [DataType(DataType.Url)]
-        public string AuthorWebsite { get; set; }
+        public string? AuthorWebsite { get; set; }
 
         [Display(Name = "Comment", ResourceType = typeof(Resources.Names))]
-        [Required]
         [DataType(DataType.MultilineText)]
         public string Comment { get; set; }
 
-        [Required, StringLength(45)]
+        [StringLength(45)]
         public string IpAddress { get; set; }
 
         [StringLength(200)]
         [DataType(DataType.ImageUrl)]
-        public string Avatar { get; set; }
+        public string? Avatar { get; set; }
 
         [Display(Name = "CreationDate", ResourceType = typeof(Resources.Names))]
         public DateTime CreationDate { get; set; }
