@@ -21,13 +21,13 @@ namespace FujiyBlog.Core.EntityFramework
         public DbSet<WidgetSetting> WidgetSettings { get; set; }
         public DbSet<Page> Pages { get; set; }
 
-        private string lastDatabaseChange;
+        private string? lastDatabaseChange;
         public string LastDatabaseChange
         {
             get
             {
                 return lastDatabaseChange
-                    ?? (lastDatabaseChange = this.Settings.Where(x => x.Id == 24).Select(x => x.Value).SingleOrDefault() ?? "0");
+                    ?? (lastDatabaseChange = Settings.Where(x => x.Id == 24).Select(x => x.Value).SingleOrDefault() ?? "0");
             }
         }
 
@@ -72,7 +72,7 @@ namespace FujiyBlog.Core.EntityFramework
 
         public void UpdateLastDbChange()
         {
-            Setting setting = Settings.SingleOrDefault(x => x.Id == 24);
+            Setting? setting = Settings.SingleOrDefault(x => x.Id == 24);
             if (setting == null)
             {
                 setting = new Setting { Id = 24, Description = "Last Database Change" };
