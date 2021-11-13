@@ -48,13 +48,13 @@ namespace FujiyBlog.Core.DomainObjects
         [Required]
         public Post Post { get; set; }
 
-        public PostComment ParentComment { get; set; }
+        public PostComment? ParentComment { get; set; }
 
         public ICollection<PostComment> NestedComments { get; set; }
 
-        public ApplicationUser Author { get; set; }
+        public ApplicationUser? Author { get; set; }
 
-        public ApplicationUser ModeratedBy { get; set; }
+        public ApplicationUser? ModeratedBy { get; set; }
 
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
