@@ -6,15 +6,10 @@ using FujiyBlog.Web.Infrastructure;
 using FujiyBlog.Web.Models;
 using FujiyBlog.Web.Services;
 using Microsoft.ApplicationInsights.DependencyCollector;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
-using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -157,6 +152,8 @@ app.MapControllerRoute(
 //           // UI strings that we have localized.
 //           SupportedUICultures = supportedCultures
 //       });
+
+//TODO need to find how to configure it
 
 //TelemetryConfiguration configuration = ...
 //configuration.DisableTelemetry = string.IsNullOrWhiteSpace(settingRepository.ApplicationInsightsInstrumentationKey);
