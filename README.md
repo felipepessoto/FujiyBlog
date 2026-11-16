@@ -1,5 +1,14 @@
 ### Project Description
-A simple Open Source Blog using ASP.NET Core, jQuery, Entity Framework Core and SQL Server.
+A simple Open Source Blog using ASP.NET Core on .NET 10, jQuery, Entity Framework Core and SQL Server.
+
+### Building
+Install the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotnet/10.0), then build from the repository root:
+
+```powershell
+dotnet build src\FujiyBlog.sln --configuration Release
+```
+
+Running the blog also requires SQL Server. Configure `ConnectionStrings:DefaultConnection` in the web application's configuration; the default uses SQL Server Express LocalDB on Windows.
 
 ### Demo
 You can see a live blog at <a href="http://blog.fujiy.net/">http://blog.fujiy.net/</a>.
