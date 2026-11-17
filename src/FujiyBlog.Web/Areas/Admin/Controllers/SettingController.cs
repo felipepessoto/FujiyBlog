@@ -31,47 +31,56 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            string themeDir = Path.Combine(AppContext.BaseDirectory, "Views", "Themes");
-            var fileThemes = Directory.Exists(themeDir) ? new DirectoryInfo(themeDir).GetDirectories().Select(x => new SelectListItem { Text = x.Name }) : Enumerable.Empty<SelectListItem>();
-
-            var themePrefix = "Views_Themes_";
-            var themePrefixLength = themePrefix.Length;
-            var compiledViewsThemes = CompiledViewsHelper.GetAllViews()
-                .Where(x => x.Name.StartsWith(themePrefix))
-                .Select(x => x.Name.Substring(themePrefixLength))
-                .Select(x => x.Contains('_') ? x.Substring(0, x.IndexOf("_")) : x)
-                .Select(x => new SelectListItem { Text = x }).ToList();
-
             AdminBasicSettings viewModel = new AdminBasicSettings
             {
                 BlogName = settingRepository.BlogName,
                 BlogDescription = settingRepository.BlogDescription,
                 Theme = settingRepository.Theme,
-                Themes = fileThemes.Concat(compiledViewsThemes),
                 PostsPerPage = settingRepository.PostsPerPage,
                 TimeZoneId = settingRepository.TimeZone.Id,
-                TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id }),
                 Language = settingRepository.Culture,
                 ApplicationInsightsInstrumentationKey = settingRepository.ApplicationInsightsInstrumentationKey,
                 CustomCode = settingRepository.CustomCode,
             };
 
+            PopulateBasicSettings(viewModel);
             return View(viewModel);
+        }
+
+        private static void PopulateBasicSettings(AdminBasicSettings viewModel)
+        {
+            string themeDir = Path.Combine(AppContext.BaseDirectory, "Views", "Themes");
+            var fileThemes = Directory.Exists(themeDir) ? new DirectoryInfo(themeDir).GetDirectories().Select(x => new SelectListItem { Text = x.Name }) : Enumerable.Empty<SelectListItem>();
+            const string themePrefix = "Views_Themes_";
+            var compiledViewsThemes = CompiledViewsHelper.GetAllViews()
+                .Where(x => x.Name.StartsWith(themePrefix))
+                .Select(x => x.Name.Substring(themePrefix.Length))
+                .Select(x => x.Contains('_') ? x.Substring(0, x.IndexOf("_")) : x)
+                .Select(x => new SelectListItem { Text = x }).ToList();
+
+            viewModel.Themes = fileThemes.Concat(compiledViewsThemes);
+            viewModel.TimeZones = TimeZoneInfo.GetSystemTimeZones().Select(x => new SelectListItem { Text = x.DisplayName, Value = x.Id });
         }
 
         [HttpPost]
         public virtual ActionResult Index(AdminBasicSettings settings)
         {
-            if (!ModelState.IsValid)
+            if (!TimeZoneInfo.TryFindSystemTimeZoneById(settings.TimeZoneId ?? string.Empty, out var timeZone))
             {
-                return View();
+                ModelState.AddModelError(nameof(settings.TimeZoneId), "Select a valid time zone.");
+            }
+
+            if (!ModelState.IsValid || timeZone == null)
+            {
+                PopulateBasicSettings(settings);
+                return View(settings);
             }
 
             settingRepository.BlogName = settings.BlogName;
             settingRepository.BlogDescription = settings.BlogDescription;
             settingRepository.Theme = settings.Theme;
             settingRepository.PostsPerPage = settings.PostsPerPage;
-            settingRepository.TimeZone = TimeZoneInfo.FindSystemTimeZoneById(settings.TimeZoneId);
+            settingRepository.TimeZone = timeZone;
             settingRepository.Culture = settings.Language;
             settingRepository.ApplicationInsightsInstrumentationKey = settings.ApplicationInsightsInstrumentationKey;
             settingRepository.CustomCode = settings.CustomCode;
@@ -109,7 +118,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(settings);
             }
 
             settingRepository.EmailTo = settings.EmailTo;
@@ -149,7 +158,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(settings);
             }
 
             settingRepository.EnableComments = settings.EnableComments;
@@ -218,7 +227,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(settings);
             }
 
             settingRepository.EnableFacebookLikePosts = settings.EnableFacebookLikePosts;
@@ -250,7 +259,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(settings);
             }
 
             settingRepository.AlternateFeedUrl = settings.AlternateFeedUrl;
@@ -263,31 +272,50 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         public ActionResult Storage()
         {
-            var fileServiceType = typeof(IFileUploadService);
-
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(s => s.GetTypes())
-                .Where(p => fileServiceType.IsAssignableFrom(p) && fileServiceType != p)
-                .Select(x => x.Name);
-
             AdminStorageSettings viewModel = new AdminStorageSettings
             {
-                FileUploadServices = types.Select(x => new SelectListItem { Text = x }).ToList(),
                 FileUploadService = settingRepository.FileUploadService,
                 AzureStorageAccountName = settingRepository.AzureStorageAccountName,
                 AzureStorageAccountKey = settingRepository.AzureStorageAccountKey,
                 AzureStorageUploadContainerName = settingRepository.AzureStorageUploadContainerName,
             };
 
+            PopulateStorageSettings(viewModel);
             return View(viewModel);
+        }
+
+        private static void PopulateStorageSettings(AdminStorageSettings viewModel)
+        {
+            var fileServiceType = typeof(IFileUploadService);
+            viewModel.FileUploadServices = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(s => s.GetTypes())
+                .Where(p => fileServiceType.IsAssignableFrom(p) && fileServiceType != p)
+                .Select(x => new SelectListItem { Text = x.Name })
+                .ToList();
         }
 
         [HttpPost]
         public ActionResult Storage(AdminStorageSettings settings)
         {
+            PopulateStorageSettings(settings);
+            if (!settings.FileUploadServices.Any(x => x.Text == settings.FileUploadService))
+            {
+                ModelState.AddModelError(nameof(settings.FileUploadService), "Select a valid file upload service.");
+            }
+
+            if (settings.FileUploadService == nameof(AzureStorageFileUploadService))
+            {
+                if (string.IsNullOrWhiteSpace(settings.AzureStorageAccountName))
+                    ModelState.AddModelError(nameof(settings.AzureStorageAccountName), "The Azure Storage Account Name field is required.");
+                if (string.IsNullOrWhiteSpace(settings.AzureStorageAccountKey))
+                    ModelState.AddModelError(nameof(settings.AzureStorageAccountKey), "The Azure Storage Account Key field is required.");
+                if (string.IsNullOrWhiteSpace(settings.AzureStorageUploadContainerName))
+                    ModelState.AddModelError(nameof(settings.AzureStorageUploadContainerName), "The Azure Storage Upload Container Name field is required.");
+            }
+
             if (!ModelState.IsValid)
             {
-                return View();
+                return View(settings);
             }
 
             settingRepository.FileUploadService = settings.FileUploadService;

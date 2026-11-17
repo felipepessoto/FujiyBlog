@@ -23,7 +23,7 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
             }
 
             Tags = string.Join(", ", post.PostTags.Select(x => x.Tag.Name));
-            Categories = post.PostCategories.Select(x => x.Category);//TODO Maybe should I remove this property and just use SelectedCategories
+            SelectedCategories = post.PostCategories.Select(x => x.CategoryId).ToList();
 
             Title = post.Title;
             AuthorId = post.Author.Id;
@@ -39,27 +39,29 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public int? Id { get; set; }
 
         [DataType(DataType.MultilineText)]
-        public string Tags { get; set; }
+        public string? Tags { get; set; }
 
-        public IEnumerable<int> SelectedCategories { get; set; }
+        [Display(Name = "Categories", ResourceType = typeof(Resources.Labels))]
+        public List<int> SelectedCategories { get; set; } = [];
 
         [Required, StringLength(200)]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
+        [Required]
         [Display(Name = "Author")]
-        public string AuthorId { get; set; }
+        public string AuthorId { get; set; } = string.Empty;
 
         [StringLength(500)]
         [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required, StringLength(200)]
-        public string Slug { get; set; }
+        public string Slug { get; set; } = string.Empty;
 
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
         [StringLength(255)]
-        public string ImageUrl { get; set; }
+        public string? ImageUrl { get; set; }
 
         [Display(Name = "Publish Date")]
         public DateTime PublicationDate { get; set; }
@@ -69,8 +71,6 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
 
         [Display(Name="Enable Comments")]
         public bool IsCommentEnabled { get; set; }
-
-        public IEnumerable<Category> Categories { get; set; }
 
         public void FillPost(Post post, DateTimeUtil dateTimeUtil)
         {

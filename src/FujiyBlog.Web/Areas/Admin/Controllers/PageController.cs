@@ -72,17 +72,21 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         private AdminPageSave CreateAdminPageSave(Page page)
         {
+            return PopulatePageChoices(new AdminPageSave(page, dateTimeUtil));
+        }
+
+        private AdminPageSave PopulatePageChoices(AdminPageSave viewModel)
+        {
             IQueryable<ApplicationUser> authors = db.Users.Where(x => x.Enabled);
             if (!HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPages))
             {
                 authors = authors.Where(x => x.UserName == User.Identity.Name);
             }
 
-            AdminPageSave viewModel = new AdminPageSave(page, dateTimeUtil);
             viewModel.Authors = authors.ToList().Select(x => new SelectListItem {Value = x.Id.ToString(), Text = x.UserName});
             viewModel.Pages = (from p in db.Pages
-                               where p.Id != page.Id
-                               select new { p.Id, p.Title }).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Title, Selected = x.Id == page.ParentId });
+                               where p.Id != viewModel.Id
+                               select new { p.Id, p.Title }).ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.Title, Selected = x.Id == viewModel.ParentId });
 
             return viewModel;
         }
@@ -91,39 +95,48 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public ActionResult Edit(AdminPageSave pageSave)
         {
             Page editedPage = pageSave.Id.HasValue ? db.Pages.Include(x => x.Author).Single(x => x.Id == pageSave.Id)
-                                  : db.Pages.Add(new Page
+                                  : new Page
                                         {
                                             CreationDate = DateTime.UtcNow,
-                                        }).Entity;
+                                        };
 
-            var newAuthor = db.Users.Single(x => x.Id == pageSave.AuthorId);
-
-            if(CheckPagesSaveRoles(pageSave, editedPage, newAuthor) == false)
+            if (!CanEditPage(pageSave, editedPage))
             {
                 return Forbid();
             }
 
-            editedPage.Author = newAuthor;
+            var newAuthor = db.Users.SingleOrDefault(x => x.Id == pageSave.AuthorId);
+            if (newAuthor == null)
+            {
+                ModelState.AddModelError(nameof(pageSave.AuthorId), "Select a valid author.");
+            }
+            else if (!CheckPagesSaveRoles(pageSave, editedPage, newAuthor))
+            {
+                return Forbid();
+            }
 
-            editedPage.LastModificationDate = DateTime.UtcNow;
-
-            pageSave.FillPage(editedPage, dateTimeUtil);
-
-            if (db.Pages.Any(x => x.Slug == editedPage.Slug && x.Id != editedPage.Id))
+            if (db.Pages.Any(x => x.Slug == pageSave.Slug && x.Id != editedPage.Id))
             {
                 ModelState.AddModelError("Slug", "This slug already exists");
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid || newAuthor == null)
             {
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return View(PopulatePageChoices(pageSave));
             }
 
-            return View(CreateAdminPageSave(editedPage));
+            editedPage.Author = newAuthor;
+            editedPage.LastModificationDate = DateTime.UtcNow;
+            pageSave.FillPage(editedPage, dateTimeUtil);
+            if (!pageSave.Id.HasValue)
+            {
+                db.Pages.Add(editedPage);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
-        private bool CheckPagesSaveRoles(AdminPageSave pageSave, Page editedPage, ApplicationUser newAuthor)
+        private bool CanEditPage(AdminPageSave pageSave, Page editedPage)
         {
             if (!pageSave.Id.HasValue && !HttpContext.UserHasClaimPermission(PermissionClaims.CreateNewPages))
             {
@@ -136,6 +149,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return false;
             }
 
+            return true;
+        }
+
+        private bool CheckPagesSaveRoles(AdminPageSave pageSave, Page editedPage, ApplicationUser newAuthor)
+        {
             if (!HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPages) && newAuthor.UserName != User.Identity.Name)
             {
                 return false;

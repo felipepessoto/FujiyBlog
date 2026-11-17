@@ -14,15 +14,15 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public bool EnableTwitterSharePosts { get; set; }
 
         [Display(Name = "Facebook Admin Ids")]
-        public string FacebookAdminIds { get; set; }
+        public string? FacebookAdminIds { get; set; }
 
         [Display(Name = "Facebook App ID")]
-        public string FacebookAppId { get; set; }
+        public string? FacebookAppId { get; set; }
 
         [Display(Name = "Default Open Graph Image(used on facebook share)")]
-        public string OpenGraphImageUrl { get; set; }
+        public string? OpenGraphImageUrl { get; set; }
 
         [Display(Name = "Blog's Twitter account")]
-        public string TwitterBlogAccount { get; set; }
+        public string? TwitterBlogAccount { get; set; }
     }
 }

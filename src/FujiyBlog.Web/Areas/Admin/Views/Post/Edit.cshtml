@@ -107,13 +107,13 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Post.Categories" class="control-label"></label>
+                <label asp-for="Post.SelectedCategories" class="control-label"></label>
                 <div id="categories-list">
                     @foreach (Category category in Model.AllCategories)
                     {
                         <div class="checkbox">
                             <label>
-                                <input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.Categories.Any(x => x.Id == category.Id) ? "checked=checked" : string.Empty) />@category.Name
+                                <input type="checkbox" name="Post.selectedCategories" value="@category.Id" @(Model.Post.SelectedCategories.Contains(category.Id) ? "checked=checked" : string.Empty) />@category.Name
                             </label>
                         </div>
                     }

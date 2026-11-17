@@ -14,22 +14,24 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public bool EnableNestedComments { get; set; }
 
         [Display(Name = "Close Comments After")]
+        [Range(0, int.MaxValue)]
         public int? CloseCommentsAfterDays { get; set; }
 
         [Display(Name = "Comments Per Page")]
+        [Range(1, int.MaxValue)]
         public int CommentsPerPage { get; set; }
 
         [Display(Name = "Comments Avatar")]
-        public string CommentsAvatar { get; set; }
+        public string? CommentsAvatar { get; set; }
 
         [Display(Name = "Enable ReCaptcha")]
         public bool ReCaptchaEnabled { get; set; }
 
         [Display(Name = "ReCaptcha private key")]
-        public string ReCaptchaPrivateKey { get; set; }
+        public string? ReCaptchaPrivateKey { get; set; }
 
         [Display(Name = "ReCaptcha public key")]
-        public string ReCaptchaPublicKey { get; set; }
+        public string? ReCaptchaPublicKey { get; set; }
 
         [Display(Name = "Notify new comments")]
         public bool NotifyNewComments { get; set; }

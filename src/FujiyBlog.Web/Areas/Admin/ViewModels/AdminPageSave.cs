@@ -1,5 +1,7 @@
 ﻿using FujiyBlog.Core;
 using FujiyBlog.Core.DomainObjects;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -37,23 +39,24 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         public int? Id { get; set; }
 
         [Required, StringLength(200)]
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
+        [Required]
         [Display(Name = "Author")]
-        public string AuthorId { get; set; }
+        public string AuthorId { get; set; } = string.Empty;
 
         [StringLength(500)]
         [DataType(DataType.MultilineText)]
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         [Required, StringLength(200)]
-        public string Slug { get; set; }
+        public string Slug { get; set; } = string.Empty;
 
-        public string Content { get; set; }
+        public string? Content { get; set; }
 
         [StringLength(500)]
         [DataType(DataType.MultilineText)]
-        public string Keywords { get; set; }
+        public string? Keywords { get; set; }
 
         [Display(Name = "Publish Date")]
         public DateTime PublicationDate { get; set; }
@@ -70,8 +73,11 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
         [Display(Name = "Show In List")]
         public bool ShowInList { get; set; }
 
-        public IEnumerable<SelectListItem> Pages { get; set; }
-        public IEnumerable<SelectListItem> Authors { get; set; }
+        [BindNever, ValidateNever]
+        public IEnumerable<SelectListItem> Pages { get; set; } = [];
+
+        [BindNever, ValidateNever]
+        public IEnumerable<SelectListItem> Authors { get; set; } = [];
 
         public void FillPage(Page page, DateTimeUtil dateTimeUtil)
         {

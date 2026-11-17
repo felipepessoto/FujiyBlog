@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,36 +12,40 @@ namespace FujiyBlog.Web.Areas.Admin.ViewModels
     {
         [Required]
         [Display(Name = "Blog Name")]
-        public string BlogName { get; set; }
+        public string BlogName { get; set; } = string.Empty;
 
         [Display(Name = "Blog Description")]
-        public string BlogDescription { get; set; }
+        public string? BlogDescription { get; set; }
 
         [Required]
-        public string Theme { get; set; }
+        public string Theme { get; set; } = string.Empty;
 
         [Display(Name = "Posts Per Page")]
+        [Range(1, int.MaxValue)]
         public int PostsPerPage { get; set; }
 
         [Required]
         [Display(Name = "Time Zone")]
-        public string TimeZoneId { get; set; }
+        public string TimeZoneId { get; set; } = string.Empty;
 
         [Required]
         [Display(Name = "Language")]
-        public string Language { get; set; }
+        public string Language { get; set; } = string.Empty;
 
         [Display(Name = "Application Insights Instrumentation Key")]
-        public string ApplicationInsightsInstrumentationKey { get; set; }
+        public string? ApplicationInsightsInstrumentationKey { get; set; }
 
         [Display(Name = "Custom Code"), DataType(DataType.MultilineText)]
-        public string CustomCode { get; set; }
+        public string? CustomCode { get; set; }
 
-        public IEnumerable<SelectListItem> Themes { get; set; }
+        [BindNever, ValidateNever]
+        public IEnumerable<SelectListItem> Themes { get; set; } = [];
 
-        public IEnumerable<SelectListItem> TimeZones { get; set; }
+        [BindNever, ValidateNever]
+        public IEnumerable<SelectListItem> TimeZones { get; set; } = [];
 
         private static List<SelectListItem> languagesCache;
+        [BindNever, ValidateNever]
         public List<SelectListItem> Languages
         {
             get

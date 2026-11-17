@@ -35,8 +35,49 @@ jobs:
       - name: Build solution
         run: dotnet build src/FujiyBlog.sln --configuration Release --no-restore
 
+      - name: Start SQL Server for integration tests
+        shell: bash
+        run: |
+          password="$(openssl rand -hex 24)Aa1!"
+          echo "::add-mask::$password"
+          docker run --detach --name fujiyblog-test-sql \
+            --env ACCEPT_EULA=Y --env MSSQL_SA_PASSWORD="$password" \
+            --publish 127.0.0.1::1433 \
+            --health-cmd '/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$MSSQL_SA_PASSWORD" -C -Q "SELECT 1" -b -o /dev/null' \
+            --health-interval 2s --health-timeout 5s --health-retries 30 \
+            mcr.microsoft.com/mssql/server:2022-latest
+          ready=false
+          for _ in {1..60}; do
+            if [ "$(docker inspect --format='{{.State.Health.Status}}' fujiyblog-test-sql)" = healthy ]; then
+              ready=true
+              break
+            fi
+            if [ "$(docker inspect --format='{{.State.Running}}' fujiyblog-test-sql)" != true ]; then
+              break
+            fi
+            sleep 2
+          done
+          if [ "$ready" != true ]; then
+            docker logs fujiyblog-test-sql
+            echo "::error::SQL Server did not become ready."
+            exit 1
+          fi
+          binding="$(docker port fujiyblog-test-sql 1433/tcp)"
+          echo "FUJIYBLOG_TEST_CONNECTION_STRING=Server=127.0.0.1,${binding##*:};User Id=sa;Password=$password;Encrypt=True;TrustServerCertificate=True" >> "$GITHUB_ENV"
+
+      - name: Run regression tests
+        run: dotnet test src/FujiyBlog.sln --configuration Release --no-build --no-restore
+
       - name: Publish web application locally
         run: dotnet publish src/FujiyBlog.Web/FujiyBlog.Web.csproj --configuration Release --no-build --no-restore --output "${{ runner.temp }}/fujiyblog-publish"
+
+      - name: Remove test SQL Server
+        if: always()
+        shell: bash
+        run: |
+          if docker container inspect fujiyblog-test-sql > /dev/null 2>&1; then
+            docker rm --force fujiyblog-test-sql
+          fi
 
   docker:
     name: Docker build

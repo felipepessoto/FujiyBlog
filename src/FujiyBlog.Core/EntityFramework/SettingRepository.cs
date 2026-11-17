@@ -38,7 +38,7 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.BlogName, value); }
         }
 
-        public string BlogDescription
+        public string? BlogDescription
         {
             get { return LoadSetting(SettingNames.BlogDescription); }
             set { SaveSetting(SettingNames.BlogDescription, value); }
@@ -65,7 +65,7 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.EmailTo, value); }
         }
 
-        public string EmailSubjectPrefix
+        public string? EmailSubjectPrefix
         {
             get { return LoadSetting(SettingNames.EmailSubjectPrefix); }
             set { SaveSetting(SettingNames.EmailSubjectPrefix, value); }
@@ -83,13 +83,13 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.SmtpPort, value.ToString()); }
         }
 
-        public string SmtpUserName
+        public string? SmtpUserName
         {
             get { return LoadSetting(SettingNames.SmtpUserName); }
             set { SaveSetting(SettingNames.SmtpUserName, value); }
         }
 
-        public string SmtpPassword
+        public string? SmtpPassword
         {
             get { return LoadSetting(SettingNames.SmtpPassword); }
             set { SaveSetting(SettingNames.SmtpPassword, value); }
@@ -140,7 +140,7 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.CommentsPerPage, value.ToString()); }
         }
 
-        public string CommentsAvatar
+        public string? CommentsAvatar
         {
             get { return LoadSetting(SettingNames.CommentsAvatar); }
             set { SaveSetting(SettingNames.CommentsAvatar, value); }
@@ -181,13 +181,13 @@ namespace FujiyBlog.Core.EntityFramework
         //    set { SaveSetting(SettingNames.LastDatabaseChange, value.ToString()); }
         //}
         
-        public string CustomCode
+        public string? CustomCode
         {
             get { return LoadSetting(SettingNames.CustomCode); }
             set { SaveSetting(SettingNames.CustomCode, value); }
         }
 
-        public string AlternateFeedUrl
+        public string? AlternateFeedUrl
         {
             get { return LoadSetting(SettingNames.AlternateFeedUrl); }
             set { SaveSetting(SettingNames.AlternateFeedUrl, value); }
@@ -210,25 +210,25 @@ namespace FujiyBlog.Core.EntityFramework
         //    set { SaveSetting(SettingNames.DefaultFeedOutput, value); }
         //}
 
-        public string FacebookAdminIds
+        public string? FacebookAdminIds
         {
             get { return LoadSetting(SettingNames.FacebookAdminIds); }
             set { SaveSetting(SettingNames.FacebookAdminIds, value); }
         }
 
-        public string FacebookAppId
+        public string? FacebookAppId
         {
             get { return LoadSetting(SettingNames.FacebookAppId); }
             set { SaveSetting(SettingNames.FacebookAppId, value); }
         }
 
-        public string OpenGraphImageUrl
+        public string? OpenGraphImageUrl
         {
             get { return LoadSetting(SettingNames.OpenGraphImageUrl); }
             set { SaveSetting(SettingNames.OpenGraphImageUrl, value); }
         }
 
-        public string TwitterBlogAccount
+        public string? TwitterBlogAccount
         {
             get { return LoadSetting(SettingNames.TwitterBlogAccount); }
             set { SaveSetting(SettingNames.TwitterBlogAccount, value); }
@@ -244,13 +244,13 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.ReCaptchaEnabled, value.ToString()); }
         }
 
-        public string ReCaptchaPrivateKey
+        public string? ReCaptchaPrivateKey
         {
             get { return LoadSetting(SettingNames.ReCaptchaPrivateKey); }
             set { SaveSetting(SettingNames.ReCaptchaPrivateKey, value); }
         }
 
-        public string ReCaptchaPublicKey
+        public string? ReCaptchaPublicKey
         {
             get { return LoadSetting(SettingNames.ReCaptchaPublicKey); }
             set { SaveSetting(SettingNames.ReCaptchaPublicKey, value); }
@@ -262,7 +262,7 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.NotifyNewComments, value.ToString()); }
         }
 
-        public string ApplicationInsightsInstrumentationKey
+        public string? ApplicationInsightsInstrumentationKey
         {
             get { return LoadSetting(SettingNames.ApplicationInsightsInstrumentationKey); }
             set { SaveSetting(SettingNames.ApplicationInsightsInstrumentationKey, value); }
@@ -274,19 +274,19 @@ namespace FujiyBlog.Core.EntityFramework
             set { SaveSetting(SettingNames.FileUploadService, value); }
         }
 
-        public string AzureStorageAccountName
+        public string? AzureStorageAccountName
         {
             get { return LoadSetting(SettingNames.AzureStorageAccountName); }
             set { SaveSetting(SettingNames.AzureStorageAccountName, value); }
         }
 
-        public string AzureStorageAccountKey
+        public string? AzureStorageAccountKey
         {
             get { return LoadSetting(SettingNames.AzureStorageAccountKey); }
             set { SaveSetting(SettingNames.AzureStorageAccountKey, value); }
         }
 
-        public string AzureStorageUploadContainerName
+        public string? AzureStorageUploadContainerName
         {
             get { return LoadSetting(SettingNames.AzureStorageUploadContainerName); }
             set { SaveSetting(SettingNames.AzureStorageUploadContainerName, value); }
@@ -302,7 +302,7 @@ namespace FujiyBlog.Core.EntityFramework
             return GetSettingNameDefaultValue(setting);
         }
 
-        private void SaveSetting(SettingNames settingName, string value)
+        private void SaveSetting(SettingNames settingName, string? value)
         {
             int settingId = (int) settingName;
             

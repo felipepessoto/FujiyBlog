@@ -89,27 +89,41 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
         public virtual ActionResult Edit([Bind(Prefix = "Post")]AdminPostSave postSave)
         {
             Post editedPost = postSave.Id.HasValue ? db.Posts.Include(x => x.Author).Include(x => x.PostTags).ThenInclude(x => x.Tag).Include(x => x.PostCategories).ThenInclude(x => x.Category).Single(x => x.Id == postSave.Id)
-                                  : db.Posts.Add(new Post
+                                  : new Post
                                   {
                                       CreationDate = DateTime.UtcNow,
                                       Slug = postSave.Slug,
-                                  }).Entity;
+                                  };
+
+            if (!CanEditPost(postSave, editedPost))
+            {
+                return Forbid();
+            }
 
             var newAuthor = userRepository.GetById(postSave.AuthorId); //postSave.AuthorId.HasValue ? userRepository.GetById(postSave.AuthorId.Value) : userRepository.GetByUsername(User.Identity.Name);
 
-            if (CheckPostsSaveRoles(postSave, editedPost, newAuthor) == false)
+            if (newAuthor == null)
+            {
+                ModelState.AddModelError("Post.AuthorId", "Select a valid author.");
+            }
+            else if (!CheckPostsSaveRoles(postSave, editedPost, newAuthor))
             {
                 return Forbid();
+            }
+
+            if (db.Posts.Any(x => x.Slug == postSave.Slug && x.Id != editedPost.Id))
+            {
+                ModelState.AddModelError("Post.Slug", "This slug already exists");
+            }
+
+            if (!ModelState.IsValid || newAuthor == null)
+            {
+                return View(CreateAdminPostEdit(postSave));
             }
 
             editedPost.Author = newAuthor;
             editedPost.LastModificationDate = DateTime.UtcNow;
             postSave.FillPost(editedPost, dateTimeUtil);
-
-            if (db.Posts.Any(x => x.Slug == editedPost.Slug && x.Id != editedPost.Id))
-            {
-                ModelState.AddModelError("Post.Slug", "This slug already exists");
-            }
 
             IEnumerable<string> tags = from tag in (postSave.Tags ?? string.Empty).Split(new[] { ',' })
                                        where !string.IsNullOrWhiteSpace(tag)
@@ -127,7 +141,7 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 editedPost.PostTags.Add(new PostTag() { Tag = item });
             }
 
-            postSave.SelectedCategories = postSave.SelectedCategories ?? Enumerable.Empty<int>();
+            postSave.SelectedCategories ??= [];
             var categoriesToAdd = postSave.SelectedCategories.Except(editedPost.PostCategories.Select(x => x.CategoryId));
 
             foreach (var removedCategory in editedPost.PostCategories.Where(x => postSave.SelectedCategories.Contains(x.CategoryId) == false).ToList())
@@ -140,14 +154,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 editedPost.PostCategories.Add(new PostCategory() { Category = category });
             }
 
-            if (ModelState.IsValid)
+            if (!postSave.Id.HasValue)
             {
-                db.SaveChanges();
-                CreatePostRevision(editedPost);
-                return RedirectToAction("Details", "Post", new { postSlug = editedPost.Slug });
+                db.Posts.Add(editedPost);
             }
-
-            return View(CreateAdminPostEdit(editedPost));
+            db.SaveChanges();
+            CreatePostRevision(editedPost);
+            return RedirectToAction("Details", "Post", new { postSlug = editedPost.Slug });
         }
 
         private void CreatePostRevision(Post editedPost)
@@ -180,6 +193,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
 
         private AdminPostEdit CreateAdminPostEdit(Post post)
         {
+            return CreateAdminPostEdit(new AdminPostSave(post, dateTimeUtil));
+        }
+
+        private AdminPostEdit CreateAdminPostEdit(AdminPostSave post)
+        {
             IQueryable<ApplicationUser> authors = db.Users.Where(x => x.Enabled);
             if (!HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts))
             {
@@ -189,13 +207,13 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
             AdminPostEdit viewModel = new AdminPostEdit();
             viewModel.Authors = authors.ToList().Select(x => new SelectListItem { Value = x.Id.ToString(), Text = x.UserName });
 
-            viewModel.Post = new AdminPostSave(post, dateTimeUtil);
+            viewModel.Post = post;
             viewModel.AllCategories = db.Categories.ToList();
             viewModel.AllTagsJson = JsonConvert.SerializeObject(db.Tags.Select(x => x.Name));
             return viewModel;
         }
 
-        private bool CheckPostsSaveRoles(AdminPostSave postSave, Post editedPost, ApplicationUser newAuthor)
+        private bool CanEditPost(AdminPostSave postSave, Post editedPost)
         {
             if (!postSave.Id.HasValue && !HttpContext.UserHasClaimPermission(PermissionClaims.CreateNewPosts))
             {
@@ -208,6 +226,11 @@ namespace FujiyBlog.Web.Areas.Admin.Controllers
                 return false;
             }
 
+            return true;
+        }
+
+        private bool CheckPostsSaveRoles(AdminPostSave postSave, Post editedPost, ApplicationUser newAuthor)
+        {
             if (!HttpContext.UserHasClaimPermission(PermissionClaims.EditOtherUsersPosts) && newAuthor.UserName != User.Identity.Name)
             {
                 return false;
